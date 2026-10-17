@@ -1,6 +1,8 @@
 // BorBan: odczyt zdjęć zeszytu przez AI (Claude).
 // Wejście (POST, z tokenem zalogowanego użytkownika): { paths: ["<family_id>/<note_id>/1.jpg", ...], subject: "Chemia", units: [{id, title}] }
 // Wyjście: { ok: true, model, result: { lessons, text, issues, cards, unitGuess, confidence, unreadable } }
+// Tryb "check" (bez zdjęć): { mode:"check", fam, subject, unit:{title}, points:[{id,q,a}], notes:["tekst notatki", ...] }
+//   → { ok:true, model, result:{ covered:[id], partial:[id], missing:[id], conflicts:[{id,note,book,why}], extra:[str], summary } }
 // Sekrety (Supabase → Edge Functions → Secrets): ANTHROPIC_API_KEY (wymagany), ANTHROPIC_MODEL (opcjonalny).
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { encodeBase64 } from "jsr:@std/encoding@1/base64";
@@ -23,6 +25,16 @@ Zadanie:
 Odpowiedz WYŁĄCZNIE jednym obiektem JSON, bez komentarzy:
 {"lessons":[{"number":"L16"|null,"date":"RRRR-MM-DD"|null,"topic":"..."}],"text":"Markdown","issues":[{"wrote":"...","correct":"...","why":"..."}],"cards":[{"front":"...","back":"..."}],"unitGuess":"id"|null,"confidence":0.0-1.0,"unreadable":["krótki opis nieczytelnych miejsc"]}`;
 
+const PROMPT_CHECK = `Jesteś asystentem aplikacji BorBan. Porównujesz notatki ucznia z zeszytu z materiałem działu z podręcznika (lista punktów: id, pytanie, poprawna odpowiedź).
+Dla KAŻDEGO punktu z podręcznika zdecyduj:
+- covered: notatki zawierają tę wiedzę (inne słowa są OK, liczy się sens),
+- partial: jest tylko częściowo (np. pojęcie bez definicji, wzór bez przykładu),
+- missing: w notatkach tego nie ma.
+Osobno wypisz conflicts: miejsca, gdzie notatka mówi COŚ INNEGO niż podręcznik (błędny wzór, zła data, inna definicja): id punktu albo null, co jest w zeszycie (note), co w podręczniku (book), krótko dlaczego (why). Tylko pewne sprzeczności.
+extra: ważne rzeczy z notatek, których nie ma w punktach podręcznika (max 8, krótko).
+summary: 1–2 zdania po polsku dla ucznia 15 lat, konkretnie, życzliwie, bez ocen typu „źle”.
+Odpowiedz WYŁĄCZNIE jednym obiektem JSON: {"covered":["id"],"partial":["id"],"missing":["id"],"conflicts":[{"id":"id"|null,"note":"...","book":"...","why":"..."}],"extra":["..."],"summary":"..."}`;
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
   if (req.method !== "POST") return json({ error: "method" }, 405);
@@ -34,6 +46,7 @@ Deno.serve(async (req) => {
     if (!u?.user) return json({ error: "unauthorized" }, 401);
 
     const body = await req.json().catch(() => ({}));
+    if (body.mode === "check") return await check(db, body);
     const paths: string[] = Array.isArray(body.paths) ? body.paths : [];
     if (!paths.length || paths.length > 6) return json({ error: "bad_paths" }, 400);
     const fam = String(paths[0]).split("/")[0];
@@ -78,3 +91,41 @@ Deno.serve(async (req) => {
     return json({ error: "server", detail: String(e) }, 500);
   }
 });
+
+// wspólne wywołanie Claude z automatycznym wyborem dostępnego modelu Sonnet
+async function claude(system: string, content: unknown[], maxTokens: number) {
+  const key = Deno.env.get("ANTHROPIC_API_KEY");
+  if (!key) return { err: json({ error: "no_key" }, 503) };
+  const H = { "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json" };
+  const call = (m: string) => fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST", headers: H, body: JSON.stringify({ model: m, max_tokens: maxTokens, system, messages: [{ role: "user", content }] }),
+  });
+  let used = Deno.env.get("ANTHROPIC_MODEL") || "claude-sonnet-4-5";
+  let r = await call(used); let out = await r.json();
+  if (!r.ok && (r.status === 404 || out?.error?.type === "not_found_error" || /^model:/i.test(out?.error?.message || ""))) {
+    const ml = await (await fetch("https://api.anthropic.com/v1/models?limit=100", { headers: H })).json();
+    const pick = (ml?.data || []).map((x: { id: string }) => x.id).find((id: string) => id.includes("sonnet"));
+    if (pick) { used = pick; r = await call(used); out = await r.json(); }
+  }
+  if (!r.ok) return { err: json({ error: "ai", detail: `${out?.error?.type || r.status}: ${out?.error?.message || ""}`.slice(0, 300), model: used }, 502) };
+  const txt = (out.content || []).filter((c: { type: string }) => c.type === "text").map((c: { text: string }) => c.text).join("");
+  const a = txt.indexOf("{"), b = txt.lastIndexOf("}");
+  try { return { used, usage: out.usage, result: JSON.parse(txt.slice(a, b + 1)) }; }
+  catch { return { err: json({ error: "parse", raw: txt.slice(0, 500) }, 502) }; }
+}
+
+// porównanie notatek działu z materiałem podręcznika (sam tekst, bez zdjęć)
+// deno-lint-ignore no-explicit-any
+async function check(db: any, body: any) {
+  const fam = String(body.fam || "");
+  const { data: role } = await db.rpc("borban_role", { fam });
+  if (!role) return json({ error: "forbidden" }, 403);
+  const points = (Array.isArray(body.points) ? body.points : []).slice(0, 120)
+    .map((p: { id: string; q: string; a: string }) => `[${String(p.id).slice(0, 60)}] ${String(p.q).slice(0, 300)} → ${String(p.a).slice(0, 300)}`).join("\n");
+  const notes = (Array.isArray(body.notes) ? body.notes : []).slice(0, 12).map((t: string, i: number) => `--- Notatka ${i + 1} ---\n${String(t).slice(0, 12000)}`).join("\n\n");
+  if (!points || !notes) return json({ error: "bad_input" }, 400);
+  const text = `Przedmiot: ${String(body.subject || "").slice(0, 80)}\nDział: ${String(body.unit?.title || "").slice(0, 200)}\n\nPODRĘCZNIK (punkty działu):\n${points}\n\nZESZYT UCZNIA:\n${notes}`;
+  const r = await claude(PROMPT_CHECK, [{ type: "text", text }], 4000);
+  if (r.err) return r.err;
+  return json({ ok: true, model: r.used, usage: r.usage, result: r.result });
+}
