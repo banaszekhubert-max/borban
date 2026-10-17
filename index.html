@@ -923,13 +923,34 @@ function renderCardFace(c, revealed){
 }
 const clozeAnswer = c => (String(c.front).match(/\{\{(.+?)\}\}/g) || []).map(x => x.slice(2,-2)).join(", ");
 const norm = s => String(s||"").toLowerCase().normalize("NFKC").replace(/[\s.,;:!?()"'„”–−-]+/g, " ").trim();
+// Sprawdzanie odpowiedzi: ta sama treść = "exact"; inna kolejność słów, brak polskich znaków, drobna literówka = "close".
+const plain = s => String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ł/g, "l")
+  .replace(/\([^)]*\)/g, " ").replace(/[^a-z0-9㐀-鿿+=²³√<>≤≥]+/g, " ").trim();
+const sortedWords = s => s.split(" ").filter(Boolean).sort().join(" ");
+function lev(a, b){ if (a === b) return 0; const m = a.length, n = b.length; if (!m || !n) return m || n;
+  let prev = Array.from({length: n+1}, (_, j) => j);
+  for (let i = 1; i <= m; i++){ const cur = [i]; for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j]+1, cur[j-1]+1, prev[j-1] + (a[i-1] === b[j-1] ? 0 : 1)); prev = cur; }
+  return prev[n]; }
+function checkAnswer(typed, answer){
+  if (!String(typed||"").trim()) return "";
+  if (norm(typed) === norm(answer)) return "exact";
+  const t = plain(typed); if (!t) return "";
+  const variants = [answer, ...String(answer).split(/\s*(?:\/|;|,|\blub\b|\bor\b)\s*/)].map(plain).filter(Boolean);
+  for (const v of variants){
+    if (t.replace(/ /g, "") === v.replace(/ /g, "") && t !== v) return "close";
+    if (t === v || sortedWords(t) === sortedWords(v)) return v === plain(answer) && t === v ? "exact" : "close";
+    const tol = Math.max(1, Math.floor(v.length * 0.15));
+    if (v.length >= 4 && (lev(t, v) <= tol || lev(sortedWords(t), sortedWords(v)) <= tol)) return "close";
+  }
+  return "";
+}
 function renderStudy(){
   const sh = $("#sheet"); const cid = SES.queue[SES.i]; const c = S.cards[cid];
   if (!c){ SES.i++; if (SES.i >= SES.queue.length) return finishSession(); return renderStudy(); }
   const s = S.subjects[c.subjectId], u = S.units[c.unitId];
   const pct = Math.round(SES.i / SES.queue.length * 100);
   const answer = c.type === "cloze" ? clozeAnswer(c) : c.back;
-  const typed = SES.typed.trim(); const match = typed && norm(typed) === norm(answer);
+  const typed = SES.typed.trim(); const verdict = checkAnswer(typed, answer); const match = !!verdict;
   const isNew = !S.progress[cid];
   sh.innerHTML = `<div class="wrap">
     <div class="sbar"><button class="iconbtn" data-act="quit" aria-label="Zakończ sesję">${ICON.x}</button><div class="bar"><i style="width:${pct}%"></i></div><span class="small muted" style="font-variant-numeric:tabular-nums">${SES.i+1}/${SES.queue.length}</span></div>
@@ -937,7 +958,7 @@ function renderStudy(){
       <div class="meta"><span class="dot" style="--c:${scol(s)}"></span>${esc(s?.name)} · ${esc(u?.title)}${isNew ? ` <span class="chip here">nowa</span>` : ""}${c.type === "vocab" ? ` <span class="chip">przetłumacz</span>` : ""}</div>
       ${renderCardFace(c, SES.revealed)}
       ${SES.revealed ? `<div class="answer">${c.type === "cloze" ? `Odpowiedź: <mark>${esc(answer)}</mark>` : esc(c.back)}</div>
-        ${typed ? `<div class="yours ${match ? "match" : ""}">${match ? "Zgadza się z Twoją odpowiedzią." : `Twoja odpowiedź: ${esc(typed)}`}</div>` : ""}` : ""}
+        ${typed ? `<div class="yours ${match ? "match" : ""}">${verdict === "exact" ? "Zgadza się z Twoją odpowiedzią." : verdict === "close" ? `Dobrze! Twoja odpowiedź „${esc(typed)}” znaczy to samo (inna kolejność słów, brak polskich znaków albo drobna literówka). Śmiało kliknij „Wiem”.` : `Twoja odpowiedź: ${esc(typed)}. Porównaj z poprawną i oceń sam: jeśli chodzi o to samo, kliknij „Wiem”.`}</div>` : ""}` : ""}
     </div>
     ${SES.revealed ? `<p class="small muted" style="text-align:center">${isNew ? "Pierwszy raz? Oceń szczerze, karta wróci w dobrym momencie." : "Jak Ci poszło?"}</p>
       <div class="grades">
