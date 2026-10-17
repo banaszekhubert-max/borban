@@ -932,7 +932,10 @@ function renderNote(){
 async function aiRead(paths, subjectId){
   try {
     const { data, error } = await sb.functions.invoke("read-notebook", { body: { paths, subject: S.subjects[subjectId]?.name || "", units: unitsOf(subjectId).map(([id,u]) => ({ id, title: u.title })) } });
-    if (error || !data?.ok || !data.result) { console.warn("AI", error, data); return { err: data?.error || error?.message || "ai" }; }
+    if (error || !data?.ok || !data.result) {
+      let body = data; try { if (error?.context?.json) body = await error.context.json(); } catch {}
+      console.warn("AI", error, body);
+      return { err: body?.error || "ai", detail: [body?.detail, body?.model].filter(Boolean).join(" · ") || error?.message || "" }; }
     const r = data.result;
     return { ai: { lessons: (r.lessons || []).slice(0, 10), issues: (r.issues || []).slice(0, 30), cards: (r.cards || []).filter(c => c && c.front && c.back).slice(0, 20),
       unitGuess: r.unitGuess || null, confidence: r.confidence ?? null, unreadable: (r.unreadable || []).slice(0, 20), model: data.model }, text: String(r.text || "") };
@@ -951,7 +954,7 @@ async function sendNote(){
   } catch (e){ console.warn(e); N.busy = ""; renderNote(); toast("Nie udało się wysłać zdjęć. Sprawdź internet i spróbuj jeszcze raz."); return; }
   let text = "", unsure = [], conf = null, ocrOk = true, ai = null, aiErr = null;
   N.busy = "AI czyta zeszyt… (ok. 20–40 s)"; renderNote();
-  { const r = await aiRead(paths, N.subjectId); if (r.ai){ ai = r.ai; text = r.text; } else aiErr = r.err; }
+  { const r = await aiRead(paths, N.subjectId); if (r.ai){ ai = r.ai; text = r.text; } else aiErr = r.err + (r.detail ? ": " + r.detail : ""); }
   if (!ai) for (let i = 0; i < N.files.length; i++){
     try {
       N.busy = `Odczytuję tekst ze zdjęcia ${i+1} z ${N.files.length}… (pierwszy raz może potrwać minutę)`; renderNote();
@@ -1002,7 +1005,7 @@ function renderConfirm(){
     ${n.ai ? `<div class="panel stack" style="gap:6px"><p class="eyebrow">Odczyt AI</p>${(n.ai.lessons||[]).map(l => `<div class="small"><b>${esc(l.number || "Lekcja")}</b>${l.date ? " · " + esc(l.date) : ""} · ${esc(l.topic || "")}</div>`).join("")}
       ${(n.ai.unreadable||[]).length ? `<p class="small" style="color:var(--warn)">Nieczytelne: ${esc(n.ai.unreadable.join("; "))}</p>` : ""}</div>
       ${(n.ai.issues||[]).length ? `<div class="panel stack" style="gap:6px;border:2px solid var(--bad)"><p class="eyebrow">Możliwe błędy w zeszycie (${n.ai.issues.length})</p>${n.ai.issues.map(x => `<div class="small"><s>${esc(x.wrote)}</s> → <b>${esc(x.correct)}</b><br><span class="muted">${esc(x.why || "")}</span></div>`).join("")}<p class="small muted">Karty do nauki mają już poprawną wersję.</p></div>` : ""}`
-    : `${n.aiErr ? `<p class="banner">Odczyt AI był niedostępny${n.aiErr === "no_key" ? " (brak klucza AI w Supabase)" : ""}, użyto prostego odczytu. <button class="btn sm" data-act="confAi">Odczytaj przez AI</button></p>` : `<button class="btn sm" data-act="confAi">Odczytaj jeszcze raz przez AI</button>`}`}
+    : `${n.aiErr ? `<p class="banner">Odczyt AI był niedostępny${n.aiErr === "no_key" ? " (brak klucza AI w Supabase)" : ` (${esc(String(n.aiErr).slice(0,200))}${n.aiErrDetail ? " – " + esc(n.aiErrDetail) : ""})`}, użyto prostego odczytu. <button class="btn sm" data-act="confAi">Odczytaj przez AI</button></p>` : `<button class="btn sm" data-act="confAi">Odczytaj jeszcze raz przez AI</button>`}`}
     ${!n.ai && n.ocrText ? `<div class="panel"><p class="eyebrow">Odczyt (podgląd niepewnych słów)</p><div class="small" style="white-space:pre-wrap">${marked}</div></div>` : n.ai ? "" : `<p class="banner">Programowi nie udało się odczytać tekstu. Wpisz najważniejsze pojęcia z notatki albo odrzuć zdjęcie jako nieczytelne.</p>`}
     <label class="f">Tekst notatki (możesz poprawić)<textarea id="c_text" rows="10">${esc(n.ocrConfirmed ?? n.ocrText ?? "")}</textarea></label>
     <label class="f">Czego dotyczy notatka? <small>${C.sure ? "proponujemy na podstawie treści" : "nie jesteśmy pewni, wybierz dział"}</small><select id="c_unit">${unitsOf(n.subjectId).map(([uid_,u]) => `<option value="${uid_}" ${uid_ === C.unitId ? "selected" : ""}>${esc(u.title)}</option>`).join("")}<option value="" ${C.unitId ? "" : "selected"}>Inny / nowy temat</option></select></label>
@@ -1509,7 +1512,7 @@ document.addEventListener("click", async e => {
     case "confAi": if (NCONF){ const n = S.notes[NCONF.id]; t.disabled = true; t.textContent = "AI czyta zeszyt… (ok. 20–40 s)";
       const r = await aiRead(n.photos || [], n.subjectId);
       if (r.ai){ store.put("notes", NCONF.id, { ...n, ai: r.ai, aiErr: null, ocrText: r.text }); const urls = NCONF.urls; await openConfirm(NCONF.id); NCONF.urls = urls; renderConfirm(); toast("Gotowe: odczyt AI."); }
-      else { store.put("notes", NCONF.id, { ...n, aiErr: r.err }); renderConfirm(); toast(r.err === "no_key" ? "Brak klucza AI w Supabase (Edge Functions → Secrets)." : "Odczyt AI się nie udał, spróbuj za chwilę."); } } break;
+      else { store.put("notes", NCONF.id, { ...n, aiErr: r.err, aiErrDetail: r.detail || "" }); renderConfirm(); toast(r.err === "no_key" ? "Brak klucza AI w Supabase (Edge Functions → Secrets)." : `Odczyt AI się nie udał: ${r.err}${r.detail ? " – " + r.detail : ""}`); } } break;
     case "confNo": confirmNote(false); break;
     case "confClose": NCONF = null; closeSheet(); break;
     case "why": if (SES){ SES.why = SES.queue[SES.i]; renderStudy(); } break;
