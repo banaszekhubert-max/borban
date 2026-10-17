@@ -331,7 +331,7 @@ const PLAN = { // 0 = niedziela
 const BLOCK_STEPS = [["Plan sesji",5,"var(--muted)"],["Odpytywanie z dzisiejszych lekcji",25,"var(--primary)"],["Przerwa",5,"var(--line)"],["Powtórka fiszek",25,"var(--good)"]];
 
 /* ---------- stan ---------- */
-const COLS = ["meta","subjects","units","cards","progress","sessions","tests","woop","flags"];
+const COLS = ["meta","subjects","units","cards","progress","sessions","tests","woop","flags","notes","confirmations"];
 const S = Object.fromEntries(COLS.map(c => [c, {}]));
 const role = { canEdit:false, canWrite:true, isOwner:false, preview:false, mode:"…" };
 let caps = { sample:null, assets:null, imagesOk:false };
@@ -577,6 +577,8 @@ function viewToday(){
   if (!role.canWrite) parts.push(`<p class="banner">Tryb podglądu dla rodzica: widzisz to samo co ${esc(name)}, bez możliwości zmian.</p>`);
   { const tk = todayTasks(t); const dn = tk.filter(x => x.done).length;
     parts.push(`<div class="stack" style="gap:8px"><div class="row" style="justify-content:space-between"><h2>Do zrobienia dziś</h2><span class="chip ${dn === tk.length ? "done" : ""}">${dn}/${tk.length}</span></div>${tasksTiles(tk, role.canWrite)}<p class="small muted">Kafelki odhaczają się same, gdy skończysz zadanie. Każda odpowiedź zapisuje się od razu.</p></div>`); }
+  if (role.canWrite){ const pend = notesOf("to_confirm").length;
+    parts.push(`<div class="panel row" style="justify-content:space-between;gap:10px;align-items:center"><div><b>Notatka z lekcji</b><br><span class="small muted">Zdjęcie zeszytu po lekcji: +10 pkt${pend ? ` · ${pend} ${plural(pend,"czeka","czekają","czeka")} na potwierdzenie rodzica` : ""}</span></div><button class="btn primary" data-act="noteNew">📸 Zrób zdjęcie</button></div>`); }
   // główny przycisk
   const mIds = morningIds(t);
   if (role.canWrite && isMorning() && mIds.length && !morningDone(t)){
@@ -644,7 +646,8 @@ function viewMap(){
   const nodes = units.map(([id,u]) => {
     const st = unitStats(id); const p = Math.round(st.prog*100); const here = s.current === id; const locked = !eligibleUnit(id);
     const open = openUnit === id;
-    const cards = open ? `<div class="unitcards">${u.svg ? `<div class="pic" style="margin-bottom:8px">${cleanSvg(u.svg)}</div>` : ""}${cardsOf(id).map(([cid,c]) => { const r = S.progress[cid]?.run||0;
+    const unotes = Object.values(S.notes || {}).filter(x => x.status === "confirmed" && x.unitId === id).sort((a,b) => (b.date||"").localeCompare(a.date||""));
+    const cards = open ? `<div class="unitcards">${u.svg ? `<div class="pic" style="margin-bottom:8px">${cleanSvg(u.svg)}</div>` : ""}${unotes.map(x => `<details class="panel" style="margin-bottom:8px"><summary class="small"><b>📒 Notatka z lekcji</b> · ${fmtDate(x.date)}</summary><div class="small" style="white-space:pre-wrap;margin-top:6px">${esc(x.ocrConfirmed || "")}</div></details>`).join("")}${cardsOf(id).map(([cid,c]) => { const r = S.progress[cid]?.run||0;
       return `<div class="mini"><span class="lvl" title="${Math.min(r,3)} z 3">${[0,1,2].map(i => `<i class="${i<r?"on":""}"></i>`).join("")}</span><span class="q">${esc(stripCloze(c.front))}</span></div>`; }).join("") || `<p class="small muted">Brak kart w tym dziale.</p>`}
       ${role.canWrite && st.total && !locked ? `<button class="btn sm" data-act="start" data-kind="unit" data-id="${id}">Ucz się tego działu</button>` : ""}</div>` : "";
     return `<button class="unit ${locked?"locked":""}" data-act="unit" data-id="${id}" style="--c:${scol(s)}" aria-expanded="${open}">
@@ -818,7 +821,7 @@ function viewParent(){
 
   // sesje i błędy (odpowiedzi zapisane w sesjach + historia kart)
   const sesList = Object.values(S.sessions).filter(s => s.date).sort((a,b) => (b.start||0) - (a.start||0)).slice(0, 8);
-  const KIND = { rematch:"Rewanż", morning:"Poranna powtórka", quick:"Szybka runda", daily:"Fiszki na dziś", extra:"Dodatkowe karty", unit:"Dział", test:"Przed sprawdzianem", recall:"Odpytanie z lekcji" };
+  const KIND = { rematch:"Rewanż", morning:"Poranna powtórka", quick:"Szybka runda", daily:"Fiszki na dziś", extra:"Dodatkowe karty", unit:"Dział", test:"Przed sprawdzianem", recall:"Odpytanie z lekcji", note:"Notatka z lekcji (zdjęcie)" };
   const sesRows = sesList.map(s => { const acc = s.n ? Math.round(((s.ok||0)+(s.hard||0))/s.n*100) : null;
     const ref = s.kind === "test" ? S.tests[s.ref]?.title : s.kind === "unit" ? S.units[s.ref]?.title : "";
     return `<div class="li"><div><b>${KIND[s.kind] || s.kind}</b>${ref ? ` · ${esc(ref)}` : ""}<br><span class="small muted">${fmtDate(s.date)} ${s.start ? new Date(s.start).toTimeString().slice(0,5) : ""} · ${fmtMin(s.activeMs||0)} · ${s.n||0} odp.</span></div>
@@ -845,6 +848,7 @@ function viewParent(){
       <div class="tile"><b>${fmtMin(weekMs)}</b><span>nauki w tym tygodniu</span></div>
       <div class="tile"><b>${streak()}</b><span>dni serii · fiszki ${wp.cardsDays}/${wp.daysSoFar}</span></div>
     </div>
+    ${notesPanel()}
     <div class="panel stack"><div class="row" style="justify-content:space-between"><h3>Dziś u ${esc(name)}</h3><span class="small muted">${fmtMin(activeMsOn(t))} · ${answeredOn(t)} odp.</span></div>${tasksTiles(todayTasks(t), false)}</div>
     <div class="panel stack"><h3>Ostatnie sesje</h3>${sesRows ? `<div class="list">${sesRows}</div>` : `<p class="small muted">Jeszcze nie było sesji nauki.</p>`}</div>
     <div class="panel stack"><div><h3>Błędy z ostatnich 7 dni</h3><p class="small muted">Karty, na których ${esc(name)} odpowiedział „Nie wiem”. Wracają do powtórki automatycznie, aż wejdą do pamięci.</p></div>${misRows ? `<div class="list">${misRows}</div>` : `<p class="small muted">Brak błędów.</p>`}</div>
@@ -859,6 +863,180 @@ function viewParent(){
       ${vsRows || `<p class="small muted">Na razie brak ocen wystawionych po starcie nauki w BorBan.</p>`}</div>
     ${familyPanel()}
   </div>`;
+}
+
+/* ---------- notatki z lekcji: zdjęcie → kontrola jakości → OCR → potwierdzenie rodzica ---------- */
+let NOTE = null;          // szkic nowej notatki (sheet)
+let NCONF = null;         // otwarte potwierdzenie (sheet rodzica)
+let tessP = null;
+function loadTess(){
+  return tessP || (tessP = new Promise((res, rej) => { const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
+    s.onload = () => res(window.Tesseract); s.onerror = () => { tessP = null; rej(new Error("ocr-load")); }; document.head.appendChild(s); }));
+}
+async function ocrBlob(blob, onp){
+  const T = await loadTess();
+  const w = await T.createWorker("pol", 1, { logger: m => { if (m.status === "recognizing text" && onp) onp(m.progress); } });
+  try { const { data } = await w.recognize(blob); return data; } finally { try { await w.terminate(); } catch {} }
+}
+async function photoPrep(file){
+  let src;
+  try { src = await createImageBitmap(file); }
+  catch { src = await new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = URL.createObjectURL(file); }); }
+  const W0 = src.width, H0 = src.height, sc = Math.min(1, 1600 / Math.max(W0, H0));
+  const c = document.createElement("canvas"); c.width = Math.round(W0 * sc); c.height = Math.round(H0 * sc);
+  c.getContext("2d").drawImage(src, 0, 0, c.width, c.height);
+  const blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.82));
+  // jakość liczona na małej kopii: jasność i ostrość (wariancja Laplasjanu)
+  const s2 = Math.min(1, 400 / Math.max(c.width, c.height)); const m = document.createElement("canvas");
+  m.width = Math.max(3, Math.round(c.width * s2)); m.height = Math.max(3, Math.round(c.height * s2));
+  const ctx = m.getContext("2d"); ctx.drawImage(c, 0, 0, m.width, m.height);
+  const d = ctx.getImageData(0, 0, m.width, m.height).data, W = m.width, H = m.height, g = new Float32Array(W * H);
+  let sum = 0, clip = 0; for (let i = 0; i < W * H; i++){ const v = 0.299*d[i*4] + 0.587*d[i*4+1] + 0.114*d[i*4+2]; g[i] = v; sum += v; if (v > 252) clip++; }
+  let ls = 0, lq = 0, n = 0;
+  for (let y = 1; y < H - 1; y++) for (let x = 1; x < W - 1; x++){ const i = y*W + x; const l = 4*g[i] - g[i-1] - g[i+1] - g[i-W] - g[i+W]; ls += l; lq += l*l; n++; }
+  const mean = sum / (W * H), sharp = n ? lq/n - (ls/n)**2 : 0;
+  const issues = [];
+  if (mean < 70) issues.push("za ciemno"); if (clip / (W * H) > 0.6) issues.push("prześwietlone");
+  if (sharp < 60) issues.push("nieostre"); if (Math.max(W0, H0) < 1000) issues.push("mała rozdzielczość");
+  return { blob, url: URL.createObjectURL(blob), q: { mean: Math.round(mean), sharp: Math.round(sharp), issues } };
+}
+const notesOf = st => Object.entries(S.notes || {}).filter(([,n]) => n.status === st).sort((a,b) => (b[1].created||0) - (a[1].created||0));
+function openNoteNew(){
+  if (role.preview){ toast("W podglądzie nie zapisujemy notatek."); return; }
+  NOTE = { subjectId: NOTE?.subjectId || sortedSubjects()[0]?.[0] || "", files: [], busy: "" };
+  openSheet(); renderNote();
+}
+function renderNote(){
+  const N = NOTE; if (!N) return;
+  const bad = N.files.filter(f => f.q.issues.length).length;
+  $("#sheet").innerHTML = `<div class="wrap">
+    <div class="sbar"><button class="iconbtn" data-act="noteClose" aria-label="Zamknij">${ICON.x}</button><span class="small muted" style="flex:1">Notatka z lekcji</span></div>
+    <div><h1>📸 Notatka z lekcji</h1><p class="small muted">Zrób zdjęcie zeszytu: cała strona w kadrze, dobre światło, bez cienia ręki. Odczytamy tekst, a rodzic potwierdzi, że zgadza się z zeszytem.</p></div>
+    <label class="f">Przedmiot<select id="n_subj">${sortedSubjects().map(([id,s]) => `<option value="${id}" ${id === N.subjectId ? "selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label>
+    <label class="btn big" style="text-align:center;cursor:pointer">${N.files.length ? "Dodaj kolejne zdjęcie" : "Zrób zdjęcie albo wybierz z galerii"}<input type="file" id="n_file" accept="image/*" capture="environment" multiple hidden></label>
+    <div class="stack" style="gap:8px">${N.files.map((f,i) => `<div class="panel row" style="gap:10px;align-items:center;padding:8px">
+      <img src="${f.url}" alt="Zdjęcie ${i+1}" style="width:72px;height:72px;object-fit:cover;border-radius:8px">
+      <div style="flex:1;min-width:0"><b class="small">Zdjęcie ${i+1}</b><br>${f.q.issues.length ? `<span class="small" style="color:var(--bad)">⚠ ${esc(f.q.issues.join(", "))}: lepiej zrób jeszcze raz</span>` : `<span class="small" style="color:var(--good)">✓ wygląda dobrze</span>`}</div>
+      <button class="btn sm ghost" data-act="noteRemove" data-i="${i}">Usuń</button></div>`).join("")}</div>
+    ${N.busy ? `<p class="banner">${esc(N.busy)}</p>` : `<button class="btn primary big" data-act="noteSend" ${N.files.length && N.subjectId ? "" : "disabled"}>${bad ? `Wyślij mimo to (${bad} ${plural(bad,"słabe zdjęcie","słabe zdjęcia","słabych zdjęć")})` : "Wyślij notatkę"}</button>`}
+    <p class="small muted">Za notatkę dostajesz +10 pkt. Zdjęcia widzi tylko Twoja rodzina; usuwamy je po przygotowaniu materiału.</p></div>`;
+  const inp = $("#n_file"); if (inp) inp.onchange = async () => {
+    const files = [...inp.files].slice(0, 5 - N.files.length); if (!files.length) return;
+    N.busy = "Sprawdzam zdjęcia…"; renderNote();
+    for (const f of files){ try { N.files.push(await photoPrep(f)); } catch (e){ console.warn(e); toast("Nie udało się wczytać zdjęcia."); } }
+    N.busy = ""; renderNote(); };
+  const sel = $("#n_subj"); if (sel) sel.onchange = () => { N.subjectId = sel.value; };
+}
+async function sendNote(){
+  const N = NOTE; if (!N || !N.files.length) return;
+  const id = uid("n"), t = TODAY(), paths = [], t0 = Date.now();
+  try {
+    for (let i = 0; i < N.files.length; i++){
+      N.busy = `Wysyłam zdjęcie ${i+1} z ${N.files.length}…`; renderNote();
+      const path = `${fam.id}/${id}/${i+1}.jpg`;
+      const { error } = await sb.storage.from("notes").upload(path, N.files[i].blob, { contentType: "image/jpeg", upsert: false });
+      if (error) throw error; paths.push(path);
+    }
+  } catch (e){ console.warn(e); N.busy = ""; renderNote(); toast("Nie udało się wysłać zdjęć. Sprawdź internet i spróbuj jeszcze raz."); return; }
+  let text = "", unsure = [], conf = null, ocrOk = true;
+  for (let i = 0; i < N.files.length; i++){
+    try {
+      N.busy = `Odczytuję tekst ze zdjęcia ${i+1} z ${N.files.length}… (pierwszy raz może potrwać minutę)`; renderNote();
+      const d = await ocrBlob(N.files[i].blob, p => { N.busy = `Odczytuję tekst ze zdjęcia ${i+1} z ${N.files.length}: ${Math.round(p*100)}%`; const b = $(".banner"); if (b) b.textContent = N.busy; });
+      text += (text ? "\n\n" : "") + (d.text || "").trim();
+      (d.words || []).forEach(w => { if (w.confidence < 60 && w.text && w.text.length > 1 && !unsure.includes(w.text)) unsure.push(w.text); });
+      conf = conf == null ? d.confidence : (conf + d.confidence) / 2;
+    } catch (e){ console.warn(e); ocrOk = false; }
+  }
+  store.put("notes", id, { subjectId: N.subjectId, date: t, by: fam.role || "child", byName: fam.me?.email || "", photos: paths,
+    quality: N.files.map(f => f.q), ocrText: text, ocrUnsure: unsure.slice(0, 80), ocrConf: conf == null ? null : Math.round(conf), ocrOk,
+    status: "to_confirm", created: Date.now() });
+  store.put("sessions", uid("s"), { date: t, start: t0, end: Date.now(), activeMs: Date.now() - t0, kind: "note", ref: id, n: 0, ok: 0, hard: 0, wrong: 0, newN: 0, points: 10, answers: [] });
+  N.files.forEach(f => URL.revokeObjectURL(f.url));
+  NOTE = null; closeSheet();
+  toast(ocrOk ? "+10 pkt! Notatka czeka na potwierdzenie rodzica." : "+10 pkt! Zdjęcia wysłane; tekstu nie udało się odczytać, rodzic go uzupełni.");
+}
+// propozycja działu: wspólne słowa z tytułem działu i treścią jego kart
+function suggestUnit(sid, text){
+  const words = new Set((text || "").toLowerCase().match(/[a-ząćęłńóśźż0-9]{4,}/g) || []);
+  let best = null, bestS = 0;
+  unitsOf(sid).forEach(([uid_, u]) => {
+    const pool = (u.title + " " + cardsOf(uid_).map(([,c]) => c.front + " " + (c.back || "")).join(" ")).toLowerCase().match(/[a-ząćęłńóśźż0-9]{4,}/g) || [];
+    const sc = new Set(pool.filter(w => words.has(w))).size + (u.title.toLowerCase().split(/\s+/).some(w => w.length > 3 && words.has(w)) ? 3 : 0);
+    if (sc > bestS){ bestS = sc; best = uid_; }
+  });
+  return { unitId: best || S.subjects[sid]?.current || unitsOf(sid)[0]?.[0] || "", sure: bestS >= 3 };
+}
+function hashText(s){ let h = 0; for (const ch of String(s)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h.toString(36); }
+async function openConfirm(id){
+  const n = S.notes[id]; if (!n) return;
+  const sug = suggestUnit(n.subjectId, n.ocrText);
+  NCONF = { id, t0: Date.now(), urls: [], unitId: n.unitId || sug.unitId, sure: sug.sure, props: cardsFromText(n.ocrConfirmed ?? n.ocrText), off: new Set() };
+  openSheet(); renderConfirm();
+  try { const { data } = await sb.storage.from("notes").createSignedUrls(n.photos || [], 3600); NCONF.urls = (data || []).map(x => x.signedUrl).filter(Boolean); } catch (e){ console.warn(e); }
+  if (NCONF?.id === id) renderConfirm();
+}
+function renderConfirm(){
+  const C = NCONF; if (!C) return; const n = S.notes[C.id]; if (!n) return;
+  const marked = esc(n.ocrText || "").replace(new RegExp("(" + (n.ocrUnsure || []).map(w => esc(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")", "g"), m => (n.ocrUnsure || []).length ? `<mark>${m}</mark>` : m);
+  $("#sheet").innerHTML = `<div class="wrap">
+    <div class="sbar"><button class="iconbtn" data-act="confClose" aria-label="Zamknij">${ICON.x}</button><span class="small muted" style="flex:1">Potwierdzenie notatki</span></div>
+    <div><p class="eyebrow">${esc(S.subjects[n.subjectId]?.name || "")} · ${fmtDate(n.date)} · ${n.by === "parent" ? "zdjęcie rodzica" : "zdjęcie dziecka"}</p><h1>Czy odczyt zgadza się z zeszytem?</h1>
+      <p class="small muted">Porównaj tekst ze zdjęciem. Na żółto słowa, których program nie był pewien. Popraw tylko to, co ważne (pojęcia, wzory, daty). Fragmentów nieczytelnych nie dopisuj, oznacz je jako [nieczytelne].</p></div>
+    <div class="stack" style="gap:8px">${C.urls.length ? C.urls.map((u,i) => `<a href="${esc(u)}" target="_blank" rel="noopener"><img src="${esc(u)}" alt="Zdjęcie ${i+1}" style="width:100%;border-radius:12px;border:1px solid var(--line)"></a>`).join("") : `<p class="small muted">Wczytuję zdjęcia…</p>`}</div>
+    ${n.ocrText ? `<div class="panel"><p class="eyebrow">Odczyt (podgląd niepewnych słów)</p><div class="small" style="white-space:pre-wrap">${marked}</div></div>` : `<p class="banner">Programowi nie udało się odczytać tekstu. Wpisz najważniejsze pojęcia z notatki albo odrzuć zdjęcie jako nieczytelne.</p>`}
+    <label class="f">Tekst notatki (możesz poprawić)<textarea id="c_text" rows="10">${esc(n.ocrConfirmed ?? n.ocrText ?? "")}</textarea></label>
+    <label class="f">Czego dotyczy notatka? <small>${C.sure ? "proponujemy na podstawie treści" : "nie jesteśmy pewni, wybierz dział"}</small><select id="c_unit">${unitsOf(n.subjectId).map(([uid_,u]) => `<option value="${uid_}" ${uid_ === C.unitId ? "selected" : ""}>${esc(u.title)}</option>`).join("")}<option value="" ${C.unitId ? "" : "selected"}>Inny / nowy temat</option></select></label>
+    <div class="panel stack" id="c_props" style="gap:8px">${propsBlock()}</div>
+    <button class="btn primary big" data-act="confYes">Potwierdzam: odczyt i dział się zgadzają</button>
+    <button class="btn ghost" data-act="confNo">Zdjęcie nieczytelne: odrzuć</button>
+    <p class="small muted">Potwierdzenie zapisuje się w dzienniku (kto i kiedy). Notatka od razu trafia do materiału działu, a zaznaczone karty do nauki.</p></div>`;
+  const ta = $("#c_text"); if (ta) ta.oninput = () => { C.props = cardsFromText(ta.value); C.off = new Set(); const b = $("#c_props"); if (b) b.innerHTML = propsBlock(); };
+  const pr = $("#c_props"); if (pr) pr.onchange = e => { const i = e.target.dataset?.pi; if (i == null) return; e.target.checked ? C.off.delete(+i) : C.off.add(+i); };
+  const us = $("#c_unit"); if (us) us.onchange = () => { C.pickedUnit = us.value; };
+}
+function confirmNote(ok){
+  const C = NCONF; if (!C) return; const n = S.notes[C.id]; if (!n) return;
+  const text = ok ? ($("#c_text")?.value || "").trim() : "", unitId = ok ? ($("#c_unit")?.value || "") : "";
+  if (ok && !text){ toast("Wpisz choć najważniejsze pojęcia albo odrzuć zdjęcie."); return; }
+  const secs = Math.round((Date.now() - C.t0) / 1000), at = new Date().toISOString(), who = fam.me?.id || "", whoMail = fam.me?.email || "";
+  const decision = !ok ? "rejected" : text === (n.ocrText || "").trim() ? "confirmed" : "corrected";
+  store.put("confirmations", uid("c"), { noteId: C.id, step: "ocr_text", decision, contentHash: hashText(text), secondsSpent: secs, user: who, email: whoMail, at });
+  if (ok) store.put("confirmations", uid("c"), { noteId: C.id, step: "topic", decision: unitId === C.unitId ? "confirmed" : "corrected", unitId, suggested: C.unitId, secondsSpent: secs, user: who, email: whoMail, at });
+  let made = 0;
+  if (ok && unitId){ const u = S.units[unitId];
+    cardsFromText(text).forEach((c, i) => { if (C.off.has(i)) return;
+      store.put("cards", `k_${unitId.replace(/^un_/, "")}_n${hashText(c.front)}`, { unitId, subjectId: u?.subjectId || n.subjectId, type: "qa", front: c.front, back: c.back, created: TODAY(), source: "notatka z lekcji " + n.date, noteId: C.id }); made++; }); }
+  store.put("notes", C.id, { ...n, status: ok ? "confirmed" : "rejected", ocrConfirmed: text, unitId, cardsMade: made, confirmedAt: at, confirmedBy: whoMail });
+  NCONF = null; closeSheet(); toast(ok ? `Notatka dodana do materiału${made ? ` + ${made} ${plural(made,"karta","karty","kart")} do nauki` : ""}.` : "Notatka odrzucona jako nieczytelna.");
+}
+// automatyczne propozycje kart z potwierdzonej notatki (bez AI): linie „pojęcie – wyjaśnienie”, „pojęcie: …”, „wzór = …”
+function cardsFromText(text){
+  const out = [], seen = new Set();
+  for (const raw of String(text || "").split(/\n+/)){
+    const line = raw.replace(/^[\s•*\-–\d.)]+/, "").trim(); if (line.length < 5 || line.length > 220) continue;
+    const m = line.match(/^(.{2,60}?)\s*([–—:=]|-\s)\s*(.{2,160})$/); if (!m) continue;
+    const a = m[1].trim(), b = m[3].trim(); if (!/[a-ząćęłńóśźż]/i.test(a) || /^\d+$/.test(a)) continue;
+    const front = m[2] === "=" ? `${a} = ?` : `Co oznacza: ${a}?`; const k = front.toLowerCase();
+    if (seen.has(k)) continue; seen.add(k); out.push({ front, back: b }); if (out.length >= 15) break;
+  }
+  return out;
+}
+function propsBlock(){
+  const C = NCONF; if (!C) return "";
+  return C.props.length ? `<p class="eyebrow">Karty do nauki z tej notatki (${C.props.length})</p>
+    ${C.props.map((c,i) => `<label class="row small" style="gap:8px;align-items:flex-start"><input type="checkbox" data-pi="${i}" ${C.off.has(i) ? "" : "checked"}><span><b>${esc(c.front)}</b><br>${esc(c.back)}</span></label>`).join("")}
+    <p class="small muted">Odznacz karty, które nie mają sensu. Zaznaczone trafią od razu do wybranego działu.</p>`
+    : `<p class="small muted">Nie znaleźliśmy w tekście par „pojęcie – wyjaśnienie” ani wzorów „… = …”, więc notatka trafi do działu bez nowych kart. Możesz dopisać linie w tej postaci w polu wyżej.</p>`;
+}
+function notesPanel(){
+  const todo = notesOf("to_confirm"), done = notesOf("confirmed");
+  if (!todo.length && !done.length) return `<div class="panel stack"><h3>Notatki z lekcji</h3><p class="small muted">Gdy Borys albo Ty zrobicie zdjęcie zeszytu (przycisk „Notatka z lekcji” na ekranie Dziś), pojawi się tu do potwierdzenia.</p><button class="btn sm" data-act="noteNew">📸 Dodaj notatkę</button></div>`;
+  return `<div class="panel stack" style="${todo.length ? "border:2px solid var(--warn)" : ""}"><div class="row" style="justify-content:space-between"><h3>Notatki z lekcji</h3>${todo.length ? `<span class="chip doing">${todo.length} do potwierdzenia</span>` : ""}</div>
+    ${todo.map(([id,n]) => `<div class="li"><div><b>${esc(S.subjects[n.subjectId]?.name || "")}</b> · ${fmtDate(n.date)}<br><span class="small muted">${(n.photos||[]).length} ${plural((n.photos||[]).length,"zdjęcie","zdjęcia","zdjęć")} · ${n.by === "parent" ? "rodzic" : "dziecko"}${n.ocrOk === false ? " · tekst nieodczytany" : ""}</span></div><button class="btn sm primary" data-act="confOpen" data-id="${id}">Sprawdź</button></div>`).join("")}
+    ${done.length ? `<p class="small muted">Potwierdzone i dodane do materiału: <b>${done.length}</b> (widać je w Mapie przy działach).</p>` : ""}
+    <button class="btn sm" data-act="noteNew">📸 Dodaj notatkę</button></div>`;
 }
 
 /* ---------- konto, rodzina, paczki ---------- */
@@ -1303,6 +1481,14 @@ document.addEventListener("click", async e => {
   switch (a){
     case "start": startSession(t.dataset.kind, id); break;
     case "speak": if (SES){ const c = S.cards[SES.queue[SES.i]]; if (c) speak(t.dataset.side === "back" ? c.back : c.front, LANG[c.subjectId]); } break;
+    case "noteNew": openNoteNew(); break;
+    case "noteRemove": if (NOTE){ const f = NOTE.files.splice(+t.dataset.i, 1)[0]; if (f) URL.revokeObjectURL(f.url); renderNote(); } break;
+    case "noteSend": if (NOTE && !NOTE.busy){ NOTE.subjectId = $("#n_subj")?.value || NOTE.subjectId; sendNote(); } break;
+    case "noteClose": if (NOTE?.busy){ toast("Poczekaj, aż skończymy wysyłać."); break; } NOTE = null; closeSheet(); break;
+    case "confOpen": openConfirm(id); break;
+    case "confYes": confirmNote(true); break;
+    case "confNo": confirmNote(false); break;
+    case "confClose": NCONF = null; closeSheet(); break;
     case "why": if (SES){ SES.why = SES.queue[SES.i]; renderStudy(); } break;
     case "upic": if (SES){ SES.typed = $("#typed")?.value ?? SES.typed; const c = S.cards[SES.queue[SES.i]]; SES.upic = SES.upic === c?.unitId ? null : c?.unitId; renderStudy(); } break;
     case "hint": if (SES){ SES.typed = $("#typed")?.value || SES.typed; SES.hint = SES.queue[SES.i]; renderStudy(); } break;
@@ -1387,7 +1573,7 @@ document.addEventListener("visibilitychange", () => { if (document.visibilitySta
 /* ---------- start: Supabase (logowanie + wspólna baza rodziny) ---------- */
 const sb = supabase.createClient(window.BORBAN.url, window.BORBAN.anonKey, { auth: { persistSession: true, autoRefreshToken: true } });
 const fam = { id:null, role:null, name:"", members:[], me:null };
-const CHILD_COLS = ["progress","sessions","woop","flags"];
+const CHILD_COLS = ["progress","sessions","woop","flags","notes"];
 function makeSbStore(fid){
   const q = {};
   const chain = (key, fn) => (q[key] = (q[key] || Promise.resolve()).then(fn).then(r => { if (r?.error) throw r.error; }).catch(e => { console.warn(e); toast("Nie udało się zapisać. Sprawdź internet."); }));
