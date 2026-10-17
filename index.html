@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Borban – fiszki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1d2742;--paper:#f4f7fb;--card:#fff;--sun:#ffc531;--mint:#1fa88f;--coral:#e8574a;--line:#d5deea;--muted:#5d6b85}
+*{box-sizing:border-box}
+body{margin:0;font-family:Fredoka,system-ui,sans-serif;background:var(--paper);color:var(--ink);font-size:18px;line-height:1.4}
+header{background:var(--ink);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+header b{font-size:26px;letter-spacing:.5px}
+header button{background:none;border:1px solid #5d6b85;color:#fff}
+main{max-width:640px;margin:0 auto;padding:20px}
+nav{display:flex;gap:8px;margin-bottom:20px}
+nav button{flex:1;background:var(--card);border:2px solid var(--line);color:var(--ink)}
+nav button.on{background:var(--sun);border-color:var(--sun)}
+button{font:inherit;font-weight:500;border-radius:12px;border:0;padding:12px 18px;cursor:pointer;background:var(--ink);color:#fff}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--mint);outline-offset:2px}
+button.good{background:var(--mint)}button.bad{background:var(--coral)}
+input,select{font:inherit;width:100%;padding:12px;border:2px solid var(--line);border-radius:12px;margin:6px 0 14px;background:#fff}
+label{font-weight:500}
+.panel{background:var(--card);border-radius:18px;padding:22px;border:2px solid var(--line)}
+.flash{min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px}
+.word{font-size:40px;font-weight:600}
+.answer{font-size:30px;color:var(--mint);font-weight:600}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.muted{color:var(--muted)}
+.err{color:var(--coral);min-height:1.4em}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.stat{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.stat b{display:block;font-size:30px}
+.bars{display:flex;align-items:flex-end;gap:6px;height:120px;margin:10px 0}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;text-align:center;font-size:12px}
+.bar i{display:block;background:var(--mint);border-radius:6px 6px 0 0;min-height:2px}
+.list li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+ul{list-style:none;padding:0;margin:0}
+.hide{display:none}
+@media (prefers-reduced-motion:no-preference){.flash .answer{animation:pop .25s ease-out}@keyframes pop{from{transform:scale(.9);opacity:0}}}
+</style>
+</head>
+<body>
+<header><b>Borban</b><span id="who" class="muted"></span><button id="logout" class="hide">Wyloguj</button></header>
+<main>
+  <section id="auth" class="panel hide">
+    <h2 id="authTitle">Zaloguj się</h2>
+    <label for="email">E-mail</label><input id="email" type="email" autocomplete="email">
+    <label for="pass">Hasło (min. 8 znaków)</label><input id="pass" type="password" autocomplete="current-password">
+    <p id="authErr" class="err" role="alert"></p>
+    <div class="row">
+      <button id="authGo">Zaloguj</button>
+      <button id="authSwitch" style="background:var(--card);color:var(--ink);border:2px solid var(--line)">Nie mam konta</button>
+    </div>
+  </section>
+
+  <section id="app" class="hide">
+    <div id="childPick" class="hide"><label for="childSel">Dziecko</label><select id="childSel"></select></div>
+    <nav id="tabs"></nav>
+    <div id="view"></div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const sb = supabase.createClient(window.BORBAN.url, window.BORBAN.anonKey);
+const INTERVALS = [0, 1, 2, 4, 8, 16]; // dni do powtórki dla pudełek 0..5
+const MAX_BOX = 5;
+let me = null, children = [], target = null, tab = 'learn', signup = false;
+
+const ymd = d => { const z = new Date(d.getTime() - d.getTimezoneOffset()*60000); return z.toISOString().slice(0,10); };
+const addDays = n => { const d = new Date(); d.setDate(d.getDate()+n); return ymd(d); };
+const el = (tag, props = {}, ...kids) => { const e = Object.assign(document.createElement(tag), props); kids.forEach(k => e.append(k)); return e; };
+const isParent = () => me && me.role === 'parent';
+
+/* ---------- logowanie ---------- */
+function showAuth(){ $('auth').classList.remove('hide'); $('app').classList.add('hide'); $('logout').classList.add('hide'); $('who').textContent=''; }
+$('authSwitch').onclick = () => {
+  signup = !signup;
+  $('authTitle').textContent = signup ? 'Załóż konto' : 'Zaloguj się';
+  $('authGo').textContent = signup ? 'Załóż konto' : 'Zaloguj';
+  $('authSwitch').textContent = signup ? 'Mam już konto' : 'Nie mam konta';
+  $('authErr').textContent = '';
+};
+$('authGo').onclick = async () => {
+  $('authErr').textContent = '';
+  const creds = { email: $('email').value.trim(), password: $('pass').value };
+  const { data, error } = signup ? await sb.auth.signUp(creds) : await sb.auth.signInWithPassword(creds);
+  if (error) { $('authErr').textContent = 'Nie udało się: ' + error.message; return; }
+  if (signup && !data.session) { $('authErr').textContent = 'Sprawdź skrzynkę e-mail i potwierdź konto, potem się zaloguj.'; return; }
+  start();
+};
+$('logout').onclick = async () => { await sb.auth.signOut(); showAuth(); };
+
+/* ---------- start ---------- */
+async function start(){
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) return showAuth();
+  const { data: profs, error } = await sb.from('profiles').select('*');
+  if (error || !profs) return showAuth();
+  me = profs.find(p => p.id === session.user.id);
+  if (!me) return showAuth();
+  children = isParent() ? profs.filter(p => p.parent_id === me.id) : [me];
+  target = children[0] || null;
+  $('who').textContent = me.display_name;
+  $('auth').classList.add('hide'); $('app').classList.remove('hide'); $('logout').classList.remove('hide');
+  tab = isParent() ? 'progress' : 'learn';
+  const sel = $('childSel'); sel.replaceChildren(...children.map(c => el('option', { value: c.id, textContent: c.display_name })));
+  sel.onchange = () => { target = children.find(c => c.id === sel.value); render(); };
+  $('childPick').classList.toggle('hide', !(isParent() && children.length > 1));
+  render();
+}
+
+function render(){
+  const tabs = isParent() ? [['progress','Postępy'],['cards','Fiszki']] : [['learn','Nauka'],['cards','Fiszki'],['progress','Postępy']];
+  $('tabs').replaceChildren(...tabs.map(([k, label]) => el('button', { textContent: label, className: tab === k ? 'on' : '', onclick: () => { tab = k; render(); } })));
+  const v = $('view');
+  if (!target) { v.replaceChildren(el('div', { className: 'panel muted', textContent: 'To konto nie ma jeszcze przypisanego dziecka. Uruchom w Supabase ostatni krok z pliku schema.sql.' })); return; }
+  ({ learn: viewLearn, cards: viewCards, progress: viewProgress })[tab](v);
+}
+
+/* ---------- nauka ---------- */
+async function viewLearn(v){
+  v.replaceChildren(el('p', { className: 'muted', textContent: 'Ładuję…' }));
+  const { data: due, error } = await sb.from('cards').select('*').eq('owner_id', target.id).lte('due', ymd(new Date())).order('due').limit(20);
+  if (error) return v.replaceChildren(el('p', { className: 'err', textContent: 'Błąd: ' + error.message }));
+  if (!due.length) return v.replaceChildren(el('div', { className: 'panel flash' }, el('div', { className: 'word', textContent: 'Na dziś koniec! 🎉' }), el('p', { className: 'muted', textContent: 'Wróć jutro albo dodaj nowe fiszki.' })));
+  let i = 0;
+  const show = () => {
+    if (i >= due.length) return viewLearn(v);
+    const c = due[i];
+    const ans = el('div', { className: 'answer hide', textContent: c.back });
+    const reveal = el('button', { textContent: 'Pokaż odpowiedź' });
+    const good = el('button', { className: 'good hide', textContent: 'Wiem' });
+    const bad = el('button', { className: 'bad hide', textContent: 'Jeszcze nie' });
+    reveal.onclick = () => { ans.classList.remove('hide'); good.classList.remove('hide'); bad.classList.remove('hide'); reveal.classList.add('hide'); good.focus(); };
+    const answer = async ok => {
+      good.disabled = bad.disabled = true;
+      const box = ok ? Math.min(c.box + 1, MAX_BOX) : 1;
+      await sb.from('cards').update({ box, due: addDays(INTERVALS[box]) }).eq('id', c.id);
+      await sb.from('reviews').insert({ card_id: c.id, owner_id: target.id, correct: ok });
+      i++; show();
+    };
+    good.onclick = () => answer(true); bad.onclick = () => answer(false);
+    v.replaceChildren(
+      el('p', { className: 'muted', textContent: `Fiszka ${i + 1} z ${due.length}` }),
+      el('div', { className: 'panel flash' }, el('div', { className: 'word', textContent: c.front }), ans, reveal, el('div', { className: 'row' }, bad, good))
+    );
+  };
+  show();
+}
+
+/* ---------- fiszki ---------- */
+async function viewCards(v){
+  const front = el('input', { id: 'f1', placeholder: 'np. apple' });
+  const back = el('input', { id: 'f2', placeholder: 'np. jabłko' });
+  const err = el('p', { className: 'err', role: 'alert' });
+  const list = el('ul', { className: 'list' });
+  const add = el('button', { textContent: 'Dodaj fiszkę' });
+  add.onclick = async () => {
+    err.textContent = '';
+    if (!front.value.trim() || !back.value.trim()) { err.textContent = 'Wpisz oba pola.'; return; }
+    const { error } = await sb.from('cards').insert({ owner_id: target.id, front: front.value.trim(), back: back.value.trim() });
+    if (error) { err.textContent = 'Błąd: ' + error.message; return; }
+    front.value = back.value = ''; front.focus(); load();
+  };
+  const load = async () => {
+    const { data } = await sb.from('cards').select('*').eq('owner_id', target.id).order('created_at', { ascending: false }).limit(100);
+    list.replaceChildren(...(data || []).map(c => {
+      const del = el('button', { textContent: 'Usuń', style: 'background:none;color:var(--coral);padding:4px 8px' });
+      del.onclick = async () => { await sb.from('cards').delete().eq('id', c.id); load(); };
+      return el('li', {}, el('span', { textContent: `${c.front} – ${c.back}` }), del);
+    }));
+    if (!data || !data.length) list.replaceChildren(el('li', { className: 'muted', textContent: 'Brak fiszek. Dodaj pierwszą powyżej.' }));
+  };
+  v.replaceChildren(
+    el('div', { className: 'panel' }, el('label', { htmlFor: 'f1', textContent: 'Słowo' }), front, el('label', { htmlFor: 'f2', textContent: 'Znaczenie' }), back, err, add),
+    el('h3', { textContent: 'Fiszki' }), list
+  );
+  load();
+}
+
+/* ---------- postępy ---------- */
+async function viewProgress(v){
+  const since = new Date(); since.setDate(since.getDate() - 6); since.setHours(0,0,0,0);
+  const [{ data: cards }, { data: revs }] = await Promise.all([
+    sb.from('cards').select('box,due').eq('owner_id', target.id),
+    sb.from('reviews').select('correct,created_at').eq('owner_id', target.id).gte('created_at', since.toISOString())
+  ]);
+  const today = ymd(new Date());
+  const total = (cards || []).length;
+  const dueN = (cards || []).filter(c => c.due <= today).length;
+  const known = (cards || []).filter(c => c.box >= MAX_BOX).length;
+  const days = [...Array(7)].map((_, k) => { const d = new Date(since); d.setDate(d.getDate() + k); return { key: ymd(d), label: d.toLocaleDateString('pl-PL', { weekday: 'short' }), n: 0, ok: 0 }; });
+  (revs || []).forEach(r => { const d = days.find(x => x.key === ymd(new Date(r.created_at))); if (d) { d.n++; if (r.correct) d.ok++; } });
+  const max = Math.max(1, ...days.map(d => d.n));
+  const week = days.reduce((a, d) => a + d.n, 0), weekOk = days.reduce((a, d) => a + d.ok, 0);
+  const stat = (n, t) => el('div', { className: 'stat' }, el('b', { textContent: n }), el('span', { className: 'muted', textContent: t }));
+  v.replaceChildren(
+    el('h3', { textContent: 'Postępy: ' + target.display_name }),
+    el('div', { className: 'stats' }, stat(total, 'fiszek'), stat(dueN, 'na dziś'), stat(known, 'opanowanych')),
+    el('div', { className: 'panel' },
+      el('b', { textContent: 'Odpowiedzi w ostatnich 7 dniach' }),
+      el('div', { className: 'bars' }, ...days.map(d => el('div', { className: 'bar', title: `${d.n} odpowiedzi` }, el('span', { textContent: d.n || '' }), el('i', { style: `height:${Math.round(d.n / max * 80)}px` }), el('span', { className: 'muted', textContent: d.label })))),
+      el('p', { className: 'muted', textContent: week ? `Poprawnych: ${weekOk} z ${week} (${Math.round(weekOk / week * 100)}%).` : 'Jeszcze brak odpowiedzi w tym tygodniu.' })
+    )
+  );
+}
+
+start();
+</script>
+</body>
+</html>
