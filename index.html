@@ -196,6 +196,9 @@ details.adm > .body{padding:0 16px 16px; display:flex; flex-direction:column; ga
 @keyframes pspin{to{transform:rotate(360deg)}} @keyframes pdrive{from{transform:translateX(0)}to{transform:translateX(200px)}} @keyframes pdot{from{transform:translate(0,0)}to{transform:translate(120px,-80px)}}
 @media (prefers-reduced-motion:reduce){.pic .spin,.pic .spin2,.pic .car,.pic .dot{animation:none}}
 .who{font-size:.85rem; color:var(--muted); margin-top:-8px}
+#hdrBook[aria-pressed="true"]{background:var(--primary-soft)}
+.zbody{margin-top:8px} .zbody .zh{font-weight:700; margin:10px 0 4px} .zbody .zp,.zbody .zli{margin:2px 0; font-size:.95rem}
+.ztbl{border-collapse:collapse; font-size:.85rem; margin:6px 0} .ztbl th,.ztbl td{border:1px solid var(--line); padding:4px 6px; text-align:left; vertical-align:top} .ztbl th{background:var(--primary-soft)}
 .steps{display:flex; flex-direction:column; gap:8px}
 .st{border-radius:12px; padding:10px 12px; border-left:5px solid; font-size:.95rem; line-height:1.4}
 .st b.h{display:block; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; opacity:.75; margin-bottom:2px}
@@ -267,6 +270,8 @@ button.task:hover{border-color:var(--primary)}
 <header class="top">
   <div class="wrap">
     <div class="brand"><span>BorBan</span></div>
+    <button class="iconbtn" id="hdrCam" data-act="noteNew" aria-label="Zrób zdjęcie notatki" title="Zdjęcie notatki" hidden style="width:38px;height:38px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg></button>
+    <button class="iconbtn" id="hdrBook" data-tab="zeszyt" aria-label="Zeszyt" title="Zeszyt" hidden style="width:38px;height:38px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6"/></svg></button>
     <span class="pill flame" id="hdrStreak" title="Seria dni nauki"></span>
     <span class="pill star" id="hdrPoints" title="Punkty w tym tygodniu"></span>
     <button class="iconbtn" id="hdrMenu" data-act="menu" aria-label="Konto" hidden style="width:38px;height:38px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></button>
@@ -552,11 +557,13 @@ function render(){
   $("#hdrPoints").innerHTML = `${ICON.star}${pointsInWeek(mondayOf(TODAY()))}`;
   const tabs = [["dzis","Dziś",ICON.home],["mapa","Mapa",ICON.map],["postepy","Postępy",ICON.chart],["plan","Plan",ICON.cal]];
   if (role.canEdit && !role.preview){ tabs.push(["rodzic","Rodzic",ICON.eye]); tabs.push(["tata","Materiał",ICON.tool]); }
-  if (!tabs.some(t => t[0] === tab)) tab = "dzis";
+  if (!tabs.some(t => t[0] === tab) && tab !== "zeszyt") tab = "dzis";
+  $("#hdrCam").hidden = !role.canWrite || role.preview; $("#hdrBook").hidden = false;
+  $("#hdrBook").setAttribute("aria-pressed", tab === "zeszyt");
   $("#tabs").innerHTML = tabs.map(([id,l,i]) => `<button class="tab" data-tab="${id}" ${tab===id?'aria-current="page"':""}>${i}<span>${l}</span></button>`).join("");
   const v = $("#view");
   const y = window.scrollY;
-  v.innerHTML = ({dzis:viewToday, mapa:viewMap, postepy:viewStats, plan:viewPlan, rodzic:viewParent, tata:viewAdmin}[tab])();
+  v.innerHTML = ({dzis:viewToday, mapa:viewMap, postepy:viewStats, plan:viewPlan, rodzic:viewParent, tata:viewAdmin, zeszyt:viewZeszyt}[tab])();
   for (const [id,val] of Object.entries(drafts)){ const el = document.getElementById(id); if (el && el.type !== "file"){ if (el.type === "checkbox") el.checked = val; else el.value = val; } }
   window.scrollTo(0, y);
 }
@@ -902,9 +909,9 @@ async function photoPrep(file){
   return { blob, url: URL.createObjectURL(blob), q: { mean: Math.round(mean), sharp: Math.round(sharp), issues } };
 }
 const notesOf = st => Object.entries(S.notes || {}).filter(([,n]) => n.status === st).sort((a,b) => (b[1].created||0) - (a[1].created||0));
-function openNoteNew(){
+function openNoteNew(sid){
   if (role.preview){ toast("W podglądzie nie zapisujemy notatek."); return; }
-  NOTE = { subjectId: NOTE?.subjectId || sortedSubjects()[0]?.[0] || "", files: [], busy: "" };
+  NOTE = { subjectId: sid || (tab === "zeszyt" && zSubject) || NOTE?.subjectId || sortedSubjects()[0]?.[0] || "", files: [], busy: "" };
   openSheet(); renderNote();
 }
 function renderNote(){
@@ -1031,6 +1038,7 @@ function confirmNote(ok){
     C.props.forEach((c, i) => { if (C.off.has(i)) return;
       store.put("cards", `k_${unitId.replace(/^un_/, "")}_n${hashText(c.front)}`, { unitId, subjectId: u?.subjectId || n.subjectId, type: "qa", front: c.front, back: c.back, created: TODAY(), source: "notatka z lekcji " + n.date, noteId: C.id }); made++; }); }
   store.put("notes", C.id, { ...n, status: ok ? "confirmed" : "rejected", ocrConfirmed: text, unitId, cardsMade: made, confirmedAt: at, confirmedBy: whoMail });
+  if (ok && unitId) setTimeout(() => zCheckAi(unitId, true), 500);
   NCONF = null; closeSheet(); toast(ok ? `Notatka dodana do materiału${made ? ` + ${made} ${plural(made,"karta","karty","kart")} do nauki` : ""}.` : "Notatka odrzucona jako nieczytelna.");
 }
 // automatyczne propozycje kart z potwierdzonej notatki (bez AI): linie „pojęcie – wyjaśnienie”, „pojęcie: …”, „wzór = …”
@@ -1051,6 +1059,123 @@ function propsBlock(){
     ${C.props.map((c,i) => `<label class="row small" style="gap:8px;align-items:flex-start"><input type="checkbox" data-pi="${i}" ${C.off.has(i) ? "" : "checked"}><span><b>${esc(c.front)}</b><br>${esc(c.back)}</span></label>`).join("")}
     <p class="small muted">Odznacz karty, które nie mają sensu. Zaznaczone trafią od razu do wybranego działu.</p>`
     : `<p class="small muted">Nie znaleźliśmy w tekście par „pojęcie – wyjaśnienie” ani wzorów „… = …”, więc notatka trafi do działu bez nowych kart. Możesz dopisać linie w tej postaci w polu wyżej.</p>`;
+}
+/* ---------- Zeszyt: przedmiot → lekcje (zdjęcie, tekst, karty) ---------- */
+let zSubject = null; const zUrls = {}; let zUrlsBusy = false;
+function mdLite(src){
+  const lines = String(src || "").split("\n"); let out = "", tbl = [];
+  const flush = () => { if (!tbl.length) return; const rows = tbl.filter(r => !/^\|?\s*:?-{2,}/.test(r.replace(/\|/g, "").trim() ? r : "---"));
+    out += `<div style="overflow-x:auto"><table class="ztbl">${rows.map((r,i) => `<tr>${r.replace(/^\||\|$/g, "").split("|").map(c => i === 0 ? `<th>${esc(c.trim())}</th>` : `<td>${esc(c.trim())}</td>`).join("")}</tr>`).join("")}</table></div>`; tbl = []; };
+  for (const l of lines){
+    if (/^\s*\|/.test(l)){ if (!/^\s*\|?\s*:?-{3,}/.test(l)) tbl.push(l.trim()); continue; }
+    flush();
+    if (/^#{1,4}\s/.test(l)) out += `<p class="zh">${esc(l.replace(/^#+\s*/, ""))}</p>`;
+    else if (/^\s*[-*]\s/.test(l)) out += `<p class="zli">• ${esc(l.replace(/^\s*[-*]\s/, ""))}</p>`;
+    else if (l.trim()) out += `<p class="zp">${esc(l)}</p>`;
+  }
+  flush(); return out;
+}
+async function zLoadUrls(paths){
+  const need = paths.filter(p => !zUrls[p]); if (!need.length || zUrlsBusy) return; zUrlsBusy = true;
+  try { const { data } = await sb.storage.from("notes").createSignedUrls(need, 3600); (data || []).forEach(x => { if (x.signedUrl) zUrls[x.path] = x.signedUrl; }); } catch (e){ console.warn(e); }
+  zUrlsBusy = false; if (tab === "zeszyt") scheduleRender();
+}
+// --- porównanie zeszytu z podręcznikiem (punkty = karty działu z biblioteki) ---
+const zOpen = new Set(); let zBusy = "";
+const isCheck = n => n && n.kind === "check";
+function zPoints(unitId){
+  return cardsOf(unitId).filter(([cid,c]) => !c.noteId && !(c.type === "vocab" && /b$/.test(cid)))
+    .map(([cid,c]) => ({ id: cid, q: stripCloze(c.front), a: c.type === "cloze" ? clozeAnswer(c) : (c.back || "") }));
+}
+function zUnitNotes(unitId){ return Object.entries(S.notes || {}).filter(([,n]) => !isCheck(n) && n.status === "confirmed" && n.unitId === unitId).sort((a,b) => (a[1].date||"").localeCompare(b[1].date||"")); }
+// szybkie porównanie bez AI: rdzenie słów (5 liter) z odpowiedzi karty szukane w tekście notatek
+function zStems(t){ return (String(t||"").toLowerCase().normalize("NFC").match(/[a-ząćęłńóśźż0-9₀-₉²³]{3,}/g) || []).map(w => w.slice(0,5)); }
+function zCheckLocal(unitId){
+  const txt = new Set(zStems(zUnitNotes(unitId).map(([,n]) => n.ocrConfirmed || "").join("\n")));
+  const covered = [], partial = [], missing = [];
+  zPoints(unitId).forEach(p => { const k = [...new Set(zStems(p.a).filter(w => w.length >= 4))]; const kq = [...new Set(zStems(p.q).filter(w => w.length >= 4))];
+    const hit = k.length ? k.filter(w => txt.has(w)).length / k.length : 0, hq = kq.length ? kq.filter(w => txt.has(w)).length / kq.length : 0;
+    (hit >= .6 ? covered : hit >= .3 || hq >= .5 ? partial : missing).push(p.id); });
+  return { covered, partial, missing, conflicts: [], extra: [], local: true };
+}
+const zHash = unitId => hashText(zUnitNotes(unitId).map(([id,n]) => id + (n.ocrConfirmed || "")).join("|") + "#" + zPoints(unitId).map(p => p.id).join(","));
+function zCheckOf(unitId){
+  const ch = S.notes?.["chk_" + unitId];
+  return ch?.result && ch.hash === zHash(unitId) ? { ...ch.result, at: ch.at, model: ch.model } : { ...zCheckLocal(unitId), stale: !!ch?.result };
+}
+async function zCheckAi(unitId, quiet){
+  const u = S.units[unitId], notes = zUnitNotes(unitId), points = zPoints(unitId); if (!u || !notes.length || !points.length || zBusy) return;
+  zBusy = unitId; if (!quiet) scheduleRender();
+  try {
+    const { data, error } = await sb.functions.invoke("read-notebook", { body: { mode: "check", fam: fam.id, subject: S.subjects[u.subjectId]?.name || "", unit: { title: u.title }, points, notes: notes.map(([,n]) => n.ocrConfirmed || "") } });
+    if (error || !data?.ok) { let body = data; try { if (error?.context?.json) body = await error.context.json(); } catch {} throw new Error([body?.error, body?.detail].filter(Boolean).join(": ") || error?.message || "ai"); }
+    const r = data.result || {}, ids = new Set(points.map(p => p.id)), f = a => (Array.isArray(a) ? a : []).filter(x => ids.has(x));
+    const covered = f(r.covered), partial = f(r.partial).filter(x => !covered.includes(x)), seen = new Set([...covered, ...partial]);
+    const result = { covered, partial, missing: points.map(p => p.id).filter(x => !seen.has(x)),
+      conflicts: (r.conflicts || []).slice(0, 20).map(c => ({ id: ids.has(c.id) ? c.id : null, note: String(c.note || ""), book: String(c.book || ""), why: String(c.why || "") })),
+      extra: (r.extra || []).slice(0, 8).map(String), summary: String(r.summary || "") };
+    await store.put("notes", "chk_" + unitId, { kind: "check", status: "check", unitId, subjectId: u.subjectId, hash: zHash(unitId), at: new Date().toISOString(), model: data.model, result });
+    if (!quiet) toast("Porównanie z podręcznikiem gotowe.");
+  } catch (e){ console.warn(e); if (!quiet) toast("Nie udało się porównać przez AI. Pokazuję szybkie porównanie."); }
+  zBusy = ""; scheduleRender();
+}
+function zCompare(unitId){
+  const pts = Object.fromEntries(zPoints(unitId).map(p => [p.id, p])); const total = Object.keys(pts).length;
+  if (!total) return `<p class="small muted">Ten dział nie ma jeszcze materiału z podręcznika, więc nie ma z czym porównać.</p>`;
+  const r = zCheckOf(unitId), cov = r.covered.length, part = r.partial.length, pct = Math.round((cov + part / 2) / total * 100);
+  const li = (id, extra = "") => pts[id] ? `<div class="small" style="margin:4px 0">${esc(pts[id].q)}<br><b>${esc(pts[id].a)}</b>${extra}</div>` : "";
+  const sec = (title, color, body, open) => body ? `<details ${open ? "open" : ""} style="border-left:4px solid ${color};padding-left:8px;margin-top:6px"><summary class="small"><b>${title}</b></summary>${body}</details>` : "";
+  const busy = zBusy === unitId;
+  return `<div class="panel stack" style="gap:6px">
+    <div class="row" style="justify-content:space-between;align-items:center;gap:8px"><p class="eyebrow" style="margin:0">Zeszyt a podręcznik</p><b>${pct}%</b></div>
+    <div style="height:10px;border-radius:99px;background:var(--line);overflow:hidden;display:flex"><span style="width:${cov/total*100}%;background:var(--good)"></span><span style="width:${part/total*100}%;background:var(--warn)"></span></div>
+    <p class="small muted" style="margin:0">${cov} z ${total} punktów działu jest w zeszycie${part ? `, ${part} częściowo` : ""}${r.conflicts.length ? `, <b style="color:var(--bad)">${r.conflicts.length} ${plural(r.conflicts.length,"różnica","różnice","różnic")}</b>` : ""}. ${r.local ? (r.stale ? "Notatki się zmieniły: to szybkie porównanie słów." : "Szybkie porównanie słów, bez AI.") : "Sprawdzone przez AI."}</p>
+    ${r.summary ? `<p class="small" style="margin:0">${esc(r.summary)}</p>` : ""}
+    ${sec(`⚠️ Inaczej niż w podręczniku (${r.conflicts.length})`, "var(--bad)", r.conflicts.map(c => `<div class="small" style="margin:4px 0">W zeszycie: <s>${esc(c.note)}</s><br>W podręczniku: <b>${esc(c.book)}</b>${c.why ? `<br><span class="muted">${esc(c.why)}</span>` : ""}</div>`).join(""), true)}
+    ${sec(`❌ Brakuje w zeszycie (${r.missing.length})`, "var(--bad)", r.missing.map(id => li(id)).join("") + (r.missing.length ? `<p class="small muted">Te punkty są w powtórkach BorBan, więc Borys i tak je przećwiczy.</p>` : ""), r.missing.length <= 6)}
+    ${sec(`🟡 Częściowo (${part})`, "var(--warn)", r.partial.map(id => li(id)).join(""), false)}
+    ${sec(`✅ Jest w zeszycie (${cov})`, "var(--good)", r.covered.map(id => li(id)).join(""), false)}
+    ${sec(`➕ W zeszycie, poza materiałem działu (${r.extra.length})`, "var(--primary)", r.extra.map(x => `<div class="small" style="margin:4px 0">${esc(x)}</div>`).join(""), false)}
+    ${role.canWrite && !role.preview ? `<button class="btn sm" data-act="zCheck" data-id="${unitId}" ${busy ? "disabled" : ""}>${busy ? "AI porównuje… (ok. 15 s)" : r.local ? "🔎 Sprawdź dokładnie przez AI" : "🔎 Sprawdź jeszcze raz"}</button>` : ""}
+  </div>`;
+}
+function zNoteCard(id, n){
+  const ls = n.ai?.lessons || []; const head = ls.length ? ls.map(l => `${l.number ? `<span class="chip here">${esc(l.number)}</span> ` : ""}${esc(l.topic || "")}`).join("<br>") : "Notatka z lekcji";
+  const ok = n.status === "confirmed"; const cards = Object.entries(S.cards).filter(([,c]) => c.noteId === id).length;
+  return `<div class="panel stack" style="gap:8px">
+    <div class="row" style="justify-content:space-between;align-items:flex-start;gap:8px"><div><p class="eyebrow">${fmtDate(n.date)}</p><b>${head}</b></div>
+      <span class="chip ${ok ? "done" : "doing"}">${ok ? "w materiale" : "czeka na rodzica"}</span></div>
+    <div class="row" style="gap:6px;overflow-x:auto">${(n.photos||[]).map(p => zUrls[p] ? `<a href="${esc(zUrls[p])}" target="_blank" rel="noopener"><img src="${esc(zUrls[p])}" alt="Zdjęcie zeszytu" style="height:96px;border-radius:8px;border:1px solid var(--line)"></a>` : `<span style="width:72px;height:96px;border-radius:8px;background:var(--line);display:inline-block"></span>`).join("")}</div>
+    ${ok ? `${(n.ai?.issues||[]).length ? `<div class="small" style="border-left:4px solid var(--bad);padding-left:8px"><b>Poprawione błędy z zeszytu:</b>${n.ai.issues.map(x => `<br><s>${esc(x.wrote)}</s> → <b>${esc(x.correct)}</b>`).join("")}</div>` : ""}
+      <details><summary class="small"><b>Notatka</b>${cards ? ` · ${cards} ${plural(cards,"karta","karty","kart")} do nauki` : ""}</summary><div class="zbody">${mdLite(n.ocrConfirmed || "")}</div></details>`
+      : `<p class="small muted">${role.canEdit ? `Sprawdź odczyt i wybierz dział, a notatka trafi do zeszytu.` : `Rodzic sprawdzi odczyt, potem notatka trafi do właściwego działu.`}</p>${role.canEdit && !role.preview ? `<button class="btn sm primary" data-act="confOpen" data-id="${id}">Sprawdź i potwierdź</button>` : ""}`}
+  </div>`;
+}
+function viewZeszyt(){
+  const subs = sortedSubjects(); const all = Object.entries(S.notes || {}).filter(([,n]) => !isCheck(n) && n.status !== "rejected");
+  if (!zSubject || !S.subjects[zSubject]) zSubject = ([...all].sort((a,b) => (b[1].created||0)-(a[1].created||0))[0]?.[1].subjectId) || subs[0]?.[0];
+  const cnt = sid => all.filter(([,n]) => n.subjectId === sid).length;
+  const chips = subs.map(([id,x]) => `<button class="subjtab" style="--c:${scol(x)}" data-act="zSubj" data-id="${id}" aria-pressed="${id===zSubject}"><span class="dot"></span>${esc(x.name)}${cnt(id) ? ` <b>${cnt(id)}</b>` : ""}</button>`).join("");
+  const mine = all.filter(([,n]) => n.subjectId === zSubject);
+  setTimeout(() => zLoadUrls(mine.flatMap(([,n]) => n.photos || [])), 0);
+  const waiting = mine.filter(([,n]) => n.status !== "confirmed" || !n.unitId || !S.units[n.unitId]).sort((a,b) => (b[1].created||0)-(a[1].created||0));
+  const units = unitsOf(zSubject), withNotes = units.filter(([uid_]) => zUnitNotes(uid_).length), without = units.filter(([uid_]) => !zUnitNotes(uid_).length);
+  if (!zOpen.size && withNotes.length){ const last = [...mine].filter(([,n]) => n.unitId).sort((a,b) => (b[1].created||0)-(a[1].created||0))[0]; if (last) zOpen.add(last[1].unitId); }
+  const unitBlock = ([uid_, u]) => { const ns = zUnitNotes(uid_), open = zOpen.has(uid_), r = zCheckOf(uid_), tot = zPoints(uid_).length;
+    const pct = tot ? Math.round((r.covered.length + r.partial.length / 2) / tot * 100) : null;
+    return `<div class="panel stack" style="gap:8px;border-left:6px solid ${scol(S.subjects[zSubject])}">
+      <button class="row" data-act="zUnit" data-id="${uid_}" aria-expanded="${open}" style="all:unset;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px">
+        <div><p class="eyebrow" style="margin:0">Dział</p><b>${esc(u.title)}</b><br><span class="small muted">${ns.length} ${plural(ns.length,"lekcja","lekcje","lekcji")} w zeszycie${pct != null ? ` · zgodność z podręcznikiem ${pct}%` : ""}${r.conflicts.length ? ` · ⚠️ ${r.conflicts.length}` : ""}</span></div>
+        <span aria-hidden="true">${open ? "▾" : "▸"}</span></button>
+      ${open ? `${u.svg ? `<div class="pic sm">${cleanSvg(u.svg)}</div>` : ""}${zCompare(uid_)}<p class="eyebrow" style="margin:6px 0 0">Lekcje</p>${ns.map(([id,n]) => zNoteCard(id, n)).join("")}` : ""}
+    </div>`; };
+  return `<div class="stack">${modeBanner()}<div class="row" style="justify-content:space-between;align-items:center"><h1>📒 Zeszyt</h1>${role.canWrite && !role.preview ? `<button class="btn primary" data-act="noteNew" data-id="${zSubject || ""}">📸 Dodaj stronę</button>` : ""}</div>
+    <div class="subjtabs">${chips}</div>
+    <p class="small muted">Notatki z lekcji ułożone w działy i porównane z materiałem z podręcznika: co jest, czego brakuje, co jest zapisane inaczej.</p>
+    ${waiting.length ? `<p class="eyebrow">Czekają na sprawdzenie (${waiting.length})</p>${waiting.map(([id,n]) => zNoteCard(id, n)).join("")}` : ""}
+    ${withNotes.map(unitBlock).join("") || (waiting.length ? "" : `<div class="empty">W tym przedmiocie nie ma jeszcze notatek. Zrób zdjęcie zeszytu po lekcji (aparat na górze), a trafi do właściwego działu i porównamy je z podręcznikiem.</div>`)}
+    ${without.length ? `<details class="panel"><summary class="small"><b>Działy bez notatek (${without.length})</b></summary>${without.map(([uid_,u]) => `<div class="small" style="margin:6px 0">○ ${esc(u.title)} <span class="muted">· ${zPoints(uid_).length} ${plural(zPoints(uid_).length,"punkt","punkty","punktów")} w podręczniku</span></div>`).join("")}</details>` : ""}
+  </div>`;
 }
 function notesPanel(){
   const todo = notesOf("to_confirm"), done = notesOf("confirmed");
@@ -1503,7 +1628,10 @@ document.addEventListener("click", async e => {
   switch (a){
     case "start": startSession(t.dataset.kind, id); break;
     case "speak": if (SES){ const c = S.cards[SES.queue[SES.i]]; if (c) speak(t.dataset.side === "back" ? c.back : c.front, LANG[c.subjectId]); } break;
-    case "noteNew": openNoteNew(); break;
+    case "noteNew": openNoteNew(t.dataset.id); break;
+    case "zSubj": zSubject = id; zOpen.clear(); render(); break;
+    case "zUnit": zOpen.has(id) ? zOpen.delete(id) : zOpen.add(id); render(); break;
+    case "zCheck": zCheckAi(id); break;
     case "noteRemove": if (NOTE){ const f = NOTE.files.splice(+t.dataset.i, 1)[0]; if (f) URL.revokeObjectURL(f.url); renderNote(); } break;
     case "noteSend": if (NOTE && !NOTE.busy){ NOTE.subjectId = $("#n_subj")?.value || NOTE.subjectId; sendNote(); } break;
     case "noteClose": if (NOTE?.busy){ toast("Poczekaj, aż skończymy wysyłać."); break; } NOTE = null; closeSheet(); break;
@@ -1636,7 +1764,7 @@ function watch(fid){
   clearInterval(reloadTimer); reloadTimer = setInterval(refresh, 120000);
 }
 function authScreen(msg){
-  $("#tabs").innerHTML = ""; $("#hdrStreak").innerHTML = ""; $("#hdrPoints").innerHTML = ""; $("#hdrMenu").hidden = true;
+  $("#tabs").innerHTML = ""; $("#hdrCam").hidden = true; $("#hdrBook").hidden = true; $("#hdrStreak").innerHTML = ""; $("#hdrPoints").innerHTML = ""; $("#hdrMenu").hidden = true;
   $("#view").innerHTML = `<div class="stack" style="padding-top:20px">
     <div><p class="eyebrow">BorBan</p><h1>Zaloguj się</h1><p class="small muted">Nauka z fiszkami i plan na każdy dzień.</p></div>
     ${msg ? `<p class="banner">${esc(msg)}</p>` : ""}
