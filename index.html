@@ -501,6 +501,22 @@ function morningIds(k = TODAY()){
     .sort((a,b) => (b[1].lapses||0) - (a[1].lapses||0)).map(([id]) => id).slice(0, 15);
 }
 function isMorning(){ const n = new Date(); const m = n.getHours()*60 + n.getMinutes(); return m >= MORNING[0] && m <= MORNING[1]; }
+// Rewanż: karty, które w ostatnich 7 dniach poszły źle i jeszcze nie zostały „odbite”
+function rematchIds(k = TODAY()){
+  const from = addDays(k, -7);
+  return Object.entries(S.progress).filter(([id,p]) => { if (!S.cards[id]) return false; const h = p.hist || [];
+      const last = h[h.length-1]; return last && last[1] < 2 && h.some(([d,g]) => g === 0 && d >= from); })
+    .sort((a,b) => (b[1].last||"").localeCompare(a[1].last||"") || (b[1].lapses||0)-(a[1].lapses||0)).map(([id]) => id);
+}
+function teaser(cid){
+  const c = S.cards[cid]; if (!c) return ""; const subj = S.subjects[c.subjectId]?.name || ""; const f = stripCloze(c.front);
+  const n = dayHash(cid + TODAY()) % 3;
+  if (c.type === "vocab") return [`Jak to było: „${f}”? Ostatnio uciekło. Teraz pewnie już wiesz.`, `„${f}” – za drugim razem zwykle wchodzi. Sprawdźmy.`, `Jedno słówko, które ostatnio Cię pokonało: „${f}”. Rewanż?`][n];
+  if (c.type === "cloze" && /[=²³√+−]/.test(c.front)) return [`Ten wzór to jednak chyba nie taki trudny… Sprawdźmy.`, `Wzór, który ostatnio się wymknął. Dziś go łapiesz?`, `Matematyka lubi drugie podejście. Ten wzór czeka na rewanż.`][n];
+  if (/polski/i.test(subj)) return [`Jak to z tym było? „${f}” Ostatnio umknęło.`, `Mitologia nie wybacza… ale daje drugą szansę. „${f}”`, `„${f}” – sprawdźmy, czy teraz siedzi.`][n];
+  return [`„${f}” Ostatnio nie weszło. Założę się, że teraz pamiętasz.`, `Druga próba zwykle idzie dużo lepiej. „${f}”`, `Rewanż z ${subj ? subj.toLowerCase() : "ostatniej sesji"}: „${f}”`][n];
+}
+const hintOf = a => String(a||"").split(/(\s+)/).map(w => /\s/.test(w) ? w : w.length <= 2 ? w : w[0] + "·".repeat(Math.min(w.length - 1, 12))).join("");
 function morningDone(k = TODAY()){ return sessionsOn(k).some(s => s.kind === "morning" && (s.n||0) > 0); }
 
 /* ---------- render ---------- */
@@ -560,6 +576,10 @@ function viewToday(){
       <p class="muted">${newToday() >= newLimit() ? "Dzisiejszy limit nowych kart jest wykorzystany. Jutro kolejne." : more ? "" : "Nie ma jeszcze nowych kart z bieżących działów."}</p></div>
       ${role.canWrite && more ? `<button class="btn primary big" data-act="start" data-kind="extra">Chcesz dziś wiedzieć jeszcze więcej? +10 kart</button>` : ""}</div>`);
   }
+  { const rm = rematchIds(t).filter(id => !(isMorning() && mIds.includes(id)));
+    if (role.canWrite && rm.length) parts.push(`<div class="panel stack" style="border:2px solid var(--warn)"><div class="row" style="justify-content:space-between"><p class="eyebrow">Rewanż</p><span class="chip doing">${rm.length} ${plural(rm.length,"karta","karty","kart")} do odbicia</span></div>
+      <h3 style="font-size:1.1rem">${esc(teaser(rm[0]))}</h3>
+      <button class="btn" data-act="start" data-kind="rematch">Sprawdźmy</button></div>`); }
   if (ts){
     const [id,x,dd] = ts; const r = readiness(x);
     parts.push(`<div class="panel test stack"><div class="row" style="justify-content:space-between"><span class="chip here">D−${dd}</span><span class="small muted">${fmtDate(x.date)}</span></div>
@@ -774,7 +794,7 @@ function viewParent(){
 
   // sesje i błędy (odpowiedzi zapisane w sesjach + historia kart)
   const sesList = Object.values(S.sessions).filter(s => s.date).sort((a,b) => (b.start||0) - (a.start||0)).slice(0, 8);
-  const KIND = { morning:"Poranna powtórka", quick:"Szybka runda", daily:"Fiszki na dziś", extra:"Dodatkowe karty", unit:"Dział", test:"Przed sprawdzianem", recall:"Odpytanie z lekcji" };
+  const KIND = { rematch:"Rewanż", morning:"Poranna powtórka", quick:"Szybka runda", daily:"Fiszki na dziś", extra:"Dodatkowe karty", unit:"Dział", test:"Przed sprawdzianem", recall:"Odpytanie z lekcji" };
   const sesRows = sesList.map(s => { const acc = s.n ? Math.round(((s.ok||0)+(s.hard||0))/s.n*100) : null;
     const ref = s.kind === "test" ? S.tests[s.ref]?.title : s.kind === "unit" ? S.units[s.ref]?.title : "";
     return `<div class="li"><div><b>${KIND[s.kind] || s.kind}</b>${ref ? ` · ${esc(ref)}` : ""}<br><span class="small muted">${fmtDate(s.date)} ${s.start ? new Date(s.start).toTimeString().slice(0,5) : ""} · ${fmtMin(s.activeMs||0)} · ${s.n||0} odp.</span></div>
@@ -964,6 +984,7 @@ function buildQueue(kind, id){
     while (n < p.news.length) q.push(p.news[n++]); return q; }
   if (kind === "extra") return newIds().slice(0, 10);
   if (kind === "morning") return morningIds();
+  if (kind === "rematch") return rematchIds().slice(0, QUICK_N);
   if (kind === "quick"){ const p = todayPlan(); const due = [...p.reviews].sort((a,b) => (S.progress[b]?.run||0) - (S.progress[a]?.run||0));
     let q = [...due, ...p.news];
     if (!q.length) q = newIds();
@@ -1041,6 +1062,7 @@ function renderStudy(){
       <button class="btn ghost sm" data-act="flag" style="align-self:center">${ICON.flag.replace("<svg",'<svg width="16" height="16"')} Zgłoś błąd w karcie</button>`
     : `<form data-form="reveal" class="stack" style="gap:10px">
         <label class="f">Przypomnij sobie odpowiedź <small>możesz ją wpisać albo tylko pomyśleć. Bez limitu czasu.</small><input type="text" id="typed" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(SES.typed)}"></label>
+        ${(SES.wrongIds.includes(cid) || (S.progress[cid]?.lapses||0) > 0) ? (SES.hint === cid ? `<p class="yours">Podpowiedź: <b>${esc(hintOf(answer))}</b></p>` : `<button class="btn sm ghost" type="button" data-act="hint">Podpowiedź (pierwsze litery)</button>`) : ""}
         <button class="btn primary big" type="submit">Pokaż odpowiedź</button></form>`}
   </div>`;
   if (!SES.revealed){ const inp = $("#typed"); if (inp && matchMedia("(hover:hover)").matches) inp.focus(); }
@@ -1050,6 +1072,7 @@ function gradeCard(g){
   const p = grade(prev, g, t); p.unitId = c.unitId; p.subjectId = c.subjectId;
   if (!prev){ p.introduced = t; SES.newN++; }
   if ((p.run||0) > (prev?.run||0)) SES.levelUps = (SES.levelUps||0) + 1;
+  { const ph = prev?.hist || []; if (g === 2 && ph.length && ph[ph.length-1][1] < 2) SES.won = (SES.won||0) + 1; }
   store.put("progress", cid, p);
   SES.answers = [...(SES.answers||[]), { c: cid, y: String(SES.typed||"").trim().slice(0,200), g, t: Date.now() }].slice(-120);
   SES.n++; SES.points += [2,6,10][g];
@@ -1071,7 +1094,7 @@ function finishSession(){
   $("#sheet").innerHTML = `<div class="wrap"><div class="done-hero">
     <p class="eyebrow">${PRAISE}</p><div class="big-num">+${ups}</div><p>${plural(ups,"karta","karty","kart")} poziom wyżej · +${SES.points} pkt</p>
     <div class="tiles" style="width:100%;grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><b>${SES.n}</b><span>odpowiedzi</span></div><div class="tile"><b>${acc}%</b><span>poprawnie</span></div><div class="tile"><b>${fmtMin(SES.activeMs)}</b><span>nauki</span></div></div>
-    <p class="pill flame">${ICON.flame} seria: ${st} ${plural(st,"dzień","dni","dni")}</p></div>
+    <p class="pill flame">${ICON.flame} seria: ${st} ${plural(st,"dzień","dni","dni")}</p>${SES.won ? `<p class="chip done">Rewanże wygrane: ${SES.won}</p>` : ""}</div>
     ${nb ? `<div class="panel stack"><p class="eyebrow">Najbliższa odznaka: ${nb.tier}</p><h3>${esc(S.units[nb.id].title)}</h3>
       <div class="bar" style="--c:var(--good);height:12px"><i style="width:${Math.min(100, Math.round(nb.st.prog / nb.target * 100))}%"></i></div>
       <p class="small">Brakuje <b>${nb.need}</b> ${plural(nb.need,"kroku","kroków","kroków")}. Każda dobra odpowiedź w nowym dniu to krok bliżej.</p></div>` : ""}
@@ -1211,6 +1234,7 @@ document.addEventListener("click", async e => {
   if (t.tagName === "SELECT") return;
   switch (a){
     case "start": startSession(t.dataset.kind, id); break;
+    case "hint": if (SES){ SES.typed = $("#typed")?.value || SES.typed; SES.hint = SES.queue[SES.i]; renderStudy(); } break;
     case "signup": doLogin(true); break;
     case "menu": openMenu(); break;
     case "logout": closeSheet(); await sb.auth.signOut(); location.reload(); break;
