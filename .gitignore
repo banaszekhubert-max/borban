@@ -1,0 +1,6 @@
+# dane osobowe i paczki dla konkretnych rodzin nigdy do repozytorium
+*.private.json
+paczka*.json
+galeria*.html
+.DS_Store
+__pycache__/
