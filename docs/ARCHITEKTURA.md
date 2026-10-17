@@ -38,13 +38,33 @@ Projekt schematu jest w `docs/schemat-docelowy.sql` i nie jest jeszcze wdrożony
 
 Migracja z `borban_docs` będzie jednorazowym skryptem. Format paczki zostaje jako format wymiany (import i eksport biblioteki).
 
+## Źródła danych i potwierdzenia rodzica
+
+Zasada: każdy krok, w którym dane wchodzą do BorBana albo coś jest odczytywane z niepewnego źródła, kończy się **potwierdzeniem rodzica, zapisanym w dzienniku** (kto, kiedy, którą wersję). Za nasz własny wkład, czyli karty i wyjaśnienia, odpowiadamy sami, więc ten etap przegląda opiekun.
+
+**Oceny i terminarz (Librus).** Firma nie zna haseł i nie loguje się do Librusa.
+- Pilotaż: wtyczka BorBana w przeglądarce rodzica (Chrome/Edge). Rodzic sam się loguje, a wtyczka raz dziennie wysyła tylko oceny i terminarz jego dziecka.
+- Rodzice bez komputera wysyłają zrzuty ekranu, które kasujemy po przetworzeniu.
+- Docelowo: szkoły partnerskie (szkoła jako administrator danych, za zgodą rodzica) i rozmowa z Librusem o współpracy.
+- Prywatnie u założyciela działa dziś zaplanowane zadanie w jego przeglądarce (pn–pt 19:56).
+
+**Notatki z lekcji (zdjęcia zeszytu).**
+1. Zdjęcie (dziecko lub rodzic), od razu automatyczna kontrola jakości: ostrość, jasność, kadr. Słabe zdjęcie: prośba o powtórkę.
+2. OCR: odczytany tekst obok zdjęcia, niepewne słowa podświetlone.
+3. **Potwierdzenie 1 (rodzic):** „odczyt zgadza się z zeszytem” albo poprawka. Fragmenty nieczytelne zostają oznaczone, nie zgadujemy ich treści.
+4. Jeśli temat nie jest oczywisty, proponujemy dział i stronę podręcznika. **Potwierdzenie 2 (rodzic):** wybór działu.
+5. AI tworzy uporządkowaną notatkę z lekcji i karty w standardzie, a przy okazji oznacza możliwe błędy w zeszycie (np. źle przepisany wzór).
+6. Przegląd opiekuna (fakty, standard), potem publikacja. Zdjęcia są kasowane.
+
+Potwierdzenia mają być krótkie, bo biznesplan zakłada ok. 30 minut pracy rodzica tygodniowo. Pokazujemy tylko to, co niepewne, a nie cały tekst do czytania. Mierzymy czas potwierdzeń i odsetek rodziców, którzy klikają bez poprawek. Jeśli zatwierdzają wszystko w kilka sekund, potwierdzenie przestaje cokolwiek chronić i trzeba je przeprojektować.
+
 ## Kolejność prac
 
 **Faza 1: przed pilotażem (do stycznia 2027, 10–20 rodzin)**
 1. Repozytorium prywatne, uporządkowane jak tu; CI z walidatorem materiału.
 2. Kopie zapasowe: plan Supabase z codziennym backupem i cotygodniowy eksport bazy. Plany Vercel i Supabase na wersje płatne, bo darmowy plan Vercel nie jest przeznaczony do użytku komercyjnego.
 3. Schemat docelowy, czyli migracje w `supabase/migrations/`, i jednorazowe przeniesienie danych pierwszej rodziny.
-4. Przyjmowanie zdjęć przez rodzica, a z nich szkic kart przez AI (Edge Function z kluczem API po stronie serwera).
+4. Notatki z lekcji: zdjęcia z kontrolą jakości → OCR → potwierdzenia rodzica → szkic notatki i kart przez AI (Edge Function z kluczem API po stronie serwera) → przegląd opiekuna. Wtyczka do Librusa w przeglądarce rodzica.
 5. Panel opiekuna: kolejka zadań, galeria do przeglądu, zatwierdzanie, licznik minut.
 6. Aplikacja rozbita na moduły z krokiem budowania (np. Vite), testy E2E (Playwright) w CI, środowisko testowe (podgląd Vercel + osobna baza). Robimy to w chwili, gdy do kodu dołącza druga osoba.
 7. Umowy, zgody i RODO dziecka (`docs/BEZPIECZENSTWO.md`).

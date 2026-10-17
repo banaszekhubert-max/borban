@@ -140,11 +140,35 @@ create table content_jobs (
   family_id uuid not null references families(id) on delete cascade,
   child_id uuid references children(id),
   status text not null default 'uploaded'
-    check (status in ('uploaded','ai_draft','validated','in_review','published','rejected')),
+    check (status in ('uploaded','quality_failed','ocr_draft','parent_confirmed','topic_confirmed','ai_draft','validated','in_review','published','rejected')),
+  unit_id text references library_units(id),          -- dział potwierdzony przez rodzica
+  ocr_text text, ocr_unreadable jsonb,                 -- odczyt i oznaczone nieczytelne fragmenty
   photos text[],                            -- ścieżki w Supabase Storage (kasowane po przetworzeniu)
   tutor_id uuid references staff(user_id),
   tutor_minutes numeric,                    -- KPI: minuty opiekuna na zadanie
   created_at timestamptz not null default now(), done_at timestamptz
+);
+
+create table confirmations (             -- dziennik potwierdzeń rodzica (ochrona firmy i przejrzystość)
+  id bigint generated always as identity primary key,
+  job_id uuid references content_jobs(id) on delete cascade,
+  family_id uuid not null references families(id) on delete cascade,
+  user_id uuid not null references auth.users(id),
+  step text not null check (step in ('ocr_text','topic','librus_import','consent')),
+  decision text not null check (decision in ('confirmed','corrected','rejected')),
+  content_hash text not null,               -- skrót potwierdzonej wersji
+  seconds_spent int,                        -- KPI: czy potwierdzenie jest realne, czy „klikane”
+  confirmed_at timestamptz not null default now()
+);
+
+create table lesson_notes (               -- uporządkowane notatki z lekcji (z zeszytu dziecka)
+  id uuid primary key default gen_random_uuid(),
+  child_id uuid not null references children(id) on delete cascade,
+  unit_id text references library_units(id),
+  job_id uuid references content_jobs(id),
+  lesson_date date, title text, body_md text, svg text,
+  flagged_issues jsonb,                     -- możliwe błędy w zeszycie wskazane przez AI
+  created_at timestamptz not null default now()
 );
 
 -- ===== Bezpieczeństwo (szkic) =====

@@ -4,6 +4,9 @@ Krótko: co postanowiliśmy, kiedy i dlaczego. Nowe decyzje dopisujemy na górze
 
 | Data | Decyzja | Dlaczego |
 |---|---|---|
+| 2026-10-17 | Każdy krok wejścia danych kończy się potwierdzeniem rodzica zapisanym w dzienniku; potwierdzamy tylko to, co niepewne | zdjęcie ciężaru i odpowiedzialności z firmy, bez zabierania rodzicowi czasu |
+| 2026-10-17 | Notatki z lekcji: zdjęcie → kontrola jakości → OCR → potwierdzenie rodzica → (propozycja działu → potwierdzenie) → notatka i karty przez AI → przegląd opiekuna | uporządkowana wiedza z zeszytu; nieczytelnych fragmentów nie zgadujemy |
+| 2026-10-17 | Librus: firma nie zna haseł; wtyczka w przeglądarce rodzica, zrzuty dla rodziców bez komputera, docelowo szkoły partnerskie | regulaminy szkół, RODO (dane nauczycieli i innych uczniów), bezpieczeństwo |
 | 2026-10-17 | Repozytorium uporządkowane: kod, biblioteka materiału, narzędzia, migracje, dokumentacja; dane osobowe tylko w bazie | przygotowanie pod skalę (biznesplan: 3000 dzieci w 5 lat) |
 | 2026-10-17 | Styl obrazków „Naklejki” dla całej biblioteki | wybór spośród 3 propozycji; najczytelniejszy na małym ekranie |
 | 2026-10-17 | Standard karty: obrazek zawsze, 3 kroki przy pojęciach; w powtórce kroki pod przyciskiem „Dlaczego?” | uczeń myśli dosłownie; obraz + wyjaśnienie łączą się w pamięci; krótkie sesje |
