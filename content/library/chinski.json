@@ -1,0 +1,636 @@
+{
+ "format": "borban-pack-1",
+ "meta": {
+  "subject": "Język chiński",
+  "source": "BorBan, materiał kl. 1 technikum (Warszawa), wrzesień–październik 2026",
+  "standard": "docs/STANDARD-KART.md"
+ },
+ "docs": [
+  {
+   "col": "subjects",
+   "id": "sb_chi",
+   "data": {
+    "book": "materiały z lekcji",
+    "color": "red",
+    "name": "Język chiński",
+    "order": 13
+   }
+  },
+  {
+   "col": "units",
+   "id": "un_c1",
+   "data": {
+    "order": 1,
+    "subjectId": "sb_chi",
+    "title": "Podstawy: pinyin, tony, powitania, liczby",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 200\" role=\"img\"><rect width=\"320\" height=\"200\" rx=\"16\" fill=\"#fff4d6\"/><text x=\"160\" y=\"24\" text-anchor=\"middle\" style=\"font:800 14px system-ui,sans-serif;fill:#1d2433\">4 tony + ton neutralny (bez znaczka)</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"12\" y=\"40\" width=\"68\" height=\"96\" rx=\"8\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"12\" y=\"40\" width=\"68\" height=\"96\" rx=\"8\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"12\" y=\"40\" width=\"68\" height=\"96\" rx=\"8\" fill=\"#fff\"/></g><g stroke=\"#cbd5e1\" stroke-width=\"1\" stroke-dasharray=\"3 3\"><path d=\"M18 52 H74\"/><path d=\"M18 66 H74\"/><path d=\"M18 80 H74\"/><path d=\"M18 94 H74\"/><path d=\"M18 108 H74\"/></g><g transform=\"translate(12 40)\"><path d=\"M10 14 H58\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"8\" stroke-linecap=\"round\"/><path d=\"M10 14 H58\" fill=\"none\" stroke=\"#ef4444\" stroke-width=\"4.5\" stroke-linecap=\"round\"/></g><text x=\"46\" y=\"128\" text-anchor=\"middle\" style=\"font:800 14px system-ui,sans-serif;fill:#ef4444\">1  ā</text><text x=\"46\" y=\"152\" text-anchor=\"middle\" style=\"font:600 11px system-ui,sans-serif;fill:#1d2433\">wysoki,</text><text x=\"46\" y=\"165\" text-anchor=\"middle\" style=\"font:600 11px system-ui,sans-serif;fill:#1d2433\">równy</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"88\" y=\"40\" width=\"68\" height=\"96\" rx=\"8\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"88\" y=\"40\" width=\"68\" height=\"96\" rx=\"8\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"88\" y=\"40\" width=\"68\" height=\"96\" rx=\"8\" fill=\"#fff\"/></g><g stroke=\"#cbd5e1\" stroke-width=\"1\" stroke-dasharray=\"3 3\"><path d=\"M94 52 H150\"/><path d=\"M94 66 H150\"/><path d=\"M94 80 H150\"/><path d=\"M94 94 H150\"/><path d=\"M94 108 H150\"/></g><g transform=\"translate(88 40)\"><path d=\"M10 48 L58 12\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"8\" stroke-linecap=\"round\"/><path d=\"M10 48 L58 12\" fill=\"none\" stroke=\"#3b82f6\" stroke-width=\"4.5\" stroke-linecap=\"round\"/></g><text x=\"122\" y=\"128\" text-anchor=\"middle\" style=\"font:800 14px system-ui,sans-serif;fill:#3b82f6\">2  á</text><text x=\"122\" y=\"152\" text-anchor=\"middle\" style=\"font:600 11px system-ui,sans-serif;fill:#1d2433\">w górę</text><text x=\"122\" y=\"165\" text-anchor=\"middle\" style=\"font:600 11px system-ui,sans-serif;fill:#1d2433\">(„co?”)</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"164\" y=\"40\" width=\"68\" height=\"96\" rx=\"8\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"164\" y=\"40\" width=\"68\" height=\"96\" rx=\"8\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"164\" y=\"40\" width=\"68\" height=\"96\" rx=\"8\" fill=\"#fff\"/></g><g stroke=\"#cbd5e1\" stroke-width=\"1\" stroke-dasharray=\"3 3\"><path d=\"M170 52 H226\"/><path d=\"M170 66 H226\"/><path d=\"M170 80 H226\"/><path d=\"M170 94 H226\"/><path d=\"M170 108 H226\"/></g><g transform=\"translate(164 40)\"><path d=\"M10 34 Q24 70 38 64 T58 18\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"8\" stroke-linecap=\"round\"/><path d=\"M10 34 Q24 70 38 64 T58 18\" fill=\"none\" stroke=\"#15803d\" stroke-width=\"4.5\" stroke-linecap=\"round\"/></g><text x=\"198\" y=\"128\" text-anchor=\"middle\" style=\"font:800 14px system-ui,sans-serif;fill:#15803d\">3  ǎ</text><text x=\"198\" y=\"152\" text-anchor=\"middle\" style=\"font:600 11px system-ui,sans-serif;fill:#1d2433\">w dół</text><text x=\"198\" y=\"165\" text-anchor=\"middle\" style=\"font:600 11px system-ui,sans-serif;fill:#1d2433\">i w górę</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"240\" y=\"40\" width=\"68\" height=\"96\" rx=\"8\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"240\" y=\"40\" width=\"68\" height=\"96\" rx=\"8\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"240\" y=\"40\" width=\"68\" height=\"96\" rx=\"8\" fill=\"#fff\"/></g><g stroke=\"#cbd5e1\" stroke-width=\"1\" stroke-dasharray=\"3 3\"><path d=\"M246 52 H302\"/><path d=\"M246 66 H302\"/><path d=\"M246 80 H302\"/><path d=\"M246 94 H302\"/><path d=\"M246 108 H302\"/></g><g transform=\"translate(240 40)\"><path d=\"M10 12 L58 70\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"8\" stroke-linecap=\"round\"/><path d=\"M10 12 L58 70\" fill=\"none\" stroke=\"#7c3aed\" stroke-width=\"4.5\" stroke-linecap=\"round\"/></g><text x=\"274\" y=\"128\" text-anchor=\"middle\" style=\"font:800 14px system-ui,sans-serif;fill:#7c3aed\">4  à</text><text x=\"274\" y=\"152\" text-anchor=\"middle\" style=\"font:600 11px system-ui,sans-serif;fill:#1d2433\">ostro</text><text x=\"274\" y=\"165\" text-anchor=\"middle\" style=\"font:600 11px system-ui,sans-serif;fill:#1d2433\">w dół</text><text x=\"160\" y=\"186\" text-anchor=\"middle\" style=\"font:700 12px system-ui,sans-serif;fill:#b45309\">pinyin = wymowa zapisana łacinką</text></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_01a",
+   "data": {
+    "back": "cześć / dzień dobry",
+    "created": "2026-10-17",
+    "front": "你好 (nǐ hǎo)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"166\" cy=\"28\" r=\"14\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"166\" cy=\"28\" r=\"14\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"166\" cy=\"28\" r=\"14\" fill=\"#fde047\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M42 112 V92 Q42 74 62 74 Q82 74 82 92 V112 Z\"/><circle cx=\"62\" cy=\"58\" r=\"12\"/><path d=\"M120 112 V92 Q120 74 140 74 Q160 74 160 92 V112 Z\"/><circle cx=\"140\" cy=\"58\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M42 112 V92 Q42 74 62 74 Q82 74 82 92 V112 Z\"/><circle cx=\"62\" cy=\"58\" r=\"12\"/><path d=\"M120 112 V92 Q120 74 140 74 Q160 74 160 92 V112 Z\"/><circle cx=\"140\" cy=\"58\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M42 112 V92 Q42 74 62 74 Q82 74 82 92 V112 Z\" fill=\"#60a5fa\"/><circle cx=\"62\" cy=\"58\" r=\"12\" fill=\"#fed7aa\"/><path d=\"M120 112 V92 Q120 74 140 74 Q160 74 160 92 V112 Z\" fill=\"#34d399\"/><circle cx=\"140\" cy=\"58\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M78 84 L92 60 L96 44\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M78 84 L92 60 L96 44\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M78 84 L92 60 L96 44\" stroke=\"#60a5fa\" stroke-width=\"5\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"96\" cy=\"40\" r=\"7\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"96\" cy=\"40\" r=\"7\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"96\" cy=\"40\" r=\"7\" fill=\"#fed7aa\"/></g><path d=\"M106 34 q6 6 2 14 M112 28 q9 9 3 22\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><g fill=\"#1d2433\"><circle cx=\"58\" cy=\"57\" r=\"1.8\"/><circle cx=\"66\" cy=\"57\" r=\"1.8\"/></g><path d=\"M58 62 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g fill=\"#1d2433\"><circle cx=\"136\" cy=\"57\" r=\"1.8\"/><circle cx=\"144\" cy=\"57\" r=\"1.8\"/></g><path d=\"M136 62 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_01b",
+   "data": {
+    "back": "你好 (nǐ hǎo)",
+    "created": "2026-10-17",
+    "front": "cześć / dzień dobry",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"166\" cy=\"28\" r=\"14\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"166\" cy=\"28\" r=\"14\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"166\" cy=\"28\" r=\"14\" fill=\"#fde047\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M42 112 V92 Q42 74 62 74 Q82 74 82 92 V112 Z\"/><circle cx=\"62\" cy=\"58\" r=\"12\"/><path d=\"M120 112 V92 Q120 74 140 74 Q160 74 160 92 V112 Z\"/><circle cx=\"140\" cy=\"58\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M42 112 V92 Q42 74 62 74 Q82 74 82 92 V112 Z\"/><circle cx=\"62\" cy=\"58\" r=\"12\"/><path d=\"M120 112 V92 Q120 74 140 74 Q160 74 160 92 V112 Z\"/><circle cx=\"140\" cy=\"58\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M42 112 V92 Q42 74 62 74 Q82 74 82 92 V112 Z\" fill=\"#60a5fa\"/><circle cx=\"62\" cy=\"58\" r=\"12\" fill=\"#fed7aa\"/><path d=\"M120 112 V92 Q120 74 140 74 Q160 74 160 92 V112 Z\" fill=\"#34d399\"/><circle cx=\"140\" cy=\"58\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M78 84 L92 60 L96 44\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M78 84 L92 60 L96 44\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M78 84 L92 60 L96 44\" stroke=\"#60a5fa\" stroke-width=\"5\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"96\" cy=\"40\" r=\"7\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"96\" cy=\"40\" r=\"7\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"96\" cy=\"40\" r=\"7\" fill=\"#fed7aa\"/></g><path d=\"M106 34 q6 6 2 14 M112 28 q9 9 3 22\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><g fill=\"#1d2433\"><circle cx=\"58\" cy=\"57\" r=\"1.8\"/><circle cx=\"66\" cy=\"57\" r=\"1.8\"/></g><path d=\"M58 62 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g fill=\"#1d2433\"><circle cx=\"136\" cy=\"57\" r=\"1.8\"/><circle cx=\"144\" cy=\"57\" r=\"1.8\"/></g><path d=\"M136 62 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_02a",
+   "data": {
+    "back": "dziękuję",
+    "created": "2026-10-17",
+    "front": "谢谢 (xièxie)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"62\" y=\"62\" width=\"64\" height=\"50\" rx=\"4\"/><rect x=\"55\" y=\"48\" width=\"78\" height=\"16\" rx=\"4\"/><rect x=\"88\" y=\"48\" width=\"12\" height=\"64\"/><path d=\"M94 48 C80 30 66 40 80 48 Z M94 48 C108 30 122 40 108 48 Z\"/><path d=\"M158 48.6 C135.6 34.6 149.6 17.8 158 30.4 C166.4 17.8 180.4 34.6 158 48.6 Z\"/><path d=\"M40 48.1 C25.6 39.1 34.6 28.3 40 36.4 C45.4 28.3 54.4 39.1 40 48.1 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"62\" y=\"62\" width=\"64\" height=\"50\" rx=\"4\"/><rect x=\"55\" y=\"48\" width=\"78\" height=\"16\" rx=\"4\"/><rect x=\"88\" y=\"48\" width=\"12\" height=\"64\"/><path d=\"M94 48 C80 30 66 40 80 48 Z M94 48 C108 30 122 40 108 48 Z\"/><path d=\"M158 48.6 C135.6 34.6 149.6 17.8 158 30.4 C166.4 17.8 180.4 34.6 158 48.6 Z\"/><path d=\"M40 48.1 C25.6 39.1 34.6 28.3 40 36.4 C45.4 28.3 54.4 39.1 40 48.1 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"62\" y=\"62\" width=\"64\" height=\"50\" rx=\"4\" fill=\"#ef4444\"/><rect x=\"55\" y=\"48\" width=\"78\" height=\"16\" rx=\"4\" fill=\"#f472b6\"/><rect x=\"88\" y=\"48\" width=\"12\" height=\"64\" fill=\"#fde047\"/><path d=\"M94 48 C80 30 66 40 80 48 Z M94 48 C108 30 122 40 108 48 Z\" fill=\"#fde047\"/><path d=\"M158 48.6 C135.6 34.6 149.6 17.8 158 30.4 C166.4 17.8 180.4 34.6 158 48.6 Z\" fill=\"#ef4444\"/><path d=\"M40 48.1 C25.6 39.1 34.6 28.3 40 36.4 C45.4 28.3 54.4 39.1 40 48.1 Z\" fill=\"#f472b6\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_02b",
+   "data": {
+    "back": "谢谢 (xièxie)",
+    "created": "2026-10-17",
+    "front": "dziękuję",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"62\" y=\"62\" width=\"64\" height=\"50\" rx=\"4\"/><rect x=\"55\" y=\"48\" width=\"78\" height=\"16\" rx=\"4\"/><rect x=\"88\" y=\"48\" width=\"12\" height=\"64\"/><path d=\"M94 48 C80 30 66 40 80 48 Z M94 48 C108 30 122 40 108 48 Z\"/><path d=\"M158 48.6 C135.6 34.6 149.6 17.8 158 30.4 C166.4 17.8 180.4 34.6 158 48.6 Z\"/><path d=\"M40 48.1 C25.6 39.1 34.6 28.3 40 36.4 C45.4 28.3 54.4 39.1 40 48.1 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"62\" y=\"62\" width=\"64\" height=\"50\" rx=\"4\"/><rect x=\"55\" y=\"48\" width=\"78\" height=\"16\" rx=\"4\"/><rect x=\"88\" y=\"48\" width=\"12\" height=\"64\"/><path d=\"M94 48 C80 30 66 40 80 48 Z M94 48 C108 30 122 40 108 48 Z\"/><path d=\"M158 48.6 C135.6 34.6 149.6 17.8 158 30.4 C166.4 17.8 180.4 34.6 158 48.6 Z\"/><path d=\"M40 48.1 C25.6 39.1 34.6 28.3 40 36.4 C45.4 28.3 54.4 39.1 40 48.1 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"62\" y=\"62\" width=\"64\" height=\"50\" rx=\"4\" fill=\"#ef4444\"/><rect x=\"55\" y=\"48\" width=\"78\" height=\"16\" rx=\"4\" fill=\"#f472b6\"/><rect x=\"88\" y=\"48\" width=\"12\" height=\"64\" fill=\"#fde047\"/><path d=\"M94 48 C80 30 66 40 80 48 Z M94 48 C108 30 122 40 108 48 Z\" fill=\"#fde047\"/><path d=\"M158 48.6 C135.6 34.6 149.6 17.8 158 30.4 C166.4 17.8 180.4 34.6 158 48.6 Z\" fill=\"#ef4444\"/><path d=\"M40 48.1 C25.6 39.1 34.6 28.3 40 36.4 C45.4 28.3 54.4 39.1 40 48.1 Z\" fill=\"#f472b6\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_03a",
+   "data": {
+    "back": "nie ma za co",
+    "created": "2026-10-17",
+    "front": "不客气 (bú kèqi)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M14 18 H84 a8 8 0 0 1 8 8 V56 a8 8 0 0 1 -8 8 H44 L32 76 V64 H22 a8 8 0 0 1 -8 -8 V26 a8 8 0 0 1 8 -8 Z\"/><path d=\"M53 51.9 C35.4 40.9 46.4 27.7 53 37.6 C59.6 27.7 70.6 40.9 53 51.9 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M14 18 H84 a8 8 0 0 1 8 8 V56 a8 8 0 0 1 -8 8 H44 L32 76 V64 H22 a8 8 0 0 1 -8 -8 V26 a8 8 0 0 1 8 -8 Z\"/><path d=\"M53 51.9 C35.4 40.9 46.4 27.7 53 37.6 C59.6 27.7 70.6 40.9 53 51.9 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M14 18 H84 a8 8 0 0 1 8 8 V56 a8 8 0 0 1 -8 8 H44 L32 76 V64 H22 a8 8 0 0 1 -8 -8 V26 a8 8 0 0 1 8 -8 Z\" fill=\"#fff\"/><path d=\"M53 51.9 C35.4 40.9 46.4 27.7 53 37.6 C59.6 27.7 70.6 40.9 53 51.9 Z\" fill=\"#f472b6\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M130 112 V100 Q130 82 150 82 Q170 82 170 100 V112 Z\"/><circle cx=\"150\" cy=\"66\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M130 112 V100 Q130 82 150 82 Q170 82 170 100 V112 Z\"/><circle cx=\"150\" cy=\"66\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M130 112 V100 Q130 82 150 82 Q170 82 170 100 V112 Z\" fill=\"#a78bfa\"/><circle cx=\"150\" cy=\"66\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M134 92 L116 98 L104 90\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M134 92 L116 98 L104 90\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M134 92 L116 98 L104 90\" stroke=\"#a78bfa\" stroke-width=\"5\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><ellipse cx=\"102\" cy=\"88\" rx=\"8\" ry=\"6\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><ellipse cx=\"102\" cy=\"88\" rx=\"8\" ry=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><ellipse cx=\"102\" cy=\"88\" rx=\"8\" ry=\"6\" fill=\"#fed7aa\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"170\" cy=\"28\" r=\"17\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"170\" cy=\"28\" r=\"17\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"170\" cy=\"28\" r=\"17\" fill=\"#34d399\"/></g><path d=\"M162 28 l6 6 l10 -12\" stroke=\"#fff\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><g fill=\"#1d2433\"><circle cx=\"146\" cy=\"65\" r=\"1.8\"/><circle cx=\"154\" cy=\"65\" r=\"1.8\"/></g><path d=\"M146 70 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_03b",
+   "data": {
+    "back": "不客气 (bú kèqi)",
+    "created": "2026-10-17",
+    "front": "nie ma za co",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M14 18 H84 a8 8 0 0 1 8 8 V56 a8 8 0 0 1 -8 8 H44 L32 76 V64 H22 a8 8 0 0 1 -8 -8 V26 a8 8 0 0 1 8 -8 Z\"/><path d=\"M53 51.9 C35.4 40.9 46.4 27.7 53 37.6 C59.6 27.7 70.6 40.9 53 51.9 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M14 18 H84 a8 8 0 0 1 8 8 V56 a8 8 0 0 1 -8 8 H44 L32 76 V64 H22 a8 8 0 0 1 -8 -8 V26 a8 8 0 0 1 8 -8 Z\"/><path d=\"M53 51.9 C35.4 40.9 46.4 27.7 53 37.6 C59.6 27.7 70.6 40.9 53 51.9 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M14 18 H84 a8 8 0 0 1 8 8 V56 a8 8 0 0 1 -8 8 H44 L32 76 V64 H22 a8 8 0 0 1 -8 -8 V26 a8 8 0 0 1 8 -8 Z\" fill=\"#fff\"/><path d=\"M53 51.9 C35.4 40.9 46.4 27.7 53 37.6 C59.6 27.7 70.6 40.9 53 51.9 Z\" fill=\"#f472b6\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M130 112 V100 Q130 82 150 82 Q170 82 170 100 V112 Z\"/><circle cx=\"150\" cy=\"66\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M130 112 V100 Q130 82 150 82 Q170 82 170 100 V112 Z\"/><circle cx=\"150\" cy=\"66\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M130 112 V100 Q130 82 150 82 Q170 82 170 100 V112 Z\" fill=\"#a78bfa\"/><circle cx=\"150\" cy=\"66\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M134 92 L116 98 L104 90\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M134 92 L116 98 L104 90\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M134 92 L116 98 L104 90\" stroke=\"#a78bfa\" stroke-width=\"5\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><ellipse cx=\"102\" cy=\"88\" rx=\"8\" ry=\"6\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><ellipse cx=\"102\" cy=\"88\" rx=\"8\" ry=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><ellipse cx=\"102\" cy=\"88\" rx=\"8\" ry=\"6\" fill=\"#fed7aa\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"170\" cy=\"28\" r=\"17\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"170\" cy=\"28\" r=\"17\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"170\" cy=\"28\" r=\"17\" fill=\"#34d399\"/></g><path d=\"M162 28 l6 6 l10 -12\" stroke=\"#fff\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><g fill=\"#1d2433\"><circle cx=\"146\" cy=\"65\" r=\"1.8\"/><circle cx=\"154\" cy=\"65\" r=\"1.8\"/></g><path d=\"M146 70 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_04a",
+   "data": {
+    "back": "do widzenia",
+    "created": "2026-10-17",
+    "front": "再见 (zàijiàn)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M96 10 a14 14 0 1 0 16 18 a11 11 0 0 1 -16 -18 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M96 10 a14 14 0 1 0 16 18 a11 11 0 0 1 -16 -18 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M96 10 a14 14 0 1 0 16 18 a11 11 0 0 1 -16 -18 Z\" fill=\"#fde047\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"118\" y=\"26\" width=\"58\" height=\"88\" rx=\"3\"/><path d=\"M118 26 L150 34 V120 L118 114 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"118\" y=\"26\" width=\"58\" height=\"88\" rx=\"3\"/><path d=\"M118 26 L150 34 V120 L118 114 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"118\" y=\"26\" width=\"58\" height=\"88\" rx=\"3\" fill=\"#1d2433\"/><path d=\"M118 26 L150 34 V120 L118 114 Z\" fill=\"#b45309\"/></g><circle cx=\"143\" cy=\"76\" r=\"3\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M58 112 V94 Q58 76 78 76 Q98 76 98 94 V112 Z\"/><circle cx=\"78\" cy=\"60\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M58 112 V94 Q58 76 78 76 Q98 76 98 94 V112 Z\"/><circle cx=\"78\" cy=\"60\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M58 112 V94 Q58 76 78 76 Q98 76 98 94 V112 Z\" fill=\"#fb923c\"/><circle cx=\"78\" cy=\"60\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M62 86 L48 66 L44 50\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M62 86 L48 66 L44 50\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M62 86 L48 66 L44 50\" stroke=\"#fb923c\" stroke-width=\"5\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"43\" cy=\"46\" r=\"7\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"43\" cy=\"46\" r=\"7\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"43\" cy=\"46\" r=\"7\" fill=\"#fed7aa\"/></g><path d=\"M34 36 q-6 6 -2 14 M28 30 q-9 9 -3 22\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><g fill=\"#1d2433\"><circle cx=\"74\" cy=\"59\" r=\"1.8\"/><circle cx=\"82\" cy=\"59\" r=\"1.8\"/></g><path d=\"M74 64 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_04b",
+   "data": {
+    "back": "再见 (zàijiàn)",
+    "created": "2026-10-17",
+    "front": "do widzenia",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M96 10 a14 14 0 1 0 16 18 a11 11 0 0 1 -16 -18 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M96 10 a14 14 0 1 0 16 18 a11 11 0 0 1 -16 -18 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M96 10 a14 14 0 1 0 16 18 a11 11 0 0 1 -16 -18 Z\" fill=\"#fde047\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"118\" y=\"26\" width=\"58\" height=\"88\" rx=\"3\"/><path d=\"M118 26 L150 34 V120 L118 114 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"118\" y=\"26\" width=\"58\" height=\"88\" rx=\"3\"/><path d=\"M118 26 L150 34 V120 L118 114 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"118\" y=\"26\" width=\"58\" height=\"88\" rx=\"3\" fill=\"#1d2433\"/><path d=\"M118 26 L150 34 V120 L118 114 Z\" fill=\"#b45309\"/></g><circle cx=\"143\" cy=\"76\" r=\"3\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M58 112 V94 Q58 76 78 76 Q98 76 98 94 V112 Z\"/><circle cx=\"78\" cy=\"60\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M58 112 V94 Q58 76 78 76 Q98 76 98 94 V112 Z\"/><circle cx=\"78\" cy=\"60\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M58 112 V94 Q58 76 78 76 Q98 76 98 94 V112 Z\" fill=\"#fb923c\"/><circle cx=\"78\" cy=\"60\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M62 86 L48 66 L44 50\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M62 86 L48 66 L44 50\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M62 86 L48 66 L44 50\" stroke=\"#fb923c\" stroke-width=\"5\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"43\" cy=\"46\" r=\"7\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"43\" cy=\"46\" r=\"7\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"43\" cy=\"46\" r=\"7\" fill=\"#fed7aa\"/></g><path d=\"M34 36 q-6 6 -2 14 M28 30 q-9 9 -3 22\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><g fill=\"#1d2433\"><circle cx=\"74\" cy=\"59\" r=\"1.8\"/><circle cx=\"82\" cy=\"59\" r=\"1.8\"/></g><path d=\"M74 64 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_05a",
+   "data": {
+    "back": "ja",
+    "created": "2026-10-17",
+    "front": "我 (wǒ)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><ellipse cx=\"100\" cy=\"112\" rx=\"52\" ry=\"10\" fill=\"#fde047\" opacity=\".7\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M25 112 V104 Q25 86 40 86 Q55 86 55 104 V112 Z\"/><circle cx=\"40\" cy=\"70\" r=\"12\"/><path d=\"M145 112 V104 Q145 86 160 86 Q175 86 175 104 V112 Z\"/><circle cx=\"160\" cy=\"70\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M25 112 V104 Q25 86 40 86 Q55 86 55 104 V112 Z\"/><circle cx=\"40\" cy=\"70\" r=\"12\"/><path d=\"M145 112 V104 Q145 86 160 86 Q175 86 175 104 V112 Z\"/><circle cx=\"160\" cy=\"70\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M25 112 V104 Q25 86 40 86 Q55 86 55 104 V112 Z\" fill=\"#cbd5e1\"/><circle cx=\"40\" cy=\"70\" r=\"12\" fill=\"#fed7aa\"/><path d=\"M145 112 V104 Q145 86 160 86 Q175 86 175 104 V112 Z\" fill=\"#cbd5e1\"/><circle cx=\"160\" cy=\"70\" r=\"12\" fill=\"#fed7aa\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M76 112 V84 Q76 66 100 66 Q124 66 124 84 V112 Z\"/><circle cx=\"100\" cy=\"50\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M76 112 V84 Q76 66 100 66 Q124 66 124 84 V112 Z\"/><circle cx=\"100\" cy=\"50\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M76 112 V84 Q76 66 100 66 Q124 66 124 84 V112 Z\" fill=\"#fb923c\"/><circle cx=\"100\" cy=\"50\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M122 86 L136 96 L112 92\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M122 86 L136 96 L112 92\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M122 86 L136 96 L112 92\" stroke=\"#fb923c\" stroke-width=\"5\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"110\" cy=\"91\" r=\"6\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"110\" cy=\"91\" r=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"110\" cy=\"91\" r=\"6\" fill=\"#fed7aa\"/></g><g fill=\"#1d2433\"><circle cx=\"96\" cy=\"49\" r=\"1.8\"/><circle cx=\"104\" cy=\"49\" r=\"1.8\"/></g><path d=\"M96 54 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g fill=\"#1d2433\"><circle cx=\"36\" cy=\"69\" r=\"1.8\"/><circle cx=\"44\" cy=\"69\" r=\"1.8\"/></g><g fill=\"#1d2433\"><circle cx=\"156\" cy=\"69\" r=\"1.8\"/><circle cx=\"164\" cy=\"69\" r=\"1.8\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M64 22 l3 7 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1 z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M64 22 l3 7 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1 z\" fill=\"#fde047\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_05b",
+   "data": {
+    "back": "我 (wǒ)",
+    "created": "2026-10-17",
+    "front": "ja",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><ellipse cx=\"100\" cy=\"112\" rx=\"52\" ry=\"10\" fill=\"#fde047\" opacity=\".7\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M25 112 V104 Q25 86 40 86 Q55 86 55 104 V112 Z\"/><circle cx=\"40\" cy=\"70\" r=\"12\"/><path d=\"M145 112 V104 Q145 86 160 86 Q175 86 175 104 V112 Z\"/><circle cx=\"160\" cy=\"70\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M25 112 V104 Q25 86 40 86 Q55 86 55 104 V112 Z\"/><circle cx=\"40\" cy=\"70\" r=\"12\"/><path d=\"M145 112 V104 Q145 86 160 86 Q175 86 175 104 V112 Z\"/><circle cx=\"160\" cy=\"70\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M25 112 V104 Q25 86 40 86 Q55 86 55 104 V112 Z\" fill=\"#cbd5e1\"/><circle cx=\"40\" cy=\"70\" r=\"12\" fill=\"#fed7aa\"/><path d=\"M145 112 V104 Q145 86 160 86 Q175 86 175 104 V112 Z\" fill=\"#cbd5e1\"/><circle cx=\"160\" cy=\"70\" r=\"12\" fill=\"#fed7aa\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M76 112 V84 Q76 66 100 66 Q124 66 124 84 V112 Z\"/><circle cx=\"100\" cy=\"50\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M76 112 V84 Q76 66 100 66 Q124 66 124 84 V112 Z\"/><circle cx=\"100\" cy=\"50\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M76 112 V84 Q76 66 100 66 Q124 66 124 84 V112 Z\" fill=\"#fb923c\"/><circle cx=\"100\" cy=\"50\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M122 86 L136 96 L112 92\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M122 86 L136 96 L112 92\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M122 86 L136 96 L112 92\" stroke=\"#fb923c\" stroke-width=\"5\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"110\" cy=\"91\" r=\"6\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"110\" cy=\"91\" r=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"110\" cy=\"91\" r=\"6\" fill=\"#fed7aa\"/></g><g fill=\"#1d2433\"><circle cx=\"96\" cy=\"49\" r=\"1.8\"/><circle cx=\"104\" cy=\"49\" r=\"1.8\"/></g><path d=\"M96 54 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g fill=\"#1d2433\"><circle cx=\"36\" cy=\"69\" r=\"1.8\"/><circle cx=\"44\" cy=\"69\" r=\"1.8\"/></g><g fill=\"#1d2433\"><circle cx=\"156\" cy=\"69\" r=\"1.8\"/><circle cx=\"164\" cy=\"69\" r=\"1.8\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M64 22 l3 7 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1 z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M64 22 l3 7 7 1 -5 5 1 7 -6 -3 -6 3 1 -7 -5 -5 7 -1 z\" fill=\"#fde047\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_06a",
+   "data": {
+    "back": "ty",
+    "created": "2026-10-17",
+    "front": "你 (nǐ)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fef3c7\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M128 112 V90 Q128 72 150 72 Q172 72 172 90 V112 Z\"/><circle cx=\"150\" cy=\"56\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M128 112 V90 Q128 72 150 72 Q172 72 172 90 V112 Z\"/><circle cx=\"150\" cy=\"56\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M128 112 V90 Q128 72 150 72 Q172 72 172 90 V112 Z\" fill=\"#3b82f6\"/><circle cx=\"150\" cy=\"56\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"#1d2433\"><circle cx=\"146\" cy=\"55\" r=\"1.8\"/><circle cx=\"154\" cy=\"55\" r=\"1.8\"/></g><path d=\"M146 60 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M10 92 L30 84 L40 92 L30 108 L10 114 Z\"/><rect x=\"30\" y=\"78\" width=\"30\" height=\"28\" rx=\"10\"/><rect x=\"46\" y=\"78\" width=\"54\" height=\"11\" rx=\"5.5\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M10 92 L30 84 L40 92 L30 108 L10 114 Z\"/><rect x=\"30\" y=\"78\" width=\"30\" height=\"28\" rx=\"10\"/><rect x=\"46\" y=\"78\" width=\"54\" height=\"11\" rx=\"5.5\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M10 92 L30 84 L40 92 L30 108 L10 114 Z\" fill=\"#a78bfa\"/><rect x=\"30\" y=\"78\" width=\"30\" height=\"28\" rx=\"10\" fill=\"#fed7aa\"/><rect x=\"46\" y=\"78\" width=\"54\" height=\"11\" rx=\"5.5\" fill=\"#fed7aa\"/></g><path d=\"M40 92 h16 M40 99 h16\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M108 76 l8 -4 M108 84 h9 M108 92 l8 4\" stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_06b",
+   "data": {
+    "back": "你 (nǐ)",
+    "created": "2026-10-17",
+    "front": "ty",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fef3c7\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M128 112 V90 Q128 72 150 72 Q172 72 172 90 V112 Z\"/><circle cx=\"150\" cy=\"56\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M128 112 V90 Q128 72 150 72 Q172 72 172 90 V112 Z\"/><circle cx=\"150\" cy=\"56\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M128 112 V90 Q128 72 150 72 Q172 72 172 90 V112 Z\" fill=\"#3b82f6\"/><circle cx=\"150\" cy=\"56\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"#1d2433\"><circle cx=\"146\" cy=\"55\" r=\"1.8\"/><circle cx=\"154\" cy=\"55\" r=\"1.8\"/></g><path d=\"M146 60 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M10 92 L30 84 L40 92 L30 108 L10 114 Z\"/><rect x=\"30\" y=\"78\" width=\"30\" height=\"28\" rx=\"10\"/><rect x=\"46\" y=\"78\" width=\"54\" height=\"11\" rx=\"5.5\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M10 92 L30 84 L40 92 L30 108 L10 114 Z\"/><rect x=\"30\" y=\"78\" width=\"30\" height=\"28\" rx=\"10\"/><rect x=\"46\" y=\"78\" width=\"54\" height=\"11\" rx=\"5.5\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M10 92 L30 84 L40 92 L30 108 L10 114 Z\" fill=\"#a78bfa\"/><rect x=\"30\" y=\"78\" width=\"30\" height=\"28\" rx=\"10\" fill=\"#fed7aa\"/><rect x=\"46\" y=\"78\" width=\"54\" height=\"11\" rx=\"5.5\" fill=\"#fed7aa\"/></g><path d=\"M40 92 h16 M40 99 h16\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M108 76 l8 -4 M108 84 h9 M108 92 l8 4\" stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_07a",
+   "data": {
+    "back": "on / ona",
+    "created": "2026-10-17",
+    "front": "他 / 她 (tā)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M20 112 V88 Q20 70 40 70 Q60 70 60 88 V112 Z\"/><circle cx=\"40\" cy=\"54\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M20 112 V88 Q20 70 40 70 Q60 70 60 88 V112 Z\"/><circle cx=\"40\" cy=\"54\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M20 112 V88 Q20 70 40 70 Q60 70 60 88 V112 Z\" fill=\"#9ca3af\"/><circle cx=\"40\" cy=\"54\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M58 84 L82 72\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M58 84 L82 72\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M58 84 L82 72\" stroke=\"#9ca3af\" stroke-width=\"5\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"86\" cy=\"70\" r=\"6\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"86\" cy=\"70\" r=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"86\" cy=\"70\" r=\"6\" fill=\"#fed7aa\"/></g><path d=\"M96 66 h10\" stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-dasharray=\"3 4\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M112 112 V96 Q112 78 128 78 Q144 78 144 96 V112 Z\"/><circle cx=\"128\" cy=\"62\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M112 112 V96 Q112 78 128 78 Q144 78 144 96 V112 Z\"/><circle cx=\"128\" cy=\"62\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M112 112 V96 Q112 78 128 78 Q144 78 144 96 V112 Z\" fill=\"#3b82f6\"/><circle cx=\"128\" cy=\"62\" r=\"12\" fill=\"#fed7aa\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M156 112 L166 78 Q172 72 178 78 L188 112 Z\"/><circle cx=\"172\" cy=\"62\" r=\"12\"/><path d=\"M162 56 q10 -14 22 0 l4 14 q-6 -2 -6 -10 q-10 4 -20 -4 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M156 112 L166 78 Q172 72 178 78 L188 112 Z\"/><circle cx=\"172\" cy=\"62\" r=\"12\"/><path d=\"M162 56 q10 -14 22 0 l4 14 q-6 -2 -6 -10 q-10 4 -20 -4 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M156 112 L166 78 Q172 72 178 78 L188 112 Z\" fill=\"#f472b6\"/><circle cx=\"172\" cy=\"62\" r=\"12\" fill=\"#fed7aa\"/><path d=\"M162 56 q10 -14 22 0 l4 14 q-6 -2 -6 -10 q-10 4 -20 -4 Z\" fill=\"#b45309\"/></g><g fill=\"#1d2433\"><circle cx=\"36\" cy=\"53\" r=\"1.8\"/><circle cx=\"44\" cy=\"53\" r=\"1.8\"/></g><g fill=\"#1d2433\"><circle cx=\"124\" cy=\"61\" r=\"1.8\"/><circle cx=\"132\" cy=\"61\" r=\"1.8\"/></g><path d=\"M124 66 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g fill=\"#1d2433\"><circle cx=\"168\" cy=\"62\" r=\"1.8\"/><circle cx=\"176\" cy=\"62\" r=\"1.8\"/></g><path d=\"M168 67 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_07b",
+   "data": {
+    "back": "他 / 她 (tā)",
+    "created": "2026-10-17",
+    "front": "on / ona",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M20 112 V88 Q20 70 40 70 Q60 70 60 88 V112 Z\"/><circle cx=\"40\" cy=\"54\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M20 112 V88 Q20 70 40 70 Q60 70 60 88 V112 Z\"/><circle cx=\"40\" cy=\"54\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M20 112 V88 Q20 70 40 70 Q60 70 60 88 V112 Z\" fill=\"#9ca3af\"/><circle cx=\"40\" cy=\"54\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M58 84 L82 72\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M58 84 L82 72\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M58 84 L82 72\" stroke=\"#9ca3af\" stroke-width=\"5\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"86\" cy=\"70\" r=\"6\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"86\" cy=\"70\" r=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"86\" cy=\"70\" r=\"6\" fill=\"#fed7aa\"/></g><path d=\"M96 66 h10\" stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-dasharray=\"3 4\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M112 112 V96 Q112 78 128 78 Q144 78 144 96 V112 Z\"/><circle cx=\"128\" cy=\"62\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M112 112 V96 Q112 78 128 78 Q144 78 144 96 V112 Z\"/><circle cx=\"128\" cy=\"62\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M112 112 V96 Q112 78 128 78 Q144 78 144 96 V112 Z\" fill=\"#3b82f6\"/><circle cx=\"128\" cy=\"62\" r=\"12\" fill=\"#fed7aa\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M156 112 L166 78 Q172 72 178 78 L188 112 Z\"/><circle cx=\"172\" cy=\"62\" r=\"12\"/><path d=\"M162 56 q10 -14 22 0 l4 14 q-6 -2 -6 -10 q-10 4 -20 -4 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M156 112 L166 78 Q172 72 178 78 L188 112 Z\"/><circle cx=\"172\" cy=\"62\" r=\"12\"/><path d=\"M162 56 q10 -14 22 0 l4 14 q-6 -2 -6 -10 q-10 4 -20 -4 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M156 112 L166 78 Q172 72 178 78 L188 112 Z\" fill=\"#f472b6\"/><circle cx=\"172\" cy=\"62\" r=\"12\" fill=\"#fed7aa\"/><path d=\"M162 56 q10 -14 22 0 l4 14 q-6 -2 -6 -10 q-10 4 -20 -4 Z\" fill=\"#b45309\"/></g><g fill=\"#1d2433\"><circle cx=\"36\" cy=\"53\" r=\"1.8\"/><circle cx=\"44\" cy=\"53\" r=\"1.8\"/></g><g fill=\"#1d2433\"><circle cx=\"124\" cy=\"61\" r=\"1.8\"/><circle cx=\"132\" cy=\"61\" r=\"1.8\"/></g><path d=\"M124 66 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g fill=\"#1d2433\"><circle cx=\"168\" cy=\"62\" r=\"1.8\"/><circle cx=\"176\" cy=\"62\" r=\"1.8\"/></g><path d=\"M168 67 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_08a",
+   "data": {
+    "back": "nazywam się…",
+    "created": "2026-10-17",
+    "front": "我叫… (wǒ jiào…)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M30 112 V90 Q30 72 52 72 Q74 72 74 90 V112 Z\"/><circle cx=\"52\" cy=\"56\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M30 112 V90 Q30 72 52 72 Q74 72 74 90 V112 Z\"/><circle cx=\"52\" cy=\"56\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M30 112 V90 Q30 72 52 72 Q74 72 74 90 V112 Z\" fill=\"#34d399\"/><circle cx=\"52\" cy=\"56\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"#1d2433\"><circle cx=\"48\" cy=\"55\" r=\"1.8\"/><circle cx=\"56\" cy=\"55\" r=\"1.8\"/></g><path d=\"M48 60 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"98\" y=\"30\" width=\"88\" height=\"70\" rx=\"8\"/><path d=\"M98 50 V38 a8 8 0 0 1 8 -8 H178 a8 8 0 0 1 8 8 V50 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"98\" y=\"30\" width=\"88\" height=\"70\" rx=\"8\"/><path d=\"M98 50 V38 a8 8 0 0 1 8 -8 H178 a8 8 0 0 1 8 8 V50 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"98\" y=\"30\" width=\"88\" height=\"70\" rx=\"8\" fill=\"#fff\"/><path d=\"M98 50 V38 a8 8 0 0 1 8 -8 H178 a8 8 0 0 1 8 8 V50 Z\" fill=\"#ef4444\"/></g><g fill=\"#cbd5e1\"><rect x=\"110\" y=\"62\" width=\"64\" height=\"8\" rx=\"4\"/><rect x=\"110\" y=\"78\" width=\"44\" height=\"8\" rx=\"4\"/></g><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M94 80 Q84 86 82 92\" stroke=\"#fff\" stroke-width=\"13\"/><path d=\"M94 80 Q84 86 82 92\" stroke=\"#1d2433\" stroke-width=\"8\"/><path d=\"M94 80 Q84 86 82 92\" stroke=\"#fff\" stroke-width=\"3\"/></g><polygon points=\"80.0,96.0 87.2,90.1 78.2,86.8\" fill=\"#1d2433\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_08b",
+   "data": {
+    "back": "我叫… (wǒ jiào…)",
+    "created": "2026-10-17",
+    "front": "nazywam się…",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M30 112 V90 Q30 72 52 72 Q74 72 74 90 V112 Z\"/><circle cx=\"52\" cy=\"56\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M30 112 V90 Q30 72 52 72 Q74 72 74 90 V112 Z\"/><circle cx=\"52\" cy=\"56\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M30 112 V90 Q30 72 52 72 Q74 72 74 90 V112 Z\" fill=\"#34d399\"/><circle cx=\"52\" cy=\"56\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"#1d2433\"><circle cx=\"48\" cy=\"55\" r=\"1.8\"/><circle cx=\"56\" cy=\"55\" r=\"1.8\"/></g><path d=\"M48 60 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"98\" y=\"30\" width=\"88\" height=\"70\" rx=\"8\"/><path d=\"M98 50 V38 a8 8 0 0 1 8 -8 H178 a8 8 0 0 1 8 8 V50 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"98\" y=\"30\" width=\"88\" height=\"70\" rx=\"8\"/><path d=\"M98 50 V38 a8 8 0 0 1 8 -8 H178 a8 8 0 0 1 8 8 V50 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"98\" y=\"30\" width=\"88\" height=\"70\" rx=\"8\" fill=\"#fff\"/><path d=\"M98 50 V38 a8 8 0 0 1 8 -8 H178 a8 8 0 0 1 8 8 V50 Z\" fill=\"#ef4444\"/></g><g fill=\"#cbd5e1\"><rect x=\"110\" y=\"62\" width=\"64\" height=\"8\" rx=\"4\"/><rect x=\"110\" y=\"78\" width=\"44\" height=\"8\" rx=\"4\"/></g><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M94 80 Q84 86 82 92\" stroke=\"#fff\" stroke-width=\"13\"/><path d=\"M94 80 Q84 86 82 92\" stroke=\"#1d2433\" stroke-width=\"8\"/><path d=\"M94 80 Q84 86 82 92\" stroke=\"#fff\" stroke-width=\"3\"/></g><polygon points=\"80.0,96.0 87.2,90.1 78.2,86.8\" fill=\"#1d2433\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_09a",
+   "data": {
+    "back": "jak się nazywasz?",
+    "created": "2026-10-17",
+    "front": "你叫什么名字？(nǐ jiào shénme míngzi?)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"16\" y=\"30\" width=\"88\" height=\"70\" rx=\"8\"/><path d=\"M16 50 V38 a8 8 0 0 1 8 -8 H96 a8 8 0 0 1 8 8 V50 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"16\" y=\"30\" width=\"88\" height=\"70\" rx=\"8\"/><path d=\"M16 50 V38 a8 8 0 0 1 8 -8 H96 a8 8 0 0 1 8 8 V50 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"16\" y=\"30\" width=\"88\" height=\"70\" rx=\"8\" fill=\"#fff\"/><path d=\"M16 50 V38 a8 8 0 0 1 8 -8 H96 a8 8 0 0 1 8 8 V50 Z\" fill=\"#3b82f6\"/></g><text x=\"60\" y=\"92\" text-anchor=\"middle\" style=\"font:800 38px system-ui,sans-serif;fill:#ef4444;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M128 112 V92 Q128 74 150 74 Q172 74 172 92 V112 Z\"/><circle cx=\"150\" cy=\"58\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M128 112 V92 Q128 74 150 74 Q172 74 172 92 V112 Z\"/><circle cx=\"150\" cy=\"58\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M128 112 V92 Q128 74 150 74 Q172 74 172 92 V112 Z\" fill=\"#fb923c\"/><circle cx=\"150\" cy=\"58\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"#1d2433\"><circle cx=\"146\" cy=\"57\" r=\"1.8\"/><circle cx=\"154\" cy=\"57\" r=\"1.8\"/></g><ellipse cx=\"150\" cy=\"63\" rx=\"3\" ry=\"3.5\" fill=\"#1d2433\"/><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M132 84 L116 70\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M132 84 L116 70\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M132 84 L116 70\" stroke=\"#fb923c\" stroke-width=\"5\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"113\" cy=\"66\" r=\"6\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"113\" cy=\"66\" r=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"113\" cy=\"66\" r=\"6\" fill=\"#fed7aa\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_09b",
+   "data": {
+    "back": "你叫什么名字？(nǐ jiào shénme míngzi?)",
+    "created": "2026-10-17",
+    "front": "jak się nazywasz?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"16\" y=\"30\" width=\"88\" height=\"70\" rx=\"8\"/><path d=\"M16 50 V38 a8 8 0 0 1 8 -8 H96 a8 8 0 0 1 8 8 V50 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"16\" y=\"30\" width=\"88\" height=\"70\" rx=\"8\"/><path d=\"M16 50 V38 a8 8 0 0 1 8 -8 H96 a8 8 0 0 1 8 8 V50 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"16\" y=\"30\" width=\"88\" height=\"70\" rx=\"8\" fill=\"#fff\"/><path d=\"M16 50 V38 a8 8 0 0 1 8 -8 H96 a8 8 0 0 1 8 8 V50 Z\" fill=\"#3b82f6\"/></g><text x=\"60\" y=\"92\" text-anchor=\"middle\" style=\"font:800 38px system-ui,sans-serif;fill:#ef4444;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M128 112 V92 Q128 74 150 74 Q172 74 172 92 V112 Z\"/><circle cx=\"150\" cy=\"58\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M128 112 V92 Q128 74 150 74 Q172 74 172 92 V112 Z\"/><circle cx=\"150\" cy=\"58\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M128 112 V92 Q128 74 150 74 Q172 74 172 92 V112 Z\" fill=\"#fb923c\"/><circle cx=\"150\" cy=\"58\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"#1d2433\"><circle cx=\"146\" cy=\"57\" r=\"1.8\"/><circle cx=\"154\" cy=\"57\" r=\"1.8\"/></g><ellipse cx=\"150\" cy=\"63\" rx=\"3\" ry=\"3.5\" fill=\"#1d2433\"/><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M132 84 L116 70\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M132 84 L116 70\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M132 84 L116 70\" stroke=\"#fb923c\" stroke-width=\"5\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"113\" cy=\"66\" r=\"6\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"113\" cy=\"66\" r=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"113\" cy=\"66\" r=\"6\" fill=\"#fed7aa\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_10a",
+   "data": {
+    "back": "być (jest)",
+    "created": "2026-10-17",
+    "front": "是 (shì)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"18\" y=\"38\" width=\"50\" height=\"54\" rx=\"10\"/><rect x=\"132\" y=\"38\" width=\"50\" height=\"54\" rx=\"10\"/><rect x=\"82\" y=\"50\" width=\"36\" height=\"10\" rx=\"4\"/><rect x=\"82\" y=\"70\" width=\"36\" height=\"10\" rx=\"4\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"18\" y=\"38\" width=\"50\" height=\"54\" rx=\"10\"/><rect x=\"132\" y=\"38\" width=\"50\" height=\"54\" rx=\"10\"/><rect x=\"82\" y=\"50\" width=\"36\" height=\"10\" rx=\"4\"/><rect x=\"82\" y=\"70\" width=\"36\" height=\"10\" rx=\"4\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"18\" y=\"38\" width=\"50\" height=\"54\" rx=\"10\" fill=\"#60a5fa\"/><rect x=\"132\" y=\"38\" width=\"50\" height=\"54\" rx=\"10\" fill=\"#60a5fa\"/><rect x=\"82\" y=\"50\" width=\"36\" height=\"10\" rx=\"4\" fill=\"#fde047\"/><rect x=\"82\" y=\"70\" width=\"36\" height=\"10\" rx=\"4\" fill=\"#fde047\"/></g><g fill=\"#1d2433\"><circle cx=\"39\" cy=\"61\" r=\"1.8\"/><circle cx=\"47\" cy=\"61\" r=\"1.8\"/></g><path d=\"M39 66 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g fill=\"#1d2433\"><circle cx=\"153\" cy=\"61\" r=\"1.8\"/><circle cx=\"161\" cy=\"61\" r=\"1.8\"/></g><path d=\"M153 66 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_10b",
+   "data": {
+    "back": "是 (shì)",
+    "created": "2026-10-17",
+    "front": "być (jest)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"18\" y=\"38\" width=\"50\" height=\"54\" rx=\"10\"/><rect x=\"132\" y=\"38\" width=\"50\" height=\"54\" rx=\"10\"/><rect x=\"82\" y=\"50\" width=\"36\" height=\"10\" rx=\"4\"/><rect x=\"82\" y=\"70\" width=\"36\" height=\"10\" rx=\"4\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"18\" y=\"38\" width=\"50\" height=\"54\" rx=\"10\"/><rect x=\"132\" y=\"38\" width=\"50\" height=\"54\" rx=\"10\"/><rect x=\"82\" y=\"50\" width=\"36\" height=\"10\" rx=\"4\"/><rect x=\"82\" y=\"70\" width=\"36\" height=\"10\" rx=\"4\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"18\" y=\"38\" width=\"50\" height=\"54\" rx=\"10\" fill=\"#60a5fa\"/><rect x=\"132\" y=\"38\" width=\"50\" height=\"54\" rx=\"10\" fill=\"#60a5fa\"/><rect x=\"82\" y=\"50\" width=\"36\" height=\"10\" rx=\"4\" fill=\"#fde047\"/><rect x=\"82\" y=\"70\" width=\"36\" height=\"10\" rx=\"4\" fill=\"#fde047\"/></g><g fill=\"#1d2433\"><circle cx=\"39\" cy=\"61\" r=\"1.8\"/><circle cx=\"47\" cy=\"61\" r=\"1.8\"/></g><path d=\"M39 66 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g fill=\"#1d2433\"><circle cx=\"153\" cy=\"61\" r=\"1.8\"/><circle cx=\"161\" cy=\"61\" r=\"1.8\"/></g><path d=\"M153 66 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_11a",
+   "data": {
+    "back": "nie",
+    "created": "2026-10-17",
+    "front": "不 (bù)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"64\" cy=\"64\" r=\"40\"/><circle cx=\"64\" cy=\"64\" r=\"27\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"12\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"64\" cy=\"64\" r=\"40\"/><circle cx=\"64\" cy=\"64\" r=\"27\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"64\" cy=\"64\" r=\"40\" fill=\"#ef4444\"/><circle cx=\"64\" cy=\"64\" r=\"27\" fill=\"#fff\"/></g><path d=\"M45 45 L83 83\" stroke=\"#fff\" stroke-width=\"16\" stroke-linecap=\"round\"/><path d=\"M45 45 L83 83\" stroke=\"#1d2433\" stroke-width=\"13\" stroke-linecap=\"round\"/><path d=\"M45 45 L83 83\" stroke=\"#ef4444\" stroke-width=\"8\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M130 112 V92 Q130 74 152 74 Q174 74 174 92 V112 Z\"/><circle cx=\"152\" cy=\"58\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M130 112 V92 Q130 74 152 74 Q174 74 174 92 V112 Z\"/><circle cx=\"152\" cy=\"58\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M130 112 V92 Q130 74 152 74 Q174 74 174 92 V112 Z\" fill=\"#9ca3af\"/><circle cx=\"152\" cy=\"58\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"#1d2433\"><circle cx=\"148\" cy=\"57\" r=\"1.8\"/><circle cx=\"156\" cy=\"57\" r=\"1.8\"/></g><path d=\"M147 64 h10\" stroke=\"#1d2433\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M132 52 q-6 6 0 12 M172 52 q6 6 0 12 M126 48 q-9 10 0 20 M178 48 q9 10 0 20\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_11b",
+   "data": {
+    "back": "不 (bù)",
+    "created": "2026-10-17",
+    "front": "nie",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"64\" cy=\"64\" r=\"40\"/><circle cx=\"64\" cy=\"64\" r=\"27\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"12\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"64\" cy=\"64\" r=\"40\"/><circle cx=\"64\" cy=\"64\" r=\"27\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"64\" cy=\"64\" r=\"40\" fill=\"#ef4444\"/><circle cx=\"64\" cy=\"64\" r=\"27\" fill=\"#fff\"/></g><path d=\"M45 45 L83 83\" stroke=\"#fff\" stroke-width=\"16\" stroke-linecap=\"round\"/><path d=\"M45 45 L83 83\" stroke=\"#1d2433\" stroke-width=\"13\" stroke-linecap=\"round\"/><path d=\"M45 45 L83 83\" stroke=\"#ef4444\" stroke-width=\"8\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M130 112 V92 Q130 74 152 74 Q174 74 174 92 V112 Z\"/><circle cx=\"152\" cy=\"58\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M130 112 V92 Q130 74 152 74 Q174 74 174 92 V112 Z\"/><circle cx=\"152\" cy=\"58\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M130 112 V92 Q130 74 152 74 Q174 74 174 92 V112 Z\" fill=\"#9ca3af\"/><circle cx=\"152\" cy=\"58\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"#1d2433\"><circle cx=\"148\" cy=\"57\" r=\"1.8\"/><circle cx=\"156\" cy=\"57\" r=\"1.8\"/></g><path d=\"M147 64 h10\" stroke=\"#1d2433\" stroke-width=\"2.2\" stroke-linecap=\"round\"/><path d=\"M132 52 q-6 6 0 12 M172 52 q6 6 0 12 M126 48 q-9 10 0 20 M178 48 q9 10 0 20\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_12a",
+   "data": {
+    "back": "uczeń, student",
+    "created": "2026-10-17",
+    "front": "学生 (xuésheng)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"34\" y=\"36\" width=\"68\" height=\"80\" rx=\"18\"/><rect x=\"44\" y=\"76\" width=\"48\" height=\"30\" rx=\"8\"/><rect x=\"118\" y=\"44\" width=\"50\" height=\"66\" rx=\"4\"/><path d=\"M178 34 L190 40 L162 104 L154 112 L150 100 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"11\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M50 40 a18 18 0 0 1 36 0\"  fill=\"none\"/><rect x=\"34\" y=\"36\" width=\"68\" height=\"80\" rx=\"18\"/><rect x=\"44\" y=\"76\" width=\"48\" height=\"30\" rx=\"8\"/><rect x=\"118\" y=\"44\" width=\"50\" height=\"66\" rx=\"4\"/><path d=\"M178 34 L190 40 L162 104 L154 112 L150 100 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M50 40 a18 18 0 0 1 36 0\"  fill=\"none\"/><rect x=\"34\" y=\"36\" width=\"68\" height=\"80\" rx=\"18\" fill=\"#3b82f6\"/><rect x=\"44\" y=\"76\" width=\"48\" height=\"30\" rx=\"8\" fill=\"#60a5fa\"/><rect x=\"118\" y=\"44\" width=\"50\" height=\"66\" rx=\"4\" fill=\"#fde047\"/><path d=\"M178 34 L190 40 L162 104 L154 112 L150 100 Z\" fill=\"#fb923c\"/></g><path d=\"M44 90 h48 M124 60 h38 M124 72 h38 M124 84 h28\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><rect x=\"62\" y=\"84\" width=\"12\" height=\"8\" rx=\"2\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_12b",
+   "data": {
+    "back": "学生 (xuésheng)",
+    "created": "2026-10-17",
+    "front": "uczeń, student",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"34\" y=\"36\" width=\"68\" height=\"80\" rx=\"18\"/><rect x=\"44\" y=\"76\" width=\"48\" height=\"30\" rx=\"8\"/><rect x=\"118\" y=\"44\" width=\"50\" height=\"66\" rx=\"4\"/><path d=\"M178 34 L190 40 L162 104 L154 112 L150 100 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"11\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M50 40 a18 18 0 0 1 36 0\"  fill=\"none\"/><rect x=\"34\" y=\"36\" width=\"68\" height=\"80\" rx=\"18\"/><rect x=\"44\" y=\"76\" width=\"48\" height=\"30\" rx=\"8\"/><rect x=\"118\" y=\"44\" width=\"50\" height=\"66\" rx=\"4\"/><path d=\"M178 34 L190 40 L162 104 L154 112 L150 100 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M50 40 a18 18 0 0 1 36 0\"  fill=\"none\"/><rect x=\"34\" y=\"36\" width=\"68\" height=\"80\" rx=\"18\" fill=\"#3b82f6\"/><rect x=\"44\" y=\"76\" width=\"48\" height=\"30\" rx=\"8\" fill=\"#60a5fa\"/><rect x=\"118\" y=\"44\" width=\"50\" height=\"66\" rx=\"4\" fill=\"#fde047\"/><path d=\"M178 34 L190 40 L162 104 L154 112 L150 100 Z\" fill=\"#fb923c\"/></g><path d=\"M44 90 h48 M124 60 h38 M124 72 h38 M124 84 h28\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><rect x=\"62\" y=\"84\" width=\"12\" height=\"8\" rx=\"2\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_13a",
+   "data": {
+    "back": "nauczyciel",
+    "created": "2026-10-17",
+    "front": "老师 (lǎoshī)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fef3c7\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"14\" y=\"14\" width=\"114\" height=\"76\" rx=\"6\"/><rect x=\"20\" y=\"90\" width=\"102\" height=\"6\" rx=\"2\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"14\" y=\"14\" width=\"114\" height=\"76\" rx=\"6\"/><rect x=\"20\" y=\"90\" width=\"102\" height=\"6\" rx=\"2\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"14\" y=\"14\" width=\"114\" height=\"76\" rx=\"6\" fill=\"#15803d\"/><rect x=\"20\" y=\"90\" width=\"102\" height=\"6\" rx=\"2\" fill=\"#b45309\"/></g><g fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M32 70 L52 32 L72 70 Z\"/><path d=\"M84 40 q8 -8 16 0 t16 0 M84 56 h30 M84 68 h18\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M140 112 V90 Q140 72 162 72 Q184 72 184 90 V112 Z\"/><circle cx=\"162\" cy=\"56\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M140 112 V90 Q140 72 162 72 Q184 72 184 90 V112 Z\"/><circle cx=\"162\" cy=\"56\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M140 112 V90 Q140 72 162 72 Q184 72 184 90 V112 Z\" fill=\"#a78bfa\"/><circle cx=\"162\" cy=\"56\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"#1d2433\"><circle cx=\"158\" cy=\"55\" r=\"1.8\"/><circle cx=\"166\" cy=\"55\" r=\"1.8\"/></g><path d=\"M158 60 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M154 54 h16\" stroke=\"#1d2433\" stroke-width=\"2\" /><circle cx=\"157\" cy=\"55\" r=\"4\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"2\"/><circle cx=\"167\" cy=\"55\" r=\"4\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"2\"/><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M144 84 L132 74\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M144 84 L132 74\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M144 84 L132 74\" stroke=\"#a78bfa\" stroke-width=\"5\"/></g><path d=\"M134 76 L104 52\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"133\" cy=\"75\" r=\"6\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"133\" cy=\"75\" r=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"133\" cy=\"75\" r=\"6\" fill=\"#fed7aa\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_13b",
+   "data": {
+    "back": "老师 (lǎoshī)",
+    "created": "2026-10-17",
+    "front": "nauczyciel",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fef3c7\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"14\" y=\"14\" width=\"114\" height=\"76\" rx=\"6\"/><rect x=\"20\" y=\"90\" width=\"102\" height=\"6\" rx=\"2\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"14\" y=\"14\" width=\"114\" height=\"76\" rx=\"6\"/><rect x=\"20\" y=\"90\" width=\"102\" height=\"6\" rx=\"2\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"14\" y=\"14\" width=\"114\" height=\"76\" rx=\"6\" fill=\"#15803d\"/><rect x=\"20\" y=\"90\" width=\"102\" height=\"6\" rx=\"2\" fill=\"#b45309\"/></g><g fill=\"none\" stroke=\"#fff\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M32 70 L52 32 L72 70 Z\"/><path d=\"M84 40 q8 -8 16 0 t16 0 M84 56 h30 M84 68 h18\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M140 112 V90 Q140 72 162 72 Q184 72 184 90 V112 Z\"/><circle cx=\"162\" cy=\"56\" r=\"12\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M140 112 V90 Q140 72 162 72 Q184 72 184 90 V112 Z\"/><circle cx=\"162\" cy=\"56\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M140 112 V90 Q140 72 162 72 Q184 72 184 90 V112 Z\" fill=\"#a78bfa\"/><circle cx=\"162\" cy=\"56\" r=\"12\" fill=\"#fed7aa\"/></g><g fill=\"#1d2433\"><circle cx=\"158\" cy=\"55\" r=\"1.8\"/><circle cx=\"166\" cy=\"55\" r=\"1.8\"/></g><path d=\"M158 60 q4 4 8 0\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M154 54 h16\" stroke=\"#1d2433\" stroke-width=\"2\" /><circle cx=\"157\" cy=\"55\" r=\"4\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"2\"/><circle cx=\"167\" cy=\"55\" r=\"4\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"2\"/><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M144 84 L132 74\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M144 84 L132 74\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M144 84 L132 74\" stroke=\"#a78bfa\" stroke-width=\"5\"/></g><path d=\"M134 76 L104 52\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"133\" cy=\"75\" r=\"6\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"133\" cy=\"75\" r=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"133\" cy=\"75\" r=\"6\" fill=\"#fed7aa\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_14a",
+   "data": {
+    "back": "Chiny",
+    "created": "2026-10-17",
+    "front": "中国 (Zhōngguó)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"34\" y=\"18\" width=\"7\" height=\"104\" rx=\"3\"/><rect x=\"41\" y=\"22\" width=\"120\" height=\"80\" rx=\"2\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"34\" y=\"18\" width=\"7\" height=\"104\" rx=\"3\"/><rect x=\"41\" y=\"22\" width=\"120\" height=\"80\" rx=\"2\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"34\" y=\"18\" width=\"7\" height=\"104\" rx=\"3\" fill=\"#9ca3af\"/><rect x=\"41\" y=\"22\" width=\"120\" height=\"80\" rx=\"2\" fill=\"#ef4444\"/></g><g fill=\"#fde047\"><polygon points=\"61.0,30.0 63.8,38.1 72.4,38.3 65.6,43.5 68.1,51.7 61.0,46.8 53.9,51.7 56.4,43.5 49.6,38.3 58.2,38.1\"/><polygon points=\"83.1,26.6 82.5,29.4 84.9,30.9 82.0,31.2 81.3,34.0 80.2,31.4 77.3,31.6 79.4,29.6 78.4,27.0 80.9,28.4\"/><polygon points=\"89.6,34.0 90.1,36.8 92.9,37.3 90.4,38.7 90.9,41.5 88.8,39.6 86.2,40.9 87.4,38.3 85.4,36.2 88.2,36.6\"/><polygon points=\"87.9,46.2 89.5,48.5 92.3,47.8 90.6,50.1 92.2,52.5 89.4,51.5 87.6,53.8 87.7,50.9 85.0,49.9 87.7,49.0\"/><polygon points=\"78.5,54.8 80.9,56.4 83.2,54.7 82.5,57.5 84.8,59.1 82.0,59.3 81.1,62.0 80.1,59.3 77.2,59.4 79.5,57.6\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_14b",
+   "data": {
+    "back": "中国 (Zhōngguó)",
+    "created": "2026-10-17",
+    "front": "Chiny",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"34\" y=\"18\" width=\"7\" height=\"104\" rx=\"3\"/><rect x=\"41\" y=\"22\" width=\"120\" height=\"80\" rx=\"2\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"34\" y=\"18\" width=\"7\" height=\"104\" rx=\"3\"/><rect x=\"41\" y=\"22\" width=\"120\" height=\"80\" rx=\"2\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"34\" y=\"18\" width=\"7\" height=\"104\" rx=\"3\" fill=\"#9ca3af\"/><rect x=\"41\" y=\"22\" width=\"120\" height=\"80\" rx=\"2\" fill=\"#ef4444\"/></g><g fill=\"#fde047\"><polygon points=\"61.0,30.0 63.8,38.1 72.4,38.3 65.6,43.5 68.1,51.7 61.0,46.8 53.9,51.7 56.4,43.5 49.6,38.3 58.2,38.1\"/><polygon points=\"83.1,26.6 82.5,29.4 84.9,30.9 82.0,31.2 81.3,34.0 80.2,31.4 77.3,31.6 79.4,29.6 78.4,27.0 80.9,28.4\"/><polygon points=\"89.6,34.0 90.1,36.8 92.9,37.3 90.4,38.7 90.9,41.5 88.8,39.6 86.2,40.9 87.4,38.3 85.4,36.2 88.2,36.6\"/><polygon points=\"87.9,46.2 89.5,48.5 92.3,47.8 90.6,50.1 92.2,52.5 89.4,51.5 87.6,53.8 87.7,50.9 85.0,49.9 87.7,49.0\"/><polygon points=\"78.5,54.8 80.9,56.4 83.2,54.7 82.5,57.5 84.8,59.1 82.0,59.3 81.1,62.0 80.1,59.3 77.2,59.4 79.5,57.6\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_15a",
+   "data": {
+    "back": "Polska",
+    "created": "2026-10-17",
+    "front": "波兰 (Bōlán)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"34\" y=\"18\" width=\"7\" height=\"104\" rx=\"3\"/><path d=\"M41 22 H161 V62 H41 Z\"/><path d=\"M41 62 H161 V102 H41 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"34\" y=\"18\" width=\"7\" height=\"104\" rx=\"3\"/><path d=\"M41 22 H161 V62 H41 Z\"/><path d=\"M41 62 H161 V102 H41 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"34\" y=\"18\" width=\"7\" height=\"104\" rx=\"3\" fill=\"#9ca3af\"/><path d=\"M41 22 H161 V62 H41 Z\" fill=\"#fff\"/><path d=\"M41 62 H161 V102 H41 Z\" fill=\"#ef4444\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_15b",
+   "data": {
+    "back": "波兰 (Bōlán)",
+    "created": "2026-10-17",
+    "front": "Polska",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"34\" y=\"18\" width=\"7\" height=\"104\" rx=\"3\"/><path d=\"M41 22 H161 V62 H41 Z\"/><path d=\"M41 62 H161 V102 H41 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"34\" y=\"18\" width=\"7\" height=\"104\" rx=\"3\"/><path d=\"M41 22 H161 V62 H41 Z\"/><path d=\"M41 62 H161 V102 H41 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"34\" y=\"18\" width=\"7\" height=\"104\" rx=\"3\" fill=\"#9ca3af\"/><path d=\"M41 22 H161 V62 H41 Z\" fill=\"#fff\"/><path d=\"M41 62 H161 V102 H41 Z\" fill=\"#ef4444\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_16a",
+   "data": {
+    "back": "1, 2, 3",
+    "created": "2026-10-17",
+    "front": "一 二 三 (yī èr sān)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\" fill=\"#334155\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\" fill=\"#e8f1ff\"/></g><rect x=\"70\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><text x=\"100\" y=\"34\" text-anchor=\"middle\" style=\"font:800 20px system-ui,sans-serif;fill:#1d2433;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M188 51 H156\" stroke=\"#fff\" stroke-width=\"14\"/><path d=\"M188 51 H156\" stroke=\"#1d2433\" stroke-width=\"9\"/><path d=\"M188 51 H156\" stroke=\"#ef4444\" stroke-width=\"4\"/></g><polygon points=\"148.0,51.0 158.0,57.0 158.0,45.0\" fill=\"#1d2433\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_16b",
+   "data": {
+    "back": "一 二 三 (yī èr sān)",
+    "created": "2026-10-17",
+    "front": "1, 2, 3",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\" fill=\"#334155\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\" fill=\"#e8f1ff\"/></g><rect x=\"70\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><text x=\"100\" y=\"34\" text-anchor=\"middle\" style=\"font:800 20px system-ui,sans-serif;fill:#1d2433;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M188 51 H156\" stroke=\"#fff\" stroke-width=\"14\"/><path d=\"M188 51 H156\" stroke=\"#1d2433\" stroke-width=\"9\"/><path d=\"M188 51 H156\" stroke=\"#ef4444\" stroke-width=\"4\"/></g><polygon points=\"148.0,51.0 158.0,57.0 158.0,45.0\" fill=\"#1d2433\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_17a",
+   "data": {
+    "back": "4, 5, 6",
+    "created": "2026-10-17",
+    "front": "四 五 六 (sì wǔ liù)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\" fill=\"#334155\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\" fill=\"#e8f1ff\"/></g><rect x=\"70\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><text x=\"100\" y=\"34\" text-anchor=\"middle\" style=\"font:800 20px system-ui,sans-serif;fill:#1d2433;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M188 70 H156\" stroke=\"#fff\" stroke-width=\"14\"/><path d=\"M188 70 H156\" stroke=\"#1d2433\" stroke-width=\"9\"/><path d=\"M188 70 H156\" stroke=\"#ef4444\" stroke-width=\"4\"/></g><polygon points=\"148.0,70.0 158.0,76.0 158.0,64.0\" fill=\"#1d2433\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_17b",
+   "data": {
+    "back": "四 五 六 (sì wǔ liù)",
+    "created": "2026-10-17",
+    "front": "4, 5, 6",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\" fill=\"#334155\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\" fill=\"#e8f1ff\"/></g><rect x=\"70\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><text x=\"100\" y=\"34\" text-anchor=\"middle\" style=\"font:800 20px system-ui,sans-serif;fill:#1d2433;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M188 70 H156\" stroke=\"#fff\" stroke-width=\"14\"/><path d=\"M188 70 H156\" stroke=\"#1d2433\" stroke-width=\"9\"/><path d=\"M188 70 H156\" stroke=\"#ef4444\" stroke-width=\"4\"/></g><polygon points=\"148.0,70.0 158.0,76.0 158.0,64.0\" fill=\"#1d2433\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_18a",
+   "data": {
+    "back": "7, 8, 9, 10",
+    "created": "2026-10-17",
+    "front": "七 八 九 十 (qī bā jiǔ shí)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\" fill=\"#334155\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\" fill=\"#e8f1ff\"/></g><rect x=\"70\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><text x=\"100\" y=\"34\" text-anchor=\"middle\" style=\"font:800 20px system-ui,sans-serif;fill:#1d2433;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M188 89 H156\" stroke=\"#fff\" stroke-width=\"14\"/><path d=\"M188 89 H156\" stroke=\"#1d2433\" stroke-width=\"9\"/><path d=\"M188 89 H156\" stroke=\"#ef4444\" stroke-width=\"4\"/></g><polygon points=\"148.0,89.0 158.0,95.0 158.0,83.0\" fill=\"#1d2433\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_18b",
+   "data": {
+    "back": "七 八 九 十 (qī bā jiǔ shí)",
+    "created": "2026-10-17",
+    "front": "7, 8, 9, 10",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "vocab",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"60\" y=\"6\" width=\"80\" height=\"118\" rx=\"12\" fill=\"#334155\"/><rect x=\"68\" y=\"14\" width=\"64\" height=\"24\" rx=\"4\" fill=\"#e8f1ff\"/></g><rect x=\"70\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"44\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"63\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"82\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"91\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"112\" y=\"101\" width=\"18\" height=\"15\" rx=\"4\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"2\"/><text x=\"100\" y=\"34\" text-anchor=\"middle\" style=\"font:800 20px system-ui,sans-serif;fill:#1d2433;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M188 89 H156\" stroke=\"#fff\" stroke-width=\"14\"/><path d=\"M188 89 H156\" stroke=\"#1d2433\" stroke-width=\"9\"/><path d=\"M188 89 H156\" stroke=\"#ef4444\" stroke-width=\"4\"/></g><polygon points=\"148.0,89.0 158.0,95.0 158.0,83.0\" fill=\"#1d2433\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_q01",
+   "data": {
+    "back": "4 tony + ton neutralny",
+    "created": "2026-10-17",
+    "front": "Ile tonów ma chiński mandaryński (plus ton neutralny)?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "qa",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"46\" cy=\"70\" r=\"28\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"46\" cy=\"70\" r=\"28\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"46\" cy=\"70\" r=\"28\" fill=\"#fde047\"/></g><g fill=\"#1d2433\"><circle cx=\"37\" cy=\"62\" r=\"2.6\"/><circle cx=\"53\" cy=\"62\" r=\"2.6\"/></g><ellipse cx=\"48\" cy=\"80\" rx=\"7\" ry=\"8\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M80 60 q6 10 0 20 M88 54 q10 16 0 32\" stroke=\"#1d2433\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><ellipse cx=\"111\" cy=\"94\" rx=\"10\" ry=\"7\"/><ellipse cx=\"163\" cy=\"84\" rx=\"10\" ry=\"7\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M118 92 V40 L170 30 V82\" fill=\"none\"/><ellipse cx=\"111\" cy=\"94\" rx=\"10\" ry=\"7\"/><ellipse cx=\"163\" cy=\"84\" rx=\"10\" ry=\"7\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M118 92 V40 L170 30 V82\" fill=\"none\"/><ellipse cx=\"111\" cy=\"94\" rx=\"10\" ry=\"7\" fill=\"#1d2433\"/><ellipse cx=\"163\" cy=\"84\" rx=\"10\" ry=\"7\" fill=\"#1d2433\"/></g><text x=\"144\" y=\"76\" text-anchor=\"middle\" style=\"font:800 32px system-ui,sans-serif;fill:#ef4444;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text></svg>",
+    "lit": "W chińskim każda sylaba ma swoją melodię (wysokość głosu). Są 4 melodie oznaczane znaczkiem nad samogłoską oraz ton neutralny: krótki, lekki, bez znaczka (np. druga sylaba w xièxie).",
+    "why": "Melodia zmienia znaczenie sylaby, więc rozróżnia się 4 tony; piąty, neutralny, to tylko słaba, nieakcentowana sylaba.",
+    "ex": "mā = mama, má = konopie, mǎ = koń, mà = besztać, a ma na końcu zdania (ton neutralny) robi z niego pytanie. Na sprawdzianie: chiński ma 4 tony + ton neutralny."
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_q02",
+   "data": {
+    "back": "kreską poziomą: ā (wysoki, równy)",
+    "created": "2026-10-17",
+    "front": "Jak oznacza się 1. ton w pinyinie?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "qa",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"46\" cy=\"70\" r=\"28\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"46\" cy=\"70\" r=\"28\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"46\" cy=\"70\" r=\"28\" fill=\"#fde047\"/></g><g fill=\"#1d2433\"><circle cx=\"37\" cy=\"62\" r=\"2.6\"/><circle cx=\"53\" cy=\"62\" r=\"2.6\"/></g><ellipse cx=\"48\" cy=\"80\" rx=\"7\" ry=\"8\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M80 60 q6 10 0 20 M88 54 q10 16 0 32\" stroke=\"#1d2433\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"98\" y=\"22\" width=\"88\" height=\"88\" rx=\"8\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"98\" y=\"22\" width=\"88\" height=\"88\" rx=\"8\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"98\" y=\"22\" width=\"88\" height=\"88\" rx=\"8\" fill=\"#fff\"/></g><g stroke=\"#cbd5e1\" stroke-width=\"1.5\" stroke-dasharray=\"4 4\"><path d=\"M106 38 H178\"/><path d=\"M106 54 H178\"/><path d=\"M106 70 H178\"/><path d=\"M106 86 H178\"/><path d=\"M106 102 H178\"/></g><text x=\"142\" y=\"80\" text-anchor=\"middle\" style=\"font:800 38px system-ui,sans-serif;fill:#9ca3af;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"24\" r=\"14\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"24\" r=\"14\" fill=\"#ef4444\"/></g><text x=\"100\" y=\"29\" text-anchor=\"middle\" style=\"font:800 15px system-ui,sans-serif;fill:#fff\">1</text></svg>",
+    "lit": "Znaczek tonu rysuje kształt melodii. 1. ton śpiewa się wysoko i cały czas na tej samej wysokości, jak długie „piiip” testu dźwięku w telefonie.",
+    "why": "Głos się nie zmienia, więc znaczek to płaska, pozioma kreska nad samogłoską.",
+    "ex": "mā (mama), sān (trzy), Zhōngguó: pierwsza sylaba ma 1. ton. Na sprawdzianie: 1. ton oznacza się kreską poziomą (ā), bo głos jest wysoki i równy."
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_q03",
+   "data": {
+    "back": "wznoszący, jak pytanie „co?”",
+    "created": "2026-10-17",
+    "front": "Jak brzmi 2. ton (á)?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "qa",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"46\" cy=\"70\" r=\"28\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"46\" cy=\"70\" r=\"28\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"46\" cy=\"70\" r=\"28\" fill=\"#fde047\"/></g><g fill=\"#1d2433\"><circle cx=\"37\" cy=\"62\" r=\"2.6\"/><circle cx=\"53\" cy=\"62\" r=\"2.6\"/></g><ellipse cx=\"48\" cy=\"80\" rx=\"7\" ry=\"8\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M80 60 q6 10 0 20 M88 54 q10 16 0 32\" stroke=\"#1d2433\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"98\" y=\"22\" width=\"88\" height=\"88\" rx=\"8\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"98\" y=\"22\" width=\"88\" height=\"88\" rx=\"8\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"98\" y=\"22\" width=\"88\" height=\"88\" rx=\"8\" fill=\"#fff\"/></g><g stroke=\"#cbd5e1\" stroke-width=\"1.5\" stroke-dasharray=\"4 4\"><path d=\"M106 38 H178\"/><path d=\"M106 54 H178\"/><path d=\"M106 70 H178\"/><path d=\"M106 86 H178\"/><path d=\"M106 102 H178\"/></g><text x=\"142\" y=\"80\" text-anchor=\"middle\" style=\"font:800 38px system-ui,sans-serif;fill:#9ca3af;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"24\" r=\"14\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"24\" r=\"14\" fill=\"#3b82f6\"/></g><text x=\"100\" y=\"29\" text-anchor=\"middle\" style=\"font:800 15px system-ui,sans-serif;fill:#fff\">2</text></svg>",
+    "lit": "W 2. tonie głos idzie od średniego do wysokiego, tak jak gdy zdziwiony pytasz po polsku „co?”. Znaczek ´ też idzie w górę w prawo.",
+    "why": "Znaczek wskazuje kierunek głosu: w górę, więc 2. ton jest wznoszący, jak pytanie.",
+    "ex": "má (konopie), xué w xuésheng (uczeń). Na sprawdzianie: 2. ton (á) jest wznoszący, jak pytanie „co?”."
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_q04",
+   "data": {
+    "back": "opada i wznosi się (dołek)",
+    "created": "2026-10-17",
+    "front": "Jak brzmi 3. ton (ǎ)?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "qa",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"46\" cy=\"70\" r=\"28\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"46\" cy=\"70\" r=\"28\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"46\" cy=\"70\" r=\"28\" fill=\"#fde047\"/></g><g fill=\"#1d2433\"><circle cx=\"37\" cy=\"62\" r=\"2.6\"/><circle cx=\"53\" cy=\"62\" r=\"2.6\"/></g><ellipse cx=\"48\" cy=\"80\" rx=\"7\" ry=\"8\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M80 60 q6 10 0 20 M88 54 q10 16 0 32\" stroke=\"#1d2433\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"98\" y=\"22\" width=\"88\" height=\"88\" rx=\"8\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"98\" y=\"22\" width=\"88\" height=\"88\" rx=\"8\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"98\" y=\"22\" width=\"88\" height=\"88\" rx=\"8\" fill=\"#fff\"/></g><g stroke=\"#cbd5e1\" stroke-width=\"1.5\" stroke-dasharray=\"4 4\"><path d=\"M106 38 H178\"/><path d=\"M106 54 H178\"/><path d=\"M106 70 H178\"/><path d=\"M106 86 H178\"/><path d=\"M106 102 H178\"/></g><text x=\"142\" y=\"80\" text-anchor=\"middle\" style=\"font:800 38px system-ui,sans-serif;fill:#9ca3af;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"24\" r=\"14\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"24\" r=\"14\" fill=\"#15803d\"/></g><text x=\"100\" y=\"29\" text-anchor=\"middle\" style=\"font:800 15px system-ui,sans-serif;fill:#fff\">3</text></svg>",
+    "lit": "W 3. tonie głos najpierw schodzi nisko, a potem trochę wraca w górę, jak niedowierzające „nooo?”. Znaczek ˇ wygląda jak mały dołek.",
+    "why": "Kształt znaczka ˇ to dołek, czyli głos opada i znów się wznosi.",
+    "ex": "nǐ hǎo: obie sylaby mają 3. ton. Gdy dwa 3. tony stoją obok siebie, pierwszy czyta się jak 2.: ní hǎo."
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_q05",
+   "data": {
+    "back": "krótki, ostro opadający",
+    "created": "2026-10-17",
+    "front": "Jak brzmi 4. ton (à)?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "qa",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"46\" cy=\"70\" r=\"28\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"46\" cy=\"70\" r=\"28\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"46\" cy=\"70\" r=\"28\" fill=\"#fde047\"/></g><g fill=\"#1d2433\"><circle cx=\"37\" cy=\"62\" r=\"2.6\"/><circle cx=\"53\" cy=\"62\" r=\"2.6\"/></g><ellipse cx=\"48\" cy=\"80\" rx=\"7\" ry=\"8\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M80 60 q6 10 0 20 M88 54 q10 16 0 32\" stroke=\"#1d2433\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"98\" y=\"22\" width=\"88\" height=\"88\" rx=\"8\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"98\" y=\"22\" width=\"88\" height=\"88\" rx=\"8\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"98\" y=\"22\" width=\"88\" height=\"88\" rx=\"8\" fill=\"#fff\"/></g><g stroke=\"#cbd5e1\" stroke-width=\"1.5\" stroke-dasharray=\"4 4\"><path d=\"M106 38 H178\"/><path d=\"M106 54 H178\"/><path d=\"M106 70 H178\"/><path d=\"M106 86 H178\"/><path d=\"M106 102 H178\"/></g><text x=\"142\" y=\"80\" text-anchor=\"middle\" style=\"font:800 38px system-ui,sans-serif;fill:#9ca3af;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"24\" r=\"14\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"24\" r=\"14\" fill=\"#7c3aed\"/></g><text x=\"100\" y=\"29\" text-anchor=\"middle\" style=\"font:800 15px system-ui,sans-serif;fill:#fff\">4</text></svg>",
+    "lit": "W 4. tonie głos spada z wysoka w dół krótko i stanowczo, jak komenda „Stój!” albo ostre „Nie!”. Znaczek ` opada w prawo.",
+    "why": "Znaczek idzie ostro w dół, więc 4. ton jest krótki i opadający.",
+    "ex": "zàijiàn: obie sylaby mają 4. ton. bù (nie) też ma 4. ton, ale przed innym 4. tonem zmienia się na 2.: bú kèqi."
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_c1_q06",
+   "data": {
+    "back": "zapis wymowy chińskiej alfabetem łacińskim",
+    "created": "2026-10-17",
+    "front": "Co to jest pinyin?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_chi",
+    "type": "qa",
+    "unitId": "un_c1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fef3c7\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M14 26 H74 a8 8 0 0 1 8 8 V70 a8 8 0 0 1 -8 8 H40 L28 92 V78 H22 a8 8 0 0 1 -8 -8 V34 a8 8 0 0 1 8 -8 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M14 26 H74 a8 8 0 0 1 8 8 V70 a8 8 0 0 1 -8 8 H40 L28 92 V78 H22 a8 8 0 0 1 -8 -8 V34 a8 8 0 0 1 8 -8 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M14 26 H74 a8 8 0 0 1 8 8 V70 a8 8 0 0 1 -8 8 H40 L28 92 V78 H22 a8 8 0 0 1 -8 -8 V34 a8 8 0 0 1 8 -8 Z\" fill=\"#fff\"/></g><path d=\"M24 52 l6 -10 l6 20 l6 -24 l6 28 l6 -20 l6 12 l6 -6\" stroke=\"#3b82f6\" stroke-width=\"3\" fill=\"none\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><g fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M88 64 H108\" stroke=\"#fff\" stroke-width=\"15\"/><path d=\"M88 64 H108\" stroke=\"#1d2433\" stroke-width=\"10\"/><path d=\"M88 64 H108\" stroke=\"#fb923c\" stroke-width=\"5\"/></g><polygon points=\"118.0,64.0 108.0,58.0 108.0,70.0\" fill=\"#1d2433\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"124\" y=\"22\" width=\"62\" height=\"84\" rx=\"5\"/><rect x=\"124\" y=\"22\" width=\"10\" height=\"84\" rx=\"3\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"124\" y=\"22\" width=\"62\" height=\"84\" rx=\"5\"/><rect x=\"124\" y=\"22\" width=\"10\" height=\"84\" rx=\"3\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"124\" y=\"22\" width=\"62\" height=\"84\" rx=\"5\" fill=\"#fff\"/><rect x=\"124\" y=\"22\" width=\"10\" height=\"84\" rx=\"3\" fill=\"#ef4444\"/></g><path d=\"M142 44 q4 -6 8 0 t8 0 t8 0 t8 0 M142 62 q4 -6 8 0 t8 0 t8 0 M142 80 q4 -6 8 0 t8 0 t8 0 t8 0\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/></svg>",
+    "lit": "Chińskie znaki nie pokazują, jak się je czyta. W 1958 r. w Chinach zatwierdzono pinyin: zapis dźwięków literami łacińskimi ze znaczkami tonów.",
+    "why": "Pinyin znaczy dosłownie „składanie dźwięków”, więc zapisuje wymowę literami, które znamy (łacinką).",
+    "ex": "Chińczycy piszą w telefonie właśnie pinyinem: wpisujesz „nihao”, a klawiatura podpowiada właściwe znaki. Na sprawdzianie: pinyin to zapis wymowy chińskiej alfabetem łacińskim."
+   }
+  }
+ ]
+}

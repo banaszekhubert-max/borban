@@ -1,0 +1,792 @@
+{
+ "format": "borban-pack-1",
+ "meta": {
+  "subject": "Język niemiecki",
+  "source": "BorBan, materiał kl. 1 technikum (Warszawa), wrzesień–październik 2026",
+  "standard": "docs/STANDARD-KART.md"
+ },
+ "docs": [
+  {
+   "col": "subjects",
+   "id": "sb_niem",
+   "data": {
+    "book": "Ein tolles Team 1 (Hueber)",
+    "color": "purple",
+    "name": "Język niemiecki",
+    "order": 3
+   }
+  },
+  {
+   "col": "units",
+   "id": "un_n1",
+   "data": {
+    "order": 1,
+    "subjectId": "sb_niem",
+    "title": "Powitania i przedstawianie się",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 200\" role=\"img\" aria-label=\"Schemat rozmowy: dwie osoby witają się, przedstawiają i żegnają\"><rect width=\"320\" height=\"200\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M25.6 164v-32q0 -12.8 14.4 -12.8q14.4 0 14.4 12.8v32z\"/><circle cx=\"40\" cy=\"100\" r=\"14.4\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M25.6 164v-32q0 -12.8 14.4 -12.8q14.4 0 14.4 12.8v32z\"/><circle cx=\"40\" cy=\"100\" r=\"14.4\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M25.6 164v-32q0 -12.8 14.4 -12.8q14.4 0 14.4 12.8v32z\" fill=\"#3b82f6\"/><circle cx=\"40\" cy=\"100\" r=\"14.4\" fill=\"#fcd5b4\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M265.6 164v-32q0 -12.8 14.4 -12.8q14.4 0 14.4 12.8v32z\"/><circle cx=\"280\" cy=\"100\" r=\"14.4\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M265.6 164v-32q0 -12.8 14.4 -12.8q14.4 0 14.4 12.8v32z\"/><circle cx=\"280\" cy=\"100\" r=\"14.4\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M265.6 164v-32q0 -12.8 14.4 -12.8q14.4 0 14.4 12.8v32z\" fill=\"#f472b6\"/><circle cx=\"280\" cy=\"100\" r=\"14.4\" fill=\"#fcd5b4\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M68 14H228Q238 14 238 24V52Q238 62 228 62H76L50 84L64 62Q58 62 58 52V24Q58 14 68 14z\"/><path d=\"M150 70H252Q262 70 262 80V84L270 98L262 96V102Q262 112 252 112H150Q140 112 140 102V80Q140 70 150 70z\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M68 14H228Q238 14 238 24V52Q238 62 228 62H76L50 84L64 62Q58 62 58 52V24Q58 14 68 14z\"/><path d=\"M150 70H252Q262 70 262 80V84L270 98L262 96V102Q262 112 252 112H150Q140 112 140 102V80Q140 70 150 70z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M68 14H228Q238 14 238 24V52Q238 62 228 62H76L50 84L64 62Q58 62 58 52V24Q58 14 68 14z\" fill=\"#fff\"/><path d=\"M150 70H252Q262 70 262 80V84L270 98L262 96V102Q262 112 252 112H150Q140 112 140 102V80Q140 70 150 70z\" fill=\"#fff\"/></g><text x=\"148\" y=\"34\" text-anchor=\"middle\" style=\"font:700 12px system-ui,sans-serif;fill:#1d2433\">Hallo! Wie heißt du?</text><text x=\"148\" y=\"52\" text-anchor=\"middle\" style=\"font:500 11px system-ui,sans-serif;fill:#6b7280\">→ powitanie, pytanie o imię</text><text x=\"201\" y=\"88\" text-anchor=\"middle\" style=\"font:700 12px system-ui,sans-serif;fill:#1d2433\">Ich heiße Max.</text><text x=\"201\" y=\"104\" text-anchor=\"middle\" style=\"font:500 11px system-ui,sans-serif;fill:#6b7280\">→ przedstawiam się</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"50\" y=\"168\" width=\"220\" height=\"26\" rx=\"13\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"50\" y=\"168\" width=\"220\" height=\"26\" rx=\"13\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"50\" y=\"168\" width=\"220\" height=\"26\" rx=\"13\" fill=\"#fde047\"/></g><text x=\"160\" y=\"185\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#1d2433\">Tschüss! = cześć (na pożegnanie)</text></svg>"
+   }
+  },
+  {
+   "col": "units",
+   "id": "un_n2",
+   "data": {
+    "order": 2,
+    "subjectId": "sb_niem",
+    "title": "Liczby, godziny i plan dnia",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 200\" role=\"img\" aria-label=\"Schemat dnia od rana do nocy oraz zegar z zasadami halb i Viertel\"><rect width=\"320\" height=\"200\" rx=\"16\" fill=\"#e8f1ff\"/><path d=\"M28 66A132 56 0 0 1 292 66\" stroke=\"#94a3b8\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"30\" cy=\"56.3\" r=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"30\" cy=\"56.3\" r=\"9\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"82\" cy=\"20.8\" r=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"82\" cy=\"20.8\" r=\"9\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"134\" cy=\"11.1\" r=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"134\" cy=\"11.1\" r=\"9\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"186\" cy=\"11.1\" r=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"186\" cy=\"11.1\" r=\"9\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"238\" cy=\"20.8\" r=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"238\" cy=\"20.8\" r=\"9\" fill=\"#fb923c\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"290\" cy=\"56.3\" r=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"290\" cy=\"56.3\" r=\"9\" fill=\"#e0e7ff\"/></g><text x=\"30\" y=\"88\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#1d2433\">rano</text><text x=\"82\" y=\"88\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#1d2433\">przedpoł.</text><text x=\"134\" y=\"88\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#1d2433\">południe</text><text x=\"186\" y=\"88\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#1d2433\">popoł.</text><text x=\"238\" y=\"88\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#1d2433\">wieczór</text><text x=\"290\" y=\"88\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#1d2433\">noc</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"70\" cy=\"146\" r=\"40\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"70\" cy=\"146\" r=\"40\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"70\" cy=\"146\" r=\"40\" fill=\"#3b82f6\"/></g><circle cx=\"70\" cy=\"146\" r=\"33\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M70 146L70 114.5A31.5 31.5 0 0 1 70 177.5Z\" fill=\"#fde047\" opacity=\".85\"/><path d=\"M70 115.5L70 122.5M85.2 119.6L83.5 122.6M96.4 130.8L93.4 132.5M100.5 146L93.5 146M96.4 161.2L93.4 159.5M85.2 172.4L83.5 169.4M70 176.5L70 169.5M54.8 172.4L56.5 169.4M43.6 161.2L46.6 159.5M39.5 146L46.5 146M43.6 130.8L46.6 132.5M54.7 119.6L56.5 122.6\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M70 146L54.1 150.3\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M70 146L70 172.4\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"70\" cy=\"146\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"128\" y=\"112\" width=\"182\" height=\"72\" rx=\"12\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"128\" y=\"112\" width=\"182\" height=\"72\" rx=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"128\" y=\"112\" width=\"182\" height=\"72\" rx=\"12\" fill=\"#fff\"/></g><text x=\"138\" y=\"134\" text-anchor=\"start\" style=\"font:700 11px system-ui,sans-serif;fill:#1d2433\">halb neun = 8:30 (pół do 9)</text><text x=\"138\" y=\"154\" text-anchor=\"start\" style=\"font:700 11px system-ui,sans-serif;fill:#1d2433\">Viertel nach = kwadrans po</text><text x=\"138\" y=\"174\" text-anchor=\"start\" style=\"font:700 11px system-ui,sans-serif;fill:#1d2433\">Viertel vor = za kwadrans</text></svg>"
+   }
+  },
+  {
+   "col": "units",
+   "id": "un_n3",
+   "data": {
+    "order": 3,
+    "subjectId": "sb_niem",
+    "title": "Szkoła",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 200\" role=\"img\" aria-label=\"Schemat szkoły: budynek, klasa z tablicą, przybory i plan lekcji\"><rect width=\"320\" height=\"200\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M20 120V64H120V120z\"/><path d=\"M12 66L70 34L128 66z\"/><path d=\"M60 120V96H80V120z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M20 120V64H120V120z\"/><path d=\"M12 66L70 34L128 66z\"/><path d=\"M60 120V96H80V120z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M20 120V64H120V120z\" fill=\"#fbbf77\"/><path d=\"M12 66L70 34L128 66z\" fill=\"#ef4444\"/><path d=\"M60 120V96H80V120z\" fill=\"#b45309\"/></g><g stroke=\"#fff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"70\" cy=\"54\" r=\"7\"/><rect x=\"30\" y=\"74\" width=\"18\" height=\"14\" rx=\"2\"/><rect x=\"92\" y=\"74\" width=\"18\" height=\"14\" rx=\"2\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"70\" cy=\"54\" r=\"7\" fill=\"#fde047\"/><rect x=\"30\" y=\"74\" width=\"18\" height=\"14\" rx=\"2\" fill=\"#60a5fa\"/><rect x=\"92\" y=\"74\" width=\"18\" height=\"14\" rx=\"2\" fill=\"#60a5fa\"/></g><text x=\"70\" y=\"140\" text-anchor=\"middle\" style=\"font:700 12px system-ui,sans-serif;fill:#1d2433\">szkoła</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"150\" y=\"26\" width=\"100\" height=\"62\" rx=\"6\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"150\" y=\"26\" width=\"100\" height=\"62\" rx=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"150\" y=\"26\" width=\"100\" height=\"62\" rx=\"6\" fill=\"#166534\"/></g><path d=\"M164 44h40M164 58h60M164 72h30\" stroke=\"#fff\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><text x=\"200\" y=\"106\" text-anchor=\"middle\" style=\"font:700 12px system-ui,sans-serif;fill:#1d2433\">klasa i lekcje</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"264\" y=\"30\" width=\"42\" height=\"56\" rx=\"5\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"264\" y=\"30\" width=\"42\" height=\"56\" rx=\"5\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"264\" y=\"30\" width=\"42\" height=\"56\" rx=\"5\" fill=\"#fff\"/></g><path d=\"M272 44h26M272 56h26M272 68h26\" stroke=\"#60a5fa\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><text x=\"285\" y=\"106\" text-anchor=\"middle\" style=\"font:700 12px system-ui,sans-serif;fill:#1d2433\">plan lekcji</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"150\" y=\"130\" width=\"34\" height=\"44\" rx=\"8\"/><path d=\"M200 174L240 134l8 8L208 182z\"/><path d=\"M262 138h40v36h-40z\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"150\" y=\"130\" width=\"34\" height=\"44\" rx=\"8\"/><path d=\"M200 174L240 134l8 8L208 182z\"/><path d=\"M262 138h40v36h-40z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"150\" y=\"130\" width=\"34\" height=\"44\" rx=\"8\" fill=\"#fb923c\"/><path d=\"M200 174L240 134l8 8L208 182z\" fill=\"#fde047\"/><path d=\"M262 138h40v36h-40z\" fill=\"#3b82f6\"/></g><path d=\"M282 138v36\" stroke=\"#fff\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><text x=\"232\" y=\"194\" text-anchor=\"middle\" style=\"font:700 12px system-ui,sans-serif;fill:#1d2433\">przybory szkolne</text></svg>"
+   }
+  },
+  {
+   "col": "units",
+   "id": "un_n4",
+   "data": {
+    "order": 4,
+    "subjectId": "sb_niem",
+    "title": "Rodzina",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 200\" role=\"img\" aria-label=\"Drzewo rodziny: dziadkowie, rodzice, ja i rodzeństwo\"><rect width=\"320\" height=\"200\" rx=\"16\" fill=\"#ffe4e6\"/><path d=\"M140 44H180M160 44V128M128 102H192M110 128H210M110 128V138M210 128V138\" stroke=\"#94a3b8\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M126.3 56v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\"/><circle cx=\"134\" cy=\"22\" r=\"7.6\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M126.3 56v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\"/><circle cx=\"134\" cy=\"22\" r=\"7.6\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M126.3 56v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\" fill=\"#9ca3af\"/><circle cx=\"134\" cy=\"22\" r=\"7.6\" fill=\"#fcd5b4\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M178.3 56v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\"/><circle cx=\"186\" cy=\"22\" r=\"7.6\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M178.3 56v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\"/><circle cx=\"186\" cy=\"22\" r=\"7.6\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M178.3 56v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\" fill=\"#cbd5e1\"/><circle cx=\"186\" cy=\"22\" r=\"7.6\" fill=\"#fcd5b4\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M108.3 118v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\"/><circle cx=\"116\" cy=\"84\" r=\"7.6\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M108.3 118v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\"/><circle cx=\"116\" cy=\"84\" r=\"7.6\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M108.3 118v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\" fill=\"#3b82f6\"/><circle cx=\"116\" cy=\"84\" r=\"7.6\" fill=\"#fcd5b4\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M196.3 118v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\"/><circle cx=\"204\" cy=\"84\" r=\"7.6\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M196.3 118v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\"/><circle cx=\"204\" cy=\"84\" r=\"7.6\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M196.3 118v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\" fill=\"#f472b6\"/><circle cx=\"204\" cy=\"84\" r=\"7.6\" fill=\"#fcd5b4\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M102.3 180v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\"/><circle cx=\"110\" cy=\"146\" r=\"7.6\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M102.3 180v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\"/><circle cx=\"110\" cy=\"146\" r=\"7.6\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M102.3 180v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\" fill=\"#fb923c\"/><circle cx=\"110\" cy=\"146\" r=\"7.6\" fill=\"#fcd5b4\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M202.3 180v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\"/><circle cx=\"210\" cy=\"146\" r=\"7.6\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M202.3 180v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\"/><circle cx=\"210\" cy=\"146\" r=\"7.6\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M202.3 180v-17q0 -6.8 7.6 -6.8q7.6 0 7.6 6.8v17z\" fill=\"#34d399\"/><circle cx=\"210\" cy=\"146\" r=\"7.6\" fill=\"#fcd5b4\"/></g><text x=\"240\" y=\"44\" text-anchor=\"start\" style=\"font:700 12px system-ui,sans-serif;fill:#1d2433\">dziadkowie</text><text x=\"240\" y=\"106\" text-anchor=\"start\" style=\"font:700 12px system-ui,sans-serif;fill:#1d2433\">rodzice</text><text x=\"110\" y=\"196\" text-anchor=\"middle\" style=\"font:800 12px system-ui,sans-serif;fill:#1d2433\">ja</text><text x=\"210\" y=\"196\" text-anchor=\"middle\" style=\"font:700 12px system-ui,sans-serif;fill:#1d2433\">rodzeństwo</text><text x=\"20\" y=\"28\" text-anchor=\"start\" style=\"font:600 12px system-ui,sans-serif;fill:#6b7280\">die Familie</text></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_01a",
+   "data": {
+    "back": "jeden, dwa, trzy",
+    "created": "2026-10-17",
+    "front": "eins, zwei, drei",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Trzy kostki do gry z jednym, dwoma i trzema oczkami\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"20\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"20\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"20\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\" fill=\"#ef4444\"/></g><circle cx=\"42\" cy=\"66\" r=\"5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"78\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"78\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"78\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\" fill=\"#3b82f6\"/></g><circle cx=\"89\" cy=\"55\" r=\"5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><circle cx=\"111\" cy=\"77\" r=\"5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"136\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"136\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"136\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\" fill=\"#34d399\"/></g><circle cx=\"147\" cy=\"55\" r=\"5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><circle cx=\"158\" cy=\"66\" r=\"5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><circle cx=\"169\" cy=\"77\" r=\"5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><path d=\"M66 66h8M124 66h8\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M70 62l4 4l-4 4M128 62l4 4l-4 4\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_01b",
+   "data": {
+    "back": "eins, zwei, drei",
+    "created": "2026-10-17",
+    "front": "jeden, dwa, trzy",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Trzy kostki do gry z jednym, dwoma i trzema oczkami\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"20\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"20\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"20\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\" fill=\"#ef4444\"/></g><circle cx=\"42\" cy=\"66\" r=\"5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"78\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"78\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"78\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\" fill=\"#3b82f6\"/></g><circle cx=\"89\" cy=\"55\" r=\"5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><circle cx=\"111\" cy=\"77\" r=\"5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"136\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"136\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"136\" y=\"44\" width=\"44\" height=\"44\" rx=\"9\" fill=\"#34d399\"/></g><circle cx=\"147\" cy=\"55\" r=\"5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><circle cx=\"158\" cy=\"66\" r=\"5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><circle cx=\"169\" cy=\"77\" r=\"5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><path d=\"M66 66h8M124 66h8\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M70 62l4 4l-4 4M128 62l4 4l-4 4\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_02a",
+   "data": {
+    "back": "dwanaście",
+    "created": "2026-10-17",
+    "front": "zwölf",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Wytłaczanka z jajkami w dwóch rzędach po sześć\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fef3c7\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"18\" y=\"30\" width=\"164\" height=\"72\" rx=\"12\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"18\" y=\"30\" width=\"164\" height=\"72\" rx=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"18\" y=\"30\" width=\"164\" height=\"72\" rx=\"12\" fill=\"#cbd5e1\"/></g><ellipse cx=\"38\" cy=\"50\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"38\" cy=\"80\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"63\" cy=\"50\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"63\" cy=\"80\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"88\" cy=\"50\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"88\" cy=\"80\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"113\" cy=\"50\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"113\" cy=\"80\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"138\" cy=\"50\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"138\" cy=\"80\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"163\" cy=\"50\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"163\" cy=\"80\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M34 44q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M34 74q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M59 44q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M59 74q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M84 44q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M84 74q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M109 44q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M109 74q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M134 44q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M134 74q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M159 44q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M159 74q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_02b",
+   "data": {
+    "back": "zwölf",
+    "created": "2026-10-17",
+    "front": "dwanaście",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Wytłaczanka z jajkami w dwóch rzędach po sześć\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fef3c7\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"18\" y=\"30\" width=\"164\" height=\"72\" rx=\"12\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"18\" y=\"30\" width=\"164\" height=\"72\" rx=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"18\" y=\"30\" width=\"164\" height=\"72\" rx=\"12\" fill=\"#cbd5e1\"/></g><ellipse cx=\"38\" cy=\"50\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"38\" cy=\"80\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"63\" cy=\"50\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"63\" cy=\"80\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"88\" cy=\"50\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"88\" cy=\"80\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"113\" cy=\"50\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"113\" cy=\"80\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"138\" cy=\"50\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"138\" cy=\"80\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"163\" cy=\"50\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><ellipse cx=\"163\" cy=\"80\" rx=\"10\" ry=\"12\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M34 44q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M34 74q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M59 44q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M59 74q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M84 44q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M84 74q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M109 44q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M109 74q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M134 44q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M134 74q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M159 44q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M159 74q3 -4 6 -2\" stroke=\"#9ca3af\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_03a",
+   "data": {
+    "back": "dwadzieścia",
+    "created": "2026-10-17",
+    "front": "zwanzig",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Tabliczka czekolady z kostkami ułożonymi 4 na 5\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"44\" y=\"8\" width=\"112\" height=\"88\" rx=\"8\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"44\" y=\"8\" width=\"112\" height=\"88\" rx=\"8\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"44\" y=\"8\" width=\"112\" height=\"88\" rx=\"8\" fill=\"#78350f\"/></g><rect x=\"50\" y=\"14\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"50\" y=\"32\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"50\" y=\"50\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"50\" y=\"68\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"14\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"32\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"50\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"68\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"90\" y=\"14\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"90\" y=\"32\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"90\" y=\"50\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"90\" y=\"68\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"110\" y=\"14\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"110\" y=\"32\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"110\" y=\"50\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"110\" y=\"68\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"130\" y=\"14\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"130\" y=\"32\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"130\" y=\"50\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"130\" y=\"68\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M40 88H160V122H40z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M40 88H160V122H40z\" fill=\"#ef4444\"/></g><path d=\"M40 98H160\" stroke=\"#fde047\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M60 108l6 6M80 108l6 6\" stroke=\"#fff\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_03b",
+   "data": {
+    "back": "zwanzig",
+    "created": "2026-10-17",
+    "front": "dwadzieścia",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Tabliczka czekolady z kostkami ułożonymi 4 na 5\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"44\" y=\"8\" width=\"112\" height=\"88\" rx=\"8\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"44\" y=\"8\" width=\"112\" height=\"88\" rx=\"8\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"44\" y=\"8\" width=\"112\" height=\"88\" rx=\"8\" fill=\"#78350f\"/></g><rect x=\"50\" y=\"14\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"50\" y=\"32\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"50\" y=\"50\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"50\" y=\"68\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"14\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"32\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"50\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"70\" y=\"68\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"90\" y=\"14\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"90\" y=\"32\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"90\" y=\"50\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"90\" y=\"68\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"110\" y=\"14\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"110\" y=\"32\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"110\" y=\"50\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"110\" y=\"68\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"130\" y=\"14\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"130\" y=\"32\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"130\" y=\"50\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><rect x=\"130\" y=\"68\" width=\"16\" height=\"14\" rx=\"3\" fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M40 88H160V122H40z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M40 88H160V122H40z\" fill=\"#ef4444\"/></g><path d=\"M40 98H160\" stroke=\"#fde047\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M60 108l6 6M80 108l6 6\" stroke=\"#fff\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_04a",
+   "data": {
+    "back": "Która jest godzina?",
+    "created": "2026-10-17",
+    "front": "Wie spät ist es?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Postać patrzy na zegar ścienny i ma dymek ze znakiem zapytania\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"132\" cy=\"68\" r=\"44\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"132\" cy=\"68\" r=\"44\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"132\" cy=\"68\" r=\"44\" fill=\"#ef4444\"/></g><circle cx=\"132\" cy=\"68\" r=\"37\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M132 33.5L132 40.5M149.2 38.1L147.5 41.2M161.9 50.8L158.8 52.5M166.5 68L159.5 68M161.9 85.2L158.8 83.5M149.2 97.9L147.5 94.8M132 102.5L132 95.5M114.8 97.9L116.5 94.8M102.1 85.3L105.2 83.5M97.5 68L104.5 68M102.1 50.8L105.2 52.5M114.7 38.1L116.5 41.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M132 68L116.8 57.4\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M132 68L157.6 53.2\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"132\" cy=\"68\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M30.1 110v-22q0 -8.8 9.9 -8.8q9.9 0 9.9 8.8v22z\"/><circle cx=\"40\" cy=\"66\" r=\"9.9\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M30.1 110v-22q0 -8.8 9.9 -8.8q9.9 0 9.9 8.8v22z\"/><circle cx=\"40\" cy=\"66\" r=\"9.9\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M30.1 110v-22q0 -8.8 9.9 -8.8q9.9 0 9.9 8.8v22z\" fill=\"#a78bfa\"/><circle cx=\"40\" cy=\"66\" r=\"9.9\" fill=\"#fcd5b4\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M30 34q-6 -22 18 -22q22 0 18 20q-2 10 -14 10l-6 8l0 -8q-14 0 -16 -8z\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M30 34q-6 -22 18 -22q22 0 18 20q-2 10 -14 10l-6 8l0 -8q-14 0 -16 -8z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M30 34q-6 -22 18 -22q22 0 18 20q-2 10 -14 10l-6 8l0 -8q-14 0 -16 -8z\" fill=\"#fff\"/></g><text x=\"48\" y=\"34\" text-anchor=\"middle\" style=\"font:800 22px system-ui,sans-serif;fill:#ef4444\">?</text></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_04b",
+   "data": {
+    "back": "Wie spät ist es?",
+    "created": "2026-10-17",
+    "front": "Która jest godzina?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Postać patrzy na zegar ścienny i ma dymek ze znakiem zapytania\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"132\" cy=\"68\" r=\"44\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"132\" cy=\"68\" r=\"44\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"132\" cy=\"68\" r=\"44\" fill=\"#ef4444\"/></g><circle cx=\"132\" cy=\"68\" r=\"37\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M132 33.5L132 40.5M149.2 38.1L147.5 41.2M161.9 50.8L158.8 52.5M166.5 68L159.5 68M161.9 85.2L158.8 83.5M149.2 97.9L147.5 94.8M132 102.5L132 95.5M114.8 97.9L116.5 94.8M102.1 85.3L105.2 83.5M97.5 68L104.5 68M102.1 50.8L105.2 52.5M114.7 38.1L116.5 41.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M132 68L116.8 57.4\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M132 68L157.6 53.2\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"132\" cy=\"68\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M30.1 110v-22q0 -8.8 9.9 -8.8q9.9 0 9.9 8.8v22z\"/><circle cx=\"40\" cy=\"66\" r=\"9.9\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M30.1 110v-22q0 -8.8 9.9 -8.8q9.9 0 9.9 8.8v22z\"/><circle cx=\"40\" cy=\"66\" r=\"9.9\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M30.1 110v-22q0 -8.8 9.9 -8.8q9.9 0 9.9 8.8v22z\" fill=\"#a78bfa\"/><circle cx=\"40\" cy=\"66\" r=\"9.9\" fill=\"#fcd5b4\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M30 34q-6 -22 18 -22q22 0 18 20q-2 10 -14 10l-6 8l0 -8q-14 0 -16 -8z\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M30 34q-6 -22 18 -22q22 0 18 20q-2 10 -14 10l-6 8l0 -8q-14 0 -16 -8z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M30 34q-6 -22 18 -22q22 0 18 20q-2 10 -14 10l-6 8l0 -8q-14 0 -16 -8z\" fill=\"#fff\"/></g><text x=\"48\" y=\"34\" text-anchor=\"middle\" style=\"font:800 22px system-ui,sans-serif;fill:#ef4444\">?</text></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_05a",
+   "data": {
+    "back": "Jest ósma.",
+    "created": "2026-10-17",
+    "front": "Es ist acht Uhr.",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar: krótka wskazówka na ósemce, długa na dwunastce\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"66\" r=\"52\" fill=\"#3b82f6\"/></g><circle cx=\"100\" cy=\"66\" r=\"45\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 23.5L100 30.5M121.2 29.2L119.5 32.2M136.8 44.8L133.8 46.5M142.5 66L135.5 66M136.8 87.2L133.8 85.5M121.2 102.8L119.5 99.8M100 108.5L100 101.5M78.8 102.8L80.5 99.8M63.2 87.3L66.2 85.5M57.5 66L64.5 66M63.2 44.8L66.2 46.5M78.7 29.2L80.5 32.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L80.5 77.3\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L100 30\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"66\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_05b",
+   "data": {
+    "back": "Es ist acht Uhr.",
+    "created": "2026-10-17",
+    "front": "Jest ósma.",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar: krótka wskazówka na ósemce, długa na dwunastce\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"66\" r=\"52\" fill=\"#3b82f6\"/></g><circle cx=\"100\" cy=\"66\" r=\"45\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 23.5L100 30.5M121.2 29.2L119.5 32.2M136.8 44.8L133.8 46.5M142.5 66L135.5 66M136.8 87.2L133.8 85.5M121.2 102.8L119.5 99.8M100 108.5L100 101.5M78.8 102.8L80.5 99.8M63.2 87.3L66.2 85.5M57.5 66L64.5 66M63.2 44.8L66.2 46.5M78.7 29.2L80.5 32.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L80.5 77.3\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L100 30\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"66\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_06a",
+   "data": {
+    "back": "wpół do dziewiątej (8:30)",
+    "created": "2026-10-17",
+    "front": "halb neun",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar: długa wskazówka na dole, krótka między ósemką a dziewiątką, pół tarczy na żółto\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"66\" r=\"52\" fill=\"#3b82f6\"/></g><circle cx=\"100\" cy=\"66\" r=\"45\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 66L100 22.5A43.5 43.5 0 0 1 100 109.5Z\" fill=\"#fde047\" opacity=\".85\"/><path d=\"M100 23.5L100 30.5M121.2 29.2L119.5 32.2M136.8 44.8L133.8 46.5M142.5 66L135.5 66M136.8 87.2L133.8 85.5M121.2 102.8L119.5 99.8M100 108.5L100 101.5M78.8 102.8L80.5 99.8M63.2 87.3L66.2 85.5M57.5 66L64.5 66M63.2 44.8L66.2 46.5M78.7 29.2L80.5 32.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L78.3 71.8\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L100 102\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"66\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_06b",
+   "data": {
+    "back": "halb neun",
+    "created": "2026-10-17",
+    "front": "wpół do dziewiątej (8:30)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar: długa wskazówka na dole, krótka między ósemką a dziewiątką, pół tarczy na żółto\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"66\" r=\"52\" fill=\"#3b82f6\"/></g><circle cx=\"100\" cy=\"66\" r=\"45\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 66L100 22.5A43.5 43.5 0 0 1 100 109.5Z\" fill=\"#fde047\" opacity=\".85\"/><path d=\"M100 23.5L100 30.5M121.2 29.2L119.5 32.2M136.8 44.8L133.8 46.5M142.5 66L135.5 66M136.8 87.2L133.8 85.5M121.2 102.8L119.5 99.8M100 108.5L100 101.5M78.8 102.8L80.5 99.8M63.2 87.3L66.2 85.5M57.5 66L64.5 66M63.2 44.8L66.2 46.5M78.7 29.2L80.5 32.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L78.3 71.8\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L100 102\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"66\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_07a",
+   "data": {
+    "back": "kwadrans po trzeciej (3:15)",
+    "created": "2026-10-17",
+    "front": "Viertel nach drei",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar: ćwierć tarczy na zielono od góry do trójki, krótka wskazówka tuż za trójką\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"66\" r=\"52\" fill=\"#34d399\"/></g><circle cx=\"100\" cy=\"66\" r=\"45\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 66L100 22.5A43.5 43.5 0 0 1 143.5 66Z\" fill=\"#86efac\" opacity=\".85\"/><path d=\"M100 23.5L100 30.5M121.2 29.2L119.5 32.2M136.8 44.8L133.8 46.5M142.5 66L135.5 66M136.8 87.2L133.8 85.5M121.2 102.8L119.5 99.8M100 108.5L100 101.5M78.8 102.8L80.5 99.8M63.2 87.3L66.2 85.5M57.5 66L64.5 66M63.2 44.8L66.2 46.5M78.7 29.2L80.5 32.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L122.3 68.9\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L136 66\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"66\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_07b",
+   "data": {
+    "back": "Viertel nach drei",
+    "created": "2026-10-17",
+    "front": "kwadrans po trzeciej (3:15)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar: ćwierć tarczy na zielono od góry do trójki, krótka wskazówka tuż za trójką\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"66\" r=\"52\" fill=\"#34d399\"/></g><circle cx=\"100\" cy=\"66\" r=\"45\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 66L100 22.5A43.5 43.5 0 0 1 143.5 66Z\" fill=\"#86efac\" opacity=\".85\"/><path d=\"M100 23.5L100 30.5M121.2 29.2L119.5 32.2M136.8 44.8L133.8 46.5M142.5 66L135.5 66M136.8 87.2L133.8 85.5M121.2 102.8L119.5 99.8M100 108.5L100 101.5M78.8 102.8L80.5 99.8M63.2 87.3L66.2 85.5M57.5 66L64.5 66M63.2 44.8L66.2 46.5M78.7 29.2L80.5 32.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L122.3 68.9\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L136 66\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"66\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_08a",
+   "data": {
+    "back": "za kwadrans czwarta (3:45)",
+    "created": "2026-10-17",
+    "front": "Viertel vor vier",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar: brakująca ćwiartka od dziewiątki do góry zaznaczona na pomarańczowo, krótka wskazówka blisko czwórki\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"66\" r=\"52\" fill=\"#ef4444\"/></g><circle cx=\"100\" cy=\"66\" r=\"45\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 66L56.5 66A43.5 43.5 0 0 1 100 22.5Z\" fill=\"#fdba74\" opacity=\".85\"/><path d=\"M100 23.5L100 30.5M121.2 29.2L119.5 32.2M136.8 44.8L133.8 46.5M142.5 66L135.5 66M136.8 87.2L133.8 85.5M121.2 102.8L119.5 99.8M100 108.5L100 101.5M78.8 102.8L80.5 99.8M63.2 87.3L66.2 85.5M57.5 66L64.5 66M63.2 44.8L66.2 46.5M78.7 29.2L80.5 32.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L120.8 74.6\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L64 66\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"66\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_08b",
+   "data": {
+    "back": "Viertel vor vier",
+    "created": "2026-10-17",
+    "front": "za kwadrans czwarta (3:45)",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar: brakująca ćwiartka od dziewiątki do góry zaznaczona na pomarańczowo, krótka wskazówka blisko czwórki\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"66\" r=\"52\" fill=\"#ef4444\"/></g><circle cx=\"100\" cy=\"66\" r=\"45\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 66L56.5 66A43.5 43.5 0 0 1 100 22.5Z\" fill=\"#fdba74\" opacity=\".85\"/><path d=\"M100 23.5L100 30.5M121.2 29.2L119.5 32.2M136.8 44.8L133.8 46.5M142.5 66L135.5 66M136.8 87.2L133.8 85.5M121.2 102.8L119.5 99.8M100 108.5L100 101.5M78.8 102.8L80.5 99.8M63.2 87.3L66.2 85.5M57.5 66L64.5 66M63.2 44.8L66.2 46.5M78.7 29.2L80.5 32.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L120.8 74.6\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L64 66\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"66\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_09a",
+   "data": {
+    "back": "wstawać",
+    "created": "2026-10-17",
+    "front": "aufstehen",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Ktoś siada na łóżku i się przeciąga, obok dzwoniący budzik i strzałka w górę\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><path d=\"M14 116V70M14 96H140V116\" stroke=\"#fff\" stroke-width=\"9\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M14 116V70M14 96H140V116\" stroke=\"#b45309\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M58 70L46 42M82 70L94 42\" stroke=\"#1d2433\" stroke-width=\"9\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M58 70L46 42M82 70L94 42\" stroke=\"#fcd5b4\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M58 96V70q0 -10 12 -10q12 0 12 10V96\"/><circle cx=\"70\" cy=\"46\" r=\"12\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M58 96V70q0 -10 12 -10q12 0 12 10V96\"/><circle cx=\"70\" cy=\"46\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M58 96V70q0 -10 12 -10q12 0 12 10V96\" fill=\"#60a5fa\"/><circle cx=\"70\" cy=\"46\" r=\"12\" fill=\"#fcd5b4\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M48 96V84H140V96z\"/><rect x=\"18\" y=\"80\" width=\"26\" height=\"14\" rx=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M48 96V84H140V96z\" fill=\"#ef4444\"/><rect x=\"18\" y=\"80\" width=\"26\" height=\"14\" rx=\"6\" fill=\"#fff\"/></g><path d=\"M66 44v1M74 44v1M66 51q4 3 8 0\" stroke=\"#1d2433\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M153.5 61.1a7.7 7.7 0 0 1 9.9 -7.7z\"/><path d=\"M186.5 61.1a7.7 7.7 0 0 0 -9.9 -7.7z\"/><circle cx=\"170\" cy=\"82\" r=\"22\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M153.5 61.1a7.7 7.7 0 0 1 9.9 -7.7z\"/><path d=\"M186.5 61.1a7.7 7.7 0 0 0 -9.9 -7.7z\"/><path d=\"M156.8 99.6l-6 10M183.2 99.6l6 10\" fill=\"none\"/><circle cx=\"170\" cy=\"82\" r=\"22\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M153.5 61.1a7.7 7.7 0 0 1 9.9 -7.7z\" fill=\"#ef4444\"/><path d=\"M186.5 61.1a7.7 7.7 0 0 0 -9.9 -7.7z\" fill=\"#ef4444\"/><path d=\"M156.8 99.6l-6 10M183.2 99.6l6 10\" fill=\"none\"/><circle cx=\"170\" cy=\"82\" r=\"22\" fill=\"#ef4444\"/></g><circle cx=\"170\" cy=\"82\" r=\"15\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M170 69.5L170 76.5M182.5 82L175.5 82M170 94.5L170 87.5M157.5 82L164.5 82\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M170 82L166.2 88.5\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M170 82L170 70\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"170\" cy=\"82\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/><path d=\"M148 56l-6 -6M170 46v-8M192 56l6 -6\" stroke=\"#ef4444\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M114 22l14 16h-8v22h-12v-22h-8z\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M114 22l14 16h-8v22h-12v-22h-8z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M114 22l14 16h-8v22h-12v-22h-8z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_09b",
+   "data": {
+    "back": "aufstehen",
+    "created": "2026-10-17",
+    "front": "wstawać",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Ktoś siada na łóżku i się przeciąga, obok dzwoniący budzik i strzałka w górę\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><path d=\"M14 116V70M14 96H140V116\" stroke=\"#fff\" stroke-width=\"9\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M14 116V70M14 96H140V116\" stroke=\"#b45309\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M58 70L46 42M82 70L94 42\" stroke=\"#1d2433\" stroke-width=\"9\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M58 70L46 42M82 70L94 42\" stroke=\"#fcd5b4\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M58 96V70q0 -10 12 -10q12 0 12 10V96\"/><circle cx=\"70\" cy=\"46\" r=\"12\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M58 96V70q0 -10 12 -10q12 0 12 10V96\"/><circle cx=\"70\" cy=\"46\" r=\"12\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M58 96V70q0 -10 12 -10q12 0 12 10V96\" fill=\"#60a5fa\"/><circle cx=\"70\" cy=\"46\" r=\"12\" fill=\"#fcd5b4\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M48 96V84H140V96z\"/><rect x=\"18\" y=\"80\" width=\"26\" height=\"14\" rx=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M48 96V84H140V96z\" fill=\"#ef4444\"/><rect x=\"18\" y=\"80\" width=\"26\" height=\"14\" rx=\"6\" fill=\"#fff\"/></g><path d=\"M66 44v1M74 44v1M66 51q4 3 8 0\" stroke=\"#1d2433\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M153.5 61.1a7.7 7.7 0 0 1 9.9 -7.7z\"/><path d=\"M186.5 61.1a7.7 7.7 0 0 0 -9.9 -7.7z\"/><circle cx=\"170\" cy=\"82\" r=\"22\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M153.5 61.1a7.7 7.7 0 0 1 9.9 -7.7z\"/><path d=\"M186.5 61.1a7.7 7.7 0 0 0 -9.9 -7.7z\"/><path d=\"M156.8 99.6l-6 10M183.2 99.6l6 10\" fill=\"none\"/><circle cx=\"170\" cy=\"82\" r=\"22\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M153.5 61.1a7.7 7.7 0 0 1 9.9 -7.7z\" fill=\"#ef4444\"/><path d=\"M186.5 61.1a7.7 7.7 0 0 0 -9.9 -7.7z\" fill=\"#ef4444\"/><path d=\"M156.8 99.6l-6 10M183.2 99.6l6 10\" fill=\"none\"/><circle cx=\"170\" cy=\"82\" r=\"22\" fill=\"#ef4444\"/></g><circle cx=\"170\" cy=\"82\" r=\"15\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M170 69.5L170 76.5M182.5 82L175.5 82M170 94.5L170 87.5M157.5 82L164.5 82\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M170 82L166.2 88.5\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M170 82L170 70\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"170\" cy=\"82\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/><path d=\"M148 56l-6 -6M170 46v-8M192 56l6 -6\" stroke=\"#ef4444\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M114 22l14 16h-8v22h-12v-22h-8z\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M114 22l14 16h-8v22h-12v-22h-8z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M114 22l14 16h-8v22h-12v-22h-8z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_10a",
+   "data": {
+    "back": "jeść śniadanie",
+    "created": "2026-10-17",
+    "front": "frühstücken",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Miska płatków z mlekiem, kubek z parą i tost z rana\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><path d=\"M26 11L26 6M36.6 15.4L40.1 11.9M41 26L46 26M36.6 36.6L40.1 40.1M26 41L26 46M15.4 36.6L11.9 40.1M11 26L6 26M15.4 15.4L11.9 11.9\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M26 11L26 6M36.6 15.4L40.1 11.9M41 26L46 26M36.6 36.6L40.1 40.1M26 41L26 46M15.4 36.6L11.9 40.1M11 26L6 26M15.4 15.4L11.9 11.9\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"26\" cy=\"26\" r=\"11\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"26\" cy=\"26\" r=\"11\" fill=\"#fde047\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M14 74H86Q86 112 50 112Q14 112 14 74z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M14 74H86Q86 112 50 112Q14 112 14 74z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M14 74H86Q86 112 50 112Q14 112 14 74z\" fill=\"#60a5fa\"/></g><ellipse cx=\"50\" cy=\"74\" rx=\"36\" ry=\"7\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><g fill=\"#fb923c\" stroke=\"#1d2433\" stroke-width=\"1.5\"><circle cx=\"36\" cy=\"72\" r=\"4\"/><circle cx=\"50\" cy=\"75\" r=\"4\"/><circle cx=\"64\" cy=\"72\" r=\"4\"/><circle cx=\"44\" cy=\"70\" r=\"3.5\"/><circle cx=\"58\" cy=\"70\" r=\"3.5\"/></g><path d=\"M74 70L92 34\" stroke=\"#fff\" stroke-width=\"9\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M74 70L92 34\" stroke=\"#9ca3af\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"100\" y=\"62\" width=\"34\" height=\"46\" rx=\"6\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"100\" y=\"62\" width=\"34\" height=\"46\" rx=\"6\"/><path d=\"M134 72q14 0 14 12q0 12 -14 12\" fill=\"none\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"100\" y=\"62\" width=\"34\" height=\"46\" rx=\"6\" fill=\"#ef4444\"/><path d=\"M134 72q14 0 14 12q0 12 -14 12\" fill=\"none\"/></g><path d=\"M110 54q-4 -6 0 -12M122 54q-4 -6 0 -12\" stroke=\"#9ca3af\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M160 112V84q-6 -2 -6 -10q2 -12 16 -12q14 0 16 12q0 8 -6 10V112z\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M160 112V84q-6 -2 -6 -10q2 -12 16 -12q14 0 16 12q0 8 -6 10V112z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M160 112V84q-6 -2 -6 -10q2 -12 16 -12q14 0 16 12q0 8 -6 10V112z\" fill=\"#fbbf77\"/></g><rect x=\"165\" y=\"80\" width=\"10\" height=\"26\" rx=\"3\" fill=\"#fde68a\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_10b",
+   "data": {
+    "back": "frühstücken",
+    "created": "2026-10-17",
+    "front": "jeść śniadanie",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Miska płatków z mlekiem, kubek z parą i tost z rana\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><path d=\"M26 11L26 6M36.6 15.4L40.1 11.9M41 26L46 26M36.6 36.6L40.1 40.1M26 41L26 46M15.4 36.6L11.9 40.1M11 26L6 26M15.4 15.4L11.9 11.9\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M26 11L26 6M36.6 15.4L40.1 11.9M41 26L46 26M36.6 36.6L40.1 40.1M26 41L26 46M15.4 36.6L11.9 40.1M11 26L6 26M15.4 15.4L11.9 11.9\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"26\" cy=\"26\" r=\"11\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"26\" cy=\"26\" r=\"11\" fill=\"#fde047\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M14 74H86Q86 112 50 112Q14 112 14 74z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M14 74H86Q86 112 50 112Q14 112 14 74z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M14 74H86Q86 112 50 112Q14 112 14 74z\" fill=\"#60a5fa\"/></g><ellipse cx=\"50\" cy=\"74\" rx=\"36\" ry=\"7\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><g fill=\"#fb923c\" stroke=\"#1d2433\" stroke-width=\"1.5\"><circle cx=\"36\" cy=\"72\" r=\"4\"/><circle cx=\"50\" cy=\"75\" r=\"4\"/><circle cx=\"64\" cy=\"72\" r=\"4\"/><circle cx=\"44\" cy=\"70\" r=\"3.5\"/><circle cx=\"58\" cy=\"70\" r=\"3.5\"/></g><path d=\"M74 70L92 34\" stroke=\"#fff\" stroke-width=\"9\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M74 70L92 34\" stroke=\"#9ca3af\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"100\" y=\"62\" width=\"34\" height=\"46\" rx=\"6\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"100\" y=\"62\" width=\"34\" height=\"46\" rx=\"6\"/><path d=\"M134 72q14 0 14 12q0 12 -14 12\" fill=\"none\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"100\" y=\"62\" width=\"34\" height=\"46\" rx=\"6\" fill=\"#ef4444\"/><path d=\"M134 72q14 0 14 12q0 12 -14 12\" fill=\"none\"/></g><path d=\"M110 54q-4 -6 0 -12M122 54q-4 -6 0 -12\" stroke=\"#9ca3af\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M160 112V84q-6 -2 -6 -10q2 -12 16 -12q14 0 16 12q0 8 -6 10V112z\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M160 112V84q-6 -2 -6 -10q2 -12 16 -12q14 0 16 12q0 8 -6 10V112z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M160 112V84q-6 -2 -6 -10q2 -12 16 -12q14 0 16 12q0 8 -6 10V112z\" fill=\"#fbbf77\"/></g><rect x=\"165\" y=\"80\" width=\"10\" height=\"26\" rx=\"3\" fill=\"#fde68a\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_11a",
+   "data": {
+    "back": "iść do szkoły",
+    "created": "2026-10-17",
+    "front": "in die Schule gehen",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Dziecko z plecakiem idzie ścieżką do budynku szkoły z dzwonkiem\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 112q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 112q50 -14 100 0t108 0V134H-4z\" fill=\"#34d399\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M104 112V56H190V112z\"/><path d=\"M98 58L147 30L196 58z\"/><path d=\"M138 112V88H156V112z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M104 112V56H190V112z\"/><path d=\"M98 58L147 30L196 58z\"/><path d=\"M138 112V88H156V112z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M104 112V56H190V112z\" fill=\"#fbbf77\"/><path d=\"M98 58L147 30L196 58z\" fill=\"#ef4444\"/><path d=\"M138 112V88H156V112z\" fill=\"#b45309\"/></g><g stroke=\"#fff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"147\" cy=\"48\" r=\"7\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"147\" cy=\"48\" r=\"7\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"112\" y=\"66\" width=\"16\" height=\"14\" rx=\"2\"/><rect x=\"166\" y=\"66\" width=\"16\" height=\"14\" rx=\"2\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"112\" y=\"66\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#60a5fa\"/><rect x=\"166\" y=\"66\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#60a5fa\"/></g><g stroke=\"#fff\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M38 90l-6 22M50 90l8 22\" fill=\"none\"/></g><g stroke=\"#1d2433\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M38 90l-6 22M50 90l8 22\" fill=\"none\"/></g><path d=\"M38 90l-6 22M50 90l8 22\" stroke=\"#1d2433\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"24\" y=\"62\" width=\"12\" height=\"22\" rx=\"4\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"24\" y=\"62\" width=\"12\" height=\"22\" rx=\"4\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"24\" y=\"62\" width=\"12\" height=\"22\" rx=\"4\" fill=\"#fb923c\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M34.5 92v-21q0 -8.4 9.5 -8.4q9.5 0 9.5 8.4v21z\"/><circle cx=\"44\" cy=\"50\" r=\"9.5\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M34.5 92v-21q0 -8.4 9.5 -8.4q9.5 0 9.5 8.4v21z\"/><circle cx=\"44\" cy=\"50\" r=\"9.5\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M34.5 92v-21q0 -8.4 9.5 -8.4q9.5 0 9.5 8.4v21z\" fill=\"#3b82f6\"/><circle cx=\"44\" cy=\"50\" r=\"9.5\" fill=\"#fcd5b4\"/></g><path d=\"M66 72h20M80 66l6 6l-6 6\" stroke=\"#1d2433\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_11b",
+   "data": {
+    "back": "in die Schule gehen",
+    "created": "2026-10-17",
+    "front": "iść do szkoły",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Dziecko z plecakiem idzie ścieżką do budynku szkoły z dzwonkiem\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 112q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 112q50 -14 100 0t108 0V134H-4z\" fill=\"#34d399\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M104 112V56H190V112z\"/><path d=\"M98 58L147 30L196 58z\"/><path d=\"M138 112V88H156V112z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M104 112V56H190V112z\"/><path d=\"M98 58L147 30L196 58z\"/><path d=\"M138 112V88H156V112z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M104 112V56H190V112z\" fill=\"#fbbf77\"/><path d=\"M98 58L147 30L196 58z\" fill=\"#ef4444\"/><path d=\"M138 112V88H156V112z\" fill=\"#b45309\"/></g><g stroke=\"#fff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"147\" cy=\"48\" r=\"7\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"147\" cy=\"48\" r=\"7\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"112\" y=\"66\" width=\"16\" height=\"14\" rx=\"2\"/><rect x=\"166\" y=\"66\" width=\"16\" height=\"14\" rx=\"2\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"112\" y=\"66\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#60a5fa\"/><rect x=\"166\" y=\"66\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#60a5fa\"/></g><g stroke=\"#fff\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M38 90l-6 22M50 90l8 22\" fill=\"none\"/></g><g stroke=\"#1d2433\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M38 90l-6 22M50 90l8 22\" fill=\"none\"/></g><path d=\"M38 90l-6 22M50 90l8 22\" stroke=\"#1d2433\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"24\" y=\"62\" width=\"12\" height=\"22\" rx=\"4\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"24\" y=\"62\" width=\"12\" height=\"22\" rx=\"4\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"24\" y=\"62\" width=\"12\" height=\"22\" rx=\"4\" fill=\"#fb923c\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M34.5 92v-21q0 -8.4 9.5 -8.4q9.5 0 9.5 8.4v21z\"/><circle cx=\"44\" cy=\"50\" r=\"9.5\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M34.5 92v-21q0 -8.4 9.5 -8.4q9.5 0 9.5 8.4v21z\"/><circle cx=\"44\" cy=\"50\" r=\"9.5\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M34.5 92v-21q0 -8.4 9.5 -8.4q9.5 0 9.5 8.4v21z\" fill=\"#3b82f6\"/><circle cx=\"44\" cy=\"50\" r=\"9.5\" fill=\"#fcd5b4\"/></g><path d=\"M66 72h20M80 66l6 6l-6 6\" stroke=\"#1d2433\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_12a",
+   "data": {
+    "back": "jeść obiad",
+    "created": "2026-10-17",
+    "front": "zu Mittag essen",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Talerz z obiadem: udko, ziemniaki i sałata, sztućce, słońce wysoko\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fef3c7\"/><path d=\"M100 5L100 1M109.2 8.8L112 6M113 18L117 18M109.2 27.2L112 30M100 31L100 35M90.8 27.2L88 30M87 18L83 18M90.8 8.8L88 6\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 5L100 1M109.2 8.8L112 6M113 18L117 18M109.2 27.2L112 30M100 31L100 35M90.8 27.2L88 30M87 18L83 18M90.8 8.8L88 6\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"18\" r=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"18\" r=\"9\" fill=\"#fde047\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M174 112V50q10 10 6 34h-6\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M24 50v62M18 50v16q0 6 6 6q6 0 6 -6v-16\" fill=\"none\"/><path d=\"M174 112V50q10 10 6 34h-6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M24 50v62M18 50v16q0 6 6 6q6 0 6 -6v-16\" fill=\"none\"/><path d=\"M174 112V50q10 10 6 34h-6\" fill=\"#cbd5e1\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><ellipse cx=\"100\" cy=\"80\" rx=\"58\" ry=\"36\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><ellipse cx=\"100\" cy=\"80\" rx=\"58\" ry=\"36\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"80\" rx=\"58\" ry=\"36\" fill=\"#fff\"/></g><path d=\"M100 80m-40 0a40 24 0 1 0 80 0a40 24 0 1 0 -80 0\" stroke=\"#cbd5e1\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M88 70q-24 -8 -20 10q4 14 22 4l10 8q6 2 4 -4q4 -2 -2 -6z\"/><circle cx=\"116\" cy=\"70\" r=\"8\"/><circle cx=\"126\" cy=\"82\" r=\"8\"/><path d=\"M92 98q8 -12 16 -2q8 -10 14 2q-14 8 -30 0z\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M88 70q-24 -8 -20 10q4 14 22 4l10 8q6 2 4 -4q4 -2 -2 -6z\"/><circle cx=\"116\" cy=\"70\" r=\"8\"/><circle cx=\"126\" cy=\"82\" r=\"8\"/><path d=\"M92 98q8 -12 16 -2q8 -10 14 2q-14 8 -30 0z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M88 70q-24 -8 -20 10q4 14 22 4l10 8q6 2 4 -4q4 -2 -2 -6z\" fill=\"#b45309\"/><circle cx=\"116\" cy=\"70\" r=\"8\" fill=\"#fde047\"/><circle cx=\"126\" cy=\"82\" r=\"8\" fill=\"#fde047\"/><path d=\"M92 98q8 -12 16 -2q8 -10 14 2q-14 8 -30 0z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_12b",
+   "data": {
+    "back": "zu Mittag essen",
+    "created": "2026-10-17",
+    "front": "jeść obiad",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Talerz z obiadem: udko, ziemniaki i sałata, sztućce, słońce wysoko\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fef3c7\"/><path d=\"M100 5L100 1M109.2 8.8L112 6M113 18L117 18M109.2 27.2L112 30M100 31L100 35M90.8 27.2L88 30M87 18L83 18M90.8 8.8L88 6\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 5L100 1M109.2 8.8L112 6M113 18L117 18M109.2 27.2L112 30M100 31L100 35M90.8 27.2L88 30M87 18L83 18M90.8 8.8L88 6\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"18\" r=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"18\" r=\"9\" fill=\"#fde047\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M174 112V50q10 10 6 34h-6\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M24 50v62M18 50v16q0 6 6 6q6 0 6 -6v-16\" fill=\"none\"/><path d=\"M174 112V50q10 10 6 34h-6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M24 50v62M18 50v16q0 6 6 6q6 0 6 -6v-16\" fill=\"none\"/><path d=\"M174 112V50q10 10 6 34h-6\" fill=\"#cbd5e1\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><ellipse cx=\"100\" cy=\"80\" rx=\"58\" ry=\"36\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><ellipse cx=\"100\" cy=\"80\" rx=\"58\" ry=\"36\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"80\" rx=\"58\" ry=\"36\" fill=\"#fff\"/></g><path d=\"M100 80m-40 0a40 24 0 1 0 80 0a40 24 0 1 0 -80 0\" stroke=\"#cbd5e1\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M88 70q-24 -8 -20 10q4 14 22 4l10 8q6 2 4 -4q4 -2 -2 -6z\"/><circle cx=\"116\" cy=\"70\" r=\"8\"/><circle cx=\"126\" cy=\"82\" r=\"8\"/><path d=\"M92 98q8 -12 16 -2q8 -10 14 2q-14 8 -30 0z\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M88 70q-24 -8 -20 10q4 14 22 4l10 8q6 2 4 -4q4 -2 -2 -6z\"/><circle cx=\"116\" cy=\"70\" r=\"8\"/><circle cx=\"126\" cy=\"82\" r=\"8\"/><path d=\"M92 98q8 -12 16 -2q8 -10 14 2q-14 8 -30 0z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M88 70q-24 -8 -20 10q4 14 22 4l10 8q6 2 4 -4q4 -2 -2 -6z\" fill=\"#b45309\"/><circle cx=\"116\" cy=\"70\" r=\"8\" fill=\"#fde047\"/><circle cx=\"126\" cy=\"82\" r=\"8\" fill=\"#fde047\"/><path d=\"M92 98q8 -12 16 -2q8 -10 14 2q-14 8 -30 0z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_13a",
+   "data": {
+    "back": "odrabiać lekcje",
+    "created": "2026-10-17",
+    "front": "Hausaufgaben machen",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Otwarty zeszyt z zadaniem, ołówek i mały domek\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M20 34Q60 24 100 38V114Q60 100 20 110z\"/><path d=\"M100 38Q140 24 180 34V110Q140 100 100 114z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M20 34Q60 24 100 38V114Q60 100 20 110z\"/><path d=\"M100 38Q140 24 180 34V110Q140 100 100 114z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M20 34Q60 24 100 38V114Q60 100 20 110z\" fill=\"#fff\"/><path d=\"M100 38Q140 24 180 34V110Q140 100 100 114z\" fill=\"#fff\"/></g><path d=\"M30 52q34 -6 60 2M30 66q34 -6 60 2M30 80q34 -6 60 2M110 52q34 -8 60 -2M110 66q34 -8 60 -2\" stroke=\"#60a5fa\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M116 84l6 6l12 -14\" stroke=\"#34d399\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M118 120L170 68l10 10L128 130z\"/><path d=\"M170 68l6 -6l10 10l-6 6z\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M118 120L170 68l10 10L128 130z\"/><path d=\"M170 68l6 -6l10 10l-6 6z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M118 120L170 68l10 10L128 130z\" fill=\"#fde047\"/><path d=\"M170 68l6 -6l10 10l-6 6z\" fill=\"#f472b6\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M30 26V12L44 2L58 12V26z\"/><path d=\"M26 14L44 0L62 14\" fill=\"none\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M30 26V12L44 2L58 12V26z\" fill=\"#fbbf77\"/><path d=\"M26 14L44 0L62 14\" fill=\"none\"/></g><path d=\"M26 14L44 0L62 14\" stroke=\"#ef4444\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M41 26v-8h6v8\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_13b",
+   "data": {
+    "back": "Hausaufgaben machen",
+    "created": "2026-10-17",
+    "front": "odrabiać lekcje",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Otwarty zeszyt z zadaniem, ołówek i mały domek\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M20 34Q60 24 100 38V114Q60 100 20 110z\"/><path d=\"M100 38Q140 24 180 34V110Q140 100 100 114z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M20 34Q60 24 100 38V114Q60 100 20 110z\"/><path d=\"M100 38Q140 24 180 34V110Q140 100 100 114z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M20 34Q60 24 100 38V114Q60 100 20 110z\" fill=\"#fff\"/><path d=\"M100 38Q140 24 180 34V110Q140 100 100 114z\" fill=\"#fff\"/></g><path d=\"M30 52q34 -6 60 2M30 66q34 -6 60 2M30 80q34 -6 60 2M110 52q34 -8 60 -2M110 66q34 -8 60 -2\" stroke=\"#60a5fa\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M116 84l6 6l12 -14\" stroke=\"#34d399\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M118 120L170 68l10 10L128 130z\"/><path d=\"M170 68l6 -6l10 10l-6 6z\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M118 120L170 68l10 10L128 130z\"/><path d=\"M170 68l6 -6l10 10l-6 6z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M118 120L170 68l10 10L128 130z\" fill=\"#fde047\"/><path d=\"M170 68l6 -6l10 10l-6 6z\" fill=\"#f472b6\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M30 26V12L44 2L58 12V26z\"/><path d=\"M26 14L44 0L62 14\" fill=\"none\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M30 26V12L44 2L58 12V26z\" fill=\"#fbbf77\"/><path d=\"M26 14L44 0L62 14\" fill=\"none\"/></g><path d=\"M26 14L44 0L62 14\" stroke=\"#ef4444\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M41 26v-8h6v8\" stroke=\"#1d2433\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_14a",
+   "data": {
+    "back": "iść spać",
+    "created": "2026-10-17",
+    "front": "schlafen gehen",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Śpiąca osoba w łóżku pod kołdrą, księżyc i literki Z\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M150 16a20 20 0 1 0 22 26a16 16 0 0 1 -22 -26z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M150 16a20 20 0 1 0 22 26a16 16 0 0 1 -22 -26z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M150 16a20 20 0 1 0 22 26a16 16 0 0 1 -22 -26z\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"7\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M14 116V60M186 116V80\" fill=\"none\"/></g><g stroke=\"#1d2433\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M14 116V60M186 116V80\" fill=\"none\"/></g><path d=\"M14 116V60M186 116V80M14 104H186\" stroke=\"#b45309\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"20\" y=\"74\" width=\"34\" height=\"18\" rx=\"8\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"20\" y=\"74\" width=\"34\" height=\"18\" rx=\"8\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"20\" y=\"74\" width=\"34\" height=\"18\" rx=\"8\" fill=\"#fff\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"44\" cy=\"76\" r=\"11\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"44\" cy=\"76\" r=\"11\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"44\" cy=\"76\" r=\"11\" fill=\"#fcd5b4\"/></g><path d=\"M38 76q3 2 6 0\" stroke=\"#1d2433\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M48 104V90q4 -12 24 -10H186V104z\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M48 104V90q4 -12 24 -10H186V104z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M48 104V90q4 -12 24 -10H186V104z\" fill=\"#a78bfa\"/></g><path d=\"M80 84q30 8 50 0M140 84q20 8 40 0\" stroke=\"#fff\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><text x=\"80\" y=\"48\" text-anchor=\"middle\" style=\"font:800 14px system-ui,sans-serif;fill:#3b82f6\">z</text><text x=\"96\" y=\"36\" text-anchor=\"middle\" style=\"font:800 18px system-ui,sans-serif;fill:#3b82f6\">z</text><text x=\"116\" y=\"22\" text-anchor=\"middle\" style=\"font:800 22px system-ui,sans-serif;fill:#3b82f6\">Z</text></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_14b",
+   "data": {
+    "back": "schlafen gehen",
+    "created": "2026-10-17",
+    "front": "iść spać",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Śpiąca osoba w łóżku pod kołdrą, księżyc i literki Z\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M150 16a20 20 0 1 0 22 26a16 16 0 0 1 -22 -26z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M150 16a20 20 0 1 0 22 26a16 16 0 0 1 -22 -26z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M150 16a20 20 0 1 0 22 26a16 16 0 0 1 -22 -26z\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"7\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M14 116V60M186 116V80\" fill=\"none\"/></g><g stroke=\"#1d2433\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M14 116V60M186 116V80\" fill=\"none\"/></g><path d=\"M14 116V60M186 116V80M14 104H186\" stroke=\"#b45309\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"20\" y=\"74\" width=\"34\" height=\"18\" rx=\"8\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"20\" y=\"74\" width=\"34\" height=\"18\" rx=\"8\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"20\" y=\"74\" width=\"34\" height=\"18\" rx=\"8\" fill=\"#fff\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"44\" cy=\"76\" r=\"11\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"44\" cy=\"76\" r=\"11\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"44\" cy=\"76\" r=\"11\" fill=\"#fcd5b4\"/></g><path d=\"M38 76q3 2 6 0\" stroke=\"#1d2433\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M48 104V90q4 -12 24 -10H186V104z\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M48 104V90q4 -12 24 -10H186V104z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M48 104V90q4 -12 24 -10H186V104z\" fill=\"#a78bfa\"/></g><path d=\"M80 84q30 8 50 0M140 84q20 8 40 0\" stroke=\"#fff\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><text x=\"80\" y=\"48\" text-anchor=\"middle\" style=\"font:800 14px system-ui,sans-serif;fill:#3b82f6\">z</text><text x=\"96\" y=\"36\" text-anchor=\"middle\" style=\"font:800 18px system-ui,sans-serif;fill:#3b82f6\">z</text><text x=\"116\" y=\"22\" text-anchor=\"middle\" style=\"font:800 22px system-ui,sans-serif;fill:#3b82f6\">Z</text></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_15a",
+   "data": {
+    "back": "rano / wieczorem",
+    "created": "2026-10-17",
+    "front": "am Morgen / am Abend",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Podzielony obrazek: po lewej wschodzi słońce, po prawej zachodzi i świeci księżyc\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><path d=\"M118 0H184Q200 0 200 16V114Q200 130 184 130H82z\" fill=\"#7c3aed\" opacity=\".35\"/><path d=\"M118 0H184Q200 0 200 16V114Q200 130 184 130H82z\" fill=\"#fb923c\" opacity=\".35\"/><path d=\"M50 56L50 49M62.9 60.2L67 54.5M70.9 71.2L77.6 69M70.9 84.8L77.6 87M62.9 95.8L67 101.5M50 100L50 107M37.1 95.8L33 101.5M29.1 84.8L22.4 87M29.1 71.2L22.4 69M37.1 60.2L33 54.5\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M50 56L50 49M62.9 60.2L67 54.5M70.9 71.2L77.6 69M70.9 84.8L77.6 87M62.9 95.8L67 101.5M50 100L50 107M37.1 95.8L33 101.5M29.1 84.8L22.4 87M29.1 71.2L22.4 69M37.1 60.2L33 54.5\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"50\" cy=\"78\" r=\"18\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"50\" cy=\"78\" r=\"18\" fill=\"#fde047\"/></g><path d=\"M152 74L152 69M164.7 79.3L168.3 75.7M170 92L175 92M164.7 104.7L168.3 108.3M152 110L152 115M139.3 104.7L135.7 108.3M134 92L129 92M139.3 79.3L135.7 75.7\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M152 74L152 69M164.7 79.3L168.3 75.7M170 92L175 92M164.7 104.7L168.3 108.3M152 110L152 115M139.3 104.7L135.7 108.3M134 92L129 92M139.3 79.3L135.7 75.7\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"152\" cy=\"92\" r=\"14\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"152\" cy=\"92\" r=\"14\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-2 92q50 -10 100 0t104 0V130H-2z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-2 92q50 -10 100 0t104 0V130H-2z\" fill=\"#34d399\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M168 24a12 12 0 1 0 14 16a10 10 0 0 1 -14 -16z\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M168 24a12 12 0 1 0 14 16a10 10 0 0 1 -14 -16z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M168 24a12 12 0 1 0 14 16a10 10 0 0 1 -14 -16z\" fill=\"#fde047\"/></g><path d=\"M118 0L82 130\" stroke=\"#fff\" stroke-width=\"9\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M118 0L82 130\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M24 50l8 -16l8 16h-5v12h-6v-12z\"/><path d=\"M174 62l8 16l8 -16h-5v-12h-6v12z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M24 50l8 -16l8 16h-5v12h-6v-12z\" fill=\"#34d399\"/><path d=\"M174 62l8 16l8 -16h-5v-12h-6v12z\" fill=\"#ef4444\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_15b",
+   "data": {
+    "back": "am Morgen / am Abend",
+    "created": "2026-10-17",
+    "front": "rano / wieczorem",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Podzielony obrazek: po lewej wschodzi słońce, po prawej zachodzi i świeci księżyc\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><path d=\"M118 0H184Q200 0 200 16V114Q200 130 184 130H82z\" fill=\"#7c3aed\" opacity=\".35\"/><path d=\"M118 0H184Q200 0 200 16V114Q200 130 184 130H82z\" fill=\"#fb923c\" opacity=\".35\"/><path d=\"M50 56L50 49M62.9 60.2L67 54.5M70.9 71.2L77.6 69M70.9 84.8L77.6 87M62.9 95.8L67 101.5M50 100L50 107M37.1 95.8L33 101.5M29.1 84.8L22.4 87M29.1 71.2L22.4 69M37.1 60.2L33 54.5\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M50 56L50 49M62.9 60.2L67 54.5M70.9 71.2L77.6 69M70.9 84.8L77.6 87M62.9 95.8L67 101.5M50 100L50 107M37.1 95.8L33 101.5M29.1 84.8L22.4 87M29.1 71.2L22.4 69M37.1 60.2L33 54.5\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"50\" cy=\"78\" r=\"18\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"50\" cy=\"78\" r=\"18\" fill=\"#fde047\"/></g><path d=\"M152 74L152 69M164.7 79.3L168.3 75.7M170 92L175 92M164.7 104.7L168.3 108.3M152 110L152 115M139.3 104.7L135.7 108.3M134 92L129 92M139.3 79.3L135.7 75.7\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M152 74L152 69M164.7 79.3L168.3 75.7M170 92L175 92M164.7 104.7L168.3 108.3M152 110L152 115M139.3 104.7L135.7 108.3M134 92L129 92M139.3 79.3L135.7 75.7\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"152\" cy=\"92\" r=\"14\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"152\" cy=\"92\" r=\"14\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-2 92q50 -10 100 0t104 0V130H-2z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-2 92q50 -10 100 0t104 0V130H-2z\" fill=\"#34d399\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M168 24a12 12 0 1 0 14 16a10 10 0 0 1 -14 -16z\"/></g><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M168 24a12 12 0 1 0 14 16a10 10 0 0 1 -14 -16z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M168 24a12 12 0 1 0 14 16a10 10 0 0 1 -14 -16z\" fill=\"#fde047\"/></g><path d=\"M118 0L82 130\" stroke=\"#fff\" stroke-width=\"9\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M118 0L82 130\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"4\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M24 50l8 -16l8 16h-5v12h-6v-12z\"/><path d=\"M174 62l8 16l8 -16h-5v-12h-6v12z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M24 50l8 -16l8 16h-5v12h-6v-12z\" fill=\"#34d399\"/><path d=\"M174 62l8 16l8 -16h-5v-12h-6v12z\" fill=\"#ef4444\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_16",
+   "data": {
+    "back": "Ich stehe um sieben Uhr auf.",
+    "created": "2026-10-17",
+    "front": "Jak powiesz po niemiecku: „Wstaję o siódmej.”?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "qa",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Budzik pokazuje siódmą, osoba wstała i stoi obok łóżka, strzałka w górę\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M27.5 35.9a13.3 13.3 0 0 1 17.1 -13.3z\"/><path d=\"M84.5 35.9a13.3 13.3 0 0 0 -17.1 -13.3z\"/><circle cx=\"56\" cy=\"72\" r=\"38\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M27.5 35.9a13.3 13.3 0 0 1 17.1 -13.3z\"/><path d=\"M84.5 35.9a13.3 13.3 0 0 0 -17.1 -13.3z\"/><path d=\"M33.2 102.4l-6 10M78.8 102.4l6 10\" fill=\"none\"/><circle cx=\"56\" cy=\"72\" r=\"38\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M27.5 35.9a13.3 13.3 0 0 1 17.1 -13.3z\" fill=\"#ef4444\"/><path d=\"M84.5 35.9a13.3 13.3 0 0 0 -17.1 -13.3z\" fill=\"#ef4444\"/><path d=\"M33.2 102.4l-6 10M78.8 102.4l6 10\" fill=\"none\"/><circle cx=\"56\" cy=\"72\" r=\"38\" fill=\"#ef4444\"/></g><circle cx=\"56\" cy=\"72\" r=\"31\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M56 43.5L56 50.5M70.2 47.3L68.5 50.3M80.7 57.8L77.7 59.5M84.5 72L77.5 72M80.7 86.2L77.7 84.5M70.2 96.7L68.5 93.7M56 100.5L56 93.5M41.8 96.7L43.5 93.7M31.3 86.3L34.3 84.5M27.5 72L34.5 72M31.3 57.8L34.3 59.5M41.7 47.3L43.5 50.3\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M56 72L48.2 85.4\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M56 72L56 47.2\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"56\" cy=\"72\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/><path d=\"M26 26l-6 -6M56 18v-8M86 26l6 -6\" stroke=\"#ef4444\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M108 118V96H158V118\" stroke=\"#fff\" stroke-width=\"9\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M108 118V96H158V118\" stroke=\"#b45309\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M108 96V84H158V96z\"/><rect x=\"112\" y=\"76\" width=\"20\" height=\"9\" rx=\"4\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M108 96V84H158V96z\" fill=\"#a78bfa\"/><rect x=\"112\" y=\"76\" width=\"20\" height=\"9\" rx=\"4\" fill=\"#fff\"/></g><path d=\"M174 92v26M184 92v26\" stroke=\"#fff\" stroke-width=\"9\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M174 92v26M184 92v26\" stroke=\"#1d2433\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M170 94V62q0 -8 9 -8q9 0 9 8V94z\"/><circle cx=\"179\" cy=\"42\" r=\"10\"/></g><g stroke=\"#fff\" stroke-width=\"6.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M170 94V62q0 -8 9 -8q9 0 9 8V94z\"/><circle cx=\"179\" cy=\"42\" r=\"10\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M170 94V62q0 -8 9 -8q9 0 9 8V94z\" fill=\"#60a5fa\"/><circle cx=\"179\" cy=\"42\" r=\"10\" fill=\"#fcd5b4\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M134 30l12 14h-7v20h-10v-20h-7z\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M134 30l12 14h-7v20h-10v-20h-7z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M134 30l12 14h-7v20h-10v-20h-7z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_17",
+   "data": {
+    "back": "na końcu zdania: Ich stehe … auf.",
+    "created": "2026-10-17",
+    "front": "Gdzie stoi przedrostek czasownika rozdzielnego (aufstehen) w zdaniu?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_niem",
+    "type": "qa",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Rząd klocków-słów: klocek czasownika pęka, a jego mały kawałek skacze strzałką na sam koniec rzędu\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"16\" y=\"18\" width=\"20\" height=\"28\" rx=\"6\"/><rect x=\"42\" y=\"18\" width=\"40\" height=\"28\" rx=\"6\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"16\" y=\"18\" width=\"20\" height=\"28\" rx=\"6\"/><rect x=\"42\" y=\"18\" width=\"40\" height=\"28\" rx=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"16\" y=\"18\" width=\"20\" height=\"28\" rx=\"6\" fill=\"#fb923c\"/><rect x=\"42\" y=\"18\" width=\"40\" height=\"28\" rx=\"6\" fill=\"#3b82f6\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"10\" y=\"70\" width=\"28\" height=\"28\" rx=\"6\"/><rect x=\"42\" y=\"70\" width=\"40\" height=\"28\" rx=\"6\"/><rect x=\"86\" y=\"70\" width=\"36\" height=\"28\" rx=\"6\"/><rect x=\"126\" y=\"70\" width=\"30\" height=\"28\" rx=\"6\"/><rect x=\"162\" y=\"70\" width=\"24\" height=\"28\" rx=\"6\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"10\" y=\"70\" width=\"28\" height=\"28\" rx=\"6\"/><rect x=\"42\" y=\"70\" width=\"40\" height=\"28\" rx=\"6\"/><rect x=\"86\" y=\"70\" width=\"36\" height=\"28\" rx=\"6\"/><rect x=\"126\" y=\"70\" width=\"30\" height=\"28\" rx=\"6\"/><rect x=\"162\" y=\"70\" width=\"24\" height=\"28\" rx=\"6\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"10\" y=\"70\" width=\"28\" height=\"28\" rx=\"6\" fill=\"#cbd5e1\"/><rect x=\"42\" y=\"70\" width=\"40\" height=\"28\" rx=\"6\" fill=\"#3b82f6\"/><rect x=\"86\" y=\"70\" width=\"36\" height=\"28\" rx=\"6\" fill=\"#cbd5e1\"/><rect x=\"126\" y=\"70\" width=\"30\" height=\"28\" rx=\"6\" fill=\"#cbd5e1\"/><rect x=\"162\" y=\"70\" width=\"24\" height=\"28\" rx=\"6\" fill=\"#fb923c\"/></g><path d=\"M26 18Q100 -24 172 60\" stroke=\"#ef4444\" stroke-width=\"3.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"6 5\"/><g stroke=\"#fff\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M175.6 73.7 165.7 60.6 177.6 57.4Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M175.6 73.7 165.7 60.6 177.6 57.4Z\" fill=\"#ef4444\"/></g><path d=\"M62 50v12\" stroke=\"#3b82f6\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M62 72 57.1 59.9 66.9 59.9Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M62 72 57.1 59.9 66.9 59.9Z\" fill=\"#3b82f6\"/></g><text x=\"62\" y=\"120\" text-anchor=\"middle\" style=\"font:800 13px system-ui,sans-serif;fill:#1d2433\">2.</text><text x=\"174\" y=\"120\" text-anchor=\"middle\" style=\"font:800 14px system-ui,sans-serif;fill:#ef4444\">!</text></svg>",
+    "lit": "Aufstehen to dwa klocki sklejone w jeden: przedrostek auf (= w górę) i czasownik stehen (= stać). W zwykłym zdaniu w czasie teraźniejszym klocki się rozklejają: odmienione stehe stoi na 2. miejscu, a auf odpada i ląduje na samym końcu zdania.",
+    "why": "Przedrostek to osobny kawałek czasownika, więc przy odmianie odrywa się i idzie na koniec zdania, a na 2. miejscu zostaje tylko odmieniona część.",
+    "ex": "Ich stehe um sieben Uhr auf. – Wstaję o siódmej. Tak samo: Ich mache das Handy aus. – Wyłączam telefon (ausmachen = wyłączać).",
+    "tpl": "Ich [odmieniona część] … [przedrostek]., np. Ich stehe … auf."
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_18a",
+   "data": {
+    "back": "ranek",
+    "created": "2026-10-17",
+    "front": "der Morgen",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Słońce wschodzi nad horyzontem po lewej, różowe niebo\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><path d=\"M24 100A76 82 0 0 1 176 100\" stroke=\"#94a3b8\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><path d=\"M24.4 74.4L24.4 67.4M36.4 79.4L41.4 74.4M41.4 91.4L48.4 91.4M36.4 103.4L41.4 108.4M24.4 108.4L24.4 115.4M12.4 103.4L7.4 108.4M7.4 91.4L0.4 91.4M12.4 79.4L7.4 74.4\" stroke=\"#ef4444\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"24.4\" cy=\"91.4\" r=\"14\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"24.4\" cy=\"91.4\" r=\"14\" fill=\"#fb923c\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_18b",
+   "data": {
+    "back": "der Morgen",
+    "created": "2026-10-17",
+    "front": "ranek",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Słońce wschodzi nad horyzontem po lewej, różowe niebo\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#ffe4e6\"/><path d=\"M24 100A76 82 0 0 1 176 100\" stroke=\"#94a3b8\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><path d=\"M24.4 74.4L24.4 67.4M36.4 79.4L41.4 74.4M41.4 91.4L48.4 91.4M36.4 103.4L41.4 108.4M24.4 108.4L24.4 115.4M12.4 103.4L7.4 108.4M7.4 91.4L0.4 91.4M12.4 79.4L7.4 74.4\" stroke=\"#ef4444\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"24.4\" cy=\"91.4\" r=\"14\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"24.4\" cy=\"91.4\" r=\"14\" fill=\"#fb923c\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_19a",
+   "data": {
+    "back": "przedpołudnie",
+    "created": "2026-10-17",
+    "front": "der Vormittag",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Słońce w połowie drogi w górę po łuku nieba\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><path d=\"M24 100A76 82 0 0 1 176 100\" stroke=\"#94a3b8\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><path d=\"M46.3 25L46.3 19M58.3 30L62.6 25.7M63.3 42L69.3 42M58.3 54L62.6 58.3M46.3 59L46.3 65M34.3 54L30 58.3M29.3 42L23.3 42M34.3 30L30 25.7\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M46.3 25L46.3 19M58.3 30L62.6 25.7M63.3 42L69.3 42M58.3 54L62.6 58.3M46.3 59L46.3 65M34.3 54L30 58.3M29.3 42L23.3 42M34.3 30L30 25.7\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"46.3\" cy=\"42.0\" r=\"13\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"46.3\" cy=\"42.0\" r=\"13\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_19b",
+   "data": {
+    "back": "der Vormittag",
+    "created": "2026-10-17",
+    "front": "przedpołudnie",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Słońce w połowie drogi w górę po łuku nieba\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><path d=\"M24 100A76 82 0 0 1 176 100\" stroke=\"#94a3b8\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><path d=\"M46.3 25L46.3 19M58.3 30L62.6 25.7M63.3 42L69.3 42M58.3 54L62.6 58.3M46.3 59L46.3 65M34.3 54L30 58.3M29.3 42L23.3 42M34.3 30L30 25.7\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M46.3 25L46.3 19M58.3 30L62.6 25.7M63.3 42L69.3 42M58.3 54L62.6 58.3M46.3 59L46.3 65M34.3 54L30 58.3M29.3 42L23.3 42M34.3 30L30 25.7\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"46.3\" cy=\"42.0\" r=\"13\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"46.3\" cy=\"42.0\" r=\"13\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_20a",
+   "data": {
+    "back": "południe",
+    "created": "2026-10-17",
+    "front": "der Mittag",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Słońce na samym szczycie łuku nieba\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#dbeafe\"/><path d=\"M24 100A76 82 0 0 1 176 100\" stroke=\"#94a3b8\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><path d=\"M100 1L100 -5M112 6L116.3 1.7M117 18L123 18M112 30L116.3 34.3M100 35L100 41M88 30L83.7 34.3M83 18L77 18M88 6L83.7 1.7\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 1L100 -5M112 6L116.3 1.7M117 18L123 18M112 30L116.3 34.3M100 35L100 41M88 30L83.7 34.3M83 18L77 18M88 6L83.7 1.7\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100.0\" cy=\"18.0\" r=\"13\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100.0\" cy=\"18.0\" r=\"13\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_20b",
+   "data": {
+    "back": "der Mittag",
+    "created": "2026-10-17",
+    "front": "południe",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Słońce na samym szczycie łuku nieba\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#dbeafe\"/><path d=\"M24 100A76 82 0 0 1 176 100\" stroke=\"#94a3b8\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><path d=\"M100 1L100 -5M112 6L116.3 1.7M117 18L123 18M112 30L116.3 34.3M100 35L100 41M88 30L83.7 34.3M83 18L77 18M88 6L83.7 1.7\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 1L100 -5M112 6L116.3 1.7M117 18L123 18M112 30L116.3 34.3M100 35L100 41M88 30L83.7 34.3M83 18L77 18M88 6L83.7 1.7\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100.0\" cy=\"18.0\" r=\"13\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100.0\" cy=\"18.0\" r=\"13\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_21a",
+   "data": {
+    "back": "popołudnie",
+    "created": "2026-10-17",
+    "front": "der Nachmittag",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Słońce w połowie drogi w dół po łuku nieba\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fef3c7\"/><path d=\"M24 100A76 82 0 0 1 176 100\" stroke=\"#94a3b8\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><path d=\"M153.7 25L153.7 19M165.7 30L170 25.7M170.7 42L176.7 42M165.7 54L170 58.3M153.7 59L153.7 65M141.7 54L137.4 58.3M136.7 42L130.7 42M141.7 30L137.4 25.7\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M153.7 25L153.7 19M165.7 30L170 25.7M170.7 42L176.7 42M165.7 54L170 58.3M153.7 59L153.7 65M141.7 54L137.4 58.3M136.7 42L130.7 42M141.7 30L137.4 25.7\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"153.7\" cy=\"42.0\" r=\"13\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"153.7\" cy=\"42.0\" r=\"13\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_21b",
+   "data": {
+    "back": "der Nachmittag",
+    "created": "2026-10-17",
+    "front": "popołudnie",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Słońce w połowie drogi w dół po łuku nieba\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fef3c7\"/><path d=\"M24 100A76 82 0 0 1 176 100\" stroke=\"#94a3b8\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><path d=\"M153.7 25L153.7 19M165.7 30L170 25.7M170.7 42L176.7 42M165.7 54L170 58.3M153.7 59L153.7 65M141.7 54L137.4 58.3M136.7 42L130.7 42M141.7 30L137.4 25.7\" stroke=\"#fff\" stroke-width=\"7\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M153.7 25L153.7 19M165.7 30L170 25.7M170.7 42L176.7 42M165.7 54L170 58.3M153.7 59L153.7 65M141.7 54L137.4 58.3M136.7 42L130.7 42M141.7 30L137.4 25.7\" stroke=\"#fb923c\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"153.7\" cy=\"42.0\" r=\"13\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"153.7\" cy=\"42.0\" r=\"13\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_22a",
+   "data": {
+    "back": "wieczór",
+    "created": "2026-10-17",
+    "front": "der Abend",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Pomarańczowe słońce zachodzi po prawej, pomarańczowe niebo\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fed7aa\"/><path d=\"M24 100A76 82 0 0 1 176 100\" stroke=\"#94a3b8\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><path d=\"M175.6 74.4L175.6 67.4M187.6 79.4L192.6 74.4M192.6 91.4L199.6 91.4M187.6 103.4L192.6 108.4M175.6 108.4L175.6 115.4M163.6 103.4L158.6 108.4M158.6 91.4L151.6 91.4M163.6 79.4L158.6 74.4\" stroke=\"#ef4444\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"175.6\" cy=\"91.4\" r=\"14\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"175.6\" cy=\"91.4\" r=\"14\" fill=\"#fb923c\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_22b",
+   "data": {
+    "back": "der Abend",
+    "created": "2026-10-17",
+    "front": "wieczór",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Pomarańczowe słońce zachodzi po prawej, pomarańczowe niebo\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fed7aa\"/><path d=\"M24 100A76 82 0 0 1 176 100\" stroke=\"#94a3b8\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><path d=\"M175.6 74.4L175.6 67.4M187.6 79.4L192.6 74.4M192.6 91.4L199.6 91.4M187.6 103.4L192.6 108.4M175.6 108.4L175.6 115.4M163.6 103.4L158.6 108.4M158.6 91.4L151.6 91.4M163.6 79.4L158.6 74.4\" stroke=\"#ef4444\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"175.6\" cy=\"91.4\" r=\"14\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"175.6\" cy=\"91.4\" r=\"14\" fill=\"#fb923c\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\" fill=\"#34d399\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_23a",
+   "data": {
+    "back": "noc",
+    "created": "2026-10-17",
+    "front": "die Nacht",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Ciemne niebo, księżyc, gwiazdy i dom ze świecącym oknem\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#312e81\"/><path d=\"M24 100A76 82 0 0 1 176 100\" stroke=\"#fff\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><g stroke=\"#fff\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M40 24l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\"/></g><g stroke=\"#1d2433\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M40 24l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M70 48l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\"/></g><g stroke=\"#1d2433\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M70 48l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M120 18l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\"/></g><g stroke=\"#1d2433\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M120 18l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M164 46l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\"/></g><g stroke=\"#1d2433\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M164 46l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M32 70l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\"/></g><g stroke=\"#1d2433\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M32 70l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\" fill=\"#fde047\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M96 34a22 22 0 1 0 26 30a18 18 0 0 1 -26 -30z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M96 34a22 22 0 1 0 26 30a18 18 0 0 1 -26 -30z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M96 34a22 22 0 1 0 26 30a18 18 0 0 1 -26 -30z\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\" fill=\"#166534\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"128\" y=\"76\" width=\"34\" height=\"30\" rx=\"2\"/><path d=\"M122 78L145 60L168 78\" fill=\"none\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"128\" y=\"76\" width=\"34\" height=\"30\" rx=\"2\" fill=\"#475569\"/><path d=\"M122 78L145 60L168 78\" fill=\"none\"/></g><g stroke=\"#fff\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"138\" y=\"84\" width=\"14\" height=\"12\" rx=\"2\"/></g><g stroke=\"#1d2433\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"138\" y=\"84\" width=\"14\" height=\"12\" rx=\"2\" fill=\"#fde047\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_23b",
+   "data": {
+    "back": "die Nacht",
+    "created": "2026-10-17",
+    "front": "noc",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Ciemne niebo, księżyc, gwiazdy i dom ze świecącym oknem\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#312e81\"/><path d=\"M24 100A76 82 0 0 1 176 100\" stroke=\"#fff\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\" stroke-dasharray=\"5 7\"/><g stroke=\"#fff\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M40 24l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\"/></g><g stroke=\"#1d2433\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M40 24l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M70 48l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\"/></g><g stroke=\"#1d2433\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M70 48l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M120 18l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\"/></g><g stroke=\"#1d2433\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M120 18l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M164 46l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\"/></g><g stroke=\"#1d2433\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M164 46l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M32 70l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\"/></g><g stroke=\"#1d2433\" stroke-width=\"1.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M32 70l2 4l4 2l-4 2l-2 4l-2 -4l-4 -2l4 -2z\" fill=\"#fde047\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M96 34a22 22 0 1 0 26 30a18 18 0 0 1 -26 -30z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M96 34a22 22 0 1 0 26 30a18 18 0 0 1 -26 -30z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M96 34a22 22 0 1 0 26 30a18 18 0 0 1 -26 -30z\" fill=\"#fde047\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M-4 100q50 -14 100 0t108 0V134H-4z\" fill=\"#166534\"/></g><g stroke=\"#fff\" stroke-width=\"5.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"128\" y=\"76\" width=\"34\" height=\"30\" rx=\"2\"/><path d=\"M122 78L145 60L168 78\" fill=\"none\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"128\" y=\"76\" width=\"34\" height=\"30\" rx=\"2\" fill=\"#475569\"/><path d=\"M122 78L145 60L168 78\" fill=\"none\"/></g><g stroke=\"#fff\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"138\" y=\"84\" width=\"14\" height=\"12\" rx=\"2\"/></g><g stroke=\"#1d2433\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"138\" y=\"84\" width=\"14\" height=\"12\" rx=\"2\" fill=\"#fde047\"/></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_24a",
+   "data": {
+    "back": "pięć po dziesiątej",
+    "created": "2026-10-17",
+    "front": "fünf nach zehn",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar: mały kawałek od góry do jedynki zaznaczony, krótka wskazówka na dziesiątce\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"66\" r=\"52\" fill=\"#a78bfa\"/></g><circle cx=\"100\" cy=\"66\" r=\"45\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 66L100 22.5A43.5 43.5 0 0 1 121.8 28.3Z\" fill=\"#c4b5fd\" opacity=\".85\"/><path d=\"M100 23.5L100 30.5M121.2 29.2L119.5 32.2M136.8 44.8L133.8 46.5M142.5 66L135.5 66M136.8 87.2L133.8 85.5M121.2 102.8L119.5 99.8M100 108.5L100 101.5M78.8 102.8L80.5 99.8M63.2 87.3L66.2 85.5M57.5 66L64.5 66M63.2 44.8L66.2 46.5M78.7 29.2L80.5 32.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L81 53.9\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L118 34.8\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"66\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_24b",
+   "data": {
+    "back": "fünf nach zehn",
+    "created": "2026-10-17",
+    "front": "pięć po dziesiątej",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar: mały kawałek od góry do jedynki zaznaczony, krótka wskazówka na dziesiątce\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"66\" r=\"52\" fill=\"#a78bfa\"/></g><circle cx=\"100\" cy=\"66\" r=\"45\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 66L100 22.5A43.5 43.5 0 0 1 121.8 28.3Z\" fill=\"#c4b5fd\" opacity=\".85\"/><path d=\"M100 23.5L100 30.5M121.2 29.2L119.5 32.2M136.8 44.8L133.8 46.5M142.5 66L135.5 66M136.8 87.2L133.8 85.5M121.2 102.8L119.5 99.8M100 108.5L100 101.5M78.8 102.8L80.5 99.8M63.2 87.3L66.2 85.5M57.5 66L64.5 66M63.2 44.8L66.2 46.5M78.7 29.2L80.5 32.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L81 53.9\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L118 34.8\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"66\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_25a",
+   "data": {
+    "back": "za dziesięć jedenasta",
+    "created": "2026-10-17",
+    "front": "zehn vor elf",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar: brakujący kawałek od dziesiątki do góry zaznaczony, krótka wskazówka prawie na jedenastce\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"66\" r=\"52\" fill=\"#fb923c\"/></g><circle cx=\"100\" cy=\"66\" r=\"45\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 66L62.3 44.2A43.5 43.5 0 0 1 100 22.5Z\" fill=\"#fdba74\" opacity=\".85\"/><path d=\"M100 23.5L100 30.5M121.2 29.2L119.5 32.2M136.8 44.8L133.8 46.5M142.5 66L135.5 66M136.8 87.2L133.8 85.5M121.2 102.8L119.5 99.8M100 108.5L100 101.5M78.8 102.8L80.5 99.8M63.2 87.3L66.2 85.5M57.5 66L64.5 66M63.2 44.8L66.2 46.5M78.7 29.2L80.5 32.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L87.1 47.6\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L68.8 48\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"66\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_25b",
+   "data": {
+    "back": "zehn vor elf",
+    "created": "2026-10-17",
+    "front": "za dziesięć jedenasta",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar: brakujący kawałek od dziesiątki do góry zaznaczony, krótka wskazówka prawie na jedenastce\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"66\" r=\"52\" fill=\"#fb923c\"/></g><circle cx=\"100\" cy=\"66\" r=\"45\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 66L62.3 44.2A43.5 43.5 0 0 1 100 22.5Z\" fill=\"#fdba74\" opacity=\".85\"/><path d=\"M100 23.5L100 30.5M121.2 29.2L119.5 32.2M136.8 44.8L133.8 46.5M142.5 66L135.5 66M136.8 87.2L133.8 85.5M121.2 102.8L119.5 99.8M100 108.5L100 101.5M78.8 102.8L80.5 99.8M63.2 87.3L66.2 85.5M57.5 66L64.5 66M63.2 44.8L66.2 46.5M78.7 29.2L80.5 32.2\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L87.1 47.6\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 66L68.8 48\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"66\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_26a",
+   "data": {
+    "back": "O której godzinie?",
+    "created": "2026-10-17",
+    "front": "Um wie viel Uhr?",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Klaps filmowy i zegar ze znakiem zapytania zamiast wskazówek\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"20\" y=\"54\" width=\"80\" height=\"56\" rx=\"5\"/><path d=\"M20 54L22 36L100 26L100 46z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"20\" y=\"54\" width=\"80\" height=\"56\" rx=\"5\"/><path d=\"M20 54L22 36L100 26L100 46z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"20\" y=\"54\" width=\"80\" height=\"56\" rx=\"5\" fill=\"#374151\"/><path d=\"M20 54L22 36L100 26L100 46z\" fill=\"#fff\"/></g><path d=\"M32 34.5L40 48M52 32L60 47M72 29.5L80 46.5M92 27L99 44\" stroke=\"#1d2433\" stroke-width=\"7\"/><path d=\"M30 70h58M30 84h40M30 98h50\" stroke=\"#9ca3af\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"148\" cy=\"66\" r=\"40\"/><circle cx=\"148\" cy=\"66\" r=\"32\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"148\" cy=\"66\" r=\"40\"/><circle cx=\"148\" cy=\"66\" r=\"32\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"148\" cy=\"66\" r=\"40\" fill=\"#3b82f6\"/><circle cx=\"148\" cy=\"66\" r=\"32\" fill=\"#fff\"/></g><path d=\"M148 36L148 41M178 66L173 66M148 96L148 91M118 66L123 66\" stroke=\"#1d2433\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><text x=\"148\" y=\"77\" text-anchor=\"middle\" style=\"font:800 32px system-ui,sans-serif;fill:#ef4444\">?</text></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_26b",
+   "data": {
+    "back": "Um wie viel Uhr?",
+    "created": "2026-10-17",
+    "front": "O której godzinie?",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Klaps filmowy i zegar ze znakiem zapytania zamiast wskazówek\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#f3e8ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"20\" y=\"54\" width=\"80\" height=\"56\" rx=\"5\"/><path d=\"M20 54L22 36L100 26L100 46z\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"20\" y=\"54\" width=\"80\" height=\"56\" rx=\"5\"/><path d=\"M20 54L22 36L100 26L100 46z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"20\" y=\"54\" width=\"80\" height=\"56\" rx=\"5\" fill=\"#374151\"/><path d=\"M20 54L22 36L100 26L100 46z\" fill=\"#fff\"/></g><path d=\"M32 34.5L40 48M52 32L60 47M72 29.5L80 46.5M92 27L99 44\" stroke=\"#1d2433\" stroke-width=\"7\"/><path d=\"M30 70h58M30 84h40M30 98h50\" stroke=\"#9ca3af\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"148\" cy=\"66\" r=\"40\"/><circle cx=\"148\" cy=\"66\" r=\"32\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"148\" cy=\"66\" r=\"40\"/><circle cx=\"148\" cy=\"66\" r=\"32\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"148\" cy=\"66\" r=\"40\" fill=\"#3b82f6\"/><circle cx=\"148\" cy=\"66\" r=\"32\" fill=\"#fff\"/></g><path d=\"M148 36L148 41M178 66L173 66M148 96L148 91M118 66L123 66\" stroke=\"#1d2433\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/><text x=\"148\" y=\"77\" text-anchor=\"middle\" style=\"font:800 32px system-ui,sans-serif;fill:#ef4444\">?</text></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_27a",
+   "data": {
+    "back": "zegarek / godzina",
+    "created": "2026-10-17",
+    "front": "die Uhr",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegarek na rękę z paskiem\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"80\" y=\"4\" width=\"40\" height=\"122\" rx=\"10\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"80\" y=\"4\" width=\"40\" height=\"122\" rx=\"10\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"80\" y=\"4\" width=\"40\" height=\"122\" rx=\"10\" fill=\"#b45309\"/></g><path d=\"M84 18h32M84 30h32M84 100h32M84 112h32\" stroke=\"#7c4a1e\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"146\" y=\"58\" width=\"10\" height=\"14\" rx=\"3\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"146\" y=\"58\" width=\"10\" height=\"14\" rx=\"3\" fill=\"#9ca3af\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"65\" r=\"40\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"65\" r=\"40\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"65\" r=\"40\" fill=\"#9ca3af\"/></g><circle cx=\"100\" cy=\"65\" r=\"33\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 34.5L100 41.5M115.2 38.6L113.5 41.6M126.4 49.8L123.4 51.5M130.5 65L123.5 65M126.4 80.2L123.4 78.5M115.2 91.4L113.5 88.4M100 95.5L100 88.5M84.8 91.4L86.5 88.4M73.6 80.3L76.6 78.5M69.5 65L76.5 65M73.6 49.8L76.6 51.5M84.7 38.6L86.5 41.6\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 65L86.5 55.5\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 65L122.9 51.8\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"65\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_27b",
+   "data": {
+    "back": "die Uhr",
+    "created": "2026-10-17",
+    "front": "zegarek / godzina",
+    "source": "BorBan import 17.10 (terminarz)",
+    "subjectId": "sb_niem",
+    "type": "vocab",
+    "unitId": "un_n2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegarek na rękę z paskiem\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"80\" y=\"4\" width=\"40\" height=\"122\" rx=\"10\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"80\" y=\"4\" width=\"40\" height=\"122\" rx=\"10\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"80\" y=\"4\" width=\"40\" height=\"122\" rx=\"10\" fill=\"#b45309\"/></g><path d=\"M84 18h32M84 30h32M84 100h32M84 112h32\" stroke=\"#7c4a1e\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"146\" y=\"58\" width=\"10\" height=\"14\" rx=\"3\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"146\" y=\"58\" width=\"10\" height=\"14\" rx=\"3\" fill=\"#9ca3af\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"65\" r=\"40\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"65\" r=\"40\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"65\" r=\"40\" fill=\"#9ca3af\"/></g><circle cx=\"100\" cy=\"65\" r=\"33\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 34.5L100 41.5M115.2 38.6L113.5 41.6M126.4 49.8L123.4 51.5M130.5 65L123.5 65M126.4 80.2L123.4 78.5M115.2 91.4L113.5 88.4M100 95.5L100 88.5M84.8 91.4L86.5 88.4M73.6 80.3L76.6 78.5M69.5 65L76.5 65M73.6 49.8L76.6 51.5M84.7 38.6L86.5 41.6\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 65L86.5 55.5\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 65L122.9 51.8\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"65\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
+   }
+  }
+ ]
+}

@@ -1,0 +1,148 @@
+{
+ "format": "borban-pack-1",
+ "meta": {
+  "subject": "Geografia",
+  "source": "BorBan, materiał kl. 1 technikum (Warszawa), wrzesień–październik 2026",
+  "standard": "docs/STANDARD-KART.md"
+ },
+ "docs": [
+  {
+   "col": "subjects",
+   "id": "sb_geo",
+   "data": {
+    "book": "Nowe Oblicza geografii 1 (Nowa Era)",
+    "color": "green",
+    "name": "Geografia",
+    "order": 9
+   }
+  },
+  {
+   "col": "units",
+   "id": "un_g1",
+   "data": {
+    "order": 1,
+    "subjectId": "sb_geo",
+    "title": "Mapa i współrzędne geograficzne",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 200\" role=\"img\"><rect width=\"320\" height=\"200\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"80\" cy=\"98\" r=\"58\"/><circle cx=\"240\" cy=\"98\" r=\"58\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"80\" cy=\"98\" r=\"58\"/><circle cx=\"240\" cy=\"98\" r=\"58\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"80\" cy=\"98\" r=\"58\" fill=\"#60a5fa\"/><circle cx=\"240\" cy=\"98\" r=\"58\" fill=\"#60a5fa\"/></g><path d=\"M22 98 H138\" stroke=\"#ef4444\" stroke-width=\"3\"/><path d=\"M42.7 53.6 H117.3\" stroke=\"#fff\" stroke-width=\"2\" stroke-dasharray=\"4 3\"/><path d=\"M80 98 L117.3 53.6\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M80 40 V156\" stroke=\"#1d2433\" stroke-width=\"1.2\" opacity=\".5\"/><path d=\"M104 98 A24 24 0 0 0 95.4 79.6\" fill=\"none\" stroke=\"#fde047\" stroke-width=\"4\"/><circle cx=\"117.3\" cy=\"53.6\" r=\"5\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><text x=\"80\" y=\"34\" text-anchor=\"middle\" style=\"font:800 13px system-ui,sans-serif;fill:#1d2433\">N</text><text x=\"80\" y=\"172\" text-anchor=\"middle\" style=\"font:800 13px system-ui,sans-serif;fill:#1d2433\">S</text><text x=\"112\" y=\"92\" text-anchor=\"middle\" style=\"font:800 13px system-ui,sans-serif;fill:#1d2433\">φ</text><text x=\"52\" y=\"114\" text-anchor=\"middle\" style=\"font:800 11px system-ui,sans-serif;fill:#ef4444;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">równik 0°</text><path d=\"M240 98 V156\" stroke=\"#ef4444\" stroke-width=\"3\"/><path d=\"M240 98 L290.2 127.0\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M240 122 A24 24 0 0 0 260.8 110.0\" fill=\"none\" stroke=\"#fde047\" stroke-width=\"4\"/><circle cx=\"290.2\" cy=\"127.0\" r=\"5\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><circle cx=\"240\" cy=\"98\" r=\"4\" fill=\"#1d2433\"/><text x=\"250\" y=\"94\" text-anchor=\"start\" style=\"font:800 12px system-ui,sans-serif;fill:#1d2433\">N</text><text x=\"255\" y=\"128\" text-anchor=\"middle\" style=\"font:800 13px system-ui,sans-serif;fill:#1d2433\">λ</text><text x=\"306\" y=\"102\" text-anchor=\"middle\" style=\"font:800 13px system-ui,sans-serif;fill:#1d2433\">E</text><text x=\"174\" y=\"102\" text-anchor=\"middle\" style=\"font:800 13px system-ui,sans-serif;fill:#1d2433\">W</text><text x=\"240\" y=\"172\" text-anchor=\"middle\" style=\"font:800 11px system-ui,sans-serif;fill:#ef4444\">Greenwich 0°</text><text x=\"80\" y=\"192\" text-anchor=\"middle\" style=\"font:800 12px system-ui,sans-serif;fill:#1d2433\">szerokość: 0–90° N/S</text><text x=\"240\" y=\"192\" text-anchor=\"middle\" style=\"font:800 12px system-ui,sans-serif;fill:#1d2433\">długość: 0–180° E/W</text><text x=\"240\" y=\"30\" text-anchor=\"middle\" style=\"font:600 11px system-ui,sans-serif;fill:#475569\">widok z góry na biegun N</text></svg>"
+   }
+  },
+  {
+   "col": "units",
+   "id": "un_g2",
+   "data": {
+    "order": 2,
+    "subjectId": "sb_geo",
+    "title": "Ziemia we Wszechświecie",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 200\" role=\"img\"><defs><clipPath id=\"un_g2-c\"><rect width=\"320\" height=\"200\" rx=\"16\"/></clipPath></defs><g clip-path=\"url(#un_g2-c)\"><rect width=\"320\" height=\"200\" rx=\"16\" fill=\"#1e293b\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"-46\" cy=\"100\" r=\"60\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"-46\" cy=\"100\" r=\"60\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"-46\" cy=\"100\" r=\"60\" fill=\"#fde047\"/></g><g fill=\"#cbd5e1\" opacity=\".7\"><circle cx=\"140.0\" cy=\"70\" r=\"1.3\"/><circle cx=\"141.5\" cy=\"78\" r=\"1.3\"/><circle cx=\"143.0\" cy=\"86\" r=\"1.3\"/><circle cx=\"140.0\" cy=\"94\" r=\"1.3\"/><circle cx=\"141.5\" cy=\"102\" r=\"1.3\"/><circle cx=\"143.0\" cy=\"110\" r=\"1.3\"/><circle cx=\"140.0\" cy=\"118\" r=\"1.3\"/><circle cx=\"141.5\" cy=\"126\" r=\"1.3\"/></g><ellipse cx=\"214\" cy=\"100\" rx=\"24\" ry=\"5\" fill=\"none\" stroke=\"#fff\" stroke-width=\"6\"/><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"50\" cy=\"100\" r=\"3.5\"/><circle cx=\"72\" cy=\"100\" r=\"5.5\"/><circle cx=\"96\" cy=\"100\" r=\"6\"/><circle cx=\"118\" cy=\"100\" r=\"4.5\"/><circle cx=\"162\" cy=\"100\" r=\"17\"/><circle cx=\"214\" cy=\"100\" r=\"13\"/><circle cx=\"258\" cy=\"100\" r=\"9\"/><circle cx=\"296\" cy=\"100\" r=\"9\"/></g><g stroke=\"#1d2433\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"50\" cy=\"100\" r=\"3.5\" fill=\"#9ca3af\"/><circle cx=\"72\" cy=\"100\" r=\"5.5\" fill=\"#fde68a\"/><circle cx=\"96\" cy=\"100\" r=\"6\" fill=\"#3b82f6\"/><circle cx=\"118\" cy=\"100\" r=\"4.5\" fill=\"#ef4444\"/><circle cx=\"162\" cy=\"100\" r=\"17\" fill=\"#fb923c\"/><circle cx=\"214\" cy=\"100\" r=\"13\" fill=\"#fde047\"/><circle cx=\"258\" cy=\"100\" r=\"9\" fill=\"#5eead4\"/><circle cx=\"296\" cy=\"100\" r=\"9\" fill=\"#3b82f6\"/></g><path d=\"M196 104 a24 5 0 0 0 36 0\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"2\"/><ellipse cx=\"214\" cy=\"100\" rx=\"24\" ry=\"5\" fill=\"none\" stroke=\"#fde68a\" stroke-width=\"2\"/><text x=\"50\" y=\"123.5\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#fff\">Merkury</text><text x=\"72\" y=\"78.5\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#fff\">Wenus</text><text x=\"96\" y=\"126\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#fff\">Ziemia</text><text x=\"118\" y=\"79.5\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#fff\">Mars</text><text x=\"162\" y=\"137\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#fff\">Jowisz</text><text x=\"214\" y=\"71\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#fff\">Saturn</text><text x=\"258\" y=\"129\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#fff\">Uran</text><text x=\"296\" y=\"75\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#fff\">Neptun</text><path d=\"M40 166 H126 M150 166 H312\" stroke=\"#b45309\" stroke-width=\"3\"/><path d=\"M150 166 H312\" stroke=\"#fb923c\" stroke-width=\"3\"/><text x=\"84\" y=\"184\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#fde68a\">skaliste</text><text x=\"231\" y=\"184\" text-anchor=\"middle\" style=\"font:700 11px system-ui,sans-serif;fill:#fdba74\">gazowe olbrzymy</text><text x=\"160\" y=\"26\" text-anchor=\"middle\" style=\"font:700 12px system-ui,sans-serif;fill:#fff\">1 j.a. = Ziemia–Słońce ≈ 150 mln km</text></g></svg>"
+   }
+  },
+  {
+   "col": "units",
+   "id": "un_g3",
+   "data": {
+    "order": 3,
+    "subjectId": "sb_geo",
+    "title": "Ruchy Ziemi",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 200\" role=\"img\"><rect width=\"320\" height=\"200\" rx=\"16\" fill=\"#e8f1ff\"/><ellipse cx=\"160\" cy=\"104\" rx=\"122\" ry=\"52\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-dasharray=\"6 5\"/><polygon points=\"166.0,156.0 157.0,150.6 157.0,161.4\" fill=\"#1d2433\"/><polygon points=\"154.0,52.0 163.0,57.4 163.0,46.6\" fill=\"#1d2433\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"160\" cy=\"104\" r=\"22\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"160\" cy=\"104\" r=\"22\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"160\" cy=\"104\" r=\"22\" fill=\"#fde047\"/></g><text x=\"160\" y=\"109\" text-anchor=\"middle\" style=\"font:800 11px system-ui,sans-serif;fill:#1d2433\">Słońce</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"38\" cy=\"104\" r=\"16\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"38\" cy=\"104\" r=\"16\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"38\" cy=\"104\" r=\"16\" fill=\"#3b82f6\"/></g><path d=\"M38 88 A16 16 0 0 0 38 120 Z\" fill=\"#1d2433\" opacity=\".45\"/><path d=\"M27.6 127.8 L48.4 80.2\" stroke=\"#ef4444\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"282\" cy=\"104\" r=\"16\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"282\" cy=\"104\" r=\"16\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"282\" cy=\"104\" r=\"16\" fill=\"#3b82f6\"/></g><path d=\"M282 88 A16 16 0 0 1 282 120 Z\" fill=\"#1d2433\" opacity=\".45\"/><path d=\"M271.6 127.8 L292.4 80.2\" stroke=\"#ef4444\" stroke-width=\"2.5\" stroke-linecap=\"round\"/><path d=\"M24 78 A16 6 0 0 0 52 78\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><polygon points=\"55.0,75.0 47.3,77.7 53.7,83.1\" fill=\"#1d2433\"/><text x=\"160\" y=\"24\" text-anchor=\"middle\" style=\"font:800 12px system-ui,sans-serif;fill:#1d2433\">ruch obiegowy: ok. 365 dni → pory roku</text><text x=\"160\" y=\"191\" text-anchor=\"middle\" style=\"font:800 12px system-ui,sans-serif;fill:#1d2433\">ruch obrotowy: ok. 24 h → dzień i noc</text><text x=\"312\" y=\"170\" text-anchor=\"end\" style=\"font:800 11px system-ui,sans-serif;fill:#ef4444\">oś: 23,5° od pionu</text><text x=\"10\" y=\"170\" text-anchor=\"start\" style=\"font:700 11px system-ui,sans-serif;fill:#475569\">noc | dzień</text></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_g1_01",
+   "data": {
+    "back": "odległość kątowa od równika (0–90° N lub S)",
+    "created": "2026-10-17",
+    "front": "Co to jest szerokość geograficzna?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_geo",
+    "type": "qa",
+    "unitId": "un_g1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"84\" cy=\"66\" r=\"52\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"84\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"84\" cy=\"66\" r=\"52\" fill=\"#60a5fa\"/></g><path d=\"M54 46 q14 -14 30 -6 q10 12 -6 22 q-18 6 -24 -16 Z M92 80 q18 -6 22 10 q-6 16 -18 10 Z\" fill=\"#34d399\" stroke=\"#1d2433\" stroke-width=\"2\"/><g fill=\"none\" stroke=\"#1d2433\" stroke-width=\"1.2\" opacity=\".35\"><ellipse cx=\"84\" cy=\"66\" rx=\"14\" ry=\"52\"/><ellipse cx=\"84\" cy=\"66\" rx=\"30\" ry=\"52\"/><path d=\"M84 14 V118\"/></g><g fill=\"none\" stroke=\"#fde047\" stroke-width=\"3\"><ellipse cx=\"84\" cy=\"36\" rx=\"42.5\" ry=\"2.6\"/><ellipse cx=\"84\" cy=\"51\" rx=\"49.8\" ry=\"4.4\"/><ellipse cx=\"84\" cy=\"66\" rx=\"52.0\" ry=\"6.2\"/><ellipse cx=\"84\" cy=\"81\" rx=\"49.8\" ry=\"4.4\"/><ellipse cx=\"84\" cy=\"96\" rx=\"42.5\" ry=\"2.6\"/></g><circle cx=\"84\" cy=\"66\" r=\"52\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"3\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M108 38 c-10 -12 -10 -26 0 -26 c10 0 10 14 0 26 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M108 38 c-10 -12 -10 -26 0 -26 c10 0 10 14 0 26 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M108 38 c-10 -12 -10 -26 0 -26 c10 0 10 14 0 26 Z\" fill=\"#ef4444\"/></g><circle cx=\"108\" cy=\"21\" r=\"3.5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><text x=\"162\" y=\"80\" text-anchor=\"middle\" style=\"font:800 44px system-ui,sans-serif;fill:#ef4444;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text></svg>",
+    "lit": "Równik dzieli Ziemię na półkulę północną i południową. Gdy połączysz środek Ziemi z równikiem i z miejscem, w którym stoisz, powstaje kąt: to jest szerokość. Linie o tej samej szerokości to równoleżniki.",
+    "why": "Kąt mierzy się w górę lub w dół od równika, więc największy jest na biegunie (90°), z dopiskiem N (północna) lub S (południowa).",
+    "ex": "Warszawa leży na ok. 52°N, czyli 52° na północ od równika; biegun południowy ma 90°S. Jak w grze: szerokość to oś „góra–dół”.",
+    "tpl": "[miejsce] leży na [liczba]°N/S, czyli [liczba]° na północ/południe od równika"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_g1_02",
+   "data": {
+    "back": "odległość kątowa od południka 0° (Greenwich), 0–180° E lub W",
+    "created": "2026-10-17",
+    "front": "Co to jest długość geograficzna?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_geo",
+    "type": "qa",
+    "unitId": "un_g1",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"116\" cy=\"66\" r=\"52\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"116\" cy=\"66\" r=\"52\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"116\" cy=\"66\" r=\"52\" fill=\"#60a5fa\"/></g><path d=\"M86 46 q14 -14 30 -6 q10 12 -6 22 q-18 6 -24 -16 Z M124 80 q18 -6 22 10 q-6 16 -18 10 Z\" fill=\"#34d399\" stroke=\"#1d2433\" stroke-width=\"2\"/><g fill=\"none\" stroke=\"#1d2433\" stroke-width=\"1.2\" opacity=\".35\"><ellipse cx=\"116\" cy=\"36\" rx=\"42.5\" ry=\"2.6\"/><ellipse cx=\"116\" cy=\"51\" rx=\"49.8\" ry=\"4.4\"/><ellipse cx=\"116\" cy=\"66\" rx=\"52.0\" ry=\"6.2\"/><ellipse cx=\"116\" cy=\"81\" rx=\"49.8\" ry=\"4.4\"/><ellipse cx=\"116\" cy=\"96\" rx=\"42.5\" ry=\"2.6\"/></g><g fill=\"none\" stroke=\"#fde047\" stroke-width=\"3\"><ellipse cx=\"116\" cy=\"66\" rx=\"14\" ry=\"52\"/><ellipse cx=\"116\" cy=\"66\" rx=\"30\" ry=\"52\"/><path d=\"M116 14 V118\"/></g><circle cx=\"116\" cy=\"66\" r=\"52\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"3\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M132 38 c-10 -12 -10 -26 0 -26 c10 0 10 14 0 26 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M132 38 c-10 -12 -10 -26 0 -26 c10 0 10 14 0 26 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M132 38 c-10 -12 -10 -26 0 -26 c10 0 10 14 0 26 Z\" fill=\"#ef4444\"/></g><circle cx=\"132\" cy=\"21\" r=\"3.5\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><text x=\"38\" y=\"80\" text-anchor=\"middle\" style=\"font:800 44px system-ui,sans-serif;fill:#ef4444;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text></svg>",
+    "lit": "W 1884 r. ustalono, że południk zerowy przechodzi przez obserwatorium w Greenwich (Londyn). Od niego mierzy się kąt na wschód albo na zachód; południki to linie łączące oba bieguny.",
+    "why": "Pełny obrót to 360°, więc dzieli się go na pół: do 180° na wschód (E) i do 180° na zachód (W) od Greenwich.",
+    "ex": "Warszawa ma ok. 21°E, więc razem: 52°N, 21°E, dokładnie jak współrzędne GPS w telefonie (szerokość „góra–dół”, długość „lewo–prawo”).",
+    "tpl": "[miejsce] leży na [liczba]°E/W, czyli [liczba]° na wschód/zachód od Greenwich"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_g2_01",
+   "data": {
+    "back": "Merkury, Wenus, Ziemia, Mars, Jowisz, Saturn, Uran, Neptun",
+    "created": "2026-10-17",
+    "front": "Wymień planety od Słońca.",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_geo",
+    "type": "qa",
+    "unitId": "un_g2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><defs><clipPath id=\"k_g2_01-c\"><rect width=\"200\" height=\"130\" rx=\"16\"/></clipPath></defs><g clip-path=\"url(#k_g2_01-c)\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#1e293b\"/><g fill=\"#fff\" opacity=\".6\"><circle cx=\"150\" cy=\"14\" r=\"1.2\"/><circle cx=\"182\" cy=\"40\" r=\"1.2\"/><circle cx=\"120\" cy=\"118\" r=\"1.2\"/><circle cx=\"60\" cy=\"10\" r=\"1.2\"/><circle cx=\"188\" cy=\"110\" r=\"1.2\"/></g><g fill=\"none\" stroke=\"#cbd5e1\" stroke-width=\"1.2\" opacity=\".6\"><circle cx=\"-16\" cy=\"65\" r=\"48\"/><circle cx=\"-16\" cy=\"65\" r=\"64\"/><circle cx=\"-16\" cy=\"65\" r=\"80\"/><circle cx=\"-16\" cy=\"65\" r=\"96\"/><circle cx=\"-16\" cy=\"65\" r=\"120\"/><circle cx=\"-16\" cy=\"65\" r=\"148\"/><circle cx=\"-16\" cy=\"65\" r=\"172\"/><circle cx=\"-16\" cy=\"65\" r=\"196\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"-16\" cy=\"65\" r=\"44\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"-16\" cy=\"65\" r=\"44\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"-16\" cy=\"65\" r=\"44\" fill=\"#fde047\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"29.1\" cy=\"48.6\" r=\"5\"/><circle cx=\"46.1\" cy=\"80.5\" r=\"5\"/><circle cx=\"63.2\" cy=\"53.9\" r=\"5\"/><circle cx=\"73.0\" cy=\"101.0\" r=\"5\"/><circle cx=\"100.4\" cy=\"36.0\" r=\"5\"/><circle cx=\"129.8\" cy=\"90.7\" r=\"5\"/><circle cx=\"143.5\" cy=\"0.6\" r=\"5\"/><circle cx=\"179.5\" cy=\"78.7\" r=\"5\"/></g><g stroke=\"#1d2433\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"29.1\" cy=\"48.6\" r=\"5\" fill=\"#cbd5e1\"/><circle cx=\"46.1\" cy=\"80.5\" r=\"5\" fill=\"#cbd5e1\"/><circle cx=\"63.2\" cy=\"53.9\" r=\"5\" fill=\"#cbd5e1\"/><circle cx=\"73.0\" cy=\"101.0\" r=\"5\" fill=\"#cbd5e1\"/><circle cx=\"100.4\" cy=\"36.0\" r=\"5\" fill=\"#cbd5e1\"/><circle cx=\"129.8\" cy=\"90.7\" r=\"5\" fill=\"#cbd5e1\"/><circle cx=\"143.5\" cy=\"0.6\" r=\"5\" fill=\"#cbd5e1\"/><circle cx=\"179.5\" cy=\"78.7\" r=\"5\" fill=\"#cbd5e1\"/></g><text x=\"150\" y=\"52\" text-anchor=\"middle\" style=\"font:800 30px system-ui,sans-serif;fill:#fb923c;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text></g></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_g2_02",
+   "data": {
+    "back": "Merkury, Wenus, Ziemia, Mars",
+    "created": "2026-10-17",
+    "front": "Które planety są skaliste (typu ziemskiego)?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_geo",
+    "type": "qa",
+    "unitId": "un_g2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fef3c7\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><path d=\"M24 66 L32 38 L58 26 L84 34 L96 60 L88 90 L60 102 L34 94 Z\"/><circle cx=\"156\" cy=\"64\" r=\"32\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M24 66 L32 38 L58 26 L84 34 L96 60 L88 90 L60 102 L34 94 Z\"/><circle cx=\"156\" cy=\"64\" r=\"32\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M24 66 L32 38 L58 26 L84 34 L96 60 L88 90 L60 102 L34 94 Z\" fill=\"#b45309\"/><circle cx=\"156\" cy=\"64\" r=\"32\" fill=\"#fb923c\"/></g><g fill=\"#92400e\" stroke=\"#1d2433\" stroke-width=\"2\"><circle cx=\"50\" cy=\"52\" r=\"8\"/><circle cx=\"72\" cy=\"78\" r=\"6\"/><circle cx=\"46\" cy=\"82\" r=\"4\"/></g><path d=\"M128 50 q28 8 56 0 M124 64 q32 8 64 0 M128 78 q28 6 56 0\" stroke=\"#fde047\" stroke-width=\"4\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"156\" cy=\"64\" r=\"32\" fill=\"none\" stroke=\"#1d2433\" stroke-width=\"3\"/><text x=\"106\" y=\"114\" text-anchor=\"middle\" style=\"font:800 26px system-ui,sans-serif;fill:#ef4444;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">?</text><text x=\"108\" y=\"70\" text-anchor=\"middle\" style=\"font:800 13px system-ui,sans-serif;fill:#1d2433;stroke:#fff;stroke-width:4;paint-order:stroke;stroke-linejoin:round\">vs</text></svg>",
+    "lit": "Gdy powstawał Układ Słoneczny, blisko Słońca było bardzo gorąco: lekkie gazy i lód nie mogły się tam utrzymać, zostały skały i metale. Dalej, w chłodzie, urosły wielkie kule z gazu i lodu.",
+    "why": "Cztery planety najbliżej Słońca zbudowane są ze skał i metali, więc mają twardą powierzchnię jak Ziemia.",
+    "ex": "Łazik może jeździć po gruncie Marsa, a na Jowiszu nie ma gdzie wylądować, bo to kula gazu. Skaliste są: Merkury, Wenus, Ziemia, Mars."
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_g2_03",
+   "data": {
+    "back": "Jowisz",
+    "created": "2026-10-17",
+    "front": "Największa planeta Układu Słonecznego?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_geo",
+    "type": "qa",
+    "unitId": "un_g2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"70\" y=\"72\" width=\"60\" height=\"46\" rx=\"3\"/><rect x=\"20\" y=\"88\" width=\"50\" height=\"30\" rx=\"3\"/><rect x=\"130\" y=\"96\" width=\"50\" height=\"22\" rx=\"3\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"70\" y=\"72\" width=\"60\" height=\"46\" rx=\"3\"/><rect x=\"20\" y=\"88\" width=\"50\" height=\"30\" rx=\"3\"/><rect x=\"130\" y=\"96\" width=\"50\" height=\"22\" rx=\"3\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"70\" y=\"72\" width=\"60\" height=\"46\" rx=\"3\" fill=\"#fde047\"/><rect x=\"20\" y=\"88\" width=\"50\" height=\"30\" rx=\"3\" fill=\"#cbd5e1\"/><rect x=\"130\" y=\"96\" width=\"50\" height=\"22\" rx=\"3\" fill=\"#fb923c\"/></g><text x=\"100\" y=\"103\" text-anchor=\"middle\" style=\"font:800 18px system-ui,sans-serif;fill:#1d2433\">1</text><text x=\"45\" y=\"110\" text-anchor=\"middle\" style=\"font:800 15px system-ui,sans-serif;fill:#1d2433\">2</text><text x=\"155\" y=\"113\" text-anchor=\"middle\" style=\"font:800 13px system-ui,sans-serif;fill:#1d2433\">3</text><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"44\" r=\"28\"/><circle cx=\"45\" cy=\"78\" r=\"10\"/><circle cx=\"155\" cy=\"88\" r=\"7\"/><path d=\"M84 18 L86 4 L94 12 L100 2 L106 12 L114 4 L116 18 Z\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"44\" r=\"28\"/><circle cx=\"45\" cy=\"78\" r=\"10\"/><circle cx=\"155\" cy=\"88\" r=\"7\"/><path d=\"M84 18 L86 4 L94 12 L100 2 L106 12 L114 4 L116 18 Z\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"44\" r=\"28\" fill=\"#a78bfa\"/><circle cx=\"45\" cy=\"78\" r=\"10\" fill=\"#9ca3af\"/><circle cx=\"155\" cy=\"88\" r=\"7\" fill=\"#9ca3af\"/><path d=\"M84 18 L86 4 L94 12 L100 2 L106 12 L114 4 L116 18 Z\" fill=\"#fde047\"/></g><text x=\"100\" y=\"55\" text-anchor=\"middle\" style=\"font:800 30px system-ui,sans-serif;fill:#fff\">?</text></svg>"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_g2_04",
+   "data": {
+    "back": "średnia odległość Ziemi od Słońca, ok. 150 mln km",
+    "created": "2026-10-17",
+    "front": "Co to jest jednostka astronomiczna (j.a.)?",
+    "source": "BorBan import 17.10",
+    "subjectId": "sb_geo",
+    "type": "qa",
+    "unitId": "un_g2",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\"><defs><clipPath id=\"k_g2_04-c\"><rect width=\"200\" height=\"130\" rx=\"16\"/></clipPath></defs><g clip-path=\"url(#k_g2_04-c)\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"10\" cy=\"56\" r=\"40\"/><circle cx=\"170\" cy=\"56\" r=\"16\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"10\" cy=\"56\" r=\"40\"/><circle cx=\"170\" cy=\"56\" r=\"16\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"10\" cy=\"56\" r=\"40\" fill=\"#fde047\"/><circle cx=\"170\" cy=\"56\" r=\"16\" fill=\"#3b82f6\"/></g><path d=\"M160 50 q6 -6 12 0 q-2 8 -10 6 Z M170 62 q8 -2 10 4 q-6 6 -10 0 Z\" fill=\"#34d399\" stroke=\"#1d2433\" stroke-width=\"1.6\"/><path d=\"M54 56 H150\" stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-dasharray=\"5 5\"/><polygon points=\"152.0,56.0 144.0,51.2 144.0,60.8\" fill=\"#1d2433\"/><polygon points=\"50.0,56.0 58.0,60.8 58.0,51.2\" fill=\"#1d2433\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"30\" y=\"88\" width=\"150\" height=\"22\" rx=\"4\"/></g><g fill=\"#fff\" stroke=\"#fff\" stroke-width=\"8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"30\" y=\"88\" width=\"150\" height=\"22\" rx=\"4\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"30\" y=\"88\" width=\"150\" height=\"22\" rx=\"4\" fill=\"#fde047\"/></g><path d=\"M36 88 v6 M42 88 v6 M48 88 v6 M54 88 v6 M60 88 v10 M66 88 v6 M72 88 v6 M78 88 v6 M84 88 v6 M90 88 v10 M96 88 v6 M102 88 v6 M108 88 v6 M114 88 v6 M120 88 v10 M126 88 v6 M132 88 v6 M138 88 v6 M144 88 v6 M150 88 v10 M156 88 v6 M162 88 v6 M168 88 v6 M174 88 v6 \" stroke=\"#1d2433\" stroke-width=\"1.5\"/><rect x=\"88\" y=\"94\" width=\"34\" height=\"18\" rx=\"4\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2\"/><text x=\"105\" y=\"109\" text-anchor=\"middle\" style=\"font:800 16px system-ui,sans-serif;fill:#ef4444\">?</text></g></svg>",
+    "lit": "Odległości w kosmosie są ogromne, więc astronomowie wzięli za „linijkę” odległość Ziemia–Słońce. Orbita nie jest idealnym kołem (ok. 147–152 mln km), więc liczy się średnią: ok. 150 mln km.",
+    "why": "Zamiast pisać miliony kilometrów, mówimy, ile razy dalej niż Ziemia od Słońca: to jest właśnie 1 j.a.",
+    "ex": "Jowisz krąży ok. 5,2 j.a. od Słońca, czyli ok. 5 razy dalej niż Ziemia (ok. 780 mln km). Światło pokonuje 1 j.a. w ok. 8 minut."
+   }
+  }
+ ]
+}
