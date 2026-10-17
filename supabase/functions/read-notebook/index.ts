@@ -54,18 +54,26 @@ Deno.serve(async (req) => {
     const units = Array.isArray(body.units) ? body.units.slice(0, 60).map((x: { id: string; title: string }) => `${x.id}: ${x.title}`).join("\n") : "";
     content.push({ type: "text", text: `Przedmiot: ${String(body.subject || "").slice(0, 80)}\nDziały:\n${units}\nZdjęć: ${paths.length}.` });
 
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({ model, max_tokens: 6000, system: PROMPT, messages: [{ role: "user", content }] }),
+    const H = { "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json" };
+    const call = (m: string) => fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST", headers: H,
+      body: JSON.stringify({ model: m, max_tokens: 8000, system: PROMPT, messages: [{ role: "user", content }] }),
     });
-    const out = await r.json();
-    if (!r.ok) return json({ error: "ai", detail: out?.error?.message || r.status }, 502);
+    let used = model;
+    let r = await call(used);
+    let out = await r.json();
+    if (!r.ok && (r.status === 404 || out?.error?.type === "not_found_error" || /^model:/i.test(out?.error?.message || ""))) {
+      // nazwa modelu nieaktualna: weź najnowszy dostępny Sonnet z listy modeli konta
+      const ml = await (await fetch("https://api.anthropic.com/v1/models?limit=100", { headers: H })).json();
+      const pick = (ml?.data || []).map((x: { id: string }) => x.id).find((id: string) => id.includes("sonnet"));
+      if (pick) { used = pick; r = await call(used); out = await r.json(); }
+    }
+    if (!r.ok) return json({ error: "ai", detail: `${out?.error?.type || r.status}: ${out?.error?.message || ""}`.slice(0, 300), model: used }, 502);
     const txt = (out.content || []).filter((c: { type: string }) => c.type === "text").map((c: { text: string }) => c.text).join("");
     const a = txt.indexOf("{"), b = txt.lastIndexOf("}");
     let result;
     try { result = JSON.parse(txt.slice(a, b + 1)); } catch { return json({ error: "parse", raw: txt.slice(0, 500) }, 502); }
-    return json({ ok: true, model, usage: out.usage, result });
+    return json({ ok: true, model: used, usage: out.usage, result });
   } catch (e) {
     return json({ error: "server", detail: String(e) }, 500);
   }
