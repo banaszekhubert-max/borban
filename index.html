@@ -1068,8 +1068,8 @@ function stepsBlock(c, cid, isNew){
   if (!(c.lit || c.why || c.ex)) return "";
   if (!isNew && SES.why !== cid) return `<button class="btn sm ghost" data-act="why" style="align-self:flex-start">Dlaczego? (skąd to się wzięło)</button>`;
   return `<div class="steps">
-    ${c.lit ? `<div class="st st1"><b class="h">Co się naprawdę stało</b>${esc(c.lit)}</div>` : ""}
-    ${c.why ? `<div class="st st2"><b class="h">Dlaczego to znaczy właśnie to</b>${esc(c.why)}</div>` : ""}
+    ${c.lit ? `<div class="st st1"><b class="h">Skąd to się wzięło</b>${esc(c.lit)}</div>` : ""}
+    ${c.why ? `<div class="st st2"><b class="h">Dlaczego tak jest</b>${esc(c.why)}</div>` : ""}
     ${c.ex ? `<div class="st st4"><b class="h">Przykład z życia</b>${esc(c.ex)}${c.tpl ? `<div class="tpl">Wzór na sprawdzian: <b>${esc(c.tpl)}</b></div>` : ""}</div>` : ""}
   </div>`;
 }
