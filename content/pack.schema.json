@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BorBan pack (borban-pack-1)",
+  "type": "object",
+  "required": ["format", "docs"],
+  "properties": {
+    "format": { "const": "borban-pack-1" },
+    "meta": { "type": "object" },
+    "docs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["col", "id", "data"],
+        "properties": {
+          "col": { "enum": ["subjects", "units", "cards", "tests", "meta", "progress", "sessions", "woop", "flags"] },
+          "id": { "type": "string", "minLength": 1 },
+          "data": { "type": "object" }
+        },
+        "allOf": [
+          { "if": { "properties": { "col": { "const": "subjects" } } }, "then": { "properties": { "data": { "required": ["name"] } } } },
+          { "if": { "properties": { "col": { "const": "units" } } }, "then": { "properties": { "data": { "required": ["title", "subjectId"] } } } },
+          { "if": { "properties": { "col": { "const": "cards" } } }, "then": { "properties": { "data": {
+            "required": ["front", "type", "unitId", "subjectId"],
+            "properties": {
+              "type": { "enum": ["qa", "cloze", "vocab"] },
+              "svg": { "type": "string" }, "svgSize": { "enum": ["sm"] },
+              "who": { "type": "string", "maxLength": 70 }, "lit": { "type": "string", "maxLength": 300 },
+              "why": { "type": "string", "maxLength": 200 }, "ex": { "type": "string", "maxLength": 240 },
+              "tpl": { "type": "string" }, "mnemo": { "type": "string" }
+            } } } } }
+        ]
+      }
+    }
+  }
+}
