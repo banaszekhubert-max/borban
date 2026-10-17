@@ -128,6 +128,9 @@ main{padding-block:16px 110px}
 /* bars */
 .bar{height:10px; border-radius:6px; background:var(--sunk); overflow:hidden}
 .bar > i{display:block; height:100%; background:var(--c, var(--primary)); border-radius:6px}
+.bar.dual{position:relative}
+.bar.dual > b{position:absolute; left:0; top:0; height:100%; border-radius:6px; background:color-mix(in srgb, var(--c) 35%, var(--surface))}
+.bar.dual > i{position:relative}
 .urow{display:grid; grid-template-columns:minmax(0,1fr) 92px 42px; gap:10px; align-items:center; font-size:.9rem}
 .urow .n{text-align:right; font-variant-numeric:tabular-nums; font-weight:700}
 .chart text{fill:var(--muted); font-size:11px; font-family:var(--f-body)}
@@ -540,7 +543,7 @@ function viewMap(){
       ${role.canWrite && st.total && !locked ? `<button class="btn sm" data-act="start" data-kind="unit" data-id="${id}">Ucz się tego działu</button>` : ""}</div>` : "";
     return `<button class="unit ${locked?"locked":""}" data-act="unit" data-id="${id}" style="--c:${scol(s)}" aria-expanded="${open}">
       <span class="ring ${st.status==="done"?"full":""}" style="--p:${p}"><i>${st.status==="done" ? ICON.check : p+"%"}</i></span>
-      <span><span class="t">${esc(u.title)}</span><br><span class="row" style="gap:6px;margin-top:4px"><span class="chip ${st.status}">${STATUS_TXT[st.status]}</span>${here?`<span class="chip here">tu jesteś</span>`:""}${locked?`<span class="small muted">jeszcze nie na lekcjach</span>`:`<span class="small muted">${st.mastered}/${st.total} kart</span>`}</span></span>
+      <span><span class="t">${esc(u.title)}</span><br><span class="row" style="gap:6px;margin-top:4px"><span class="chip ${st.status}">${STATUS_TXT[st.status]}</span>${here?`<span class="chip here">tu jesteś</span>`:""}${locked?`<span class="small muted">jeszcze nie na lekcjach</span>`:`<span class="small muted">${st.seen}/${st.total} przećwiczonych · ${st.mastered} opanowanych</span>`}</span></span>
     </button>${cards}`;
   }).join("");
   return `<div class="stack">${modeBanner()}<h1>Mapa materiału</h1><div class="subjtabs">${tabs}</div>
@@ -574,7 +577,8 @@ function viewStats(){
   const hardCards = Object.entries(S.progress).filter(([id,p]) => S.cards[id] && (p.lapses||0) > 0).sort((a,b) => (b[1].lapses||0)-(a[1].lapses||0)).slice(0,5);
   const woop = S.woop[mon];
   const subjBlocks = sortedSubjects().map(([sid,s]) => {
-    const rows = unitsOf(sid).map(([id,u]) => { const st = unitStats(id); return `<div class="urow"><span>${esc(u.title)}</span><div class="bar" style="--c:${scol(s)}"><i style="width:${Math.round(st.pct*100)}%"></i></div><span class="n">${Math.round(st.pct*100)}%</span></div>`; }).join("");
+    const rows = unitsOf(sid).map(([id,u]) => { const st = unitStats(id); const sp = st.total ? st.seen / st.total : 0;
+      return `<div class="urow"><span>${esc(u.title)}<br><span class="small muted">${st.seen}/${st.total} przećwiczonych · ${st.mastered} opanowanych</span></span><div class="bar dual" style="--c:${scol(s)}"><b style="width:${Math.round(sp*100)}%"></b><i style="width:${Math.round(st.pct*100)}%"></i></div><span class="n">${Math.round(sp*100)}%</span></div>`; }).join("");
     return `<div class="stack" style="gap:8px"><div class="row"><span class="dot" style="--c:${scol(s)}"></span><h3>${esc(s.name)}</h3></div>${rows || `<p class="small muted">Brak działów.</p>`}</div>`;
   }).join("");
   return `<div class="stack">${modeBanner()}
@@ -595,7 +599,7 @@ function viewStats(){
       ${unitErr.length ? `<div class="list">${unitErr.map(([id,s]) => `<div class="li"><div>${esc(S.units[id].title)} <span class="muted small">· ${esc(S.subjects[S.units[id].subjectId]?.name)}</span></div><span class="chip doing">${s.lapses} ${plural(s.lapses,"błąd","błędy","błędów")}</span></div>`).join("")}</div>` : ""}
       ${hardCards.length ? `<p class="eyebrow">Najtrudniejsze karty</p><div class="list">${hardCards.map(([id,p]) => `<div class="li"><div>${esc(stripCloze(S.cards[id].front))}</div><span class="small muted">${p.lapses}×</span></div>`).join("")}</div>` : ""}`
       : `<p class="small muted">Tu pojawią się działy i karty z największą liczbą pomyłek. Na razie nic.</p>`}</div>
-    <div class="panel stack"><h3>Opanowanie działów</h3>${subjBlocks || `<p class="small muted">Brak przedmiotów.</p>`}</div>
+    <div class="panel stack"><div><h3>Opanowanie działów</h3><p class="small muted">Jasny pasek: karty już przećwiczone. Ciemny: opanowane, czyli 3 dobre odpowiedzi w odstępach co najmniej ${MASTERY_GAP} dni. Opanowanie rośnie od drugiego, trzeciego dnia nauki.</p></div>${subjBlocks || `<p class="small muted">Brak przedmiotów.</p>`}</div>
     ${woop ? `<div class="panel stack"><p class="eyebrow">Cel tygodnia (WOOP)</p><h3>${esc(woop.wish)}</h3><p class="small"><b>Jeśli</b> ${esc(woop.ifp)}, <b>to</b> ${esc(woop.then)}.</p>${woop.review ? `<p class="small muted">Podsumowanie: ${esc(woop.review)}</p>`:""}</div>` : ""}
   </div>`;
 }
