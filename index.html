@@ -877,7 +877,11 @@ async function loadPack(){
   const rows = (pk.docs || []).filter(r => r && COLS.includes(r.col) && r.id && r.data && typeof r.data === "object");
   if (!rows.length){ toast("Paczka jest pusta."); return; }
   const btn = document.querySelector('[data-act="loadPack"]'); if (btn){ btn.disabled = true; btn.textContent = `Wczytuję ${rows.length}…`; }
-  rows.forEach(r => { if (r.merge){ r.data = { ...(S[r.col]?.[r.id] || {}), ...r.data }; delete r.merge; } });
+  // Bezpiecznik: rekord bez treści (karta bez przodu, dział bez tytułu) zawsze uzupełnia istniejący, nigdy go nie zastępuje.
+  rows.forEach(r => { const cur = S[r.col]?.[r.id]; const partial = (r.col === "cards" && !r.data.front) || (r.col === "units" && !r.data.title) || (r.col === "subjects" && !r.data.name);
+    if (r.merge || (partial && cur)){ r.data = { ...(cur || {}), ...r.data }; } delete r.merge; });
+  const bad = rows.filter(r => (r.col === "cards" && !r.data.front) || (r.col === "units" && !r.data.title));
+  if (bad.length){ toast(`Paczka ma ${bad.length} niepełnych elementów bez odpowiednika w bazie. Nic nie wczytano.`); render(); return; }
   try { await store.bulk(rows); rows.forEach(r => { S[r.col] = {...S[r.col], [r.id]: r.data}; }); toast(`Wczytano ${rows.length} ${plural(rows.length,"element","elementy","elementów")}.`); }
   catch (e){ console.warn(e); toast("Nie udało się wczytać paczki: " + (e.message || "błąd")); }
   render();
