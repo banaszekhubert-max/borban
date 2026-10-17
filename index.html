@@ -348,12 +348,15 @@ const isMastered = cid => (S.progress[cid]?.run || 0) >= MASTERY_RUN;
 const sortedSubjects = () => Object.entries(S.subjects).sort((a,b) => (a[1].order||0)-(b[1].order||0));
 const unitsOf = sid => Object.entries(S.units).filter(([,u]) => u.subjectId === sid).sort((a,b) => (a[1].order||0)-(b[1].order||0));
 const cardsOf = uid_ => Object.entries(S.cards).filter(([,c]) => c.unitId === uid_);
+const cardLevel = cid => Math.min(MASTERY_RUN, S.progress[cid]?.run || 0);
 function unitStats(u){
   const cs = cardsOf(u); let m = 0, seen = 0, lapses = 0;
   cs.forEach(([id]) => { const p = S.progress[id]; if (p){ seen++; lapses += p.lapses||0; } if (isMastered(id)) m++; });
   const pct = cs.length ? m / cs.length : 0;
+  const levels = cs.reduce((a,[id]) => a + cardLevel(id), 0);
+  const prog = cs.length ? levels / (cs.length * MASTERY_RUN) : 0;
   const status = !seen ? "todo" : pct >= UNIT_DONE ? "done" : "doing";
-  return {total: cs.length, mastered: m, seen, lapses, pct, status};
+  return {total: cs.length, mastered: m, seen, lapses, pct, prog, levels, maxLevels: cs.length * MASTERY_RUN, status};
 }
 const STATUS_TXT = {todo:"nie zaczęty", doing:"w trakcie", done:"opanowany"};
 function eligibleUnit(uid_){
@@ -428,8 +431,11 @@ function todayTasks(k = TODAY()){
   const out = []; const day = PLAN[dow(k)]; const ses = sessionsOn(k);
   const pl = todayPlan(); const did = answeredOn(k);
   out.push({ id:"cards", title:"Fiszki na dziś", icon:"star",
-    sub: pl.total ? `${did ? `zrobione ${did} · ` : ""}zostało ${pl.total}` : did ? `zrobione ${did} odpowiedzi` : "brak kart",
-    done: !pl.total && did > 0, act: pl.total ? `data-act="start" data-kind="daily"` : "" });
+    sub: did ? `zrobione ${did} ${plural(did,"odpowiedź","odpowiedzi","odpowiedzi")}${pl.total ? " · możesz więcej" : ""}` : pl.total ? "wystarczy 5 kart na start" : "brak kart",
+    done: did >= QUICK_N || (!pl.total && did > 0), act: pl.total ? `data-act="start" data-kind="quick"` : "" });
+  { const mi = morningIds(k); const md = morningDone(k); const hr = new Date().getHours();
+    if ((mi.length || md) && k === TODAY() && (hr < 12 || md)) out.unshift({ id:"morning", title:"Poranna powtórka", icon:"flame",
+      sub: md ? "zrobione · wczorajsze trudne karty" : `${mi.length} ${plural(mi.length,"karta","karty","kart")} z wczoraj · 7:45–8:45`, done: md, act:`data-act="start" data-kind="morning"` }); }
   const ts = testSessionToday();
   const tests = upcomingTests().filter(([,x]) => { const d = daysBetween(k, x.date); return d >= 0 && d <= 3; });
   const seen = new Set();
@@ -449,6 +455,53 @@ function tasksTiles(list, interactive){
   return `<div class="tasks">${list.map(x => `<${interactive && x.act && !x.done ? "button" : "div"} class="task ${x.done ? "done" : ""}" ${interactive && !x.done ? x.act : ""}>
     <span class="tcheck">${x.done ? ICON.check : ICON[x.icon] || ""}</span><span class="tt"><b>${esc(x.title)}</b><span>${esc(x.done && !/^zrobione/.test(x.sub) ? "zrobione · " + x.sub : x.sub)}</span></span></${interactive && x.act && !x.done ? "button" : "div"}>`).join("")}</div>`;
 }
+
+/* ---------- motywacja: hasła z korzyścią + najbliższa odznaka ---------- */
+const HOOKS = [
+  "5 kart to krócej niż jedna rolka na TikToku. A zostaje w głowie dłużej.",
+  "Programiści robią małe commity codziennie, zamiast wszystkiego w nocy przed deadlinem. Tu działa to samo.",
+  "To, co powtórzysz dziś, jutro przypomnisz sobie dwa razy szybciej.",
+  "Każda karta tutaj to jedno pytanie mniej, którego nie znasz na kartkówce.",
+  "Mózg zapisuje wiedzę na stałe dopiero po kilku powtórkach w różne dni. Dziś robisz kolejny zapis.",
+  "Jedna runda w autobusie i wieczór masz wolny.",
+  "Sprawdzian to test pamięci. Ty ją właśnie trenujesz, jak na siłowni: krótko, ale regularnie.",
+  "Najtrudniejsze jest pierwsze 30 sekund. Potem już leci.",
+  "Nikt nie każe Ci siedzieć godzinę. 2 minuty i możesz skończyć.",
+  "Kto wie więcej, ten mniej się stresuje. Prosta matematyka.",
+  "Lepsza ocena = mniej poprawek i więcej wolnego. 5 kart to inwestycja.",
+  "Wiedza to jedyna rzecz, której nikt Ci nie zabierze ani nie wyloguje."
+];
+function dayHash(k){ let h = 0; for (const ch of k) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; }
+function hookLine(k = TODAY()){
+  const up = upcomingTests().find(([,x]) => { const d = daysBetween(k, x.date); return d >= 0 && d <= 3; });
+  if (up){ const [,x] = up; const d = daysBetween(k, x.date); const r = Math.round(readiness(x)*100);
+    const subj = S.subjects[x.subjectId]?.name || "";
+    return d === 0 ? `Dziś: ${x.title}. Szybka runda teraz to świeża pamięć za chwilę.`
+      : `${d === 1 ? "Jutro" : `Za ${d} dni`}: ${x.title}. Każda runda teraz to mniej stresu na sprawdzianie${r < 50 ? " i realna szansa na lepszą ocenę" : ""}.`; }
+  const st = streak(); if (st >= 2 && !learnedOn(k)) return `Masz serię ${st} ${plural(st,"dzień","dni","dni")}. Jedna runda i jutro będzie ${st + 1}.`;
+  return HOOKS[dayHash(k) % HOOKS.length];
+}
+const TIERS = [[0.25,"Brąz"],[0.5,"Srebro"],[0.75,"Złoto"],[UNIT_DONE,"Mistrz"]];
+function unitTier(st){ let t = null; TIERS.forEach(([p,n]) => { if (st.prog >= p) t = n; }); return t; }
+function nearestBadge(){
+  // najbliższy próg (Brąz 25% / Srebro 50% / Złoto 75% / Mistrz 90%) w rozpoczętych działach
+  let best = null;
+  Object.keys(S.units).forEach(id => { if (!eligibleUnit(id)) return; const st = unitStats(id); if (!st.total || !st.seen) return;
+    const next = TIERS.find(([p]) => st.prog < p); if (!next) return;
+    const need = Math.ceil(st.maxLevels * next[0]) - st.levels;
+    if (need > 0 && (!best || need < best.need)) best = { id, need, st, tier: next[1], target: next[0] }; });
+  return best;
+}
+const QUICK_N = 5;
+// Poranna powtórka 7:45–8:45: karty, z którymi wczoraj był kłopot („Nie wiem” albo „Z trudem”)
+const MORNING = [7*60+45, 8*60+45];
+function morningIds(k = TODAY()){
+  const y = addDays(k, -1);
+  return Object.entries(S.progress).filter(([id,p]) => S.cards[id] && (p.hist||[]).some(([d,g]) => d === y && g < 2) && !(p.hist||[]).some(([d]) => d === k))
+    .sort((a,b) => (b[1].lapses||0) - (a[1].lapses||0)).map(([id]) => id).slice(0, 15);
+}
+function isMorning(){ const n = new Date(); const m = n.getHours()*60 + n.getMinutes(); return m >= MORNING[0] && m <= MORNING[1]; }
+function morningDone(k = TODAY()){ return sessionsOn(k).some(s => s.kind === "morning" && (s.n||0) > 0); }
 
 /* ---------- render ---------- */
 let renderQueued = false;
@@ -485,18 +538,27 @@ function viewToday(){
   { const tk = todayTasks(t); const dn = tk.filter(x => x.done).length;
     parts.push(`<div class="stack" style="gap:8px"><div class="row" style="justify-content:space-between"><h2>Do zrobienia dziś</h2><span class="chip ${dn === tk.length ? "done" : ""}">${dn}/${tk.length}</span></div>${tasksTiles(tk, role.canWrite)}<p class="small muted">Kafelki odhaczają się same, gdy skończysz zadanie. Każda odpowiedź zapisuje się od razu.</p></div>`); }
   // główny przycisk
+  const mIds = morningIds(t);
+  if (role.canWrite && isMorning() && mIds.length && !morningDone(t)){
+    parts.push(`<div class="panel hero stack"><div><p class="eyebrow" style="color:inherit;opacity:.8">Poranna powtórka · do 8:45</p>
+      <h2 style="font-size:1.5rem">${mIds.length} ${plural(mIds.length,"karta","karty","kart")}, które wczoraj nie weszły</h2>
+      <p style="opacity:.92">Rano, po nocy, pamięć sprawdza się najlepiej. To, co teraz przypomnisz, zostaje na dłużej. 2–3 minuty w drodze do szkoły.</p></div>
+      <button class="btn primary big" data-act="start" data-kind="morning">Sprawdź, co już pamiętasz</button></div>`);
+  }
   if (pl.total){
+    const did = answeredOn(t);
     parts.push(`<div class="panel hero stack">
-      <div><p class="eyebrow" style="color:inherit;opacity:.8">Fiszki na dziś</p>
-      <h2 style="font-size:1.5rem">${pl.reviews.length} ${plural(pl.reviews.length,"powtórka","powtórki","powtórek")} + ${pl.news.length} ${plural(pl.news.length,"nowa","nowe","nowych")}</h2>
-      <p class="muted">ok. ${mins} min, bez pośpiechu. Najlepiej w drodze ze szkoły.</p></div>
-      ${role.canWrite ? `<button class="btn primary big" data-act="start" data-kind="daily">Zacznij naukę</button>` : ""}
+      <div><p class="eyebrow" style="color:inherit;opacity:.8">${did ? `Dziś już ${did} ${plural(did,"odpowiedź","odpowiedzi","odpowiedzi")}` : "Na start"}</p>
+      <h2 style="font-size:1.5rem">${did ? "Jeszcze jedna runda?" : "Szybka runda: 5 kart, 2 minuty"}</h2>
+      <p style="opacity:.92">${esc(hookLine(t))}</p></div>
+      ${role.canWrite ? `<button class="btn primary big" data-act="start" data-kind="quick">${did ? "Jeszcze 5 kart" : "Start: 5 kart"}</button>
+      <button class="btn sm ghost" style="color:inherit" data-act="start" data-kind="daily">Wolę od razu wszystko na dziś (${pl.total})</button>` : ""}
     </div>`);
   } else {
     const more = newIds().filter(id => true).length;
-    parts.push(`<div class="panel hero stack"><div><p class="eyebrow" style="color:inherit;opacity:.8">Fiszki na dziś</p><h2 style="font-size:1.5rem">Wszystko powtórzone</h2>
+    parts.push(`<div class="panel hero stack"><div><p class="eyebrow" style="color:inherit;opacity:.8">Fiszki na dziś</p><h2 style="font-size:1.5rem">Na dziś zrobione. Szacun!</h2>
       <p class="muted">${newToday() >= newLimit() ? "Dzisiejszy limit nowych kart jest wykorzystany. Jutro kolejne." : more ? "" : "Nie ma jeszcze nowych kart z bieżących działów."}</p></div>
-      ${role.canWrite && more ? `<button class="btn primary big" data-act="start" data-kind="extra">Dorzuć 10 nowych kart</button>` : ""}</div>`);
+      ${role.canWrite && more ? `<button class="btn primary big" data-act="start" data-kind="extra">Chcesz dziś wiedzieć jeszcze więcej? +10 kart</button>` : ""}</div>`);
   }
   if (ts){
     const [id,x,dd] = ts; const r = readiness(x);
@@ -536,14 +598,14 @@ function viewMap(){
   const units = unitsOf(mapSubject);
   const tabs = subs.map(([id,x]) => `<button class="subjtab" style="--c:${scol(x)}" data-act="subj" data-id="${id}" aria-pressed="${id===mapSubject}"><span class="dot"></span>${esc(x.name)}</button>`).join("");
   const nodes = units.map(([id,u]) => {
-    const st = unitStats(id); const p = Math.round(st.pct*100); const here = s.current === id; const locked = !eligibleUnit(id);
+    const st = unitStats(id); const p = Math.round(st.prog*100); const here = s.current === id; const locked = !eligibleUnit(id);
     const open = openUnit === id;
     const cards = open ? `<div class="unitcards">${cardsOf(id).map(([cid,c]) => { const r = S.progress[cid]?.run||0;
       return `<div class="mini"><span class="lvl" title="${Math.min(r,3)} z 3">${[0,1,2].map(i => `<i class="${i<r?"on":""}"></i>`).join("")}</span><span class="q">${esc(stripCloze(c.front))}</span></div>`; }).join("") || `<p class="small muted">Brak kart w tym dziale.</p>`}
       ${role.canWrite && st.total && !locked ? `<button class="btn sm" data-act="start" data-kind="unit" data-id="${id}">Ucz się tego działu</button>` : ""}</div>` : "";
     return `<button class="unit ${locked?"locked":""}" data-act="unit" data-id="${id}" style="--c:${scol(s)}" aria-expanded="${open}">
       <span class="ring ${st.status==="done"?"full":""}" style="--p:${p}"><i>${st.status==="done" ? ICON.check : p+"%"}</i></span>
-      <span><span class="t">${esc(u.title)}</span><br><span class="row" style="gap:6px;margin-top:4px"><span class="chip ${st.status}">${STATUS_TXT[st.status]}</span>${here?`<span class="chip here">tu jesteś</span>`:""}${locked?`<span class="small muted">jeszcze nie na lekcjach</span>`:`<span class="small muted">${st.seen}/${st.total} przećwiczonych · ${st.mastered} opanowanych</span>`}</span></span>
+      <span><span class="t">${esc(u.title)}</span><br><span class="row" style="gap:6px;margin-top:4px"><span class="chip ${st.status}">${STATUS_TXT[st.status]}</span>${here?`<span class="chip here">tu jesteś</span>`:""}${unitTier(st) ? `<span class="chip done">🏅 ${unitTier(st)}</span>` : ""}${locked?`<span class="small muted">jeszcze nie na lekcjach</span>`:`<span class="small muted">${st.seen}/${st.total} przećwiczonych · ${st.mastered} opanowanych</span>`}</span></span>
     </button>${cards}`;
   }).join("");
   return `<div class="stack">${modeBanner()}<h1>Mapa materiału</h1><div class="subjtabs">${tabs}</div>
@@ -578,7 +640,7 @@ function viewStats(){
   const woop = S.woop[mon];
   const subjBlocks = sortedSubjects().map(([sid,s]) => {
     const rows = unitsOf(sid).map(([id,u]) => { const st = unitStats(id); const sp = st.total ? st.seen / st.total : 0;
-      return `<div class="urow"><span>${esc(u.title)}<br><span class="small muted">${st.seen}/${st.total} przećwiczonych · ${st.mastered} opanowanych</span></span><div class="bar dual" style="--c:${scol(s)}"><b style="width:${Math.round(sp*100)}%"></b><i style="width:${Math.round(st.pct*100)}%"></i></div><span class="n">${Math.round(sp*100)}%</span></div>`; }).join("");
+      return `<div class="urow"><span>${esc(u.title)}<br><span class="small muted">${st.seen}/${st.total} przećwiczonych · ${st.mastered} opanowanych</span></span><div class="bar dual" style="--c:${scol(s)}"><b style="width:${Math.round(sp*100)}%"></b><i style="width:${Math.round(st.prog*100)}%"></i></div><span class="n">${Math.round(st.prog*100)}%</span></div>`; }).join("");
     return `<div class="stack" style="gap:8px"><div class="row"><span class="dot" style="--c:${scol(s)}"></span><h3>${esc(s.name)}</h3></div>${rows || `<p class="small muted">Brak działów.</p>`}</div>`;
   }).join("");
   return `<div class="stack">${modeBanner()}
@@ -599,7 +661,7 @@ function viewStats(){
       ${unitErr.length ? `<div class="list">${unitErr.map(([id,s]) => `<div class="li"><div>${esc(S.units[id].title)} <span class="muted small">· ${esc(S.subjects[S.units[id].subjectId]?.name)}</span></div><span class="chip doing">${s.lapses} ${plural(s.lapses,"błąd","błędy","błędów")}</span></div>`).join("")}</div>` : ""}
       ${hardCards.length ? `<p class="eyebrow">Najtrudniejsze karty</p><div class="list">${hardCards.map(([id,p]) => `<div class="li"><div>${esc(stripCloze(S.cards[id].front))}</div><span class="small muted">${p.lapses}×</span></div>`).join("")}</div>` : ""}`
       : `<p class="small muted">Tu pojawią się działy i karty z największą liczbą pomyłek. Na razie nic.</p>`}</div>
-    <div class="panel stack"><div><h3>Opanowanie działów</h3><p class="small muted">Jasny pasek: karty już przećwiczone. Ciemny: opanowane, czyli 3 dobre odpowiedzi w odstępach co najmniej ${MASTERY_GAP} dni. Opanowanie rośnie od drugiego, trzeciego dnia nauki.</p></div>${subjBlocks || `<p class="small muted">Brak przedmiotów.</p>`}</div>
+    <div class="panel stack"><div><h3>Opanowanie działów</h3><p class="small muted">Każda karta ma 3 poziomy: każda dobra odpowiedź w nowym dniu to poziom wyżej. Procent rośnie od pierwszej sesji. Jasny pasek: karty już przećwiczone.</p></div>${subjBlocks || `<p class="small muted">Brak przedmiotów.</p>`}</div>
     ${woop ? `<div class="panel stack"><p class="eyebrow">Cel tygodnia (WOOP)</p><h3>${esc(woop.wish)}</h3><p class="small"><b>Jeśli</b> ${esc(woop.ifp)}, <b>to</b> ${esc(woop.then)}.</p>${woop.review ? `<p class="small muted">Podsumowanie: ${esc(woop.review)}</p>`:""}</div>` : ""}
   </div>`;
 }
@@ -712,7 +774,7 @@ function viewParent(){
 
   // sesje i błędy (odpowiedzi zapisane w sesjach + historia kart)
   const sesList = Object.values(S.sessions).filter(s => s.date).sort((a,b) => (b.start||0) - (a.start||0)).slice(0, 8);
-  const KIND = { daily:"Fiszki na dziś", extra:"Dodatkowe karty", unit:"Dział", test:"Przed sprawdzianem", recall:"Odpytanie z lekcji" };
+  const KIND = { morning:"Poranna powtórka", quick:"Szybka runda", daily:"Fiszki na dziś", extra:"Dodatkowe karty", unit:"Dział", test:"Przed sprawdzianem", recall:"Odpytanie z lekcji" };
   const sesRows = sesList.map(s => { const acc = s.n ? Math.round(((s.ok||0)+(s.hard||0))/s.n*100) : null;
     const ref = s.kind === "test" ? S.tests[s.ref]?.title : s.kind === "unit" ? S.units[s.ref]?.title : "";
     return `<div class="li"><div><b>${KIND[s.kind] || s.kind}</b>${ref ? ` · ${esc(ref)}` : ""}<br><span class="small muted">${fmtDate(s.date)} ${s.start ? new Date(s.start).toTimeString().slice(0,5) : ""} · ${fmtMin(s.activeMs||0)} · ${s.n||0} odp.</span></div>
@@ -901,6 +963,12 @@ function buildQueue(kind, id){
     p.reviews.forEach((r,i) => { q.push(r); if ((i+1) % 3 === 0 && n < p.news.length) q.push(p.news[n++]); });
     while (n < p.news.length) q.push(p.news[n++]); return q; }
   if (kind === "extra") return newIds().slice(0, 10);
+  if (kind === "morning") return morningIds();
+  if (kind === "quick"){ const p = todayPlan(); const due = [...p.reviews].sort((a,b) => (S.progress[b]?.run||0) - (S.progress[a]?.run||0));
+    let q = [...due, ...p.news];
+    if (!q.length) q = newIds();
+    if (q.length > 1 && !S.progress[q[0]]){ const easy = q.findIndex(c => (S.progress[c]?.run||0) >= 1); if (easy > 0) q.unshift(q.splice(easy,1)[0]); }
+    return q.slice(0, QUICK_N); }
   if (kind === "unit") return cardsOf(id).map(([c]) => c).filter(c => !isMastered(c)).concat(cardsOf(id).map(([c]) => c).filter(isMastered)).slice(0, SESSION_MAX);
   if (kind === "test"){ const ids = testCards(S.tests[id]);
     const notM = ids.filter(c => !isMastered(c)).sort((a,b) => (S.progress[b]?.lapses||0)-(S.progress[a]?.lapses||0));
@@ -981,6 +1049,7 @@ function gradeCard(g){
   const cid = SES.queue[SES.i]; const prev = S.progress[cid]; const c = S.cards[cid]; const t = TODAY();
   const p = grade(prev, g, t); p.unitId = c.unitId; p.subjectId = c.subjectId;
   if (!prev){ p.introduced = t; SES.newN++; }
+  if ((p.run||0) > (prev?.run||0)) SES.levelUps = (SES.levelUps||0) + 1;
   store.put("progress", cid, p);
   SES.answers = [...(SES.answers||[]), { c: cid, y: String(SES.typed||"").trim().slice(0,200), g, t: Date.now() }].slice(-120);
   SES.n++; SES.points += [2,6,10][g];
@@ -996,13 +1065,20 @@ function finishSession(){
   const st = streak();
   const wrong = [...new Set(SES.wrongIds)].map(id => S.cards[id]).filter(Boolean);
   const acc = SES.n ? Math.round((SES.ok + SES.hard) / SES.n * 100) : 0;
+  const ups = SES.levelUps || 0; const nb = nearestBadge(); const more = buildQueue("quick").length;
+  const PRAISE = ups >= 5 ? "Mocna runda!" : ups >= 3 ? "Dobra robota!" : ups >= 1 ? "Jest postęp!" : "Każda próba się liczy.";
   clearInterval(tick);
   $("#sheet").innerHTML = `<div class="wrap"><div class="done-hero">
-    <p class="eyebrow">Sesja zakończona</p><div class="big-num">+${SES.points}</div><p>punktów</p>
+    <p class="eyebrow">${PRAISE}</p><div class="big-num">+${ups}</div><p>${plural(ups,"karta","karty","kart")} poziom wyżej · +${SES.points} pkt</p>
     <div class="tiles" style="width:100%;grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><b>${SES.n}</b><span>odpowiedzi</span></div><div class="tile"><b>${acc}%</b><span>poprawnie</span></div><div class="tile"><b>${fmtMin(SES.activeMs)}</b><span>nauki</span></div></div>
     <p class="pill flame">${ICON.flame} seria: ${st} ${plural(st,"dzień","dni","dni")}</p></div>
-    ${wrong.length ? `<div class="panel stack"><h3>Do zapamiętania</h3><p class="small muted">Te karty sprawiły kłopot. Wrócą jutro.</p><div class="list">${wrong.slice(0,6).map(c => `<div class="li"><div>${esc(stripCloze(c.front))}<br><b>${esc(c.type === "cloze" ? clozeAnswer(c) : c.back)}</b></div></div>`).join("")}</div></div>` : ""}
-    <button class="btn primary big" data-act="close">Gotowe</button></div>`;
+    ${nb ? `<div class="panel stack"><p class="eyebrow">Najbliższa odznaka: ${nb.tier}</p><h3>${esc(S.units[nb.id].title)}</h3>
+      <div class="bar" style="--c:var(--good);height:12px"><i style="width:${Math.min(100, Math.round(nb.st.prog / nb.target * 100))}%"></i></div>
+      <p class="small">Brakuje <b>${nb.need}</b> ${plural(nb.need,"kroku","kroków","kroków")}. Każda dobra odpowiedź w nowym dniu to krok bliżej.</p></div>` : ""}
+    ${wrong.length ? `<div class="panel stack"><h3>Do zapamiętania</h3><p class="small muted">Te karty wrócą jutro. Druga próba zwykle idzie dużo lepiej.</p><div class="list">${wrong.slice(0,6).map(c => `<div class="li"><div>${esc(stripCloze(c.front))}<br><b>${esc(c.type === "cloze" ? clozeAnswer(c) : c.back)}</b></div></div>`).join("")}</div></div>` : ""}
+    ${more ? `<div class="panel hero stack"><h2>Chcesz dziś wiedzieć jeszcze więcej?</h2><p class="muted">Jeszcze ${Math.min(QUICK_N, more)} ${plural(Math.min(QUICK_N, more),"karta","karty","kart")}, ok. 2 minuty.</p>
+      <button class="btn primary big" data-act="start" data-kind="quick">Jeszcze ${Math.min(QUICK_N, more)}</button></div>` : `<p class="small muted" style="text-align:center">Na dziś wszystko zrobione. Jutro czekają nowe karty.</p>`}
+    <button class="btn big" data-act="close">${more ? "Wystarczy na dziś" : "Gotowe"}</button></div>`;
   SES.finished = true;
 }
 function startRecall(){
