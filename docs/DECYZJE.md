@@ -5,6 +5,8 @@ Krótko: co postanowiliśmy, kiedy i dlaczego. Nowe decyzje dopisujemy na górze
 | Data | Decyzja | Dlaczego |
 |---|---|---|
 | 2026-10-17 | Każdy krok wejścia danych kończy się potwierdzeniem rodzica zapisanym w dzienniku; potwierdzamy tylko to, co niepewne | zdjęcie ciężaru i odpowiedzialności z firmy, bez zabierania rodzicowi czasu |
+| 2026-10-17 | Kierunek: wspólny zeszyt klasy (zaproszenia uczniów, scalanie notatek tej samej lekcji, wersja klasy dla wszystkich, tylko za zgodą rodzica, bez zdjęć pisma i imion) | wzrost przez polecenia i lepszy materiał z każdym nowym uczniem |
+| 2026-10-17 | Zakładka „Zeszyt” (ikona w nagłówku obok aparatu): przedmiot → działy → lekcje; każdy dział porównany z materiałem z podręcznika (jest / częściowo / brakuje / inaczej niż w podręczniku / poza działem). Szybkie porównanie słów bez AI, dokładne przez AI (read-notebook, tryb check) automatycznie po potwierdzeniu notatki; wynik w notes/chk_<dział> | zeszyt ma porządkować wiedzę, a nie tylko przechowywać zdjęcia; rodzic i dziecko od razu widzą luki przed sprawdzianem |
 | 2026-10-17 | Notatki z lekcji: zdjęcie → kontrola jakości → OCR → potwierdzenie rodzica → (propozycja działu → potwierdzenie) → notatka i karty przez AI → przegląd opiekuna | uporządkowana wiedza z zeszytu; nieczytelnych fragmentów nie zgadujemy |
 | 2026-10-17 | Librus: firma nie zna haseł; wtyczka w przeglądarce rodzica, zrzuty dla rodziców bez komputera, docelowo szkoły partnerskie | regulaminy szkół, RODO (dane nauczycieli i innych uczniów), bezpieczeństwo |
 | 2026-10-17 | Repozytorium uporządkowane: kod, biblioteka materiału, narzędzia, migracje, dokumentacja; dane osobowe tylko w bazie | przygotowanie pod skalę (biznesplan: 3000 dzieci w 5 lat) |

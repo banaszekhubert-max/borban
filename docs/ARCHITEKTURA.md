@@ -58,6 +58,17 @@ Zasada: każdy krok, w którym dane wchodzą do BorBana albo coś jest odczytywa
 
 Potwierdzenia mają być krótkie, bo biznesplan zakłada ok. 30 minut pracy rodzica tygodniowo. Pokazujemy tylko to, co niepewne, a nie cały tekst do czytania. Mierzymy czas potwierdzeń i odsetek rodziców, którzy klikają bez poprawek. Jeśli zatwierdzają wszystko w kilka sekund, potwierdzenie przestaje cokolwiek chronić i trzeba je przeprojektować.
 
+## Wspólny zeszyt klasy (kierunek, faza 2–3)
+
+Uczniowie zapraszają kolegów z klasy. Notatki tej samej lekcji (ta sama szkoła, klasa, przedmiot, dział, data) są scalane w jeden „zeszyt klasy”, a każdy uczeń dostaje wersję połączoną. Każdy nowy uczeń poprawia materiał dla wszystkich, więc wzrost i jakość napędzają się same.
+
+- **Scalanie:** dopasowanie lekcji po dziale i dacie; AI łączy treści, a to, co zgadza się u kilku osób i z podręcznikiem, ma wyższą wagę. Punkty sprzeczne idą do sprawdzenia (podręcznik rozstrzyga, potem większość).
+- **Jakość:** to samo porównanie z podręcznikiem co w „Zeszycie” (jest / brakuje / inaczej). Wersja klasy pokazuje, skąd pochodzi każdy punkt (liczba źródeł, zgodność z podręcznikiem).
+- **Prywatność:** udostępniamy tylko scalony tekst, bez zdjęć pisma, bez imion i bez ocen. Udział w zeszycie klasy wymaga zgody rodzica (uczeń niepełnoletni). Prywatne notatki zostają prywatne.
+- **Motywacja:** punkty i odznaki za notatki, które weszły do wersji klasy.
+- **Ryzyka do sprawdzenia z prawnikiem:** materiały nauczyciela (prawa autorskie, regulamin szkoły), moderacja treści, wiek użytkowników przy AI, RODO przy danych wielu rodzin.
+- **Dane:** w schemacie docelowym tabele `classes`, `class_members`, `lesson_notes` (już zaprojektowana) + `class_notebook` (wersja scalona z wagami źródeł).
+
 ## Kolejność prac
 
 **Faza 1: przed pilotażem (do stycznia 2027, 10–20 rodzin)**
