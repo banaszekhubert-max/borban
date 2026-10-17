@@ -334,7 +334,7 @@ function grade(prev, g, today){
     p.due = today;
   } else {
     if (g === 1){ p.ease = Math.max(1.3, +(p.ease - 0.15).toFixed(2)); p.interval = p.reps === 0 ? 1 : Math.max(p.interval + 1, Math.round(p.interval * 1.2)); }
-    else { p.interval = p.reps === 0 ? 1 : p.reps === 1 ? 3 : Math.round(Math.max(p.interval, 1) * p.ease); }
+    else { p.interval = p.reps === 0 ? 1 : p.reps === 1 ? 2 : p.reps === 2 ? 4 : Math.round(Math.max(p.interval, 1) * p.ease); }
     p.interval = Math.min(p.interval, 90);
     p.reps++;
     if (!p.lastOk || daysBetween(p.lastOk, today) >= MASTERY_GAP){ p.run++; p.lastOk = today; }
@@ -516,6 +516,13 @@ function teaser(cid){
   if (/polski/i.test(subj)) return [`Jak to z tym było? „${f}” Ostatnio umknęło.`, `Mitologia nie wybacza… ale daje drugą szansę. „${f}”`, `„${f}” – sprawdźmy, czy teraz siedzi.`][n];
   return [`„${f}” Ostatnio nie weszło. Założę się, że teraz pamiętasz.`, `Druga próba zwykle idzie dużo lepiej. „${f}”`, `Rewanż z ${subj ? subj.toLowerCase() : "ostatniej sesji"}: „${f}”`][n];
 }
+const LANG = { sb_ang:"en-GB", sb_niem:"de-DE", sb_chi:"zh-CN" };
+function speakSide(c, cid, revealed){ // która strona karty jest w języku obcym
+  if (c.type !== "vocab" || !LANG[c.subjectId]) return null;
+  const front = /a$/.test(cid) || (!/b$/.test(cid)); return front ? "front" : (revealed ? "back" : null);
+}
+function speak(text, lang){ try { const t = String(text).replace(/\([^)]*\)/g, "").trim(); const u = new SpeechSynthesisUtterance(t); u.lang = lang; u.rate = 0.9;
+  const v = speechSynthesis.getVoices().find(v => v.lang && v.lang.replace("_","-").startsWith(lang.slice(0,2))); if (v) u.voice = v; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch { toast("Ten telefon nie odtwarza wymowy."); } }
 const hintOf = a => String(a||"").split(/(\s+)/).map(w => /\s/.test(w) ? w : w.length <= 2 ? w : w[0] + "·".repeat(Math.min(w.length - 1, 12))).join("");
 function morningDone(k = TODAY()){ return sessionsOn(k).some(s => s.kind === "morning" && (s.n||0) > 0); }
 
@@ -1050,7 +1057,10 @@ function renderStudy(){
     <div class="fc">
       <div class="meta"><span class="dot" style="--c:${scol(s)}"></span>${esc(s?.name)} · ${esc(u?.title)}${isNew ? ` <span class="chip here">nowa</span>` : ""}${c.type === "vocab" ? ` <span class="chip">przetłumacz</span>` : ""}</div>
       ${renderCardFace(c, SES.revealed)}
+      ${speakSide(c, cid, false) === "front" ? `<button class="btn sm" data-act="speak" data-side="front" style="align-self:flex-start">🔊 Posłuchaj</button>` : ""}
       ${SES.revealed ? `<div class="answer">${c.type === "cloze" ? `Odpowiedź: <mark>${esc(answer)}</mark>` : esc(c.back)}</div>
+        ${speakSide(c, cid, true) === "back" ? `<button class="btn sm" data-act="speak" data-side="back" style="align-self:flex-start">🔊 Posłuchaj</button>` : ""}
+        ${c.mnemo ? `<div class="yours" style="background:var(--primary-soft)"><b>Zaczepka:</b> ${esc(c.mnemo)}</div>` : ""}
         ${typed ? `<div class="yours ${match ? "match" : ""}">${verdict === "exact" ? "Zgadza się z Twoją odpowiedzią." : verdict === "close" ? `Dobrze! Twoja odpowiedź „${esc(typed)}” znaczy to samo (inna kolejność słów, brak polskich znaków albo drobna literówka). Śmiało kliknij „Wiem”.` : `Twoja odpowiedź: ${esc(typed)}. Porównaj z poprawną i oceń sam: jeśli chodzi o to samo, kliknij „Wiem”.`}</div>` : ""}` : ""}
     </div>
     ${SES.revealed ? `<p class="small muted" style="text-align:center">${isNew ? "Pierwszy raz? Oceń szczerze, karta wróci w dobrym momencie." : "Jak Ci poszło?"}</p>
@@ -1062,7 +1072,7 @@ function renderStudy(){
       <button class="btn ghost sm" data-act="flag" style="align-self:center">${ICON.flag.replace("<svg",'<svg width="16" height="16"')} Zgłoś błąd w karcie</button>`
     : `<form data-form="reveal" class="stack" style="gap:10px">
         <label class="f">Przypomnij sobie odpowiedź <small>możesz ją wpisać albo tylko pomyśleć. Bez limitu czasu.</small><input type="text" id="typed" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(SES.typed)}"></label>
-        ${(SES.wrongIds.includes(cid) || (S.progress[cid]?.lapses||0) > 0) ? (SES.hint === cid ? `<p class="yours">Podpowiedź: <b>${esc(hintOf(answer))}</b></p>` : `<button class="btn sm ghost" type="button" data-act="hint">Podpowiedź (pierwsze litery)</button>`) : ""}
+        ${(SES.wrongIds.includes(cid) || (S.progress[cid]?.lapses||0) > 0) ? (SES.hint === cid ? `<p class="yours">Podpowiedź: <b>${esc(c.mnemo || hintOf(answer))}</b></p>` : `<button class="btn sm ghost" type="button" data-act="hint">Podpowiedź (pierwsze litery)</button>`) : ""}
         <button class="btn primary big" type="submit">Pokaż odpowiedź</button></form>`}
   </div>`;
   if (!SES.revealed){ const inp = $("#typed"); if (inp && matchMedia("(hover:hover)").matches) inp.focus(); }
@@ -1099,6 +1109,7 @@ function finishSession(){
       <div class="bar" style="--c:var(--good);height:12px"><i style="width:${Math.min(100, Math.round(nb.st.prog / nb.target * 100))}%"></i></div>
       <p class="small">Brakuje <b>${nb.need}</b> ${plural(nb.need,"kroku","kroków","kroków")}. Każda dobra odpowiedź w nowym dniu to krok bliżej.</p></div>` : ""}
     ${wrong.length ? `<div class="panel stack"><h3>Do zapamiętania</h3><p class="small muted">Te karty wrócą jutro. Druga próba zwykle idzie dużo lepiej.</p><div class="list">${wrong.slice(0,6).map(c => `<div class="li"><div>${esc(stripCloze(c.front))}<br><b>${esc(c.type === "cloze" ? clozeAnswer(c) : c.back)}</b></div></div>`).join("")}</div></div>` : ""}
+    ${more && sessionsOn(TODAY()).filter(x => (x.n||0) > 0).length % 2 === 0 ? `<div class="panel stack" style="border:2px solid var(--good)"><p class="eyebrow">Mini-przerwa</p><h3>Wstań na 30 sekund</h3><p class="small muted">Przeciągnij się, przejdź po pokoju, napij się wody. Krótki ruch odświeża skupienie i następna runda pójdzie lżej.</p></div>` : ""}
     ${more ? `<div class="panel hero stack"><h2>Chcesz dziś wiedzieć jeszcze więcej?</h2><p class="muted">Jeszcze ${Math.min(QUICK_N, more)} ${plural(Math.min(QUICK_N, more),"karta","karty","kart")}, ok. 2 minuty.</p>
       <button class="btn primary big" data-act="start" data-kind="quick">Jeszcze ${Math.min(QUICK_N, more)}</button></div>` : `<p class="small muted" style="text-align:center">Na dziś wszystko zrobione. Jutro czekają nowe karty.</p>`}
     <button class="btn big" data-act="close">${more ? "Wystarczy na dziś" : "Gotowe"}</button></div>`;
@@ -1234,6 +1245,7 @@ document.addEventListener("click", async e => {
   if (t.tagName === "SELECT") return;
   switch (a){
     case "start": startSession(t.dataset.kind, id); break;
+    case "speak": if (SES){ const c = S.cards[SES.queue[SES.i]]; if (c) speak(t.dataset.side === "back" ? c.back : c.front, LANG[c.subjectId]); } break;
     case "hint": if (SES){ SES.typed = $("#typed")?.value || SES.typed; SES.hint = SES.queue[SES.i]; renderStudy(); } break;
     case "signup": doLogin(true); break;
     case "menu": openMenu(); break;
