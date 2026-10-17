@@ -184,6 +184,23 @@ details.adm > .body{padding:0 16px 16px; display:flex; flex-direction:column; ga
 .fc .meta{display:flex; gap:8px; align-items:center; flex-wrap:wrap; font-size:.85rem; color:var(--muted)}
 .fc .front{font-family:var(--f-display); font-weight:600; font-size:1.45rem; line-height:1.3; overflow-wrap:anywhere}
 .fc img{border-radius:12px; border:1px solid var(--line); background:#fff; width:100%}
+.fc{-webkit-user-select:none; user-select:none; -webkit-touch-callout:none}
+.pic{--ink:#1d2433;--mute:#6b7385;--line:#d9dde8;--soft:#eef1f8;--card:#fff;--chem:#e0573a;--fiz:#2f7de1;--mat:#7a4fd6;--inf:#159a72;--p:#e0573a;--n:#8a93a6;--e:#2f7de1;--hl:#ffd54a;--pol:#c2410c;--his:#a16207;--gold:#f2b705;--sea:#2f7de1;--red:#d64545;--grn:#159a72;--vio:#7a4fd6;--dark:#3b3f4a;--acc:#c2410c;--bad:#d64545;--ok:#159a72;--fig:#7a4fd6;--lit:#2f7de1;
+  background:var(--soft); border:1px solid var(--line); border-radius:14px; padding:6px; color:var(--ink)}
+.pic svg{width:100%; height:auto; max-height:260px; display:block}
+.pic text{fill:var(--ink); font:12px system-ui,sans-serif} .pic .m{fill:var(--mute)} .pic .b{font-weight:700} .pic .c{text-anchor:middle} .pic .s{font-size:10px}
+.pic .line{stroke:var(--ink); stroke-width:2; fill:none} .pic .thin{stroke:var(--mute); stroke-width:1.2; fill:none}
+.pic.sm{max-width:180px; align-self:center}
+.pic .spin{transform-origin:160px 95px; animation:pspin 8s linear infinite} .pic .spin2{transform-origin:160px 95px; animation:pspin 14s linear infinite reverse}
+.pic .car{animation:pdrive 4s linear infinite} .pic .dot{animation:pdot 4s linear infinite}
+@keyframes pspin{to{transform:rotate(360deg)}} @keyframes pdrive{from{transform:translateX(0)}to{transform:translateX(200px)}} @keyframes pdot{from{transform:translate(0,0)}to{transform:translate(120px,-80px)}}
+@media (prefers-reduced-motion:reduce){.pic .spin,.pic .spin2,.pic .car,.pic .dot{animation:none}}
+.who{font-size:.85rem; color:var(--muted); margin-top:-8px}
+.steps{display:flex; flex-direction:column; gap:8px}
+.st{border-radius:12px; padding:10px 12px; border-left:5px solid; font-size:.95rem; line-height:1.4}
+.st b.h{display:block; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; opacity:.75; margin-bottom:2px}
+.st1{border-color:#2f7de1; background:rgba(47,125,225,.09)} .st2{border-color:#8a93a6; background:rgba(138,147,166,.12)} .st4{border-color:#159a72; background:rgba(21,154,114,.1)}
+.st .tpl{font-size:.8rem; opacity:.8; margin-top:4px}
 .gap{display:inline-block; min-width:4.5em; border-bottom:3px solid var(--primary); margin:0 2px}
 mark{background:var(--hl); color:var(--on-hl); padding:0 .2em; border-radius:4px}
 .answer{border-top:2px dashed var(--line); padding-top:14px; font-size:1.15rem; overflow-wrap:anywhere}
@@ -627,7 +644,7 @@ function viewMap(){
   const nodes = units.map(([id,u]) => {
     const st = unitStats(id); const p = Math.round(st.prog*100); const here = s.current === id; const locked = !eligibleUnit(id);
     const open = openUnit === id;
-    const cards = open ? `<div class="unitcards">${cardsOf(id).map(([cid,c]) => { const r = S.progress[cid]?.run||0;
+    const cards = open ? `<div class="unitcards">${u.svg ? `<div class="pic" style="margin-bottom:8px">${cleanSvg(u.svg)}</div>` : ""}${cardsOf(id).map(([cid,c]) => { const r = S.progress[cid]?.run||0;
       return `<div class="mini"><span class="lvl" title="${Math.min(r,3)} z 3">${[0,1,2].map(i => `<i class="${i<r?"on":""}"></i>`).join("")}</span><span class="q">${esc(stripCloze(c.front))}</span></div>`; }).join("") || `<p class="small muted">Brak kart w tym dziale.</p>`}
       ${role.canWrite && st.total && !locked ? `<button class="btn sm" data-act="start" data-kind="unit" data-id="${id}">Ucz się tego działu</button>` : ""}</div>` : "";
     return `<button class="unit ${locked?"locked":""}" data-act="unit" data-id="${id}" style="--c:${scol(s)}" aria-expanded="${open}">
@@ -860,6 +877,7 @@ async function loadPack(){
   const rows = (pk.docs || []).filter(r => r && COLS.includes(r.col) && r.id && r.data && typeof r.data === "object");
   if (!rows.length){ toast("Paczka jest pusta."); return; }
   const btn = document.querySelector('[data-act="loadPack"]'); if (btn){ btn.disabled = true; btn.textContent = `Wczytuję ${rows.length}…`; }
+  rows.forEach(r => { if (r.merge){ r.data = { ...(S[r.col]?.[r.id] || {}), ...r.data }; delete r.merge; } });
   try { await store.bulk(rows); rows.forEach(r => { S[r.col] = {...S[r.col], [r.id]: r.data}; }); toast(`Wczytano ${rows.length} ${plural(rows.length,"element","elementy","elementów")}.`); }
   catch (e){ console.warn(e); toast("Nie udało się wczytać paczki: " + (e.message || "błąd")); }
   render();
@@ -1019,7 +1037,37 @@ function renderCardFace(c, revealed){
   let front = esc(c.front);
   if (c.type === "cloze") front = front.replace(/\{\{(.+?)\}\}/g, (m, a) => revealed ? `<mark>${a}</mark>` : `<span class="gap">&nbsp;</span>`);
   const img = c.image ? (/^data:image\//.test(c.image) ? c.image : /^[A-Za-z0-9_-]+$/.test(c.image) ? "/_blob/" + c.image : "") : "";
-  return `<div class="front">${front}</div>${img ? `<img src="${esc(img)}" alt="Schemat do karty">` : ""}`;
+  return `<div class="front">${front}</div>${c.who ? `<div class="who">${esc(c.who)}</div>` : ""}${c.svg ? `<div class="pic ${c.svgSize === "sm" ? "sm" : ""}">${cleanSvg(c.svg)}</div>` : ""}${img ? `<img src="${esc(img)}" alt="Schemat do karty">` : ""}`;
+}
+// Obrazki SVG z paczek: przepuszczamy tylko rysunek (bez skryptów, zdarzeń i linków zewnętrznych).
+const svgCache = new Map();
+function cleanSvg(src){
+  if (svgCache.has(src)) return svgCache.get(src);
+  let out = "";
+  try {
+    const doc = new DOMParser().parseFromString(String(src).slice(0, 60000), "image/svg+xml");
+    const root = doc.documentElement;
+    if (root && root.nodeName.toLowerCase() === "svg" && !doc.querySelector("parsererror")){
+      root.querySelectorAll("script,foreignObject,iframe,image,use,a,animate,set,style").forEach(n => n.remove());
+      [root, ...root.querySelectorAll("*")].forEach(n => [...n.attributes].forEach(at => {
+        const nm = at.name.toLowerCase(), v = at.value;
+        if (nm.startsWith("on") || nm === "href" || nm === "xlink:href" || /javascript:|url\((?!#)/i.test(v)) n.removeAttribute(at.name);
+      }));
+      root.removeAttribute("width"); root.removeAttribute("height");
+      out = new XMLSerializer().serializeToString(root);
+    }
+  } catch {}
+  svgCache.set(src, out); return out;
+}
+// Kroki „mit → dlaczego → przykład” (standard BorBana); przy nowej karcie otwarte, w powtórce pod przyciskiem.
+function stepsBlock(c, cid, isNew){
+  if (!(c.lit || c.why || c.ex)) return "";
+  if (!isNew && SES.why !== cid) return `<button class="btn sm ghost" data-act="why" style="align-self:flex-start">Dlaczego? (skąd to się wzięło)</button>`;
+  return `<div class="steps">
+    ${c.lit ? `<div class="st st1"><b class="h">Co się naprawdę stało</b>${esc(c.lit)}</div>` : ""}
+    ${c.why ? `<div class="st st2"><b class="h">Dlaczego to znaczy właśnie to</b>${esc(c.why)}</div>` : ""}
+    ${c.ex ? `<div class="st st4"><b class="h">Przykład z życia</b>${esc(c.ex)}${c.tpl ? `<div class="tpl">Wzór na sprawdzian: <b>${esc(c.tpl)}</b></div>` : ""}</div>` : ""}
+  </div>`;
 }
 const clozeAnswer = c => (String(c.front).match(/\{\{(.+?)\}\}/g) || []).map(x => x.slice(2,-2)).join(", ");
 const norm = s => String(s||"").toLowerCase().normalize("NFKC").replace(/[\s.,;:!?()"'„”–−-]+/g, " ").trim();
@@ -1055,11 +1103,13 @@ function renderStudy(){
   sh.innerHTML = `<div class="wrap">
     <div class="sbar"><button class="iconbtn" data-act="quit" aria-label="Zakończ sesję">${ICON.x}</button><div class="bar"><i style="width:${pct}%"></i></div><span class="small muted" style="font-variant-numeric:tabular-nums">${SES.i+1}/${SES.queue.length}</span></div>
     <div class="fc">
-      <div class="meta"><span class="dot" style="--c:${scol(s)}"></span>${esc(s?.name)} · ${esc(u?.title)}${isNew ? ` <span class="chip here">nowa</span>` : ""}${c.type === "vocab" ? ` <span class="chip">przetłumacz</span>` : ""}</div>
+      <div class="meta"><span class="dot" style="--c:${scol(s)}"></span>${esc(s?.name)} · ${esc(u?.title)}${isNew ? ` <span class="chip here">nowa</span>` : ""}${c.type === "vocab" ? ` <span class="chip">przetłumacz</span>` : ""}${u?.svg && SES.revealed ? ` <button class="btn sm ghost" data-act="upic" style="padding:2px 10px">${SES.upic === c.unitId ? "Ukryj obrazek działu" : "Obrazek działu"}</button>` : ""}</div>
+      ${u?.svg && SES.revealed && SES.upic === c.unitId ? `<div class="pic">${cleanSvg(u.svg)}</div>` : ""}
       ${renderCardFace(c, SES.revealed)}
       ${speakSide(c, cid, false) === "front" ? `<button class="btn sm" data-act="speak" data-side="front" style="align-self:flex-start">🔊 Posłuchaj</button>` : ""}
       ${SES.revealed ? `<div class="answer">${c.type === "cloze" ? `Odpowiedź: <mark>${esc(answer)}</mark>` : esc(c.back)}</div>
         ${speakSide(c, cid, true) === "back" ? `<button class="btn sm" data-act="speak" data-side="back" style="align-self:flex-start">🔊 Posłuchaj</button>` : ""}
+        ${stepsBlock(c, cid, isNew)}
         ${c.mnemo ? `<div class="yours" style="background:var(--primary-soft)"><b>Zaczepka:</b> ${esc(c.mnemo)}</div>` : ""}
         ${typed ? `<div class="yours ${match ? "match" : ""}">${verdict === "exact" ? "Zgadza się z Twoją odpowiedzią." : verdict === "close" ? `Dobrze! Twoja odpowiedź „${esc(typed)}” znaczy to samo (inna kolejność słów, brak polskich znaków albo drobna literówka). Śmiało kliknij „Wiem”.` : `Twoja odpowiedź: ${esc(typed)}. Porównaj z poprawną i oceń sam: jeśli chodzi o to samo, kliknij „Wiem”.`}</div>` : ""}` : ""}
     </div>
@@ -1071,7 +1121,7 @@ function renderStudy(){
       </div>
       <button class="btn ghost sm" data-act="flag" style="align-self:center">${ICON.flag.replace("<svg",'<svg width="16" height="16"')} Zgłoś błąd w karcie</button>`
     : `<form data-form="reveal" class="stack" style="gap:10px">
-        <label class="f">Przypomnij sobie odpowiedź <small>możesz ją wpisać albo tylko pomyśleć. Bez limitu czasu.</small><input type="text" id="typed" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(SES.typed)}"></label>
+        <label class="f">Przypomnij sobie odpowiedź <small>${c.type === "vocab" ? "słówka wpisz sam, litera po literze. Bez limitu czasu." : "możesz ją wpisać albo tylko pomyśleć. Bez limitu czasu."}</small><input type="text" id="typed" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" value="${esc(SES.typed)}"></label>
         ${(SES.wrongIds.includes(cid) || (S.progress[cid]?.lapses||0) > 0) ? (SES.hint === cid ? `<p class="yours">Podpowiedź: <b>${esc(c.mnemo || hintOf(answer))}</b></p>` : `<button class="btn sm ghost" type="button" data-act="hint">Podpowiedź (pierwsze litery)</button>`) : ""}
         <button class="btn primary big" type="submit">Pokaż odpowiedź</button></form>`}
   </div>`;
@@ -1233,6 +1283,9 @@ document.addEventListener("submit", e => {
   }
   if (f.dataset.form === "review"){ const k = f.dataset.week; store.put("woop", k, { ...S.woop[k], review: $("#w_rev").value.trim() }); delete drafts.w_rev; toast("Zapisano podsumowanie."); }
 });
+// Wklejanie i przeciąganie tekstu do odpowiedzi jest wyłączone; z karty nie da się kopiować.
+["paste","drop"].forEach(ev => document.addEventListener(ev, e => { if (e.target?.id === "typed"){ e.preventDefault(); toast("Wpisz odpowiedź sam: wklejanie jest wyłączone."); } }, true));
+["copy","cut"].forEach(ev => document.addEventListener(ev, e => { if (SES && !$("#sheet").hidden) e.preventDefault(); }, true));
 document.addEventListener("keydown", e => {
   if (!SES || SES.recall || SES.finished || $("#sheet").hidden) return;
   if (SES.revealed && ["1","2","3"].includes(e.key) && e.target.tagName !== "INPUT"){ gradeCard(+e.key - 1); }
@@ -1246,6 +1299,8 @@ document.addEventListener("click", async e => {
   switch (a){
     case "start": startSession(t.dataset.kind, id); break;
     case "speak": if (SES){ const c = S.cards[SES.queue[SES.i]]; if (c) speak(t.dataset.side === "back" ? c.back : c.front, LANG[c.subjectId]); } break;
+    case "why": if (SES){ SES.why = SES.queue[SES.i]; renderStudy(); } break;
+    case "upic": if (SES){ SES.typed = $("#typed")?.value ?? SES.typed; const c = S.cards[SES.queue[SES.i]]; SES.upic = SES.upic === c?.unitId ? null : c?.unitId; renderStudy(); } break;
     case "hint": if (SES){ SES.typed = $("#typed")?.value || SES.typed; SES.hint = SES.queue[SES.i]; renderStudy(); } break;
     case "signup": doLogin(true); break;
     case "menu": openMenu(); break;
