@@ -451,9 +451,25 @@ function pacePanel(){
   }).join("");
   return `<div class="panel stack" style="border:2px solid var(--${worst === "done" ? "line" : worst === "doing" ? "warn" : "bad"})">
     <div class="row" style="justify-content:space-between"><h3>Ile trzeba dziennie do sprawdzianów</h3><span class="chip ${worst}">${PACE_TXT[worst]}</span></div>
-    <p class="small muted">Karta wchodzi do pamięci po 3 dobrych odpowiedziach, co najmniej co ${MASTERY_GAP} dni. Dlatego nowe karty trzeba zacząć najpóźniej ${2*MASTERY_GAP+1} dni przed sprawdzianem i potem pracować codziennie.</p>
+    <p class="small muted">Widzisz to tylko Ty. Borys widzi jeden mały krok na dziś, bez minut i bez „mało czasu”. Karta wchodzi do pamięci po 3 dobrych odpowiedziach, co najmniej co ${MASTERY_GAP} dni. Dlatego nowe karty trzeba zacząć najpóźniej ${2*MASTERY_GAP+1} dni przed sprawdzianem i potem pracować codziennie.</p>
     <div class="list">${subjRows}</div>
     <p><b>Razem minimum ≈ ${fmtMin(total*60000)} dziennie</b>${total > 60 ? " – podziel na 2–3 krótkie rundy w ciągu dnia" : ""}.</p></div>`;
+}
+// Widok ucznia „bez presji”: jeden mały krok na dziś, bez czerwieni, bez sumy godzin i bez porównań.
+// Pełne tempo (minuty, „mało czasu”) widzi tylko rodzic. Zasady: docs/DECYZJE.md, 2026-10-21.
+function studentStep(){
+  const rows = paceTests(); if (!rows.length) return "";
+  const pick = [...rows].sort((a,b) => (b[2].unseen ? 1 : 0) - (a[2].unseen ? 1 : 0) || a[2].introDays - b[2].introDays || a[2].days - b[2].days)[0];
+  const [id, x, p] = pick; const s = S.subjects[x.subjectId];
+  const did = answeredOn(TODAY()); const known = p.total - p.unseen;
+  const when = `${DNI[parseKey(x.date).getDay()].toLowerCase()}, ${fmtDate(x.date)}`;
+  return `<div class="panel stack">
+    <p class="eyebrow">Najbliżej: ${s ? esc(s.name) : "sprawdzian"} · ${when}</p>
+    <h3>Twój krok na dziś</h3>
+    <p>${did ? `Dziś już ${did} ${plural(did,"odpowiedź","odpowiedzi","odpowiedzi")}. Każda kolejna runda to 2 minuty – rób, ile chcesz.` : `Zacznij od 5 kart – to 2 minuty. Jak pójdzie, rób dalej, ile chcesz.`}</p>
+    <div class="bar" style="--c:var(--good)"><i style="width:${Math.max(2, Math.round(known / Math.max(1,p.total) * 100))}%"></i></div>
+    <p class="small muted">Z tego sprawdzianu znasz już ${known} z ${p.total} kart.</p>
+    ${role.canWrite ? `<button class="btn primary" data-act="start" data-kind="step" data-id="${id}">5 kart z tego sprawdzianu</button>` : ""}</div>`;
 }
 function paceNewNeed(){ return paceTests().reduce((a,[,,p]) => a + p.newPerDay, 0); }
 function newToday(){ const t = TODAY(); return Object.values(S.progress).filter(p => p.introduced === t).length; }
@@ -633,7 +649,7 @@ function viewToday(){
   const parts = [];
   parts.push(modeBanner());
   parts.push(`<div><p class="eyebrow">${DNI[d.getDay()]}, ${fmtDate(t)}</p><h1>Cześć, ${esc(name)}!</h1></div>`);
-  parts.push(pacePanel());
+  parts.push(studentStep());
   if (!role.canWrite) parts.push(`<p class="banner">Tryb podglądu dla rodzica: widzisz to samo co ${esc(name)}, bez możliwości zmian.</p>`);
   { const tk = todayTasks(t); const dn = tk.filter(x => x.done).length;
     parts.push(`<div class="stack" style="gap:8px"><div class="row" style="justify-content:space-between"><h2>Do zrobienia dziś</h2><span class="chip ${dn === tk.length ? "done" : ""}">${dn}/${tk.length}</span></div>${tasksTiles(tk, role.canWrite)}<p class="small muted">Kafelki odhaczają się same, gdy skończysz zadanie. Każda odpowiedź zapisuje się od razu.</p></div>`); }
@@ -881,9 +897,9 @@ function viewParent(){
 
   // sesje i błędy (odpowiedzi zapisane w sesjach + historia kart)
   const sesList = Object.values(S.sessions).filter(s => s.date).sort((a,b) => (b.start||0) - (a.start||0)).slice(0, 8);
-  const KIND = { rematch:"Rewanż", morning:"Poranna powtórka", quick:"Szybka runda", daily:"Fiszki na dziś", extra:"Dodatkowe karty", unit:"Dział", test:"Przed sprawdzianem", recall:"Odpytanie z lekcji", note:"Notatka z lekcji (zdjęcie)" };
+  const KIND = { rematch:"Rewanż", morning:"Poranna powtórka", quick:"Szybka runda", daily:"Fiszki na dziś", extra:"Dodatkowe karty", unit:"Dział", test:"Przed sprawdzianem", step:"Krok na dziś", recall:"Odpytanie z lekcji", note:"Notatka z lekcji (zdjęcie)" };
   const sesRows = sesList.map(s => { const acc = s.n ? Math.round(((s.ok||0)+(s.hard||0))/s.n*100) : null;
-    const ref = s.kind === "test" ? S.tests[s.ref]?.title : s.kind === "unit" ? S.units[s.ref]?.title : "";
+    const ref = (s.kind === "test" || s.kind === "step") ? S.tests[s.ref]?.title : s.kind === "unit" ? S.units[s.ref]?.title : "";
     return `<div class="li"><div><b>${KIND[s.kind] || s.kind}</b>${ref ? ` · ${esc(ref)}` : ""}<br><span class="small muted">${fmtDate(s.date)} ${s.start ? new Date(s.start).toTimeString().slice(0,5) : ""} · ${fmtMin(s.activeMs||0)} · ${s.n||0} odp.</span></div>
       <span class="small" style="text-align:right">${acc == null ? "–" : `<b>${acc}%</b> dobrze`}<br><span class="${s.wrong ? "" : "muted"}" style="${s.wrong ? "color:var(--bad)" : ""}">${s.wrong||0} ${plural(s.wrong||0,"błąd","błędy","błędów")}</span></span></div>`; }).join("");
   const lastTyped = {};
@@ -1399,6 +1415,10 @@ function buildQueue(kind, id){
     if (q.length > 1 && !S.progress[q[0]]){ const easy = q.findIndex(c => (S.progress[c]?.run||0) >= 1); if (easy > 0) q.unshift(q.splice(easy,1)[0]); }
     return q.slice(0, QUICK_N); }
   if (kind === "unit") return cardsOf(id).map(([c]) => c).filter(c => !isMastered(c)).concat(cardsOf(id).map(([c]) => c).filter(isMastered)).slice(0, SESSION_MAX);
+  if (kind === "step"){ const ids = testCards(S.tests[id]||{}); const t = TODAY();
+    const due = ids.filter(c => S.progress[c] && !isMastered(c) && (S.progress[c].due||t) <= t);
+    const fresh = ids.filter(c => !S.progress[c]);
+    return [...due.slice(0,1), ...fresh, ...due.slice(1)].slice(0, QUICK_N); }
   if (kind === "test"){ const ids = testCards(S.tests[id]);
     const notM = ids.filter(c => !isMastered(c)).sort((a,b) => (S.progress[b]?.lapses||0)-(S.progress[a]?.lapses||0));
     const m = ids.filter(isMastered).sort(() => Math.random() - .5);
