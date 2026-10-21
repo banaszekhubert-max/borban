@@ -4,6 +4,7 @@ Krótko: co postanowiliśmy, kiedy i dlaczego. Nowe decyzje dopisujemy na górze
 
 | Data | Decyzja | Dlaczego |
 |---|---|---|
+| 2026-10-21 | Panel „Ile trzeba dziennie do sprawdzianów” (uczeń i rodzic): na każdy sprawdzian do 14 dni liczba nowych kart dziennie, termin ostatniej nowej karty (sprawdzian − 5 dni) i minuty dziennie na przedmiot; przed sprawdzianami limit nowych kart rośnie do potrzebnego tempa (najwyżej 40) | opanowanie wymaga 3 poprawnych co ≥ 2 dni, więc materiał trzeba zacząć wcześnie i systematycznie; uczeń ma widzieć, że czasu jest mało |
 | 2026-10-17 | Każdy krok wejścia danych kończy się potwierdzeniem rodzica zapisanym w dzienniku; potwierdzamy tylko to, co niepewne | zdjęcie ciężaru i odpowiedzialności z firmy, bez zabierania rodzicowi czasu |
 | 2026-10-17 | Kierunek: wspólny zeszyt klasy (zaproszenia uczniów, scalanie notatek tej samej lekcji, wersja klasy dla wszystkich, tylko za zgodą rodzica, bez zdjęć pisma i imion) | wzrost przez polecenia i lepszy materiał z każdym nowym uczniem |
 | 2026-10-17 | Zakładka „Zeszyt” (ikona w nagłówku obok aparatu): przedmiot → działy → lekcje; każdy dział porównany z materiałem z podręcznika (jest / częściowo / brakuje / inaczej niż w podręczniku / poza działem). Szybkie porównanie słów bez AI, dokładne przez AI (read-notebook, tryb check) automatycznie po potwierdzeniu notatki; wynik w notes/chk_<dział> | zeszyt ma porządkować wiedzę, a nie tylko przechowywać zdjęcia; rodzic i dziecko od razu widzą luki przed sprawdzianem |
