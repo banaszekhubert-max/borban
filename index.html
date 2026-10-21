@@ -102,6 +102,7 @@ main{padding-block:16px 110px}
 .chip.doing{background:var(--warn-soft); color:var(--warn)}
 .chip.done{background:var(--good-soft); color:var(--good)}
 .chip.here{background:var(--hl); color:var(--on-hl)}
+.chip.bad{background:var(--bad-soft); color:var(--bad)}
 .dot{width:10px; height:10px; border-radius:50%; background:var(--c, var(--primary)); flex:none}
 .subjtabs{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px}
 .subjtab{border:1px solid var(--line); background:var(--surface); border-radius:999px; padding:8px 14px; font-weight:700; cursor:pointer; white-space:nowrap; display:inline-flex; gap:8px; align-items:center}
@@ -406,8 +407,59 @@ function upcomingTests(){
 }
 function testCards(test){ return Object.entries(S.cards).filter(([,c]) => (test.unitIds||[]).includes(c.unitId)).map(([id]) => id); }
 function readiness(test){ const ids = testCards(test); return ids.length ? ids.filter(isMastered).length / ids.length : 0; }
+/* ---------- tempo do sprawdzianów: ile trzeba dziennie, żeby zdążyć ---------- */
+// Karta jest opanowana po 3 poprawnych odpowiedziach co ≥ MASTERY_GAP dni, więc nowa karta musi wejść
+// najpóźniej (2·MASTERY_GAP + 1) dni przed sprawdzianem (np. 27.10 → do 22.10), żeby zdążyć wejść do pamięci.
+function secPerAnswer(){
+  const ss = Object.values(S.sessions).filter(s => (s.n||0) >= 5 && s.activeMs);
+  const n = ss.reduce((a,s) => a + s.n, 0), ms = ss.reduce((a,s) => a + s.activeMs, 0);
+  return n >= 30 ? Math.min(60, Math.max(8, ms / 1000 / n)) : 20;
+}
+function testPace(test, k = TODAY()){
+  const ids = testCards(test);
+  const days = daysBetween(k, test.date);
+  const unseen = ids.filter(id => !S.progress[id]).length;
+  const open = ids.filter(id => S.progress[id] && !isMastered(id)).length;
+  const lastNew = addDays(test.date, -(2*MASTERY_GAP + 1));
+  const introDays = Math.max(0, daysBetween(k, lastNew) + 1);
+  const late = unseen > 0 && introDays === 0;
+  const newPerDay = unseen && days > 0 ? Math.ceil(unseen / Math.max(1, introDays || days)) : 0;
+  const answersPerDay = days > 0 ? newPerDay * 2 + Math.ceil(open / MASTERY_GAP) : 0;
+  const min = Math.ceil(answersPerDay * secPerAnswer() / 60);
+  const level = days <= 0 ? "ok" : (late || min > 40 || (unseen && introDays <= 2)) ? "bad" : (min > 20 || (unseen && introDays <= 4)) ? "doing" : "done";
+  return {total: ids.length, unseen, open, mastered: ids.length - unseen - open, days, introDays, lastNew, newPerDay, answersPerDay, min, late, level};
+}
+function paceTests(k = TODAY()){ return upcomingTests().filter(([,x]) => { const d = daysBetween(k, x.date); return d > 0 && d <= 14; }).map(([id,x]) => [id, x, testPace(x, k)]); }
+const PACE_TXT = {bad:"mało czasu", doing:"trzeba przyspieszyć", done:"zdążysz"};
+function pacePanel(){
+  const rows = paceTests(); if (!rows.length) return "";
+  const bySubj = {};
+  rows.forEach(([id,x,p]) => { const k = x.subjectId || "?"; (bySubj[k] = bySubj[k] || {min:0, items:[]}); bySubj[k].min += p.min; bySubj[k].items.push([x,p]); });
+  const total = Object.values(bySubj).reduce((a,b) => a + b.min, 0);
+  const worst = rows.some(r => r[2].level === "bad") ? "bad" : rows.some(r => r[2].level === "doing") ? "doing" : "done";
+  const subjRows = Object.entries(bySubj).sort((a,b) => b[1].min - a[1].min).map(([sid,g]) => {
+    const s = S.subjects[sid];
+    const lines = g.items.map(([x,p]) => {
+      const when = `${fmtDate(x.date)} (za ${p.days} ${plural(p.days,"dzień","dni","dni")})`;
+      const what = p.unseen
+        ? (p.late ? `${p.unseen} nowych kart – na pełne opanowanie jest już za późno, przećwicz je chociaż raz: ${p.newPerDay} dziennie`
+                  : `${p.unseen} nowych kart do ${fmtDate(p.lastNew)}: ${p.newPerDay} dziennie`) + (p.open ? ` + ${p.open} do utrwalenia` : "")
+        : p.open ? `${p.open} kart do utrwalenia (powtórki co ${MASTERY_GAP} dni)` : "wszystko opanowane";
+      return `<span class="small"><b>${esc(x.title)}</b> · ${when}<br><span class="muted">${what}</span></span>`;
+    }).join("<br>");
+    return `<div class="li" style="align-items:flex-start"><div style="min-width:0"><b>${s ? esc(s.name) : "Przedmiot"}</b><br>${lines}</div><b style="white-space:nowrap">${g.min ? `≈ ${fmtMin(g.min*60000)}` : "–"}</b></div>`;
+  }).join("");
+  return `<div class="panel stack" style="border:2px solid var(--${worst === "done" ? "line" : worst === "doing" ? "warn" : "bad"})">
+    <div class="row" style="justify-content:space-between"><h3>Ile trzeba dziennie do sprawdzianów</h3><span class="chip ${worst}">${PACE_TXT[worst]}</span></div>
+    <p class="small muted">Karta wchodzi do pamięci po 3 dobrych odpowiedziach, co najmniej co ${MASTERY_GAP} dni. Dlatego nowe karty trzeba zacząć najpóźniej ${2*MASTERY_GAP+1} dni przed sprawdzianem i potem pracować codziennie.</p>
+    <div class="list">${subjRows}</div>
+    <p><b>Razem minimum ≈ ${fmtMin(total*60000)} dziennie</b>${total > 60 ? " – podziel na 2–3 krótkie rundy w ciągu dnia" : ""}.</p></div>`;
+}
+function paceNewNeed(){ return paceTests().reduce((a,[,,p]) => a + p.newPerDay, 0); }
 function newToday(){ const t = TODAY(); return Object.values(S.progress).filter(p => p.introduced === t).length; }
-const newLimit = () => Math.max(5, Math.min(20, +S.meta.config?.newPerDay || 15));
+const baseNewLimit = () => Math.max(5, Math.min(20, +S.meta.config?.newPerDay || 15));
+// przed sprawdzianami limit rośnie do tempa potrzebnego, żeby zdążyć (najwyżej 40 nowych kart dziennie)
+const newLimit = () => Math.max(baseNewLimit(), Math.min(40, paceNewNeed()));
 function dueIds(){
   const t = TODAY();
   return Object.entries(S.progress).filter(([id,p]) => S.cards[id] && p.due && p.due <= t)
@@ -581,6 +633,7 @@ function viewToday(){
   const parts = [];
   parts.push(modeBanner());
   parts.push(`<div><p class="eyebrow">${DNI[d.getDay()]}, ${fmtDate(t)}</p><h1>Cześć, ${esc(name)}!</h1></div>`);
+  parts.push(pacePanel());
   if (!role.canWrite) parts.push(`<p class="banner">Tryb podglądu dla rodzica: widzisz to samo co ${esc(name)}, bez możliwości zmian.</p>`);
   { const tk = todayTasks(t); const dn = tk.filter(x => x.done).length;
     parts.push(`<div class="stack" style="gap:8px"><div class="row" style="justify-content:space-between"><h2>Do zrobienia dziś</h2><span class="chip ${dn === tk.length ? "done" : ""}">${dn}/${tk.length}</span></div>${tasksTiles(tk, role.canWrite)}<p class="small muted">Kafelki odhaczają się same, gdy skończysz zadanie. Każda odpowiedź zapisuje się od razu.</p></div>`); }
@@ -860,6 +913,7 @@ function viewParent(){
     <div class="panel stack"><h3>Ostatnie sesje</h3>${sesRows ? `<div class="list">${sesRows}</div>` : `<p class="small muted">Jeszcze nie było sesji nauki.</p>`}</div>
     <div class="panel stack"><div><h3>Błędy z ostatnich 7 dni</h3><p class="small muted">Karty, na których ${esc(name)} odpowiedział „Nie wiem”. Wracają do powtórki automatycznie, aż wejdą do pamięci.</p></div>${misRows ? `<div class="list">${misRows}</div>` : `<p class="small muted">Brak błędów.</p>`}</div>
     <div class="panel stack"><h3>Wymaga uwagi</h3>${alerts || `<p class="small muted">Żaden przedmiot nie ma średniej poniżej 3 ani świeżej oceny poniżej 3.</p>`}</div>
+    ${pacePanel()}
     <div class="panel stack" style="gap:4px"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h3>Sprawdziany, 3 tygodnie</h3><span class="small muted">gotowość = karty opanowane</span></div>
       ${testRows || `<p class="small muted">Brak zapowiedzianych sprawdzianów.</p>`}</div>
     <div class="panel stack"><div class="row" style="justify-content:space-between"><h3>Minuty nauki, 14 dni</h3><span class="small muted">bloki z planu ${wp.blocks}/${wp.blocksDue}</span></div>${chart14()}</div>
@@ -1306,7 +1360,7 @@ function viewAdmin(){
 
   <details class="adm" ${drafts.open_set?"open":""} data-key="open_set"><summary>Ustawienia</summary><div class="body">
     <label class="f">Imię ucznia<input type="text" id="c_name" value="${esc(S.meta.config?.student || "Borys")}"></label>
-    <label class="f">Nowe karty dziennie <small>10–20; przy słabszej pamięci długotrwałej lepiej mniej i regularnie</small><input type="number" id="c_new" min="5" max="20" value="${newLimit()}"></label>
+    <label class="f">Nowe karty dziennie <small>10–20; przy słabszej pamięci długotrwałej lepiej mniej i regularnie</small><input type="number" id="c_new" min="5" max="20" value="${baseNewLimit()}"></label>
     <button class="btn" data-act="saveCfg">Zapisz ustawienia</button>
     ${demoCount ? `<hr style="border:0;border-top:1px solid var(--line);width:100%"><p class="small">W aplikacji jest ${demoCount} przykładowych kart.</p>
     <label class="row small"><input type="checkbox" id="c_wipe"> Usuń też historię nauki z testów</label>
