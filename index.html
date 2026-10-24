@@ -501,7 +501,8 @@ function todayPlan(){
   const due = dueIds(); const room = Math.max(0, newLimit() - newToday());
   const nw = newIds().slice(0, room);
   const reviews = due.slice(0, SESSION_MAX);
-  const news = nw.slice(0, Math.max(0, SESSION_MAX - reviews.length));
+  // nowe karty nie znikają, gdy powtórek jest dużo (runda i tak bierze najwyżej 3 powtórki)
+  const news = nw.slice(0, Math.max(5, SESSION_MAX - reviews.length));
   return {reviews, news, total: reviews.length + news.length};
 }
 function testSessionToday(){
@@ -1412,7 +1413,7 @@ function buildQueue(kind, id){
   if (kind === "extra") return newIds().slice(0, 10);
   if (kind === "morning") return morningIds();
   if (kind === "rematch") return rematchIds().slice(0, QUICK_N);
-  if (kind === "quick"){ const p = todayPlan(); const due = [...p.reviews].sort((a,b) => runOf(S.progress[b]) - runOf(S.progress[a]));
+  if (kind === "quick"){ const p = todayPlan(); const due = [...p.reviews].sort((a,b) => (isMastered(a) - isMastered(b)) || runOf(S.progress[b]) - runOf(S.progress[a]));
     // najwyżej 3 powtórki w rundzie, reszta to nowe karty – nowy materiał ma się pojawiać w każdej rundzie
     const nNew = Math.min(p.news.length, Math.max(QUICK_N - due.length, 2));
     let q = [...due.slice(0, QUICK_N - nNew), ...p.news.slice(0, nNew)];
