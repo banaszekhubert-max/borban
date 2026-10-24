@@ -321,8 +321,7 @@ const uid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(
 function toast(msg){ const t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(()=> t.hidden = true, 2600); }
 
 /* ---------- metody: stałe ---------- */
-const MASTERY_RUN = 3;        // karta opanowana: 3 poprawne odpowiedzi z rzędu…
-const MASTERY_GAP = 2;        // …liczone tylko, gdy między nimi minęły co najmniej 2 dni
+const MASTERY_RUN = 3;        // karta opanowana: 3 poprawne odpowiedzi z rzędu (zła odpowiedź zeruje licznik), bez wymogu odstępu dni
 const UNIT_DONE = 0.9;        // dział opanowany: 90% kart opanowanych
 const SESSION_MAX = 30;       // ok. 15–20 min przy spokojnym tempie
 const TEST_DAYS = [7,5,3,1];  // sesje przed sprawdzianem
@@ -349,7 +348,7 @@ let store = null;
 /* ---------- algorytm powtórek (SM-2, ostrożniejsze odstępy) ---------- */
 function grade(prev, g, today){
   const p = Object.assign({ease:2.3, interval:0, reps:0, run:0, lastOk:null, lapses:0, seen:0, hist:[]}, prev || {});
-  p.seen++; p.last = today;
+  p.seen++; p.last = today; p.at = Date.now();
   p.hist = [...(p.hist||[]), [today, g]].slice(-12);
   if (g === 0){
     p.lapses++; p.reps = 0; p.interval = 0; p.run = 0; p.lastOk = null;
@@ -360,18 +359,21 @@ function grade(prev, g, today){
     else { p.interval = p.reps === 0 ? 1 : p.reps === 1 ? 2 : p.reps === 2 ? 4 : Math.round(Math.max(p.interval, 1) * p.ease); }
     p.interval = Math.min(p.interval, 90);
     p.reps++;
-    if (!p.lastOk || daysBetween(p.lastOk, today) >= MASTERY_GAP){ p.run++; p.lastOk = today; }
-    p.due = addDays(today, p.interval);
+    p.run = runOf(p); p.lastOk = today;
+    // dopóki karta nie ma 3 dobrych odpowiedzi z rzędu, wraca jeszcze dziś (w kolejnej rundzie); potem powtórki co 1, 2, 4… dni
+    p.due = p.run >= MASTERY_RUN ? addDays(today, p.interval) : today;
   }
   return p;
 }
-const isMastered = cid => (S.progress[cid]?.run || 0) >= MASTERY_RUN;
+// poprawne odpowiedzi z rzędu, liczone z historii (stare zapisy liczyły tylko odpowiedzi co ≥ 2 dni)
+function runOf(p){ if (!p) return 0; const h = p.hist || []; if (!h.length) return p.run || 0; let n = 0; for (let i = h.length - 1; i >= 0 && h[i][1] > 0; i--) n++; return Math.max(n, h[h.length-1][1] > 0 ? (p.run || 0) : 0); }
+const isMastered = cid => runOf(S.progress[cid]) >= MASTERY_RUN;
 
 /* ---------- wyliczenia ---------- */
 const sortedSubjects = () => Object.entries(S.subjects).sort((a,b) => (a[1].order||0)-(b[1].order||0));
 const unitsOf = sid => Object.entries(S.units).filter(([,u]) => u.subjectId === sid).sort((a,b) => (a[1].order||0)-(b[1].order||0));
 const cardsOf = uid_ => Object.entries(S.cards).filter(([,c]) => c.unitId === uid_);
-const cardLevel = cid => Math.min(MASTERY_RUN, S.progress[cid]?.run || 0);
+const cardLevel = cid => Math.min(MASTERY_RUN, runOf(S.progress[cid]));
 function unitStats(u){
   const cs = cardsOf(u); let m = 0, seen = 0, lapses = 0;
   cs.forEach(([id]) => { const p = S.progress[id]; if (p){ seen++; lapses += p.lapses||0; } if (isMastered(id)) m++; });
@@ -408,8 +410,9 @@ function upcomingTests(){
 function testCards(test){ return Object.entries(S.cards).filter(([,c]) => (test.unitIds||[]).includes(c.unitId)).map(([id]) => id); }
 function readiness(test){ const ids = testCards(test); return ids.length ? ids.filter(isMastered).length / ids.length : 0; }
 /* ---------- tempo do sprawdzianów: ile trzeba dziennie, żeby zdążyć ---------- */
-// Karta jest opanowana po 3 poprawnych odpowiedziach co ≥ MASTERY_GAP dni, więc nowa karta musi wejść
-// najpóźniej (2·MASTERY_GAP + 1) dni przed sprawdzianem (np. 27.10 → do 22.10), żeby zdążyć wejść do pamięci.
+// Karta jest opanowana po 3 poprawnych odpowiedziach z rzędu. Nowe karty warto zacząć najpóźniej NEW_LEAD dni
+// przed sprawdzianem, żeby było kiedy je powtórzyć (powtórki w kolejne dni trzymają się w pamięci lepiej niż w jeden wieczór).
+const NEW_LEAD = 3;
 function secPerAnswer(){
   const ss = Object.values(S.sessions).filter(s => (s.n||0) >= 5 && s.activeMs);
   const n = ss.reduce((a,s) => a + s.n, 0), ms = ss.reduce((a,s) => a + s.activeMs, 0);
@@ -420,11 +423,11 @@ function testPace(test, k = TODAY()){
   const days = daysBetween(k, test.date);
   const unseen = ids.filter(id => !S.progress[id]).length;
   const open = ids.filter(id => S.progress[id] && !isMastered(id)).length;
-  const lastNew = addDays(test.date, -(2*MASTERY_GAP + 1));
+  const lastNew = addDays(test.date, -NEW_LEAD);
   const introDays = Math.max(0, daysBetween(k, lastNew) + 1);
   const late = unseen > 0 && introDays === 0;
   const newPerDay = unseen && days > 0 ? Math.ceil(unseen / Math.max(1, introDays || days)) : 0;
-  const answersPerDay = days > 0 ? newPerDay * 2 + Math.ceil(open / MASTERY_GAP) : 0;
+  const answersPerDay = days > 0 ? newPerDay * MASTERY_RUN + Math.ceil(open * (MASTERY_RUN - 1) / days) : 0;
   const min = Math.ceil(answersPerDay * secPerAnswer() / 60);
   const level = days <= 0 ? "ok" : (late || min > 40 || (unseen && introDays <= 2)) ? "bad" : (min > 20 || (unseen && introDays <= 4)) ? "doing" : "done";
   return {total: ids.length, unseen, open, mastered: ids.length - unseen - open, days, introDays, lastNew, newPerDay, answersPerDay, min, late, level};
@@ -444,14 +447,14 @@ function pacePanel(){
       const what = p.unseen
         ? (p.late ? `${p.unseen} nowych kart – na pełne opanowanie jest już za późno, przećwicz je chociaż raz: ${p.newPerDay} dziennie`
                   : `${p.unseen} nowych kart do ${fmtDate(p.lastNew)}: ${p.newPerDay} dziennie`) + (p.open ? ` + ${p.open} do utrwalenia` : "")
-        : p.open ? `${p.open} kart do utrwalenia (powtórki co ${MASTERY_GAP} dni)` : "wszystko opanowane";
+        : p.open ? `${p.open} kart do utrwalenia (3 dobre odpowiedzi z rzędu)` : "wszystko opanowane";
       return `<span class="small"><b>${esc(x.title)}</b> · ${when}<br><span class="muted">${what}</span></span>`;
     }).join("<br>");
     return `<div class="li" style="align-items:flex-start"><div style="min-width:0"><b>${s ? esc(s.name) : "Przedmiot"}</b><br>${lines}</div><b style="white-space:nowrap">${g.min ? `≈ ${fmtMin(g.min*60000)}` : "–"}</b></div>`;
   }).join("");
   return `<div class="panel stack" style="border:2px solid var(--${worst === "done" ? "line" : worst === "doing" ? "warn" : "bad"})">
     <div class="row" style="justify-content:space-between"><h3>Ile trzeba dziennie do sprawdzianów</h3><span class="chip ${worst}">${PACE_TXT[worst]}</span></div>
-    <p class="small muted">Widzisz to tylko Ty. Borys widzi jeden mały krok na dziś, bez minut i bez „mało czasu”. Karta wchodzi do pamięci po 3 dobrych odpowiedziach, co najmniej co ${MASTERY_GAP} dni. Dlatego nowe karty trzeba zacząć najpóźniej ${2*MASTERY_GAP+1} dni przed sprawdzianem i potem pracować codziennie.</p>
+    <p class="small muted">Widzisz to tylko Ty. Borys widzi jeden mały krok na dziś, bez minut i bez „mało czasu”. Karta jest opanowana po 3 dobrych odpowiedziach z rzędu (zła odpowiedź liczy od nowa). Nowe karty warto zacząć najpóźniej ${NEW_LEAD} dni przed sprawdzianem, żeby powtórki rozłożyły się na kilka dni.</p>
     <div class="list">${subjRows}</div>
     <p><b>Razem minimum ≈ ${fmtMin(total*60000)} dziennie</b>${total > 60 ? " – podziel na 2–3 krótkie rundy w ciągu dnia" : ""}.</p></div>`;
 }
@@ -479,7 +482,7 @@ const newLimit = () => Math.max(baseNewLimit(), Math.min(40, paceNewNeed()));
 function dueIds(){
   const t = TODAY();
   return Object.entries(S.progress).filter(([id,p]) => S.cards[id] && p.due && p.due <= t)
-    .sort((a,b) => a[1].due.localeCompare(b[1].due) || (b[1].lapses||0)-(a[1].lapses||0)).map(([id]) => id);
+    .sort((a,b) => a[1].due.localeCompare(b[1].due) || (a[1].at||0)-(b[1].at||0) || (b[1].lapses||0)-(a[1].lapses||0)).map(([id]) => id);
 }
 function newIds(){
   // najpierw działy z najbliższego sprawdzianu (do 14 dni), potem kolejność przedmiotów i działów
@@ -723,7 +726,7 @@ function viewMap(){
     const st = unitStats(id); const p = Math.round(st.prog*100); const here = s.current === id; const locked = !eligibleUnit(id);
     const open = openUnit === id;
     const unotes = Object.values(S.notes || {}).filter(x => x.status === "confirmed" && x.unitId === id).sort((a,b) => (b.date||"").localeCompare(a.date||""));
-    const cards = open ? `<div class="unitcards">${u.svg ? `<div class="pic" style="margin-bottom:8px">${cleanSvg(u.svg)}</div>` : ""}${unotes.map(x => `<details class="panel" style="margin-bottom:8px"><summary class="small"><b>📒 Notatka z lekcji</b> · ${fmtDate(x.date)}</summary><div class="small" style="white-space:pre-wrap;margin-top:6px">${esc(x.ocrConfirmed || "")}</div></details>`).join("")}${cardsOf(id).map(([cid,c]) => { const r = S.progress[cid]?.run||0;
+    const cards = open ? `<div class="unitcards">${u.svg ? `<div class="pic" style="margin-bottom:8px">${cleanSvg(u.svg)}</div>` : ""}${unotes.map(x => `<details class="panel" style="margin-bottom:8px"><summary class="small"><b>📒 Notatka z lekcji</b> · ${fmtDate(x.date)}</summary><div class="small" style="white-space:pre-wrap;margin-top:6px">${esc(x.ocrConfirmed || "")}</div></details>`).join("")}${cardsOf(id).map(([cid,c]) => { const r = runOf(S.progress[cid]);
       return `<div class="mini"><span class="lvl" title="${Math.min(r,3)} z 3">${[0,1,2].map(i => `<i class="${i<r?"on":""}"></i>`).join("")}</span><span class="q">${esc(stripCloze(c.front))}</span></div>`; }).join("") || `<p class="small muted">Brak kart w tym dziale.</p>`}
       ${role.canWrite && st.total && !locked ? `<button class="btn sm" data-act="start" data-kind="unit" data-id="${id}">Ucz się tego działu</button>` : ""}</div>` : "";
     return `<button class="unit ${locked?"locked":""}" data-act="unit" data-id="${id}" style="--c:${scol(s)}" aria-expanded="${open}">
@@ -732,7 +735,7 @@ function viewMap(){
     </button>${cards}`;
   }).join("");
   return `<div class="stack">${modeBanner()}<h1>Mapa materiału</h1><div class="subjtabs">${tabs}</div>
-    <p class="small muted">Pierścień pokazuje, ile kart z działu jest opanowanych (3 poprawne odpowiedzi z rzędu, w odstępach co najmniej ${MASTERY_GAP} dni).</p>
+    <p class="small muted">Pierścień pokazuje, ile kart z działu jest opanowanych (3 poprawne odpowiedzi z rzędu).</p>
     <div class="path">${nodes || `<div class="empty">Ten przedmiot nie ma jeszcze działów.</div>`}</div></div>`;
 }
 function stripCloze(t){ return String(t||"").replace(/\{\{(.+?)\}\}/g, "___"); }
@@ -1409,10 +1412,12 @@ function buildQueue(kind, id){
   if (kind === "extra") return newIds().slice(0, 10);
   if (kind === "morning") return morningIds();
   if (kind === "rematch") return rematchIds().slice(0, QUICK_N);
-  if (kind === "quick"){ const p = todayPlan(); const due = [...p.reviews].sort((a,b) => (S.progress[b]?.run||0) - (S.progress[a]?.run||0));
-    let q = [...due, ...p.news];
+  if (kind === "quick"){ const p = todayPlan(); const due = [...p.reviews].sort((a,b) => runOf(S.progress[b]) - runOf(S.progress[a]));
+    // najwyżej 3 powtórki w rundzie, reszta to nowe karty – nowy materiał ma się pojawiać w każdej rundzie
+    const nNew = Math.min(p.news.length, Math.max(QUICK_N - due.length, 2));
+    let q = [...due.slice(0, QUICK_N - nNew), ...p.news.slice(0, nNew)];
     if (!q.length) q = newIds();
-    if (q.length > 1 && !S.progress[q[0]]){ const easy = q.findIndex(c => (S.progress[c]?.run||0) >= 1); if (easy > 0) q.unshift(q.splice(easy,1)[0]); }
+    if (q.length > 1 && !S.progress[q[0]]){ const easy = q.findIndex(c => runOf(S.progress[c]) >= 1); if (easy > 0) q.unshift(q.splice(easy,1)[0]); }
     return q.slice(0, QUICK_N); }
   if (kind === "unit") return cardsOf(id).map(([c]) => c).filter(c => !isMastered(c)).concat(cardsOf(id).map(([c]) => c).filter(isMastered)).slice(0, SESSION_MAX);
   if (kind === "step"){ const ids = testCards(S.tests[id]||{}); const t = TODAY();
@@ -1525,7 +1530,7 @@ function renderStudy(){
       <button class="btn ghost sm" data-act="flag" style="align-self:center">${ICON.flag.replace("<svg",'<svg width="16" height="16"')} Zgłoś błąd w karcie</button>`
     : `<form data-form="reveal" class="stack" style="gap:10px">
         <label class="f">Przypomnij sobie odpowiedź <small>${c.type === "vocab" ? "słówka wpisz sam, litera po literze. Bez limitu czasu." : "możesz ją wpisać albo tylko pomyśleć. Bez limitu czasu."}</small><input type="text" id="typed" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" value="${esc(SES.typed)}"></label>
-        ${(SES.wrongIds.includes(cid) || (S.progress[cid]?.lapses||0) > 0) ? (SES.hint === cid ? `<p class="yours">Podpowiedź: <b>${esc(c.mnemo || hintOf(answer))}</b></p>` : `<button class="btn sm ghost" type="button" data-act="hint">Podpowiedź (pierwsze litery)</button>`) : ""}
+        ${(!S.progress[cid] || SES.wrongIds.includes(cid) || (S.progress[cid]?.lapses||0) > 0) ? (SES.hint === cid ? `<p class="yours">Podpowiedź: <b>${esc(c.mnemo || hintOf(answer))}</b></p>` : `<button class="btn sm ghost" type="button" data-act="hint">Podpowiedź (pierwsze litery)</button>`) : ""}
         <button class="btn primary big" type="submit">Pokaż odpowiedź</button></form>`}
   </div>`;
   if (!SES.revealed){ const inp = $("#typed"); if (inp && matchMedia("(hover:hover)").matches) inp.focus(); }
@@ -1534,7 +1539,7 @@ function gradeCard(g){
   const cid = SES.queue[SES.i]; const prev = S.progress[cid]; const c = S.cards[cid]; const t = TODAY();
   const p = grade(prev, g, t); p.unitId = c.unitId; p.subjectId = c.subjectId;
   if (!prev){ p.introduced = t; SES.newN++; }
-  if ((p.run||0) > (prev?.run||0)) SES.levelUps = (SES.levelUps||0) + 1;
+  if (runOf(p) > runOf(prev)) SES.levelUps = (SES.levelUps||0) + 1;
   { const ph = prev?.hist || []; if (g === 2 && ph.length && ph[ph.length-1][1] < 2) SES.won = (SES.won||0) + 1; }
   store.put("progress", cid, p);
   SES.answers = [...(SES.answers||[]), { c: cid, y: String(SES.typed||"").trim().slice(0,200), g, t: Date.now() }].slice(-120);
@@ -1799,6 +1804,7 @@ document.addEventListener("click", async e => {
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && SES && !SES.recall && !SES.finished) persistSession(); });
 
 /* ---------- start: Supabase (logowanie + wspólna baza rodziny) ---------- */
+if (!window.BORBAN){ document.body.innerHTML = '<div style="font:16px system-ui,sans-serif;max-width:420px;margin:60px auto;padding:20px;border:2px solid #1d2433;border-radius:12px">BorBan działa tylko pod adresem <b>borban.vercel.app</b>. Ten plik służy do wgrania na GitHub, nie do otwierania na komputerze.</div>'; throw new Error("BorBan: brak config.js (otwarty plik lokalnie?)"); }
 const sb = supabase.createClient(window.BORBAN.url, window.BORBAN.anonKey, { auth: { persistSession: true, autoRefreshToken: true } });
 const fam = { id:null, role:null, name:"", members:[], me:null };
 const CHILD_COLS = ["progress","sessions","woop","flags","notes"];
