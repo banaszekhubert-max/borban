@@ -247,6 +247,7 @@ mark{background:var(--hl); color:var(--on-hl); padding:0 .2em; border-radius:4px
 .yours.match{background:var(--good-soft)}
 .grades{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px}
 .grade{min-height:64px; border-radius:14px; border:2px solid var(--line); background:var(--surface); font-weight:800; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px}
+.yours .how{margin-top:8px; padding-top:8px; border-top:1px solid color-mix(in srgb, var(--warn) 30%, transparent); white-space:pre-line}
 .yours.miss{background:var(--warn-soft); border-left:4px solid var(--warn); color:var(--ink)}
 .mathpad{display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:6px; user-select:none; -webkit-user-select:none}
 .mathpad .key{min-height:46px; border-radius:12px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:1.15rem; font-weight:600; cursor:pointer; font-variant-numeric:tabular-nums; touch-action:manipulation}
@@ -1712,14 +1713,14 @@ function checkAnswer(typed, answer, type){
 }
 // Ocena sensu przez AI (Edge Function read-notebook, tryb "answer"): treść karty bierze serwer z bazy po id karty.
 async function askMeaning(cid, typed){
-  const call = sb.functions.invoke("read-notebook", { body: { mode: "answer", fam: fam.id, cardId: cid, typed: String(typed).slice(0, 400) } })
+  const call = sb.functions.invoke("read-notebook", { body: { mode: "answer", fam: fam.id, cardId: cid, typed: String(typed).slice(0, 400), ctx: [S.subjects[S.cards[cid]?.subjectId]?.name, S.units[S.cards[cid]?.unitId]?.title].filter(Boolean).join(" · ") } })
     .then(async ({ data, error }) => {
       if (error){   // odpowiedź AI z nietypowym cudzysłowem: werdykt odczytujemy z surowego tekstu
         try { const b = JSON.parse(await error.context.text()); const m = String(b.raw||"").match(/"verdict"\s*:\s*"(yes|partial|no)"/);
-          if (b.error === "parse" && m) return { verdict: m[1], why: (String(b.raw).match(/"why"\s*:\s*"(.*?)"\s*\}/s) || [, ""])[1].slice(0, 220) }; } catch {}
+          if (b.error === "parse" && m) return { verdict: m[1], why: (String(b.raw).match(/"why"\s*:\s*"(.*?)"\s*[,}]/s) || [, ""])[1].slice(0, 220), how: (String(b.raw).match(/"how"\s*:\s*"(.*?)"\s*\}/s) || [, ""])[1].slice(0, 600) }; } catch {}
         return { verdict: "na" }; }
       if (!data?.ok) return { verdict: "na" };
-      const v = data.result?.verdict; return { verdict: ["yes","partial","no"].includes(v) ? v : "na", why: String(data.result?.why || "").slice(0, 220) }; })
+      const v = data.result?.verdict; return { verdict: ["yes","partial","no"].includes(v) ? v : "na", why: String(data.result?.why || "").slice(0, 220), how: String(data.result?.how || "").slice(0, 600) }; })
     .catch(() => ({ verdict: "na" }));
   return Promise.race([call, new Promise(r => setTimeout(() => r({ verdict: "na" }), 9000))]);
 }
@@ -1757,10 +1758,11 @@ function renderStudy(){
   SES.ai = SES.ai || {};
   const verdict = SES.revealed && typed ? checkAnswer(typed, answer, c.type) : "";
   const match = verdict === "exact" || verdict === "close";
-  if (SES.revealed && typed && !verdict){ const k = aiKey(cid, typed);   // werdykt AI zapamiętany dla tej karty i tego wpisu
+  const askAi = SES.revealed && typed && (!verdict || verdict === "no");
+  if (askAi){ const k = aiKey(cid, typed);   // werdykt AI zapamiętany dla tej karty i tego wpisu
     if (!SES.ai[k]){ SES.ai[k] = { verdict: "busy" };
       askMeaning(cid, typed).then(r => { if (!SES) return; SES.ai[k] = r; if (SES.queue[SES.i] === cid && SES.revealed && aiKey(cid, SES.typed.trim()) === k) renderStudy(); }); } }
-  const ai = SES.revealed && typed && !verdict ? (SES.ai[aiKey(cid, typed)] || {}) : {};
+  const ai = askAi ? (SES.ai[aiKey(cid, typed)] || {}) : {};
   // wpisana odpowiedź okazała się zła: od razu pokazujemy poprawną odpowiedź i wyjaśnienie (bez klikania)
   const miss = !!(SES.revealed && typed && (verdict === "no" || verdict === "dk" || ai.verdict === "no" || ai.verdict === "partial"));
   const cap = SES.revealed ? gradeCap(c, 2) : 2;
@@ -1783,7 +1785,7 @@ function renderStudy(){
       ${speakSide(c, cid, false) === "front" ? `<button class="btn sm" data-act="speak" data-side="front" style="align-self:flex-start">🔊 Posłuchaj</button>` : ""}
       ${SES.revealed ? `<div class="answer">${c.type === "cloze" ? `Odpowiedź: <mark>${esc(answer)}</mark>` : esc(c.back)}</div>
         ${speakSide(c, cid, true) === "back" ? `<button class="btn sm" data-act="speak" data-side="back" style="align-self:flex-start">🔊 Posłuchaj</button>` : ""}
-        ${miss ? `<div class="yours miss" role="alert">${verdict === "dk" ? "" : "<b>To nie ta odpowiedź.</b> "}${yourMsg}<br><span class="small">Poprawnie: <b>${esc(answer)}</b>${c.lit || c.why || c.ex ? " · niżej wyjaśnienie krok po kroku" : ""}</span></div>` : ""}
+        ${miss ? `<div class="yours miss" role="alert">${verdict === "dk" ? "" : "<b>To nie ta odpowiedź.</b> "}${yourMsg}<br><span class="small">Poprawnie: <b>${esc(answer)}</b>${c.lit || c.why || c.ex ? " · niżej wyjaśnienie krok po kroku" : ""}<br>Materiał: ${esc(s?.name || "")}${u?.title ? " · " + esc(u.title) : ""}</span>${ai.how ? `<div class="how"><b>Jak do tego dojść:</b> ${esc(ai.how)}</div>` : ai.verdict === "busy" ? `<div class="how small muted">Przygotowuję wyjaśnienie, jak do tego dojść…</div>` : ""}</div>` : ""}
         ${stepsBlock(c, cid, isNew || miss)}
         ${c.mnemo ? `<div class="yours" style="background:var(--primary-soft)"><b>Zaczepka:</b> ${esc(c.mnemo)}</div>` : ""}
         ${typed && !miss ? `<div class="yours ${match || ai.verdict === "yes" ? "match" : ""}">${yourMsg}</div>` : ""}` : ""}
