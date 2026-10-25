@@ -1701,7 +1701,8 @@ function gradeCap(c, g){
   if (v === "yes") return g;
   if (v === "no") return 0;                                                     // AI: źle = „Nie wiem”
   if (v === "busy") return 0;                                                   // czekamy na sprawdzenie (przyciski 1 i 2 chwilowo wyłączone)
-  return Math.min(g, 1);                                                        // częściowo albo AI niedostępne: najwyżej „Z trudem”
+  if (v === "partial") return Math.min(g, 1);                                  // częściowo: najwyżej „Z trudem”
+  return g;                                                                     // AI niedostępne: uczeń ocenia sam (rodzic widzi wpis do przejrzenia)
 }
 function renderStudy(){
   const sh = $("#sheet"); const cid = SES.queue[SES.i]; const c = S.cards[cid];
@@ -1729,7 +1730,7 @@ function renderStudy(){
     : ai.verdict === "yes" ? `Dobrze! Innymi słowami, ale o to chodzi.${ai.why ? " " + esc(ai.why) : ""}`
     : ai.verdict === "partial" ? `Częściowo.${ai.why ? " " + esc(ai.why) : ""} Liczy się najwyżej jako „Z trudem”.`
     : ai.verdict === "no" ? `Nie o to chodzi.${ai.why ? " " + esc(ai.why) : ""} Liczy się jak „Nie wiem”. Jeśli sprawdzanie się pomyliło, zgłoś błąd w karcie.`
-    : `Twoja odpowiedź: ${esc(typed)}. Nie udało się sprawdzić sensu (może brak internetu). Jeśli chodzi o to samo, kliknij „Z trudem”.`;
+    : `Twoja odpowiedź: ${esc(typed)}. Porównaj z poprawną odpowiedzią i oceń sam: jeśli chodzi o to samo, kliknij „Wiem”.`;
   sh.innerHTML = `<div class="wrap">
     <div class="sbar"><button class="iconbtn" data-act="quit" aria-label="Zakończ sesję">${ICON.x}</button><div class="bar"><i style="width:${pct}%"></i></div><span class="small muted" style="font-variant-numeric:tabular-nums">${SES.kind === "daily" ? `${SES.n + 1}/${Math.max(SES.base, SES.n + SES.queue.length - SES.i)} odp.` : `${Math.min(SES.base || SES.queue.length, (SES.firstDone||0) + 1)}/${SES.base || SES.queue.length}${SES.rqSeen?.[SES.i] ? " · powtórka" : ""}`}</span></div>
     <div class="fc">
