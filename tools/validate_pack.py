@@ -14,6 +14,7 @@ Sprawdza:
   - długość kroków lit/why/ex.
 Kod wyjścia 1, gdy są błędy (używane w CI).
 """
+import re
 import json, re, sys
 import xml.dom.minidom as M
 
@@ -41,6 +42,8 @@ def check_svg(doc_id, col, data, err):
         return
     if len(s) > LIMITS.get(col, 7000):
         err(doc_id, f"svg za długie ({len(s)} > {LIMITS.get(col)})")
+    if re.search(r"<\?|<!--|<!\[CDATA\[|<!DOCTYPE|<!ENTITY", s, re.I):
+        err(doc_id, "svg: bez komentarzy, CDATA, DOCTYPE i instrukcji <?...?>")
     try:
         root = M.parseString(s).documentElement
     except Exception as e:
@@ -90,6 +93,9 @@ def main(argv):
             col, i, data = d.get("col"), d.get("id"), d.get("data")
             if not i or not isinstance(data, dict):
                 err(i, "brak id albo data")
+                continue
+            if not re.fullmatch(r"[A-Za-z0-9_.:-]{1,120}", str(i)):
+                err(i, "id tylko z liter, cyfr i znaków _ . : - (aplikacja pominie inne)")
                 continue
             if col in PERSONAL_COLS and not personal:
                 err(i, f"kolekcja „{col}” to dane osobowe: nie należy do biblioteki")
