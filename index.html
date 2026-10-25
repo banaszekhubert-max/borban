@@ -247,6 +247,7 @@ mark{background:var(--hl); color:var(--on-hl); padding:0 .2em; border-radius:4px
 .yours.match{background:var(--good-soft)}
 .grades{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px}
 .grade{min-height:64px; border-radius:14px; border:2px solid var(--line); background:var(--surface); font-weight:800; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px}
+.yours.miss{background:var(--warn-soft); border-left:4px solid var(--warn); color:var(--ink)}
 .mathpad{display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:6px; user-select:none; -webkit-user-select:none}
 .mathpad .key{min-height:46px; border-radius:12px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:1.15rem; font-weight:600; cursor:pointer; font-variant-numeric:tabular-nums; touch-action:manipulation}
 .mathpad .key:active{background:var(--sunk)}
@@ -1760,6 +1761,8 @@ function renderStudy(){
     if (!SES.ai[k]){ SES.ai[k] = { verdict: "busy" };
       askMeaning(cid, typed).then(r => { if (!SES) return; SES.ai[k] = r; if (SES.queue[SES.i] === cid && SES.revealed && aiKey(cid, SES.typed.trim()) === k) renderStudy(); }); } }
   const ai = SES.revealed && typed && !verdict ? (SES.ai[aiKey(cid, typed)] || {}) : {};
+  // wpisana odpowiedź okazała się zła: od razu pokazujemy poprawną odpowiedź i wyjaśnienie (bez klikania)
+  const miss = !!(SES.revealed && typed && (verdict === "no" || verdict === "dk" || ai.verdict === "no" || ai.verdict === "partial"));
   const cap = SES.revealed ? gradeCap(c, 2) : 2;
   const mastered = isMastered(cid), nextLvl = Math.min(MASTERY_RUN, runOf(S.progress[cid]) + 1);
   const yourMsg = !typed ? "" : verdict === "exact" ? "Zgadza się z Twoją odpowiedzią."
@@ -1780,9 +1783,10 @@ function renderStudy(){
       ${speakSide(c, cid, false) === "front" ? `<button class="btn sm" data-act="speak" data-side="front" style="align-self:flex-start">🔊 Posłuchaj</button>` : ""}
       ${SES.revealed ? `<div class="answer">${c.type === "cloze" ? `Odpowiedź: <mark>${esc(answer)}</mark>` : esc(c.back)}</div>
         ${speakSide(c, cid, true) === "back" ? `<button class="btn sm" data-act="speak" data-side="back" style="align-self:flex-start">🔊 Posłuchaj</button>` : ""}
-        ${stepsBlock(c, cid, isNew)}
+        ${miss ? `<div class="yours miss" role="alert">${verdict === "dk" ? "" : "<b>To nie ta odpowiedź.</b> "}${yourMsg}<br><span class="small">Poprawnie: <b>${esc(answer)}</b>${c.lit || c.why || c.ex ? " · niżej wyjaśnienie krok po kroku" : ""}</span></div>` : ""}
+        ${stepsBlock(c, cid, isNew || miss)}
         ${c.mnemo ? `<div class="yours" style="background:var(--primary-soft)"><b>Zaczepka:</b> ${esc(c.mnemo)}</div>` : ""}
-        ${typed ? `<div class="yours ${match || ai.verdict === "yes" ? "match" : ""}">${yourMsg}</div>` : ""}` : ""}
+        ${typed && !miss ? `<div class="yours ${match || ai.verdict === "yes" ? "match" : ""}">${yourMsg}</div>` : ""}` : ""}
     </div>
     ${SES.revealed ? `<p class="small muted" style="text-align:center">${isNew ? "Pierwszy raz? Oceń szczerze, karta wróci w dobrym momencie." : "Jak Ci poszło?"}</p>
       <div class="grades">
