@@ -395,7 +395,7 @@ const drafts = {};
 let store = null;
 
 /* ---------- algorytm powtórek (SM-2, ostrożniejsze odstępy) ---------- */
-function grade(prev, g, today){
+function grade(prev, g, today, hold){
   const p = Object.assign({ease:2.3, interval:0, reps:0, run:0, lastOk:null, lapses:0, seen:0, hist:[]}, prev || {});
   const base = runOf(prev);                       // dobre odpowiedzi z rzędu przed tą odpowiedzią
   const wasMastered = base >= MASTERY_RUN;
@@ -408,6 +408,7 @@ function grade(prev, g, today){
     p.due = today;
     return p;
   }
+  if (hold){ p.run = base; p.reps = 0; p.interval = 0; p.due = today; p.ease = Math.max(1.3, +(p.ease - 0.1).toFixed(2)); return p; }   // częściowo dobrze po błędzie: licznik stoi, karta wraca
   p.run = base + 1; p.lastOk = today;
   if (g === 1) p.ease = Math.max(1.3, +(p.ease - 0.15).toFixed(2));
   if (p.run < MASTERY_RUN){ p.reps = 0; p.interval = 0; p.due = today; }            // jeszcze nie opanowana: wraca dziś
@@ -1774,7 +1775,7 @@ function renderStudy(){
     : ai.verdict === "busy" ? `Twoja odpowiedź: ${esc(typed)}. Sprawdzam, czy chodzi o to samo…`
     : ai.verdict === "yes" ? `Dobrze! Innymi słowami, ale o to chodzi.${ai.why ? " " + esc(ai.why) : ""}`
     : ai.verdict === "partial" ? `Częściowo.${ai.why ? " " + esc(ai.why) : ""} Liczy się najwyżej jako „Z trudem”.`
-    : ai.verdict === "no" ? `Nie o to chodzi.${ai.why ? " " + esc(ai.why) : ""} Liczy się jak „Nie wiem”. Jeśli sprawdzanie się pomyliło, zgłoś błąd w karcie.`
+    : ai.verdict === "no" ? `Nie o to chodzi.${ai.why ? " " + esc(ai.why) : ""} Liczy się jak „Nie wiem”, karta wróci.`
     : `Twoja odpowiedź: ${esc(typed)}. Porównaj z poprawną odpowiedzią i oceń sam: jeśli chodzi o to samo, kliknij „Wiem”.`;
   sh.innerHTML = `<div class="wrap">
     <div class="sbar"><button class="iconbtn" data-act="quit" aria-label="Zakończ sesję">${ICON.x}</button><div class="bar"><i style="width:${pct}%"></i></div><span class="small muted" style="font-variant-numeric:tabular-nums">${SES.kind === "daily" ? `${SES.n + 1}/${Math.max(SES.base, SES.n + SES.queue.length - SES.i)} odp.` : `${Math.min(SES.base || SES.queue.length, (SES.firstDone||0) + 1)}/${SES.base || SES.queue.length}${SES.rqSeen?.[SES.i] ? " · powtórka" : ""}`}</span></div>
@@ -1791,10 +1792,10 @@ function renderStudy(){
         ${typed && !miss ? `<div class="yours ${match || ai.verdict === "yes" ? "match" : ""}">${yourMsg}</div>` : ""}` : ""}
     </div>
     ${SES.revealed ? `<p class="small muted" style="text-align:center">${isNew ? "Pierwszy raz? Oceń szczerze, karta wróci w dobrym momencie." : "Jak Ci poszło?"}</p>
-      <div class="grades">
+      <div class="grades" style="${miss ? `grid-template-columns:repeat(${cap >= 1 ? 2 : 1}, minmax(0, 1fr))` : ""}">
         <button class="grade g0 ${cap === 0 ? "suggest" : ""}" data-act="grade" data-g="0">Nie wiem<small>${willReturn(cid) ? "wróci za chwilę" : "wróci w następnej rundzie"}</small></button>
-        <button class="grade g1" data-act="grade" data-g="1" ${cap < 1 ? "disabled" : ""}>Z trudem<small>${mastered ? "wróci wcześniej" : `dobra · ${nextLvl}/3`}</small></button>
-        <button class="grade g2 ${match || ai.verdict === "yes" ? "suggest" : ""}" data-act="grade" data-g="2" ${cap < 2 ? "disabled" : ""}>Wiem<small>${mastered ? "wróci później" : `dobra · ${nextLvl}/3`}</small></button>
+        ${miss && cap < 1 ? "" : `<button class="grade g1" data-act="grade" data-g="1" ${cap < 1 ? "disabled" : ""}>Z trudem<small>${miss ? "częściowo · wróci za chwilę" : mastered ? "wróci wcześniej" : `dobra · ${nextLvl}/3`}</small></button>`}
+        ${miss ? "" : `<button class="grade g2 ${match || ai.verdict === "yes" ? "suggest" : ""}" data-act="grade" data-g="2" ${cap < 2 ? "disabled" : ""}>Wiem<small>${mastered ? "wróci później" : `dobra · ${nextLvl}/3`}</small></button>`}
       </div>
       <button class="btn ghost sm" data-act="flag" style="align-self:center">${ICON.flag.replace("<svg",'<svg width="16" height="16"')} Zgłoś błąd w karcie</button>`
     : `<form data-form="reveal" class="stack" style="gap:10px">
@@ -1839,12 +1840,18 @@ function typedInsert(v){
   inp.value = inp.value.slice(0, a) + v + inp.value.slice(b); const pos = a + v.length;
   try { inp.setSelectionRange(pos, pos); } catch {} if (SES) SES.typed = inp.value;
 }
+function missNow(){
+  if (!SES?.revealed) return false; const cid = SES.queue[SES.i], c = S.cards[cid], typed = String(SES.typed||"").trim(); if (!c || !typed) return false;
+  const { local, ai } = answerVerdict(c, cid, typed);
+  return local === "no" || local === "dk" || ai?.verdict === "no" || ai?.verdict === "partial";
+}
 function gradeCard(g){
   const cid = SES.queue[SES.i]; const prev = S.progress[cid]; const c = S.cards[cid]; const t = TODAY();
   if (!c) return;
   g = gradeCap(c, g); // wpisana odpowiedź nie zgadza się z poprawną: nie może być „Wiem”
   const lvl = x => Math.min(MASTERY_RUN, runOf(x));
-  const p = grade(prev, g, t); p.unitId = c.unitId; p.subjectId = c.subjectId;
+  const miss = missNow();
+  const p = grade(prev, g, t, miss && g > 0); p.unitId = c.unitId; p.subjectId = c.subjectId;
   if (!prev){ p.introduced = t; SES.newN++; }
   if (lvl(p) > lvl(prev)) SES.levelUps = (SES.levelUps||0) + 1;
   if (lvl(p) >= MASTERY_RUN && lvl(prev) < MASTERY_RUN) SES.mastered = (SES.mastered||0) + 1;
@@ -1866,7 +1873,7 @@ function gradeCard(g){
     Object.keys(SES.rqSeen).map(Number).filter(x => x >= at).sort((a,b) => b - a).forEach(x => { SES.rqSeen[x+1] = true; delete SES.rqSeen[x]; });
     SES.queue.splice(at, 0, cid); SES.rqSeen[at] = true; SES.rq[key] = k + 1; };
   const short = SES.kind === "quick" || SES.kind === "step";
-  if (g === 0){ SES.wrong++; SES.wrongIds.push(cid); requeue("e", short ? 1 : 2); }
+  if (g === 0 || miss){ if (g === 0) SES.wrong++; else SES.hard++; SES.wrongIds.push(cid); requeue("e", short ? 1 : 2); }
   else { if (g === 1) SES.hard++; else SES.ok++; if (SES.kind === "daily" && !isMastered(cid)) requeue("o", 3); }
   SES.i++; SES.revealed = false; SES.typed = ""; SES.sup = false; SES.lastAct = Date.now();
   persistSession(); // każda odpowiedź zapisuje się od razu
@@ -2071,7 +2078,7 @@ document.addEventListener("click", async e => {
     case "close": closeSheet(); break;
     case "flag": {   // najpierw krótki powód, żeby było wiadomo, co poprawić
       const box = document.createElement("div"); box.className = "row"; box.style.cssText = "gap:6px;justify-content:center;flex-wrap:wrap";
-      box.innerHTML = [["ok","Moja odpowiedź była dobra"],["card","Błąd w karcie"],["unclear","Niejasne pytanie"]]
+      box.innerHTML = [...(missNow() ? [] : [["ok","Moja odpowiedź była dobra"]]), ["card","Błąd w karcie"],["unclear","Niejasne pytanie"]]
         .map(([v, l]) => `<button type="button" class="btn sm" data-act="flagWhy" data-v="${v}">${l}</button>`).join("");
       t.replaceWith(box); break; }
     case "flagWhy": {
