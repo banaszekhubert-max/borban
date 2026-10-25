@@ -45,6 +45,28 @@
   --s-blue:#7E96FF; --s-red:#F0857C; --s-green:#4CC995; --s-purple:#B58BF2; --s-orange:#F0A55C; --s-teal:#4FC3D0;
   --shadow:none; color-scheme:dark;
 }
+/* Motyw „Arsenal” (czerwień, biel, granat, złoto) – przełącznik w zakładce konta */
+:root[data-skin="arsenal"]{
+  --bg:#FAF5F5; --surface:#FFFFFF; --sunk:#F2E5E6; --ink:#0B1A33; --muted:#59627A; --line:#E6D2D4;
+  --primary:#DB0007; --primary-ink:#FFFFFF; --primary-soft:#FDE1E2;
+  --hl:#C9A55C; --on-hl:#0B1A33;
+  --s-blue:#063672; --s-red:#DB0007;
+}
+@media (prefers-color-scheme: dark){ :root[data-skin="arsenal"]:not([data-theme="light"]){
+  --bg:#081429; --surface:#10244A; --sunk:#0B1B39; --ink:#F3F5FA; --muted:#A8B2CB; --line:#233A6B;
+  --primary:#F0262D; --primary-ink:#FFFFFF; --primary-soft:#4A1622; --hl:#D6B66C; --on-hl:#081429;
+  --s-blue:#7EA6E8; --s-red:#FF6A6F;
+}}
+:root[data-skin="arsenal"][data-theme="dark"]{
+  --bg:#081429; --surface:#10244A; --sunk:#0B1B39; --ink:#F3F5FA; --muted:#A8B2CB; --line:#233A6B;
+  --primary:#F0262D; --primary-ink:#FFFFFF; --primary-soft:#4A1622; --hl:#D6B66C; --on-hl:#081429;
+  --s-blue:#7EA6E8; --s-red:#FF6A6F;
+}
+[data-skin="arsenal"] .top{background:#063672; border-bottom:3px solid #DB0007; color:#FFFFFF}
+[data-skin="arsenal"] .top .brand span{color:#FFFFFF; background:linear-gradient(transparent 58%, #DB0007 58%, #DB0007 92%, transparent 92%)}
+[data-skin="arsenal"] .top .pill{color:#0B1A33; background:#FFFFFF; border-color:transparent}
+[data-skin="arsenal"] .top .iconbtn{color:#FFFFFF; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.35)}
+[data-skin="arsenal"] .tabs{border-top:3px solid #DB0007}
 html,body{height:100%}
 body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:16px; line-height:1.45; -webkit-tap-highlight-color:transparent}
 *{box-sizing:border-box}
@@ -284,6 +306,12 @@ button.task:hover{border-color:var(--primary)}
 <div class="toast" id="toast" hidden></div>
 
 <script>
+// motyw kolorów na tym urządzeniu (domyślnie Arsenal, od 25.10)
+const SKIN_KEY = "borban_skin";
+function getSkin(){ try { return localStorage.getItem(SKIN_KEY) || "arsenal"; } catch { return "arsenal"; } }
+function applySkin(v){ if (v === "arsenal") document.documentElement.dataset.skin = "arsenal"; else delete document.documentElement.dataset.skin;
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", v === "arsenal" ? "#063672" : "#2448D8"); }
+applySkin(getSkin());
 "use strict";
 /* ---------- helpers ---------- */
 const $ = s => document.querySelector(s);
@@ -348,25 +376,31 @@ let store = null;
 /* ---------- algorytm powtórek (SM-2, ostrożniejsze odstępy) ---------- */
 function grade(prev, g, today){
   const p = Object.assign({ease:2.3, interval:0, reps:0, run:0, lastOk:null, lapses:0, seen:0, hist:[]}, prev || {});
-  p.seen++; p.last = today; p.at = Date.now();
+  const base = runOf(prev);                       // dobre odpowiedzi z rzędu przed tą odpowiedzią
+  const wasMastered = base >= MASTERY_RUN;
+  const early = wasMastered && p.due && today < p.due; // dodatkowa powtórka przed terminem nie przesuwa planu
+  p.seen++; p.last = today; p.at = Date.now(); p.v = 2;
   p.hist = [...(p.hist||[]), [today, g]].slice(-12);
   if (g === 0){
     p.lapses++; p.reps = 0; p.interval = 0; p.run = 0; p.lastOk = null;
     p.ease = Math.max(1.3, +(p.ease - 0.2).toFixed(2));
     p.due = today;
-  } else {
-    if (g === 1){ p.ease = Math.max(1.3, +(p.ease - 0.15).toFixed(2)); p.interval = p.reps === 0 ? 1 : Math.max(p.interval + 1, Math.round(p.interval * 1.2)); }
-    else { p.interval = p.reps === 0 ? 1 : p.reps === 1 ? 2 : p.reps === 2 ? 4 : Math.round(Math.max(p.interval, 1) * p.ease); }
-    p.interval = Math.min(p.interval, 90);
-    p.reps++;
-    p.run = runOf(p); p.lastOk = today;
-    // dopóki karta nie ma 3 dobrych odpowiedzi z rzędu, wraca jeszcze dziś (w kolejnej rundzie); potem powtórki co 1, 2, 4… dni
-    p.due = p.run >= MASTERY_RUN ? addDays(today, p.interval) : today;
+    return p;
+  }
+  p.run = base + 1; p.lastOk = today;
+  if (g === 1) p.ease = Math.max(1.3, +(p.ease - 0.15).toFixed(2));
+  if (p.run < MASTERY_RUN){ p.reps = 0; p.interval = 0; p.due = today; }            // jeszcze nie opanowana: wraca dziś
+  else if (!wasMastered){ p.reps = 1; p.interval = 1; p.due = addDays(today, 1); }    // właśnie opanowana: pierwsza powtórka jutro
+  else if (!early){                                                                   // powtórki opanowanej karty: 1, 2, 4, potem × łatwość
+    p.interval = g === 1 ? Math.max(p.interval + 1, Math.round(Math.max(p.interval, 1) * 1.2))
+      : p.reps <= 1 ? 2 : p.reps === 2 ? 4 : Math.round(Math.max(p.interval, 1) * p.ease);
+    p.interval = Math.min(p.interval, 90); p.reps++; p.due = addDays(today, p.interval);
   }
   return p;
 }
-// poprawne odpowiedzi z rzędu, liczone z historii (stare zapisy liczyły tylko odpowiedzi co ≥ 2 dni)
-function runOf(p){ if (!p) return 0; const h = p.hist || []; if (!h.length) return p.run || 0; let n = 0; for (let i = h.length - 1; i >= 0 && h[i][1] > 0; i--) n++; return Math.max(n, h[h.length-1][1] > 0 ? (p.run || 0) : 0); }
+// Dobre odpowiedzi z rzędu. Zapisy od 25.10 (v:2) trzymają licznik w run; starsze liczymy z historii.
+function runOf(p){ if (!p) return 0; if (p.v === 2) return p.run || 0; const h = p.hist || []; if (!h.length) return p.run || 0;
+  let n = 0; for (let i = h.length - 1; i >= 0 && h[i][1] > 0; i--) n++; return Math.max(n, h[h.length-1][1] > 0 ? (p.run || 0) : 0); }
 const isMastered = cid => runOf(S.progress[cid]) >= MASTERY_RUN;
 
 /* ---------- wyliczenia ---------- */
@@ -391,13 +425,13 @@ function eligibleUnit(uid_){
 }
 function sessionsOn(k){ return Object.values(S.sessions).filter(s => s.date === k); }
 function activeMsOn(k){ return sessionsOn(k).reduce((a,s) => a + (s.activeMs||0), 0); }
-function learnedOn(k){ return sessionsOn(k).some(s => (s.n||0) >= 5 || (s.activeMs||0) >= 180000); }
+function learnedOn(k){ return answeredOn(k) >= 5 || activeMsOn(k) >= 180000; }
 function streak(){
   // Dzień liczy się, gdy była nauka. Jeden wolny dzień w tygodniu nie przerywa serii.
-  const t = TODAY(); let k = learnedOn(t) ? t : addDays(t, -1); let n = 0; const used = new Set();
+  const t = TODAY(); let k = learnedOn(t) ? t : addDays(t, -1); let n = 0, gap = 0; const used = new Set();
   for (let i = 0; i < 400; i++){
-    if (learnedOn(k)){ n++; }
-    else { const w = mondayOf(k); if (used.has(w) || n === 0) break; used.add(w); }
+    if (learnedOn(k)){ n++; gap = 0; }
+    else { const w = mondayOf(k); if (used.has(w) || gap >= 1) break; used.add(w); gap++; }
     k = addDays(k, -1);
   }
   return n;
@@ -422,14 +456,15 @@ function testPace(test, k = TODAY()){
   const ids = testCards(test);
   const days = daysBetween(k, test.date);
   const unseen = ids.filter(id => !S.progress[id]).length;
+  const startedToday = ids.filter(id => S.progress[id]?.introduced === k).length; // tempo liczone od stanu z rana
   const open = ids.filter(id => S.progress[id] && !isMastered(id)).length;
   const lastNew = addDays(test.date, -NEW_LEAD);
   const introDays = Math.max(0, daysBetween(k, lastNew) + 1);
   const late = unseen > 0 && introDays === 0;
-  const newPerDay = unseen && days > 0 ? Math.ceil(unseen / Math.max(1, introDays || days)) : 0;
+  const newPerDay = unseen && days > 0 ? Math.ceil((unseen + startedToday) / Math.max(1, introDays || days)) : 0;
   const answersPerDay = days > 0 ? newPerDay * MASTERY_RUN + Math.ceil(open * (MASTERY_RUN - 1) / days) : 0;
   const min = Math.ceil(answersPerDay * secPerAnswer() / 60);
-  const level = days <= 0 ? "ok" : (late || min > 40 || (unseen && introDays <= 2)) ? "bad" : (min > 20 || (unseen && introDays <= 4)) ? "doing" : "done";
+  const level = days <= 0 ? "ok" : (late || newPerDay > 40 || min > 40) ? "bad" : (min > 20 || newPerDay > baseNewLimit()) ? "doing" : "done";
   return {total: ids.length, unseen, open, mastered: ids.length - unseen - open, days, introDays, lastNew, newPerDay, answersPerDay, min, late, level};
 }
 function paceTests(k = TODAY()){ return upcomingTests().filter(([,x]) => { const d = daysBetween(k, x.date); return d > 0 && d <= 14; }).map(([id,x]) => [id, x, testPace(x, k)]); }
@@ -464,32 +499,36 @@ function studentStep(){
   const rows = paceTests(); if (!rows.length) return "";
   const pick = [...rows].sort((a,b) => (b[2].unseen ? 1 : 0) - (a[2].unseen ? 1 : 0) || a[2].introDays - b[2].introDays || a[2].days - b[2].days)[0];
   const [id, x, p] = pick; const s = S.subjects[x.subjectId];
-  const did = answeredOn(TODAY()); const known = p.total - p.unseen;
+  const did = answeredOn(TODAY()); const known = p.mastered; const allDone = p.total > 0 && known >= p.total;
   const when = `${DNI[parseKey(x.date).getDay()].toLowerCase()}, ${fmtDate(x.date)}`;
   return `<div class="panel stack">
     <p class="eyebrow">Najbliżej: ${s ? esc(s.name) : "sprawdzian"} · ${when}</p>
     <h3>Twój krok na dziś</h3>
     <p>${did ? `Dziś już ${did} ${plural(did,"odpowiedź","odpowiedzi","odpowiedzi")}. Każda kolejna runda to 2 minuty – rób, ile chcesz.` : `Zacznij od 5 kart – to 2 minuty. Jak pójdzie, rób dalej, ile chcesz.`}</p>
     <div class="bar" style="--c:var(--good)"><i style="width:${Math.max(2, Math.round(known / Math.max(1,p.total) * 100))}%"></i></div>
-    <p class="small muted">Z tego sprawdzianu znasz już ${known} z ${p.total} kart.</p>
-    ${role.canWrite ? `<button class="btn primary" data-act="start" data-kind="step" data-id="${id}">5 kart z tego sprawdzianu</button>` : ""}</div>`;
+    <p class="small muted">Z tego sprawdzianu umiesz już ${known} z ${p.total} kart (3 dobre odpowiedzi z rzędu).</p>
+    ${role.canWrite ? `<button class="btn primary" data-act="start" data-kind="step" data-id="${id}">${allDone ? "Powtórz 5 kart z zakresu" : "5 kart z tego sprawdzianu"}</button>` : ""}</div>`;
 }
 function paceNewNeed(){ return paceTests().reduce((a,[,,p]) => a + p.newPerDay, 0); }
-function newToday(){ const t = TODAY(); return Object.values(S.progress).filter(p => p.introduced === t).length; }
+function newToday(){ const t = TODAY(); return Object.entries(S.progress).filter(([id,p]) => S.cards[id] && p.introduced === t).length; }
 const baseNewLimit = () => Math.max(5, Math.min(20, +S.meta.config?.newPerDay || 15));
 // przed sprawdzianami limit rośnie do tempa potrzebnego, żeby zdążyć (najwyżej 40 nowych kart dziennie)
 const newLimit = () => Math.max(baseNewLimit(), Math.min(40, paceNewNeed()));
 function dueIds(){
   const t = TODAY();
-  return Object.entries(S.progress).filter(([id,p]) => S.cards[id] && p.due && p.due <= t)
-    .sort((a,b) => a[1].due.localeCompare(b[1].due) || (a[1].at||0)-(b[1].at||0) || (b[1].lapses||0)-(a[1].lapses||0)).map(([id]) => id);
+  // nieopanowana karta wraca każdego dnia (także stara, z terminem ze starej reguły); najpierw te najdawniej pytane
+  const rows = Object.entries(S.progress).filter(([id,p]) => S.cards[id] && (!isMastered(id) || (p.due && p.due <= t)));
+  return rows.sort((a,b) => { const ma = isMastered(a[0]), mb = isMastered(b[0]); if (ma !== mb) return ma - mb;
+      return ma ? (a[1].due||"").localeCompare(b[1].due||"") || (b[1].lapses||0)-(a[1].lapses||0) : (a[1].at||0)-(b[1].at||0) || runOf(b[1]) - runOf(a[1]); })
+    .map(([id]) => id);
 }
 function newIds(){
   // najpierw działy z najbliższego sprawdzianu (do 14 dni), potem kolejność przedmiotów i działów
   const tests = upcomingTests().filter(([,x]) => daysBetween(TODAY(), x.date) <= 14).flatMap(([,x]) => x.unitIds||[]);
   const rank = u => { const i = tests.indexOf(u); return i < 0 ? 999 : i; };
   const subjOrder = Object.fromEntries(sortedSubjects().map(([id,s],i) => [id,i]));
-  return Object.entries(S.cards).filter(([id,c]) => !S.progress[id] && eligibleUnit(c.unitId))
+  const testUnits = new Set(tests);
+  return Object.entries(S.cards).filter(([id,c]) => !S.progress[id] && (eligibleUnit(c.unitId) || testUnits.has(c.unitId)) && pairReady(id))
     .sort((a,b) => {
       const ta = rank(a[1].unitId), tb = rank(b[1].unitId);
       if (ta !== tb) return ta - tb;
@@ -497,6 +536,10 @@ function newIds(){
       return (subjOrder[a[1].subjectId]??9)-(subjOrder[b[1].subjectId]??9) || (ua?.order||0)-(ub?.order||0) || a[0].localeCompare(b[0]);
     }).map(([id]) => id);
 }
+// słówko w drugą stronę (…b) dopiero, gdy pierwsza strona (…a) była przećwiczona wcześniej niż dziś
+function pairReady(id){ const c = S.cards[id]; if (!c || c.type !== "vocab" || !/b$/.test(id)) return true;
+  const a = id.slice(0, -1) + "a"; if (!S.cards[a]) return true; const pa = S.progress[a]; return !!pa && (pa.introduced || "") < TODAY(); }
+const pairKey = id => S.cards[id]?.type === "vocab" ? id.replace(/[ab]$/, "") : id;
 function todayPlan(){
   const due = dueIds(); const room = Math.max(0, newLimit() - newToday());
   const nw = newIds().slice(0, room);
@@ -576,12 +619,15 @@ function hookLine(k = TODAY()){
   return HOOKS[dayHash(k) % HOOKS.length];
 }
 const TIERS = [[0.25,"Brąz"],[0.5,"Srebro"],[0.75,"Złoto"],[UNIT_DONE,"Mistrz"]];
-function unitTier(st){ let t = null; TIERS.forEach(([p,n]) => { if (st.prog >= p) t = n; }); return t; }
+function unitTier(st){ let t = null; TIERS.forEach(([p,n]) => { if (st.prog >= p && (n !== "Mistrz" || st.status === "done")) t = n; }); return t; }
 function nearestBadge(){
   // najbliższy próg (Brąz 25% / Srebro 50% / Złoto 75% / Mistrz 90%) w rozpoczętych działach
   let best = null;
   Object.keys(S.units).forEach(id => { if (!eligibleUnit(id)) return; const st = unitStats(id); if (!st.total || !st.seen) return;
-    const next = TIERS.find(([p]) => st.prog < p); if (!next) return;
+    const next = TIERS.find(([p]) => st.prog < p);
+    if (!next){   // kroki zrobione, ale Mistrz wymaga 90% kart opanowanych
+      const need = Math.ceil(st.total * UNIT_DONE) - st.mastered;
+      if (need > 0 && (!best || need < best.need)) best = { id, need, st, tier: "Mistrz", target: 1, cards: true }; return; }
     const need = Math.ceil(st.maxLevels * next[0]) - st.levels;
     if (need > 0 && (!best || need < best.need)) best = { id, need, st, tier: next[1], target: next[0] }; });
   return best;
@@ -673,13 +719,13 @@ function viewToday(){
       <div><p class="eyebrow" style="color:inherit;opacity:.8">${did ? `Dziś już ${did} ${plural(did,"odpowiedź","odpowiedzi","odpowiedzi")}` : "Na start"}</p>
       <h2 style="font-size:1.5rem">${did ? "Jeszcze jedna runda?" : "Szybka runda: 5 kart, 2 minuty"}</h2>
       <p style="opacity:.92">${esc(hookLine(t))}</p></div>
-      ${role.canWrite ? `<button class="btn primary big" data-act="start" data-kind="quick">${did ? "Jeszcze 5 kart" : "Start: 5 kart"}</button>
+      ${role.canWrite ? `<button class="btn primary big" data-act="start" data-kind="quick">${(() => { const n = buildQueue("quick").length || Math.min(QUICK_N, pl.total); return did ? `Jeszcze ${n} ${plural(n,"karta","karty","kart")}` : `Start: ${n} ${plural(n,"karta","karty","kart")}`; })()}</button>
       <button class="btn sm ghost" style="color:inherit" data-act="start" data-kind="daily">Wolę od razu wszystko na dziś (${pl.total})</button>` : ""}
     </div>`);
   } else {
     const more = newIds().filter(id => true).length;
     parts.push(`<div class="panel hero stack"><div><p class="eyebrow" style="color:inherit;opacity:.8">Fiszki na dziś</p><h2 style="font-size:1.5rem">Na dziś zrobione. Szacun!</h2>
-      <p class="muted">${newToday() >= newLimit() ? "Dzisiejszy limit nowych kart jest wykorzystany. Jutro kolejne." : more ? "" : "Nie ma jeszcze nowych kart z bieżących działów."}</p></div>
+      <p class="muted">${newToday() >= newLimit() ? (more ? "Plan nowych kart na dziś zrobiony. Jeśli masz ochotę, możesz wziąć jeszcze kilka." : "Plan nowych kart na dziś zrobiony. Jutro kolejne.") : more ? "" : "Nie ma jeszcze nowych kart z bieżących działów."}</p></div>
       ${role.canWrite && more ? `<button class="btn primary big" data-act="start" data-kind="extra">Chcesz dziś wiedzieć jeszcze więcej? +10 kart</button>` : ""}</div>`);
   }
   { const rm = rematchIds(t).filter(id => !(isMorning() && mIds.includes(id)));
@@ -736,7 +782,7 @@ function viewMap(){
     </button>${cards}`;
   }).join("");
   return `<div class="stack">${modeBanner()}<h1>Mapa materiału</h1><div class="subjtabs">${tabs}</div>
-    <p class="small muted">Pierścień pokazuje, ile kart z działu jest opanowanych (3 poprawne odpowiedzi z rzędu).</p>
+    <p class="small muted">Pierścień: postęp działu. Każda dobra odpowiedź to 1 z 3 kroków karty; karta po 3 dobrych z rzędu jest opanowana.</p>
     <div class="path">${nodes || `<div class="empty">Ten przedmiot nie ma jeszcze działów.</div>`}</div></div>`;
 }
 function stripCloze(t){ return String(t||"").replace(/\{\{(.+?)\}\}/g, "___"); }
@@ -760,6 +806,7 @@ function viewStats(){
   const weekMs = [...Array(7)].reduce((a,_,i) => a + activeMsOn(addDays(mon,i)), 0);
   const wp = weekPlanStatus(mon);
   const name = S.meta.config?.student || "Borys";
+  const parentView = role.canEdit && !role.preview;
   const up = upcomingTests()[0];
   // gdzie docisnąć
   const unitErr = Object.keys(S.units).map(id => [id, unitStats(id)]).filter(([,s]) => s.lapses > 0).sort((a,b) => b[1].lapses - a[1].lapses).slice(0,3);
@@ -771,14 +818,16 @@ function viewStats(){
     return `<div class="stack" style="gap:8px"><div class="row"><span class="dot" style="--c:${scol(s)}"></span><h3>${esc(s.name)}</h3></div>${rows || `<p class="small muted">Brak działów.</p>`}</div>`;
   }).join("");
   return `<div class="stack">${modeBanner()}
-    <div><h1>Postępy</h1><p class="small muted">${esc(name)} i rodzice widzą te same liczby. Służą do planowania, nie do rozliczania.</p></div>
+    <div><h1>Postępy</h1><p class="small muted">Te liczby służą do planowania, nie do rozliczania.</p></div>
     <div class="tiles four">
       <div class="tile"><b>${streak()}</b><span>dni serii</span></div>
-      <div class="tile"><b>${fmtMin(activeMsOn(t))}</b><span>nauki dziś</span></div>
-      <div class="tile"><b>${fmtMin(weekMs)}</b><span>w tym tygodniu</span></div>
-      <div class="tile"><b>${wp.blocks}/${wp.blocksDue}</b><span>bloków z planu</span></div>
+      ${parentView ? `<div class="tile"><b>${fmtMin(activeMsOn(t))}</b><span>nauki dziś</span></div>
+      <div class="tile"><b>${fmtMin(weekMs)}</b><span>w tym tygodniu</span></div>`
+      : `<div class="tile"><b>${answeredOn(t)}</b><span>odpowiedzi dziś</span></div>
+      <div class="tile"><b>${Object.keys(S.cards).filter(isMastered).length}</b><span>kart opanowanych</span></div>`}
+      ${parentView ? `<div class="tile"><b>${wp.blocks}/${wp.blocksDue}</b><span>bloków z planu</span></div>` : `<div class="tile"><b>${wp.cardsDays}</b><span>dni z fiszkami w tym tygodniu</span></div>`}
     </div>
-    <div class="panel stack"><div class="row" style="justify-content:space-between"><h3>Minuty nauki, 14 dni</h3><span class="small muted">tylko aktywne sesje</span></div>${chart14()}
+    <div class="panel stack">${parentView ? `<div class="row" style="justify-content:space-between"><h3>Minuty nauki, 14 dni</h3><span class="small muted">tylko aktywne sesje</span></div>${chart14()}` : `<h3>Ten tydzień</h3>`}
       <p class="small muted">Fiszki w ${wp.cardsDays} z ${wp.daysSoFar} dni tego tygodnia · plan tygodnia ${wp.woop ? "ustalony" : "jeszcze nie ustalony"}</p></div>
     ${up ? `<div class="panel stack"><p class="eyebrow">Najbliższy sprawdzian · ${fmtDate(up[1].date)}</p><h3>${esc(up[1].title)}</h3>
       <div class="bar" style="--c:var(--good);height:14px"><i style="width:${Math.round(readiness(up[1])*100)}%"></i></div>
@@ -786,9 +835,9 @@ function viewStats(){
     <div class="panel stack"><h3>Gdzie docisnąć</h3>
       ${unitErr.length || hardCards.length ? `
       ${unitErr.length ? `<div class="list">${unitErr.map(([id,s]) => `<div class="li"><div>${esc(S.units[id].title)} <span class="muted small">· ${esc(S.subjects[S.units[id].subjectId]?.name)}</span></div><span class="chip doing">${s.lapses} ${plural(s.lapses,"błąd","błędy","błędów")}</span></div>`).join("")}</div>` : ""}
-      ${hardCards.length ? `<p class="eyebrow">Najtrudniejsze karty</p><div class="list">${hardCards.map(([id,p]) => `<div class="li"><div>${esc(stripCloze(S.cards[id].front))}</div><span class="small muted">${p.lapses}×</span></div>`).join("")}</div>` : ""}`
+      ${hardCards.length ? `<p class="eyebrow">Najtrudniejsze karty</p><div class="list">${hardCards.map(([id,p]) => `<div class="li"><div>${esc(stripCloze(S.cards[id].front))}</div><span class="small muted">${+p.lapses||0}×</span></div>`).join("")}</div>` : ""}`
       : `<p class="small muted">Tu pojawią się działy i karty z największą liczbą pomyłek. Na razie nic.</p>`}</div>
-    <div class="panel stack"><div><h3>Opanowanie działów</h3><p class="small muted">Każda karta ma 3 poziomy: każda dobra odpowiedź w nowym dniu to poziom wyżej. Procent rośnie od pierwszej sesji. Jasny pasek: karty już przećwiczone.</p></div>${subjBlocks || `<p class="small muted">Brak przedmiotów.</p>`}</div>
+    <div class="panel stack"><div><h3>Opanowanie działów</h3><p class="small muted">Każda karta ma 3 poziomy: każda dobra odpowiedź to poziom wyżej, a „Nie wiem” zaczyna od zera. 3 dobre z rzędu = karta opanowana. Procent rośnie od pierwszej sesji. Jasny pasek: karty już przećwiczone.</p></div>${subjBlocks || `<p class="small muted">Brak przedmiotów.</p>`}</div>
     ${woop ? `<div class="panel stack"><p class="eyebrow">Cel tygodnia (WOOP)</p><h3>${esc(woop.wish)}</h3><p class="small"><b>Jeśli</b> ${esc(woop.ifp)}, <b>to</b> ${esc(woop.then)}.</p>${woop.review ? `<p class="small muted">Podsumowanie: ${esc(woop.review)}</p>`:""}</div>` : ""}
   </div>`;
 }
@@ -800,7 +849,7 @@ function viewPlan(){
     if (p.block){ txt = `Godzina nauki od ${p.time}${p.note ? ` (${p.note})` : ""} + fiszki w drodze`; done = activeMsOn(k) >= 20*60000; }
     else if (p.woop){ txt = "Fiszki · 20 min planu tygodnia z WOOP"; done = !!S.woop[addDays(k,1)] || (learnedOn(k)); }
     else { txt = "Tylko fiszki w drodze ze szkoły"; done = learnedOn(k); }
-    return `<div class="day ${k===t?"today":""}"><span class="d">${DNI_KR[dw]}</span><span><span class="small">${txt}</span><br><span class="small muted">${fmtDate(k)}${past && activeMsOn(k) ? ` · ${fmtMin(activeMsOn(k))}` : ""}</span></span><span class="check ${past && done ? "on" : ""}" aria-label="${done?"zrobione":"nie zrobione"}">${ICON.check}</span></div>`;
+    return `<div class="day ${k===t?"today":""}"><span class="d">${DNI_KR[dw]}</span><span><span class="small">${txt}</span><br><span class="small muted">${fmtDate(k)}${past && activeMsOn(k) && role.canEdit && !role.preview ? ` · ${fmtMin(activeMsOn(k))}` : ""}</span></span><span class="check ${past && done ? "on" : ""}" aria-label="${done?"zrobione":"nie zrobione"}">${ICON.check}</span></div>`;
   }).join("");
   const target = dow(t) === 0 ? addDays(t,1) : mon; // w niedzielę planujemy kolejny tydzień
   const w = S.woop[target] || {};
@@ -904,16 +953,22 @@ function viewParent(){
   const KIND = { rematch:"Rewanż", morning:"Poranna powtórka", quick:"Szybka runda", daily:"Fiszki na dziś", extra:"Dodatkowe karty", unit:"Dział", test:"Przed sprawdzianem", step:"Krok na dziś", recall:"Odpytanie z lekcji", note:"Notatka z lekcji (zdjęcie)" };
   const sesRows = sesList.map(s => { const acc = s.n ? Math.round(((s.ok||0)+(s.hard||0))/s.n*100) : null;
     const ref = (s.kind === "test" || s.kind === "step") ? S.tests[s.ref]?.title : s.kind === "unit" ? S.units[s.ref]?.title : "";
-    return `<div class="li"><div><b>${KIND[s.kind] || s.kind}</b>${ref ? ` · ${esc(ref)}` : ""}<br><span class="small muted">${fmtDate(s.date)} ${s.start ? new Date(s.start).toTimeString().slice(0,5) : ""} · ${fmtMin(s.activeMs||0)} · ${s.n||0} odp.</span></div>
-      <span class="small" style="text-align:right">${acc == null ? "–" : `<b>${acc}%</b> dobrze`}<br><span class="${s.wrong ? "" : "muted"}" style="${s.wrong ? "color:var(--bad)" : ""}">${s.wrong||0} ${plural(s.wrong||0,"błąd","błędy","błędów")}</span></span></div>`; }).join("");
+    return `<div class="li"><div><b>${esc(KIND[s.kind] || s.kind)}</b>${ref ? ` · ${esc(ref)}` : ""}<br><span class="small muted">${esc(fmtDate(s.date))} ${+s.start ? new Date(+s.start).toTimeString().slice(0,5) : ""} · ${fmtMin(+s.activeMs||0)} · ${+s.n||0} odp.</span></div>
+      <span class="small" style="text-align:right">${acc == null ? "–" : `<b>${acc}%</b> dobrze`}<br><span class="${+s.wrong ? "" : "muted"}" style="${+s.wrong ? "color:var(--bad)" : ""}">${+s.wrong||0} ${plural(+s.wrong||0,"błąd","błędy","błędów")}</span></span></div>`; }).join("");
+  const rejected = [];   // wpisy uznane za złe (do przejrzenia: czy sprawdzanie się nie pomyliło)
+  Object.values(S.sessions).filter(s => s.date >= addDays(t,-7)).forEach(s => (s.answers||[]).forEach(a => { if (a.y && a.m === 0 && S.cards[a.c]) rejected.push(a); }));
+  rejected.sort((a,b) => (b.t||0) - (a.t||0));
+  const rejRows = rejected.slice(0, 10).map(a => { const c = S.cards[a.c]; const ok = c.type === "cloze" ? clozeAnswer(c) : c.back;
+    return `<div class="mis"><span class="q">${esc(stripCloze(c.front))}</span><span class="chip doing">${a.ai === "no" ? "AI: źle" : a.ai === "partial" ? "AI: częściowo" : "nie zgadza się"}</span>
+      <span class="ya">Wpisał: ${esc(a.y)}</span><span class="ok" style="grid-column:1/-1">Poprawnie: ${esc(ok)}</span></div>`; }).join("");
   const lastTyped = {};
   Object.values(S.sessions).sort((a,b) => (a.start||0)-(b.start||0)).forEach(s => (s.answers||[]).forEach(a => { if (a.g === 0 && a.y) lastTyped[a.c] = a.y; }));
   const misCards = Object.entries(S.progress).filter(([id,p]) => S.cards[id] && (p.lapses||0) > 0 && p.last >= addDays(t,-7))
     .sort((a,b) => (b[1].lapses||0)-(a[1].lapses||0) || (b[1].last||"").localeCompare(a[1].last||"")).slice(0, 12);
   const misRows = misCards.map(([id,p]) => { const c = S.cards[id]; const ok = c.type === "cloze" ? clozeAnswer(c) : c.back;
-    return `<div class="mis"><span class="q">${esc(stripCloze(c.front))}</span><span class="chip doing">${p.lapses}× źle</span>
+    return `<div class="mis"><span class="q">${esc(stripCloze(c.front))}</span><span class="chip doing">${+p.lapses||0}× źle</span>
       ${lastTyped[id] ? `<span class="ya">Wpisał: ${esc(lastTyped[id])}</span>` : ""}<span class="ok" style="grid-column:1/-1">Poprawnie: ${esc(ok)}</span>
-      <span class="small muted" style="grid-column:1/-1">${esc(S.subjects[c.subjectId]?.name || "")} · ${esc(S.units[c.unitId]?.title || "")} · teraz ${(p.hist||[]).slice(-1)[0]?.[1] === 2 ? "już umie" : "jeszcze nie"}</span></div>`; }).join("");
+      <span class="small muted" style="grid-column:1/-1">${esc(S.subjects[c.subjectId]?.name || "")} · ${esc(S.units[c.unitId]?.title || "")} · teraz ${isMastered(id) ? "opanowana" : `${Math.min(MASTERY_RUN, runOf(p))}/${MASTERY_RUN} dobre z rzędu`}</span></div>`; }).join("");
 
   const vsRows = gradeItems().filter(g => gNum(g) != null && g.subjectId && g.date && start && g.date >= start).sort((a,b) => b.date.localeCompare(a.date)).slice(0, 12)
     .map(g => { const r = reviewsBefore(g.subjectId, g.date); return `<div class="vs">${gChip(g)}<div style="min-width:0"><b class="small">${esc(g.subject)}</b><br><span class="small muted">${fmtDate(g.date)}${g.comment ? " · " + esc(g.comment) : ""}</span></div><span class="small" style="text-align:right"><b>${r}</b> ${plural(r,"powtórka","powtórki","powtórek")}<br><span class="muted">7 dni przed</span></span></div>`; }).join("");
@@ -931,6 +986,7 @@ function viewParent(){
     ${notesPanel()}
     <div class="panel stack"><div class="row" style="justify-content:space-between"><h3>Dziś u ${esc(name)}</h3><span class="small muted">${fmtMin(activeMsOn(t))} · ${answeredOn(t)} odp.</span></div>${tasksTiles(todayTasks(t), false)}</div>
     <div class="panel stack"><h3>Ostatnie sesje</h3>${sesRows ? `<div class="list">${sesRows}</div>` : `<p class="small muted">Jeszcze nie było sesji nauki.</p>`}</div>
+    ${rejRows ? `<div class="panel stack"><div><h3>Do przejrzenia: wpisy uznane za złe</h3><p class="small muted">Ostatnie 7 dni. Jeśli sprawdzanie się pomyliło, popraw odpowiedź w karcie (Materiał) – kolejne podejścia będą oceniane według niej.</p></div><div class="list">${rejRows}</div></div>` : ""}
     <div class="panel stack"><div><h3>Błędy z ostatnich 7 dni</h3><p class="small muted">Karty, na których ${esc(name)} odpowiedział „Nie wiem”. Wracają do powtórki automatycznie, aż wejdą do pamięci.</p></div>${misRows ? `<div class="list">${misRows}</div>` : `<p class="small muted">Brak błędów.</p>`}</div>
     <div class="panel stack"><h3>Wymaga uwagi</h3>${alerts || `<p class="small muted">Żaden przedmiot nie ma średniej poniżej 3 ani świeżej oceny poniżej 3.</p>`}</div>
     ${pacePanel()}
@@ -1001,7 +1057,7 @@ function renderNote(){
       <div style="flex:1;min-width:0"><b class="small">Zdjęcie ${i+1}</b><br>${f.q.issues.length ? `<span class="small" style="color:var(--bad)">⚠ ${esc(f.q.issues.join(", "))}: lepiej zrób jeszcze raz</span>` : `<span class="small" style="color:var(--good)">✓ wygląda dobrze</span>`}</div>
       <button class="btn sm ghost" data-act="noteRemove" data-i="${i}">Usuń</button></div>`).join("")}</div>
     ${N.busy ? `<p class="banner">${esc(N.busy)}</p>` : `<button class="btn primary big" data-act="noteSend" ${N.files.length && N.subjectId ? "" : "disabled"}>${bad ? `Wyślij mimo to (${bad} ${plural(bad,"słabe zdjęcie","słabe zdjęcia","słabych zdjęć")})` : "Wyślij notatkę"}</button>`}
-    <p class="small muted">Za notatkę dostajesz +10 pkt. Zdjęcia widzi tylko Twoja rodzina; usuwamy je po przygotowaniu materiału.</p></div>`;
+    <p class="small muted">Za notatkę dostajesz +10 pkt. Zdjęcia widzi tylko Twoja rodzina. Usuwamy je 30 dni po przygotowaniu materiału (odrzucone od razu); tekst notatki zostaje.</p></div>`;
   const inp = $("#n_file"); if (inp) inp.onchange = async () => {
     const files = [...inp.files].slice(0, 5 - N.files.length); if (!files.length) return;
     N.busy = "Sprawdzam zdjęcia…"; renderNote();
@@ -1112,6 +1168,7 @@ function confirmNote(ok){
     C.props.forEach((c, i) => { if (C.off.has(i)) return;
       store.put("cards", `k_${unitId.replace(/^un_/, "")}_n${hashText(c.front)}`, { unitId, subjectId: u?.subjectId || n.subjectId, type: "qa", front: c.front, back: c.back, created: TODAY(), source: "notatka z lekcji " + n.date, noteId: C.id }); made++; }); }
   store.put("notes", C.id, { ...n, status: ok ? "confirmed" : "rejected", ocrConfirmed: text, unitId, cardsMade: made, confirmedAt: at, confirmedBy: whoMail });
+  if (!ok && n.photos?.length) removePhotos(C.id);
   if (ok && unitId) setTimeout(() => zCheckAi(unitId, true), 500);
   NCONF = null; closeSheet(); toast(ok ? `Notatka dodana do materiału${made ? ` + ${made} ${plural(made,"karta","karty","kart")} do nauki` : ""}.` : "Notatka odrzucona jako nieczytelna.");
 }
@@ -1264,6 +1321,10 @@ function notesPanel(){
 function openMenu(){
   const me = fam.me?.email || "";
   $("#sheet").innerHTML = `<div class="wrap"><div class="sbar"><button class="iconbtn" data-act="close" aria-label="Zamknij">${ICON.x}</button><span class="small muted" style="flex:1">Konto</span></div>
+    <div class="panel stack"><p class="eyebrow">Kolory</p><div class="row" style="gap:8px">
+      <button class="btn ${getSkin() === "arsenal" ? "primary" : ""}" data-act="skin" data-v="arsenal">Arsenal</button>
+      <button class="btn ${getSkin() !== "arsenal" ? "primary" : ""}" data-act="skin" data-v="borban">Zwykłe BorBan</button></div>
+      <p class="small muted">Zmiana dotyczy tego telefonu lub komputera.</p></div>
     <div class="panel stack"><p class="eyebrow">Zalogowano</p><h3 style="overflow-wrap:anywhere">${esc(me)}</h3><p class="small muted">${fam.role === "parent" ? "Rodzic" : fam.role === "child" ? "Uczeń" : "Konto bez rodziny"}${fam.name ? " · " + esc(fam.name) : ""}</p></div>
     ${fam.role === "parent" && !role.preview ? `<button class="btn big" data-act="previewOn">Zobacz, jak widzi to ${esc(S.meta.config?.student || "Borys")}</button>` : ""}
     <div class="panel stack"><h3>Na telefonie jak aplikacja</h3><p class="small muted">iPhone: Safari → Udostępnij → „Do ekranu początkowego”. Android: Chrome → menu ⋮ → „Dodaj do ekranu głównego”. Logujesz się raz, potem aplikacja pamięta konto.</p></div>
@@ -1273,7 +1334,15 @@ function openMenu(){
 async function loadPack(){
   const f = $("#pk_file")?.files?.[0]; if (!f){ toast("Wybierz plik od Claude."); return; }
   let pk; try { pk = JSON.parse(await f.text()); } catch { toast("To nie jest poprawny plik paczki."); return; }
-  const rows = (pk.docs || []).filter(r => r && COLS.includes(r.col) && r.id && r.data && typeof r.data === "object");
+  const PACK_COLS = ["cards","units","subjects","tests"];
+  const all0 = (pk.docs || []).filter(r => r && r.id && r.data && typeof r.data === "object");
+  const badId = all0.filter(r => !SAFE_ID.test(String(r.id))).length; const all = all0.filter(r => SAFE_ID.test(String(r.id)));
+  const skippedCol = all.filter(r => !(PACK_COLS.includes(r.col) || (r.col === "meta" && r.id === "grades"))).length;
+  let keptEdit = 0;
+  const rows = all.filter(r => PACK_COLS.includes(r.col) || (r.col === "meta" && r.id === "grades")).filter(r => {
+    if (r.col === "cards" && S.cards[r.id]?.editedAt && !r.merge){ keptEdit++; return false; }   // karta poprawiona w aplikacji: zostaje poprawka
+    return true; });
+  rows.forEach(r => { if (r.col === "subjects" && S.subjects[r.id]) r.data = { ...r.data, current: S.subjects[r.id].current ?? null }; });   // bieżący dział ustawia rodzic
   if (!rows.length){ toast("Paczka jest pusta."); return; }
   const btn = document.querySelector('[data-act="loadPack"]'); if (btn){ btn.disabled = true; btn.textContent = `Wczytuję ${rows.length}…`; }
   // Bezpiecznik: rekord bez treści (karta bez przodu, dział bez tytułu) zawsze uzupełnia istniejący, nigdy go nie zastępuje.
@@ -1281,7 +1350,7 @@ async function loadPack(){
     if (r.merge || (partial && cur)){ r.data = { ...(cur || {}), ...r.data }; } delete r.merge; });
   const bad = rows.filter(r => (r.col === "cards" && !r.data.front) || (r.col === "units" && !r.data.title));
   if (bad.length){ toast(`Paczka ma ${bad.length} niepełnych elementów bez odpowiednika w bazie. Nic nie wczytano.`); render(); return; }
-  try { await store.bulk(rows); rows.forEach(r => { S[r.col] = {...S[r.col], [r.id]: r.data}; }); toast(`Wczytano ${rows.length} ${plural(rows.length,"element","elementy","elementów")}.`); }
+  try { await store.bulk(rows); rows.forEach(r => { S[r.col] = {...S[r.col], [r.id]: r.data}; }); toast(`Wczytano ${rows.length} ${plural(rows.length,"element","elementy","elementów")}.${keptEdit ? ` Pominięto ${keptEdit} kart poprawionych w aplikacji.` : ""}${skippedCol ? ` Pominięto ${skippedCol} rekordów, których paczka nie może zmieniać (postępy, sesje).` : ""}${badId ? ` Pominięto ${badId} z niedozwolonym id.` : ""}`); }
   catch (e){ console.warn(e); toast("Nie udało się wczytać paczki: " + (e.message || "błąd")); }
   render();
 }
@@ -1383,7 +1452,7 @@ function viewAdmin(){
     <label class="f">Nowe karty dziennie <small>10–20; przy słabszej pamięci długotrwałej lepiej mniej i regularnie</small><input type="number" id="c_new" min="5" max="20" value="${baseNewLimit()}"></label>
     <button class="btn" data-act="saveCfg">Zapisz ustawienia</button>
     ${demoCount ? `<hr style="border:0;border-top:1px solid var(--line);width:100%"><p class="small">W aplikacji jest ${demoCount} przykładowych kart.</p>
-    <label class="row small"><input type="checkbox" id="c_wipe"> Usuń też historię nauki z testów</label>
+    <label class="row small"><input type="checkbox" id="c_wipe"> Usuń też historię nauki przykładowych kart (prawdziwa nauka zostaje)</label>
     <button class="btn danger" data-act="wipeDemo">Usuń przykładowe dane</button>` : ""}
   </div></details>
   </div>`;
@@ -1416,15 +1485,21 @@ function buildQueue(kind, id){
   if (kind === "quick"){ const p = todayPlan(); const due = [...p.reviews].sort((a,b) => (isMastered(a) - isMastered(b)) || runOf(S.progress[b]) - runOf(S.progress[a]));
     // najwyżej 3 powtórki w rundzie, reszta to nowe karty – nowy materiał ma się pojawiać w każdej rundzie
     const nNew = Math.min(p.news.length, Math.max(QUICK_N - due.length, 2));
-    let q = [...due.slice(0, QUICK_N - nNew), ...p.news.slice(0, nNew)];
-    if (!q.length) q = newIds();
+    const q = [], keys = new Set();
+    for (const c of [...due.slice(0, QUICK_N - nNew), ...p.news.slice(0, nNew), ...due.slice(QUICK_N - nNew), ...p.news.slice(nNew)]){
+      if (q.length >= QUICK_N) break; const k = pairKey(c); if (keys.has(k)) continue; keys.add(k); q.push(c); }
     if (q.length > 1 && !S.progress[q[0]]){ const easy = q.findIndex(c => runOf(S.progress[c]) >= 1); if (easy > 0) q.unshift(q.splice(easy,1)[0]); }
     return q.slice(0, QUICK_N); }
   if (kind === "unit") return cardsOf(id).map(([c]) => c).filter(c => !isMastered(c)).concat(cardsOf(id).map(([c]) => c).filter(isMastered)).slice(0, SESSION_MAX);
-  if (kind === "step"){ const ids = testCards(S.tests[id]||{}); const t = TODAY();
-    const due = ids.filter(c => S.progress[c] && !isMastered(c) && (S.progress[c].due||t) <= t);
-    const fresh = ids.filter(c => !S.progress[c]);
-    return [...due.slice(0,1), ...fresh, ...due.slice(1)].slice(0, QUICK_N); }
+  if (kind === "step"){ const ids = testCards(S.tests[id]||{});
+    const open = ids.filter(c => S.progress[c] && !isMastered(c)).sort((a,b) => (S.progress[a].at||0) - (S.progress[b].at||0));
+    const soon = S.tests[id]?.date && daysBetween(TODAY(), S.tests[id].date) <= 2;   // tuż przed sprawdzianem bez limitu nowych
+    const room = Math.max(soon ? QUICK_N : 0, newLimit() - newToday());
+    const fresh = ids.filter(c => !S.progress[c] && pairReady(c)).slice(0, room);
+    let q = [...open.slice(0,3), ...fresh, ...open.slice(3)].slice(0, QUICK_N);
+    if (!q.length) q = ids.filter(isMastered).sort(() => Math.random() - .5).slice(0, QUICK_N); // zakres opanowany: krótka powtórka
+    if (!q.length) q = buildQueue("quick");   // limit nowych na dziś wykorzystany: zwykła szybka runda
+    return q; }
   if (kind === "test"){ const ids = testCards(S.tests[id]);
     const notM = ids.filter(c => !isMastered(c)).sort((a,b) => (S.progress[b]?.lapses||0)-(S.progress[a]?.lapses||0));
     const m = ids.filter(isMastered).sort(() => Math.random() - .5);
@@ -1434,14 +1509,15 @@ function buildQueue(kind, id){
 function startSession(kind, id){
   const queue = buildQueue(kind, id);
   if (!queue.length){ toast("Brak kart do tej sesji."); return; }
-  SES = { id: uid("s"), kind, ref: id || null, queue, i:0, date: TODAY(), start: Date.now(), activeMs:0, lastAct: Date.now(), n:0, ok:0, hard:0, wrong:0, newN:0, points:0, revealed:false, typed:"", wrongIds:[] };
+  SES = { id: uid("s"), kind, ref: id || null, queue, base: kind === "daily" ? queue.reduce((a, c) => a + (isMastered(c) ? 1 : Math.min(3, MASTERY_RUN - runOf(S.progress[c]))), 0) : queue.length, firstDone: 0, rqSeen: {}, i:0, date: TODAY(), start: Date.now(), activeMs:0, lastAct: Date.now(), n:0, ok:0, hard:0, wrong:0, newN:0, points:0, revealed:false, typed:"", wrongIds:[] };
   openSheet(); renderStudy(); startTick();
 }
-function startTick(){ clearInterval(tick); tick = setInterval(() => { if (SES && document.visibilityState === "visible" && Date.now() - SES.lastAct < 90000) SES.activeMs += 1000; if (SES?.recall) renderRecallTimer(); }, 1000); }
+function startTick(){ clearInterval(tick); tick = setInterval(() => { if (SES && document.visibilityState === "visible" && (SES.recall ? SES.activeMs < 40*60000 : Date.now() - SES.lastAct < 90000)) SES.activeMs += 1000; if (SES?.recall) renderRecallTimer(); }, 1000); }
 function openSheet(){ $("#sheet").hidden = false; document.body.style.overflow = "hidden"; }
 function closeSheet(){ $("#sheet").hidden = true; document.body.style.overflow = ""; clearInterval(tick); SES = null; scheduleRender(); }
 function sessionDoc(){ return { date: SES.date, start: SES.start, end: Date.now(), activeMs: SES.activeMs, kind: SES.kind, ref: SES.ref, n: SES.n, ok: SES.ok, hard: SES.hard, wrong: SES.wrong, newN: SES.newN, points: SES.points, answers: SES.answers || [] }; }
-function persistSession(){ if (SES && (SES.n || SES.activeMs > 30000)) store.put("sessions", SES.id, sessionDoc()); }
+function persistSession(){ if (SES?.recall) SES.activeMs = Math.min((SES.doneAt || SES.lastAct) - SES.start, 40*60000);
+  if (SES && (SES.n || SES.activeMs > 30000)) store.put("sessions", SES.id, sessionDoc()); }
 function renderCardFace(c, revealed){
   let front = esc(c.front);
   if (c.type === "cloze") front = front.replace(/\{\{(.+?)\}\}/g, (m, a) => revealed ? `<mark>${a}</mark>` : `<span class="gap">&nbsp;</span>`);
@@ -1458,6 +1534,7 @@ function cleanSvg(src){
     const root = doc.documentElement;
     if (root && root.nodeName.toLowerCase() === "svg" && !doc.querySelector("parsererror")){
       root.querySelectorAll("script,foreignObject,iframe,image,use,a,animate,set,style").forEach(n => n.remove());
+      { const w = doc.createTreeWalker(root, 0xFFFFFFFF); const rm = []; while (w.nextNode()){ const t = w.currentNode.nodeType; if (t !== 3 && t !== 1) rm.push(w.currentNode); } rm.forEach(n => n.remove()); }   // komentarze, CDATA, instrukcje przetwarzania
       [root, ...root.querySelectorAll("*")].forEach(n => [...n.attributes].forEach(at => {
         const nm = at.name.toLowerCase(), v = at.value;
         if (nm.startsWith("on") || nm === "href" || nm === "xlink:href" || /javascript:|url\((?!#)/i.test(v)) n.removeAttribute(at.name);
@@ -1479,38 +1556,182 @@ function stepsBlock(c, cid, isNew){
   </div>`;
 }
 const clozeAnswer = c => (String(c.front).match(/\{\{(.+?)\}\}/g) || []).map(x => x.slice(2,-2)).join(", ");
-const norm = s => String(s||"").toLowerCase().normalize("NFKC").replace(/[\s.,;:!?()"'„”–−-]+/g, " ").trim();
-// Sprawdzanie odpowiedzi: ta sama treść = "exact"; inna kolejność słów, brak polskich znaków, drobna literówka = "close".
-const plain = s => String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ł/g, "l")
-  .replace(/\([^)]*\)/g, " ").replace(/[^a-z0-9㐀-鿿+=²³√<>≤≥]+/g, " ").trim();
-const sortedWords = s => s.split(" ").filter(Boolean).sort().join(" ");
-function lev(a, b){ if (a === b) return 0; const m = a.length, n = b.length; if (!m || !n) return m || n;
-  let prev = Array.from({length: n+1}, (_, j) => j);
-  for (let i = 1; i <= m; i++){ const cur = [i]; for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j]+1, cur[j-1]+1, prev[j-1] + (a[i-1] === b[j-1] ? 0 : 1)); prev = cur; }
-  return prev[n]; }
-function checkAnswer(typed, answer){
+const norm = s => String(s||"").toLowerCase().normalize("NFKC").replace(/[−–—]/g, "-").replace(/[\s.,;:!?()"'„”]+/g, " ").trim();
+// Sprawdzanie wpisanej odpowiedzi (25.10, po 2. recenzji):
+//  • lokalnie zaliczamy tylko to, co pewne: ten sam zapis, brak polskich znaków, drobna literówka w długim słowie,
+//    ten sam wzór w innym zapisie ((b+a)(a−b) = (a+b)(a−b), a^2 = a², 2ba = 2ab), lista z tymi samymi elementami
+//  • każdą inną różnicę ocenia AI (sens, nie słowa: inna kolejność zdania i inne słowa są OK) – askMeaning
+//  • bez tolerancji: rodzajniki, przeczenia, liczby, cyfry rzymskie, n.e./p.n.e.
+const fold = s => String(s||"").normalize("NFKC").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ł/g, "l").replace(/[−–—]/g, "-");
+const ROMAN = /^(?=[ivxlcdm]+$)m{0,3}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$/;
+const romanVal = r => { const v = {i:1,v:5,x:10,l:50,c:100,d:500,m:1000}; let n = 0; for (let i = 0; i < r.length; i++){ const a = v[r[i]], b = v[r[i+1]] || 0; n += a < b ? -a : a; } return n; };
+// część odpowiedzi bez dopisków w nawiasie (wartościowość typu żelazo(III) zostaje) + krótkie dopiski jako warianty
+const MATHOP = /[+\-−–—=²³^×·*\/<>≤≥√]/;
+function splitParen(a){
+  const extra = [];
+  if (MATHOP.test(String(a||"").replace(/\s[−–—-]\s(?=\D)/g, " "))) return { main: String(a||""), extra };   // wzór albo obliczenie: nawiasy są częścią odpowiedzi
+  const main = String(a||"").replace(/\(([^()]*)\)/g, (m, inner) => {
+    if (/^\s*[IVX]+\s*$/.test(inner) || MATHOP.test(inner) || /^\s*[a-z0-9]{1,3}\s*$/i.test(inner)) return m;   // wzór, wartościowość: zostaje
+    if (inner.trim().split(/\s+/).length <= 3) extra.push(inner.trim());
+    return " "; }).replace(/\s+/g, " ").trim();
+  return { main: main || String(a||""), extra };
+}
+const plain = s => fold(s).replace(/[^a-z0-9㐀-鿿+=<>≤≥-]+/g, " ").replace(/(^| )-+( |$)/g, " ").trim();
+function lev(a, b){   // odległość edycyjna z przestawieniem sąsiednich liter (mitochondirum → mitochondrium = 1)
+  if (a === b) return 0; const m = a.length, n = b.length; if (!m || !n) return m || n;
+  const d = Array.from({length: m+1}, (_, i) => Array.from({length: n+1}, (_, j) => i ? (j ? 0 : i) : j));
+  for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++){
+    d[i][j] = Math.min(d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+    if (i > 1 && j > 1 && a[i-1] === b[j-2] && a[i-2] === b[j-1]) d[i][j] = Math.min(d[i][j], d[i-2][j-2] + 1); }
+  return d[m][n]; }
+const hasMath = s => /\d|[=²³√+×·^<>≤≥]/.test(String(s||""));
+const wordCount = s => plain(s).split(" ").filter(Boolean).length;
+// odpowiedź „ścisła”: liczba, data, wzór albo najwyżej 3 słowa
+const isPrecise = a => { const x = splitParen(a).main; return /[=²³√+×·^<>≤≥]/.test(x) || wordCount(x) <= 3 || (/\d/.test(x) && wordCount(x) <= 5); };
+// słowa bez tolerancji literówek: zmiana takiego słowa zmienia sens
+const PROTECT = new Set("der die das den dem des ein eine einen einem einer a an the nie bez brak kein keine nicht not no ne pne".split(" "));
+const isProtected = w => PROTECT.has(w) || /\d/.test(w) || ROMAN.test(w) || w.length < 6;
+// klucz wzoru/liczby/daty: bez spacji, a^2 = a², kolejność składników sumy i czynników iloczynu dowolna
+function exprKey(e){
+  const terms = []; let depth = 0, cur = "";
+  for (const ch of e){ if (ch === "(") depth++; if (ch === ")") depth--;
+    if (depth === 0 && (ch === "+" || ch === "-") && cur !== ""){ terms.push(cur); cur = ch; } else cur += ch; }
+  if (cur) terms.push(cur);
+  return terms.map(termKey).sort().join("");
+}
+function termKey(t){
+  let sign = "+"; if (t[0] === "+" || t[0] === "-"){ sign = t[0]; t = t.slice(1); }
+  const toks = t.match(/\([^()]*\)\d*|[a-z]\d*|\d+(?:\.\d+)?|[^a-z0-9()]+/g) || [];
+  let coef = "", rest = [];
+  toks.forEach((k, i) => { if (/^\d/.test(k) && i === 0) coef = k; else if (k[0] === "(") { const m = k.match(/^\(([^()]*)\)(\d*)$/); rest.push("(" + exprKey(m[1]) + ")" + m[2]); } else rest.push(k); });
+  if (rest.length <= 6 && rest.filter(k => /^[a-z]/.test(k)).length <= 4 && rest.every(k => /^[a-z]\d*$|^\(/.test(k))) rest.sort();   // jednomian: 2ba = 2ab
+  return sign + coef + rest.join("");
+}
+function mathKey(s){
+  let x = fold(s).replace(/\(\s*([ivxlcdm]+)\s*\)/g, (m, r) => ROMAN.test(r) ? "(" + romanVal(r) + ")" : m).replace(/\^/g, "").replace(/>=|=>/g, "≥").replace(/<=|=</g, "≤").replace(/[×·*]/g, "").replace(/(\d),(\d)/g, "$1.$2");
+  x = x.replace(/^\s*(w|we|im|in|okolo|ok\.?)\s+(?=\d|[ivxlcdm]+\s*(w\b|wiek))/, "");                       // „w 1939”, „ok. 966”
+  x = x.replace(/\b([ivxlcdm]+)\s*(w\.?|wiek|wieku)(?=$|\s|p|n)/g, (m, r) => ROMAN.test(r) ? romanVal(r) + "w" : m);   // XV w. = 15 wiek
+  x = x.replace(/(\d)\s*(w\.?|wiek|wieku)(?=$|\s|p|n)/g, "$1w").replace(/(\d)\s*(r\.?|rok|roku)(?=$|\s|p|n)/g, "$1");
+  x = x.replace(/p\.?\s*n\.?\s*e\.?/g, "pne").replace(/\bn\.?\s*e\.?/g, "ne");
+  x = x.replace(/\s+/g, "").replace(/[.;:!?]+$/, "");
+  if (/[<>≤≥→]/.test(x)) return x;
+  return x.split("=").map(exprKey).join("=");
+}
+function wordsClose(t, v){   // ta sama liczba słów, każde równe albo z drobną literówką (tylko długie, niechronione słowa)
+  const a = t.split(" "), b = v.split(" "); if (a.length !== b.length) return false;
+  return a.every((w, i) => w === b[i] || (!isProtected(b[i]) && !isProtected(w) && lev(w, b[i]) <= (b[i].length >= 10 ? 2 : 1)));
+}
+function shortMatch(t, v){   // t, v po plain()
+  if (!t || !v) return "";
+  if (t === v) return "exact";
+  if (t.replace(/ /g, "") === v.replace(/ /g, "")) return "close";
+  if (!/\d/.test(v) && wordsClose(t, v)) return "close";
+  const ws = x => x.split(" ").sort().join(" ");   // 2 słowa w innej kolejności (np. „Mickiewicz Adam”)
+  if (!/\d/.test(v) && v.split(" ").length === 2 && wordsClose(ws(t), ws(v))) return "close";
+  return "";
+}
+function answerAlts(answer, type){
+  const { main, extra } = splitParen(answer);
+  const sep = type === "vocab" ? /\s+\/\s+|\s*[;,]\s*|\s+lub\s+|\s+or\s+|\s+oder\s+/i : /\s+\/\s+|\s*;\s*|\s+lub\s+|\s+or\s+|\s+oder\s+/i;
+  const parts = main.split(sep).map(x => x.trim()).filter(Boolean);
+  const base = /\d[₀-₉]+(?=\s|$|\()/.test(String(answer)) ? [String(answer).replace(/(\d)[₀-₉]+(?=\s|$|\()/g, "$1").replace(/\s*\([^()]*\)\s*$/, "")] : [];   // 53₈ → 53
+  return [...new Set([String(answer), main, ...(parts.length > 1 ? parts : []), ...extra, ...base].filter(x => String(x).trim()))];
+}
+// wynik: "exact" | "close" | "no" (inna liczba – na pewno źle) | "dk" („nie wiem”) | "" (nie wiadomo – zdecyduje AI)
+function checkAnswer(typed, answer, type){
   if (!String(typed||"").trim()) return "";
   if (norm(typed) === norm(answer)) return "exact";
-  const t = plain(typed); if (!t) return "";
-  const variants = [answer, ...String(answer).split(/\s*(?:\/|;|,|\blub\b|\bor\b)\s*/)].map(plain).filter(Boolean);
-  for (const v of variants){
-    if (t.replace(/ /g, "") === v.replace(/ /g, "") && t !== v) return "close";
-    if (t === v || sortedWords(t) === sortedWords(v)) return v === plain(answer) && t === v ? "exact" : "close";
-    const tol = Math.max(1, Math.floor(v.length * 0.15));
-    if (v.length >= 4 && (lev(t, v) <= tol || lev(sortedWords(t), sortedWords(v)) <= tol)) return "close";
+  if (/^(nie wiem|nie pamietam|nw|idk|[?.\-x\s]+)$/.test(fold(typed).trim())) return "dk";   // „nie wiem”, „?”, „-”
+  const alts = answerAlts(answer, type), tp = plain(typed), tk = mathKey(typed);
+  for (const a of alts){
+    if (norm(typed) === norm(a)) return "exact";
+    const k = mathKey(a);
+    const mathy = hasMath(a) || hasMath(typed) || /\d/.test(k + tk) || /[()⟨⟩〈〉\[\];]/.test(a + typed);
+    if (mathy){
+      if (k === tk) return "exact";
+      const ks = k.split("="), ts = tk.split("=");
+      if (ks.length === 2 && ts.length === 2 && ks[0] === ts[1] && ks[1] === ts[0]) return "exact";   // strony równania zamienione
+      const topEq = /=/.test(String(a).replace(/\([^()]*\)/g, ""));
+      if (topEq && ks.length === 2 && ts.length === 1 && ts[0] === ks[1]) return "close";            // sama prawa strona wzoru
+      if (ts.length >= 2 && ks.length === 1 && ts[ts.length-1] === k) return "close";                // „x = 5” przy odpowiedzi 5
+    }
+    if (mathy) continue;                                   // wzory, liczby, przedziały: tylko porównanie zapisu wzoru (nawias ma znaczenie)
+    const r = shortMatch(tp, plain(a)); if (r) return r;
+  }
+  // lista po przecinku (np. pierwiastki, cechy): każdy element musi być, kolejność dowolna
+  const { main } = splitParen(answer);
+  const LIST = /\s*[,;]\s*|\s+i\s+|\s+oraz\s+|\s+und\s+|\s+and\s+/;
+  const items = main.split(LIST).map(plain).filter(Boolean);
+  if (type !== "vocab" && items.length > 1 && items.every(x => x.split(" ").length <= 3 && !/\d/.test(x))){   // luki z liczbami: kolejność się liczy
+    let got = typed.split(LIST).map(plain).filter(Boolean);
+    if (got.length === 1 && items.every(x => !x.includes(" "))) got = got[0].split(" ");
+    if (got.length === items.length && items.every(x => got.some(y => shortMatch(y, x)))) return "close";
+  }
+  // sama liczba albo data: inne liczby = na pewno źle
+  if (!/[a-z]/.test(fold(answer).replace(/\b(r|rok|roku|w|wiek|wieku|pne|ne|p\.?n\.?e\.?|n\.?e\.?)\b\.?/g, " ")) && /^[\d\s.,:/-]+$/.test(fold(answer).replace(/\b(r|rok|roku|w|wiek|wieku|pne|ne|p\.?n\.?e\.?|n\.?e\.?)\b\.?/g, " "))){
+    const nums = x => (fold(x).match(/\d+/g) || []).join(",");
+    if (nums(typed) && nums(typed) !== nums(answer)) return "no";
   }
   return "";
+}
+// Ocena sensu przez AI (Edge Function read-notebook, tryb "answer"): treść karty bierze serwer z bazy po id karty.
+async function askMeaning(cid, typed){
+  const call = sb.functions.invoke("read-notebook", { body: { mode: "answer", fam: fam.id, cardId: cid, typed: String(typed).slice(0, 400) } })
+    .then(({ data, error }) => { if (error || !data?.ok) return { verdict: "na" };
+      const v = data.result?.verdict; return { verdict: ["yes","partial","no"].includes(v) ? v : "na", why: String(data.result?.why || "").slice(0, 220) }; })
+    .catch(() => ({ verdict: "na" }));
+  return Promise.race([call, new Promise(r => setTimeout(() => r({ verdict: "na" }), 9000))]);
+}
+const aiKey = (cid, typed) => cid + "|" + plain(typed);
+// werdykt dla bieżącej karty i bieżącego wpisu
+function answerVerdict(c, cid, typed){
+  if (!typed) return { local: "" };
+  const ans = c.type === "cloze" ? clozeAnswer(c) : c.back;
+  const local = checkAnswer(typed, ans, c.type);
+  return { local, ai: local ? null : (SES?.ai?.[aiKey(cid, typed)] || null) };
+}
+// najwyższa ocena, na jaką pozwala wpisana odpowiedź
+function gradeCap(c, g){
+  if (g === 0 || !SES || !c) return g;
+  const typed = String(SES.typed||"").trim(); if (!typed) return g;            // nie wpisywał: samoocena
+  const { local, ai } = answerVerdict(c, SES.queue[SES.i], typed);
+  if (local === "exact" || local === "close") return g;
+  if (local === "no" || local === "dk") return 0;                               // inna liczba/data albo „nie wiem”
+  const v = ai?.verdict;
+  if (v === "yes") return g;
+  if (v === "no") return 0;                                                     // AI: źle = „Nie wiem”
+  if (v === "busy") return 0;                                                   // czekamy na sprawdzenie (przyciski 1 i 2 chwilowo wyłączone)
+  return Math.min(g, 1);                                                        // częściowo albo AI niedostępne: najwyżej „Z trudem”
 }
 function renderStudy(){
   const sh = $("#sheet"); const cid = SES.queue[SES.i]; const c = S.cards[cid];
   if (!c){ SES.i++; if (SES.i >= SES.queue.length) return finishSession(); return renderStudy(); }
+  if (SES.shown !== SES.i){ SES.shown = SES.i; sh.scrollTop = 0; }
   const s = S.subjects[c.subjectId], u = S.units[c.unitId];
-  const pct = Math.round(SES.i / SES.queue.length * 100);
+  const pct = Math.round(Math.min(1, SES.kind === "daily" ? SES.n / Math.max(SES.base, SES.n + SES.queue.length - SES.i) : (SES.firstDone||0) / (SES.base || SES.queue.length)) * 100);
   const answer = c.type === "cloze" ? clozeAnswer(c) : c.back;
-  const typed = SES.typed.trim(); const verdict = checkAnswer(typed, answer); const match = !!verdict;
+  const typed = SES.typed.trim();
   const isNew = !S.progress[cid];
+  SES.ai = SES.ai || {};
+  const verdict = SES.revealed && typed ? checkAnswer(typed, answer, c.type) : "";
+  const match = verdict === "exact" || verdict === "close";
+  if (SES.revealed && typed && !verdict){ const k = aiKey(cid, typed);   // werdykt AI zapamiętany dla tej karty i tego wpisu
+    if (!SES.ai[k]){ SES.ai[k] = { verdict: "busy" };
+      askMeaning(cid, typed).then(r => { if (!SES) return; SES.ai[k] = r; if (SES.queue[SES.i] === cid && SES.revealed && aiKey(cid, SES.typed.trim()) === k) renderStudy(); }); } }
+  const ai = SES.revealed && typed && !verdict ? (SES.ai[aiKey(cid, typed)] || {}) : {};
+  const cap = SES.revealed ? gradeCap(c, 2) : 2;
+  const mastered = isMastered(cid), nextLvl = Math.min(MASTERY_RUN, runOf(S.progress[cid]) + 1);
+  const yourMsg = !typed ? "" : verdict === "exact" ? "Zgadza się z Twoją odpowiedzią."
+    : verdict === "close" ? `Dobrze! Twoja odpowiedź „${esc(typed)}” znaczy to samo (inny zapis, inna kolejność, brak polskich znaków albo drobna literówka). Śmiało kliknij „Wiem”.`
+    : verdict === "dk" ? `Nic się nie stało. Przeczytaj odpowiedź spokojnie, karta wróci.`
+    : verdict === "no" ? `Twoja odpowiedź: <b>${esc(typed)}</b>. Liczba się nie zgadza, więc liczy się jak „Nie wiem”.`
+    : ai.verdict === "busy" ? `Twoja odpowiedź: ${esc(typed)}. Sprawdzam, czy chodzi o to samo…`
+    : ai.verdict === "yes" ? `Dobrze! Innymi słowami, ale o to chodzi.${ai.why ? " " + esc(ai.why) : ""}`
+    : ai.verdict === "partial" ? `Częściowo.${ai.why ? " " + esc(ai.why) : ""} Liczy się najwyżej jako „Z trudem”.`
+    : ai.verdict === "no" ? `Nie o to chodzi.${ai.why ? " " + esc(ai.why) : ""} Liczy się jak „Nie wiem”. Jeśli sprawdzanie się pomyliło, zgłoś błąd w karcie.`
+    : `Twoja odpowiedź: ${esc(typed)}. Nie udało się sprawdzić sensu (może brak internetu). Jeśli chodzi o to samo, kliknij „Z trudem”.`;
   sh.innerHTML = `<div class="wrap">
-    <div class="sbar"><button class="iconbtn" data-act="quit" aria-label="Zakończ sesję">${ICON.x}</button><div class="bar"><i style="width:${pct}%"></i></div><span class="small muted" style="font-variant-numeric:tabular-nums">${SES.i+1}/${SES.queue.length}</span></div>
+    <div class="sbar"><button class="iconbtn" data-act="quit" aria-label="Zakończ sesję">${ICON.x}</button><div class="bar"><i style="width:${pct}%"></i></div><span class="small muted" style="font-variant-numeric:tabular-nums">${SES.kind === "daily" ? `${SES.n + 1}/${Math.max(SES.base, SES.n + SES.queue.length - SES.i)} odp.` : `${Math.min(SES.base || SES.queue.length, (SES.firstDone||0) + 1)}/${SES.base || SES.queue.length}${SES.rqSeen?.[SES.i] ? " · powtórka" : ""}`}</span></div>
     <div class="fc">
       <div class="meta"><span class="dot" style="--c:${scol(s)}"></span>${esc(s?.name)} · ${esc(u?.title)}${isNew ? ` <span class="chip here">nowa</span>` : ""}${c.type === "vocab" ? ` <span class="chip">przetłumacz</span>` : ""}${u?.svg && SES.revealed ? ` <button class="btn sm ghost" data-act="upic" style="padding:2px 10px">${SES.upic === c.unitId ? "Ukryj obrazek działu" : "Obrazek działu"}</button>` : ""}</div>
       ${u?.svg && SES.revealed && SES.upic === c.unitId ? `<div class="pic">${cleanSvg(u.svg)}</div>` : ""}
@@ -1520,13 +1741,13 @@ function renderStudy(){
         ${speakSide(c, cid, true) === "back" ? `<button class="btn sm" data-act="speak" data-side="back" style="align-self:flex-start">🔊 Posłuchaj</button>` : ""}
         ${stepsBlock(c, cid, isNew)}
         ${c.mnemo ? `<div class="yours" style="background:var(--primary-soft)"><b>Zaczepka:</b> ${esc(c.mnemo)}</div>` : ""}
-        ${typed ? `<div class="yours ${match ? "match" : ""}">${verdict === "exact" ? "Zgadza się z Twoją odpowiedzią." : verdict === "close" ? `Dobrze! Twoja odpowiedź „${esc(typed)}” znaczy to samo (inna kolejność słów, brak polskich znaków albo drobna literówka). Śmiało kliknij „Wiem”.` : `Twoja odpowiedź: ${esc(typed)}. Porównaj z poprawną i oceń sam: jeśli chodzi o to samo, kliknij „Wiem”.`}</div>` : ""}` : ""}
+        ${typed ? `<div class="yours ${match || ai.verdict === "yes" ? "match" : ""}">${yourMsg}</div>` : ""}` : ""}
     </div>
     ${SES.revealed ? `<p class="small muted" style="text-align:center">${isNew ? "Pierwszy raz? Oceń szczerze, karta wróci w dobrym momencie." : "Jak Ci poszło?"}</p>
       <div class="grades">
-        <button class="grade g0" data-act="grade" data-g="0">Nie wiem<small>wróci dziś</small></button>
-        <button class="grade g1" data-act="grade" data-g="1">Z trudem<small>wróci szybciej</small></button>
-        <button class="grade g2 ${match ? "suggest" : ""}" data-act="grade" data-g="2">Wiem<small>dłuższa przerwa</small></button>
+        <button class="grade g0 ${cap === 0 ? "suggest" : ""}" data-act="grade" data-g="0">Nie wiem<small>${willReturn(cid) ? "wróci za chwilę" : "wróci w następnej rundzie"}</small></button>
+        <button class="grade g1" data-act="grade" data-g="1" ${cap < 1 ? "disabled" : ""}>Z trudem<small>${mastered ? "wróci wcześniej" : `dobra · ${nextLvl}/3`}</small></button>
+        <button class="grade g2 ${match || ai.verdict === "yes" ? "suggest" : ""}" data-act="grade" data-g="2" ${cap < 2 ? "disabled" : ""}>Wiem<small>${mastered ? "wróci później" : `dobra · ${nextLvl}/3`}</small></button>
       </div>
       <button class="btn ghost sm" data-act="flag" style="align-self:center">${ICON.flag.replace("<svg",'<svg width="16" height="16"')} Zgłoś błąd w karcie</button>`
     : `<form data-form="reveal" class="stack" style="gap:10px">
@@ -1536,17 +1757,44 @@ function renderStudy(){
   </div>`;
   if (!SES.revealed){ const inp = $("#typed"); if (inp && matchMedia("(hover:hover)").matches) inp.focus(); }
 }
+// czy karta wróci jeszcze w tej sesji (co najmniej 2 inne karty pomiędzy; po dobrej odpowiedzi 3)
+function willReturn(cid, bucket = "e", max){
+  if (!SES) return false; const short = SES.kind === "quick" || SES.kind === "step";
+  if (max == null) max = bucket === "o" ? 3 : short ? 1 : 2;
+  const k = SES.rq?.[bucket + cid] || 0, rest = SES.queue.length - (SES.i + 1);
+  if (k >= max || rest < (bucket === "o" ? 3 : 2)) return false;
+  if (short && (SES.rqTotal||0) >= 3) return false;
+  return true;
+}
 function gradeCard(g){
   const cid = SES.queue[SES.i]; const prev = S.progress[cid]; const c = S.cards[cid]; const t = TODAY();
+  if (!c) return;
+  g = gradeCap(c, g); // wpisana odpowiedź nie zgadza się z poprawną: nie może być „Wiem”
+  const lvl = x => Math.min(MASTERY_RUN, runOf(x));
   const p = grade(prev, g, t); p.unitId = c.unitId; p.subjectId = c.subjectId;
   if (!prev){ p.introduced = t; SES.newN++; }
-  if (runOf(p) > runOf(prev)) SES.levelUps = (SES.levelUps||0) + 1;
-  { const ph = prev?.hist || []; if (g === 2 && ph.length && ph[ph.length-1][1] < 2) SES.won = (SES.won||0) + 1; }
+  if (lvl(p) > lvl(prev)) SES.levelUps = (SES.levelUps||0) + 1;
+  if (lvl(p) >= MASTERY_RUN && lvl(prev) < MASTERY_RUN) SES.mastered = (SES.mastered||0) + 1;
+  { const ph = prev?.hist || []; const last = ph[ph.length-1]; if (g === 2 && last && last[1] < 2 && last[0] < t) SES.won = (SES.won||0) + 1; }
   store.put("progress", cid, p);
-  SES.answers = [...(SES.answers||[]), { c: cid, y: String(SES.typed||"").trim().slice(0,200), g, t: Date.now() }].slice(-120);
-  SES.n++; SES.points += [2,6,10][g];
-  if (g === 0){ SES.wrong++; SES.wrongIds.push(cid); const at = Math.min(SES.queue.length, SES.i + 5); SES.queue.splice(at, 0, cid); }
-  else if (g === 1) SES.hard++; else SES.ok++;
+  { const y = String(SES.typed||"").trim().slice(0,200); const ans = c.type === "cloze" ? clozeAnswer(c) : c.back;
+    const vd = y ? answerVerdict(c, cid, y) : { local: "" }; const okTyped = vd.local === "exact" || vd.local === "close" || vd.ai?.verdict === "yes";
+    SES.answers = [...(SES.answers||[]), { c: cid, y, g, m: y ? (okTyped ? 1 : 0) : null, ai: vd.ai?.verdict || null, t: Date.now() }].slice(-120);
+    SES.points += [1,6,8][g] + (g > 0 && y && okTyped ? 2 : 0); }   // wpisana i zgodna odpowiedź: +2 pkt
+  SES.n++;
+  if (!SES.rqSeen?.[SES.i]) SES.firstDone = (SES.firstDone||0) + 1;
+  // powrót karty w tej samej sesji: po „Nie wiem” najwyżej 2 razy (w szybkiej rundzie raz, łącznie najwyżej 3 powtórki),
+  // w „wszystko na dziś” dobra, ale nieopanowana karta wraca, aż będzie opanowana (najwyżej 3 razy)
+  const requeue = (bucket, max) => { SES.rq = SES.rq || {}; SES.rqSeen = SES.rqSeen || {}; const key = bucket + cid; const k = SES.rq[key] || 0;
+    if (!willReturn(cid, bucket, max)) return;
+    if (SES.kind === "quick" || SES.kind === "step") SES.rqTotal = (SES.rqTotal||0) + 1;
+    const rest = SES.queue.length - (SES.i + 1); const gap = bucket === "o" ? 3 : 2;
+    const at = SES.i + 1 + Math.min(Math.max(gap, 4), rest);
+    Object.keys(SES.rqSeen).map(Number).filter(x => x >= at).sort((a,b) => b - a).forEach(x => { SES.rqSeen[x+1] = true; delete SES.rqSeen[x]; });
+    SES.queue.splice(at, 0, cid); SES.rqSeen[at] = true; SES.rq[key] = k + 1; };
+  const short = SES.kind === "quick" || SES.kind === "step";
+  if (g === 0){ SES.wrong++; SES.wrongIds.push(cid); requeue("e", short ? 1 : 2); }
+  else { if (g === 1) SES.hard++; else SES.ok++; if (SES.kind === "daily" && !isMastered(cid)) requeue("o", 3); }
   SES.i++; SES.revealed = false; SES.typed = ""; SES.lastAct = Date.now();
   persistSession(); // każda odpowiedź zapisuje się od razu
   if (SES.i >= SES.queue.length) finishSession(); else renderStudy();
@@ -1558,16 +1806,18 @@ function finishSession(){
   const wrong = [...new Set(SES.wrongIds)].map(id => S.cards[id]).filter(Boolean);
   const acc = SES.n ? Math.round((SES.ok + SES.hard) / SES.n * 100) : 0;
   const ups = SES.levelUps || 0; const nb = nearestBadge(); const more = buildQueue("quick").length;
-  const PRAISE = ups >= 5 ? "Mocna runda!" : ups >= 3 ? "Dobra robota!" : ups >= 1 ? "Jest postęp!" : "Każda próba się liczy.";
+  const kept = Math.max(0, (SES.ok + SES.hard) - ups);   // dobre odpowiedzi na kartach już opanowanych
+  const bigN = ups || kept, bigLbl = ups ? `${plural(ups,"karta","karty","kart")} poziom wyżej` : `${plural(kept,"karta utrwalona","karty utrwalone","kart utrwalonych")}`;
+  const PRAISE = ups + kept >= 5 ? "Mocna runda!" : ups + kept >= 3 ? "Dobra robota!" : ups + kept >= 1 ? "Jest postęp!" : "Każda próba się liczy.";
   clearInterval(tick);
   $("#sheet").innerHTML = `<div class="wrap"><div class="done-hero">
-    <p class="eyebrow">${PRAISE}</p><div class="big-num">+${ups}</div><p>${plural(ups,"karta","karty","kart")} poziom wyżej · +${SES.points} pkt</p>
-    <div class="tiles" style="width:100%;grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><b>${SES.n}</b><span>odpowiedzi</span></div><div class="tile"><b>${acc}%</b><span>poprawnie</span></div><div class="tile"><b>${fmtMin(SES.activeMs)}</b><span>nauki</span></div></div>
+    <p class="eyebrow">${PRAISE}</p><div class="big-num">+${bigN}</div><p>${bigLbl} · +${SES.points} pkt</p>
+    <div class="tiles" style="width:100%;grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tile"><b>${SES.n}</b><span>odpowiedzi</span></div><div class="tile"><b>${acc}%</b><span>poprawnie</span></div><div class="tile"><b>${SES.mastered || 0}</b><span>opanowane</span></div></div>
     <p class="pill flame">${ICON.flame} seria: ${st} ${plural(st,"dzień","dni","dni")}</p>${SES.won ? `<p class="chip done">Rewanże wygrane: ${SES.won}</p>` : ""}</div>
     ${nb ? `<div class="panel stack"><p class="eyebrow">Najbliższa odznaka: ${nb.tier}</p><h3>${esc(S.units[nb.id].title)}</h3>
       <div class="bar" style="--c:var(--good);height:12px"><i style="width:${Math.min(100, Math.round(nb.st.prog / nb.target * 100))}%"></i></div>
-      <p class="small">Brakuje <b>${nb.need}</b> ${plural(nb.need,"kroku","kroków","kroków")}. Każda dobra odpowiedź w nowym dniu to krok bliżej.</p></div>` : ""}
-    ${wrong.length ? `<div class="panel stack"><h3>Do zapamiętania</h3><p class="small muted">Te karty wrócą jutro. Druga próba zwykle idzie dużo lepiej.</p><div class="list">${wrong.slice(0,6).map(c => `<div class="li"><div>${esc(stripCloze(c.front))}<br><b>${esc(c.type === "cloze" ? clozeAnswer(c) : c.back)}</b></div></div>`).join("")}</div></div>` : ""}
+      <p class="small">${nb.cards ? `Brakuje <b>${nb.need}</b> ${plural(nb.need,"opanowanej karty","opanowanych kart","opanowanych kart")} (3 dobre z rzędu).` : `Brakuje <b>${nb.need}</b> ${plural(nb.need,"kroku","kroków","kroków")}. Każda dobra odpowiedź to krok bliżej.`}</p></div>` : ""}
+    ${wrong.length ? `<div class="panel stack"><h3>Do zapamiętania</h3><p class="small muted">Te karty wrócą jeszcze dziś w kolejnej rundzie. Druga próba zwykle idzie dużo lepiej.</p><div class="list">${wrong.slice(0,6).map(c => `<div class="li"><div>${esc(stripCloze(c.front))}<br><b>${esc(c.type === "cloze" ? clozeAnswer(c) : c.back)}</b></div></div>`).join("")}</div></div>` : ""}
     ${more && sessionsOn(TODAY()).filter(x => (x.n||0) > 0).length % 2 === 0 ? `<div class="panel stack" style="border:2px solid var(--good)"><p class="eyebrow">Mini-przerwa</p><h3>Wstań na 30 sekund</h3><p class="small muted">Przeciągnij się, przejdź po pokoju, napij się wody. Krótki ruch odświeża skupienie i następna runda pójdzie lżej.</p></div>` : ""}
     ${more ? `<div class="panel hero stack"><h2>Chcesz dziś wiedzieć jeszcze więcej?</h2><p class="muted">Jeszcze ${Math.min(QUICK_N, more)} ${plural(Math.min(QUICK_N, more),"karta","karty","kart")}, ok. 2 minuty.</p>
       <button class="btn primary big" data-act="start" data-kind="quick">Jeszcze ${Math.min(QUICK_N, more)}</button></div>` : `<p class="small muted" style="text-align:center">Na dziś wszystko zrobione. Jutro czekają nowe karty.</p>`}
@@ -1672,7 +1922,7 @@ function saveTT(){
 }
 
 /* ---------- zdarzenia ---------- */
-document.addEventListener("input", e => { const el = e.target; if (el.id && el.closest("#view")) drafts[el.id] = el.type === "checkbox" ? el.checked : el.value; if (el.id === "typed" && SES) { SES.typed = el.value; SES.lastAct = Date.now(); } });
+document.addEventListener("input", e => { const el = e.target; if (SES?.recall) SES.lastAct = Date.now(); if (el.id && el.closest("#view")) drafts[el.id] = el.type === "checkbox" ? el.checked : el.value; if (el.id === "typed" && SES) { SES.typed = el.value; SES.lastAct = Date.now(); } });
 document.addEventListener("change", e => {
   const el = e.target;
   if (el.id && el.closest("#view") && el.type !== "file") drafts[el.id] = el.type === "checkbox" ? el.checked : el.value;
@@ -1697,7 +1947,7 @@ document.addEventListener("submit", e => {
 ["copy","cut"].forEach(ev => document.addEventListener(ev, e => { if (SES && !$("#sheet").hidden) e.preventDefault(); }, true));
 document.addEventListener("keydown", e => {
   if (!SES || SES.recall || SES.finished || $("#sheet").hidden) return;
-  if (SES.revealed && ["1","2","3"].includes(e.key) && e.target.tagName !== "INPUT"){ gradeCard(+e.key - 1); }
+  if (SES.revealed && ["1","2","3"].includes(e.key) && e.target.tagName !== "INPUT"){ const b = document.querySelector(`.grade[data-g="${+e.key - 1}"]`); if (b && !b.disabled) gradeCard(+e.key - 1); }
   if (e.key === "Escape") { persistSession(); closeSheet(); }
 });
 document.addEventListener("click", async e => {
@@ -1729,14 +1979,15 @@ document.addEventListener("click", async e => {
     case "signup": doLogin(true); break;
     case "menu": openMenu(); break;
     case "logout": closeSheet(); await sb.auth.signOut(); location.reload(); break;
+    case "skin": { try { localStorage.setItem(SKIN_KEY, t.dataset.v); } catch {} applySkin(t.dataset.v); render(); break; }
     case "previewOn": closeSheet(); role.preview = true; tab = "dzis"; window.scrollTo(0,0); render(); break;
     case "previewOff": role.preview = false; tab = "rodzic"; render(); loadAll(fam.id).then(render).catch(() => {}); break;
     case "loadPack": loadPack(); break;
     case "addMember": addMember(); break;
     case "recall": startRecall(); break;
     case "recallNext": SES.step = 2; SES.lastAct = Date.now(); renderRecall(); break;
-    case "recallDone": { SES.points = 15; persistSession(); const ms = SES.activeMs; closeSheet(); toast(`Odpytywanie zapisane: ${fmtMin(ms)}.`); break; }
-    case "grade": gradeCard(+t.dataset.g); break;
+    case "recallDone": { SES.points = 15; SES.doneAt = Date.now(); persistSession(); closeSheet(); toast("Odpytywanie zapisane, +15 pkt."); break; }
+    case "grade": if (!t.disabled) gradeCard(+t.dataset.g); break;
     case "quit": persistSession(); closeSheet(); break;
     case "close": closeSheet(); break;
     case "flag": {
@@ -1760,7 +2011,8 @@ document.addEventListener("click", async e => {
       let o = unitsOf(id).length; lines.forEach(l => store.put("units", uid("u"), { subjectId: id, title: l, order: ++o }));
       delete drafts["toc_" + id]; toast(`Dodano ${lines.length} ${plural(lines.length,"dział","działy","działów")}.`); break; }
     case "delUnit": if (t.dataset.confirm !== "1"){ t.dataset.confirm = "1"; t.textContent = "Na pewno?"; return; }
-      cardsOf(id).forEach(([c]) => store.del("cards", c)); store.del("units", id); break;
+      cardsOf(id).forEach(([c]) => store.del("cards", c)); store.del("units", id);
+      Object.entries(S.tests).forEach(([k, x]) => { if ((x.unitIds||[]).includes(id)) store.put("tests", k, { ...x, unitIds: x.unitIds.filter(u => u !== id) }); }); break;
     case "addCard": {
       const sid = $("#a_subj").value, unit = $("#a_unit").value, type = $("#a_type").value;
       const front = $("#a_front").value.trim(), back = $("#a_back").value.trim();
@@ -1788,7 +2040,7 @@ document.addEventListener("click", async e => {
       Object.keys(drafts).filter(k => k.startsWith("t_")).forEach(k => delete drafts[k]); toast("Dodano sprawdzian."); break; }
     case "delTest": store.del("tests", id); break;
     case "fixCard": { const f = S.flags[id]; const c = S.cards[f.cardId];
-      store.put("cards", f.cardId, { ...c, front: $("#fx_f_" + id).value.trim() || c.front, back: c.type === "cloze" ? "" : $("#fx_b_" + id).value.trim() });
+      store.put("cards", f.cardId, { ...c, front: $("#fx_f_" + id).value.trim() || c.front, back: c.type === "cloze" ? "" : $("#fx_b_" + id).value.trim(), editedAt: new Date().toISOString() });
       store.put("flags", id, { ...f, resolved: true }); toast("Poprawiono kartę."); break; }
     case "resolveFlag": store.put("flags", id, { ...S.flags[id], resolved: true }); break;
     case "delFlagCard": store.del("cards", S.flags[id].cardId); store.put("flags", id, { ...S.flags[id], resolved: true }); break;
@@ -1796,29 +2048,62 @@ document.addEventListener("click", async e => {
     case "wipeDemo": {
       if (t.dataset.confirm !== "1"){ t.dataset.confirm = "1"; t.textContent = "Kliknij jeszcze raz, żeby usunąć"; return; }
       const wipe = $("#c_wipe")?.checked;
+      const demoCards = new Set(Object.entries(S.cards).filter(([,v]) => v.demo).map(([k]) => k));
       ["cards","units","subjects","tests"].forEach(col => Object.entries(S[col]).forEach(([k,v]) => { if (v.demo) store.del(col, k); }));
-      Object.keys(S.progress).forEach(k => { if (!S.cards[k] || wipe) store.del("progress", k); });
-      if (wipe){ Object.keys(S.sessions).forEach(k => store.del("sessions", k)); Object.keys(S.flags).forEach(k => store.del("flags", k)); }
+      Object.keys(S.progress).forEach(k => { if (demoCards.has(k)) store.del("progress", k); });
+      if (wipe){   // tylko historia przykładowych kart: sesje, w których wszystkie odpowiedzi dotyczą kart przykładowych
+        Object.entries(S.sessions).forEach(([k,v]) => { const a = v.answers || []; if (a.length && a.every(x => demoCards.has(x.c))) store.del("sessions", k); });
+        Object.entries(S.flags).forEach(([k,v]) => { if (demoCards.has(v.cardId)) store.del("flags", k); }); }
       store.put("meta", "config", { ...(S.meta.config||{}), demo: false }); toast("Usunięto przykładowe dane."); break; }
   }
 });
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && SES && !SES.recall && !SES.finished) persistSession(); });
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden" && SES && !SES.finished) persistSession();
+  // runda zostawiona otwarta przez noc: zapisz ją pod jej dniem i zamknij
+  if (document.visibilityState === "visible" && SES && !SES.finished && SES.date !== TODAY()){ persistSession(); closeSheet(); toast("Wczorajsza runda zapisana. Zacznij nową."); }
+});
 
 /* ---------- start: Supabase (logowanie + wspólna baza rodziny) ---------- */
 if (!window.BORBAN){ document.body.innerHTML = '<div style="font:16px system-ui,sans-serif;max-width:420px;margin:60px auto;padding:20px;border:2px solid #1d2433;border-radius:12px">BorBan działa tylko pod adresem <b>borban.vercel.app</b>. Ten plik służy do wgrania na GitHub, nie do otwierania na komputerze.</div>'; throw new Error("BorBan: brak config.js (otwarty plik lokalnie?)"); }
 const sb = supabase.createClient(window.BORBAN.url, window.BORBAN.anonKey, { auth: { persistSession: true, autoRefreshToken: true } });
 const fam = { id:null, role:null, name:"", members:[], me:null };
 const CHILD_COLS = ["progress","sessions","woop","flags","notes"];
+// Kolejka zapisów w telefonie: odpowiedź bez internetu nie ginie, wysyłamy ją przy następnej okazji.
+const OUTBOX_KEY = fid => "borban_outbox_" + fid;
+function outboxRead(fid){ try { return JSON.parse(localStorage.getItem(OUTBOX_KEY(fid)) || "{}") || {}; } catch { return {}; } }
+function outboxWrite(fid, o){ try { localStorage.setItem(OUTBOX_KEY(fid), JSON.stringify(o)); } catch {} }
+const SAFE_ID = /^[A-Za-z0-9_.:-]{1,120}$/;   // rekord z innym id (np. wstrzyknięty przez REST) jest pomijany
+const stampOf = d => { const v = d?.at ?? d?.editedAt; return v ? (typeof v === "number" ? v : Date.parse(v) || 0) : 0; };
 function makeSbStore(fid){
-  const q = {};
-  const chain = (key, fn) => (q[key] = (q[key] || Promise.resolve()).then(fn).then(r => { if (r?.error) throw r.error; }).catch(e => { console.warn(e); toast("Nie udało się zapisać. Sprawdź internet."); }));
-  const previewSkip = col => role.preview && CHILD_COLS.includes(col);
+  const q = {}; let warned = 0, parentWarned = false;
+  const send = async (k, e) => {
+    if (e.del) return sb.from("borban_docs").delete().match({ family_id: fid, col: e.col, id: e.id });
+    if (e.retry){   // ponowne wysłanie po braku sieci: nie nadpisuj nowszej wersji z innego urządzenia
+      const { data, error } = await sb.from("borban_docs").select("data").match({ family_id: fid, col: e.col, id: e.id }).maybeSingle();
+      if (error) return { error };
+      if (data?.data && stampOf(data.data) > stampOf(e.data)) return { data: null };
+    }
+    return sb.from("borban_docs").upsert({ family_id: fid, col: e.col, id: e.id, data: e.data, updated_at: new Date().toISOString() }); };
+  const chain = (k, e) => (q[k] = (q[k] || Promise.resolve()).then(() => send(k, e)).then(r => { if (r?.error) throw r.error;
+      const o = outboxRead(fid); if (o[k]?.t === e.t){ delete o[k]; outboxWrite(fid, o); } })
+    .catch(err => { console.warn(err);
+      const perm = err?.code && /^(42501|42P01|23\d{3}|22\d{3}|PGRST1\d\d|PGRST2\d\d)$/.test(err.code) && !/jwt/i.test(err.message||"");
+      if (perm && !["progress","sessions"].includes(e.col)){   // trwała odmowa bazy (uprawnienia, zły rekord): ponawianie nic nie da
+        const o = outboxRead(fid); if (o[k]?.t === e.t){ delete o[k]; outboxWrite(fid, o); }
+        toast(/42501|PGRST301|JWT/i.test(err.code + " " + (err.message||"")) ? "Nie udało się zapisać: brak uprawnień albo wygasło logowanie. Zaloguj się ponownie." : "Nie udało się zapisać zmiany."); return; }
+      if (Date.now() - warned > 60000){ warned = Date.now(); toast(perm ? "Odpowiedź czeka w telefonie: baza jej nie przyjęła. Daj znać rodzicowi." : "Brak połączenia: zapisane w telefonie, wyślę, gdy wróci sieć."); } }));
+  const enqueue = (col, id, e) => { const k = col + "/" + id; e.t = Date.now() + Math.random(); const o = outboxRead(fid); o[k] = e; outboxWrite(fid, o); return chain(k, e); };
+  // podgląd ucznia i konto rodzica: postępy i sesje zostają tylko na ekranie (nie mieszają się z postępami ucznia)
+  const localOnly = col => (role.preview && CHILD_COLS.includes(col)) || (fam.role === "parent" && ["progress","sessions"].includes(col));
   return {
     mode:"sb",
-    put(col, id, data){ S[col] = {...S[col], [id]: data}; scheduleRender(); if (previewSkip(col)) return Promise.resolve();
-      return chain(col + "/" + id, () => sb.from("borban_docs").upsert({ family_id: fid, col, id, data, updated_at: new Date().toISOString() })); },
-    del(col, id){ const o = {...S[col]}; delete o[id]; S[col] = o; scheduleRender(); if (previewSkip(col)) return Promise.resolve();
-      return chain(col + "/" + id, () => sb.from("borban_docs").delete().match({ family_id: fid, col, id })); },
+    put(col, id, data){ if (data && typeof data === "object" && data.at == null) data = { ...data, at: Date.now() };   // stempel: nowsza wersja wygrywa
+      S[col] = {...S[col], [id]: data}; scheduleRender();
+      if (localOnly(col)){ if (fam.role === "parent" && !role.preview && !parentWarned){ parentWarned = true; toast("Konto rodzica: odpowiedzi nie zapisują się w postępach ucznia."); } return Promise.resolve(); }
+      return enqueue(col, id, { col, id, data }); },
+    del(col, id){ const o = {...S[col]}; delete o[id]; S[col] = o; scheduleRender(); if (localOnly(col)) return Promise.resolve();
+      return enqueue(col, id, { col, id, del: true }); },
+    flush(){ const o = outboxRead(fid); Object.entries(o).forEach(([k, e]) => chain(k, { ...e, retry: true })); return Object.keys(o).length; },
     async bulk(rows){ for (let i = 0; i < rows.length; i += 200){ const { error } = await sb.from("borban_docs").upsert(rows.slice(i, i+200).map(r => ({ family_id: fid, col: r.col, id: r.id, data: r.data, updated_at: new Date().toISOString() }))); if (error) throw error; } }
   };
 }
@@ -1827,21 +2112,37 @@ async function loadAll(fid){
   for (let from = 0; ; from += 1000){
     const { data, error } = await sb.from("borban_docs").select("col,id,data").eq("family_id", fid).range(from, from + 999);
     if (error) throw error;
-    data.forEach(r => { if (fresh[r.col]) fresh[r.col][r.id] = r.data; });
+    data.forEach(r => { if (fresh[r.col] && SAFE_ID.test(r.id) && r.data && typeof r.data === "object") fresh[r.col][r.id] = r.data; });
     if (data.length < 1000) break;
   }
+  // niewysłane zapisy z telefonu mają pierwszeństwo, chyba że w bazie jest nowsza wersja (np. z drugiego urządzenia)
+  { const o = outboxRead(fid); let changed = false;
+    Object.entries(o).forEach(([k, e]) => { if (!fresh[e.col]) return; const srv = fresh[e.col][e.id];
+      if (e.del){ delete fresh[e.col][e.id]; return; }
+      if (srv && stampOf(srv) > stampOf(e.data)){ delete o[k]; changed = true; return; }   // w bazie jest nowsza wersja: starego wpisu nie wysyłamy
+      fresh[e.col][e.id] = e.data; });
+    if (changed) outboxWrite(fid, o); }
+  // postępy ucznia: nowsza odpowiedź wygrywa (karta otwarta w sesji nie cofa się przez starszy stan z bazy);
+  // odpowiedzi z konta rodzica i z podglądu są tylko na ekranie, więc ich nie zachowujemy
+  if (fam.role === "child") Object.entries(S.progress || {}).forEach(([id, loc]) => { const srv = fresh.progress[id]; if (srv && stampOf(loc) > stampOf(srv)) fresh.progress[id] = loc; });
   COLS.forEach(c => S[c] = fresh[c]);
 }
 let reloadTimer = null;
 function watch(fid){
   sb.channel("fam-" + fid).on("postgres_changes", { event:"*", schema:"public", table:"borban_docs", filter:"family_id=eq." + fid }, p => {
-    const r = p.new && p.new.col ? p.new : p.old; if (!r || !S[r.col]) return;
+    const r = p.new && p.new.col ? p.new : p.old; if (!r || !S[r.col] || !SAFE_ID.test(String(r.id))) return;
     if (p.eventType === "DELETE"){ const o = {...S[r.col]}; delete o[r.id]; S[r.col] = o; }
-    else S[r.col] = {...S[r.col], [r.id]: p.new.data};
+    else { const loc = S[r.col][r.id]; if (r.col === "progress" && fam.role === "child" && loc && stampOf(loc) > stampOf(p.new.data)) return; S[r.col] = {...S[r.col], [r.id]: p.new.data}; }
     if (!SES) scheduleRender();
   }).subscribe();
-  const refresh = () => { if (document.visibilityState === "visible" && !SES) loadAll(fid).then(scheduleRender).catch(() => {}); };
+  const refresh = () => { if (document.visibilityState !== "visible") return; store?.flush?.();
+    if (!SES){ loadAll(fid).then(scheduleRender).catch(() => {}); return; }
+    // w trakcie rundy: dociągnij tylko postępy kart z kolejki (np. zmienione na drugim urządzeniu)
+    const ids = (SES.queue || []).slice(SES.i); if (!ids.length) return;
+    sb.from("borban_docs").select("id,data").eq("family_id", fid).eq("col", "progress").in("id", ids.slice(0, 200))
+      .then(({ data }) => (data || []).forEach(r => { const loc = S.progress[r.id]; if (!loc || stampOf(r.data) > stampOf(loc)) S.progress = {...S.progress, [r.id]: r.data}; })).catch(() => {}); };
   document.addEventListener("visibilitychange", refresh);
+  window.addEventListener("online", () => store?.flush?.());
   clearInterval(reloadTimer); reloadTimer = setInterval(refresh, 120000);
 }
 function authScreen(msg){
@@ -1865,6 +2166,23 @@ async function doLogin(signup){
   if (signup && !data.session){ authScreen("Konto założone. Potwierdź adres e-mail z wiadomości, którą przyszła, a potem się zaloguj."); return; }
   start();
 }
+// rodzic: zdjęcia potwierdzonych notatek kasujemy po 30 dniach (tekst zostaje w notatce)
+async function removePhotos(id){
+  const n = S.notes[id]; if (!n?.photos?.length) return;
+  const mine = n.photos.filter(x => typeof x === "string" && x.startsWith(`${fam.id}/${id}/`) && !x.includes(".."));   // tylko pliki tej notatki
+  try { if (mine.length){ const { error } = await sb.storage.from("notes").remove(mine); if (error) throw error; }
+    store.put("notes", id, { ...S.notes[id], photos: [], photosDeleted: new Date().toISOString() }); }
+  catch (e){ console.warn(e); }   // zostają w notatce; spróbujemy przy następnym uruchomieniu
+}
+async function cleanupPhotos(){
+  const lim = Date.now() - 30*86400000;
+  const parents = new Set(fam.members.filter(m => m.role === "parent").map(m => m.email).filter(Boolean));
+  for (const [id, n] of Object.entries(S.notes)){
+    if (!n.photos?.length) continue;
+    if (n.status === "rejected" && (!parents.size || parents.has(n.confirmedBy))) await removePhotos(id);
+    else if (n.status === "confirmed" && Date.parse(n.confirmedAt) < lim && (!parents.size || parents.has(n.confirmedBy))) await removePhotos(id);
+  }
+}
 async function loadMembers(){
   const { data } = await sb.from("borban_members").select("user_id,role,display_name,email").eq("family_id", fam.id);
   fam.members = data || [];
@@ -1879,8 +2197,9 @@ async function start(){
   fam.id = mem[0].family_id; fam.role = mem[0].role; fam.name = mem[0].borban_families?.name || "";
   role.canEdit = fam.role === "parent"; role.canWrite = true; role.isOwner = role.canEdit; role.preview = false;
   try { await loadAll(fam.id); } catch (e){ console.warn(e); $("#view").innerHTML = `<div class="empty">Nie udało się wczytać danych. Sprawdź internet i odśwież.</div>`; return; }
-  store = makeSbStore(fam.id);
+  store = makeSbStore(fam.id); store.flush();
   if (role.canEdit) loadMembers().then(scheduleRender);
+  if (fam.role === "parent") setTimeout(() => loadMembers().then(cleanupPhotos), 8000);
   $("#hdrMenu").hidden = false;
   watch(fam.id);
   render();
