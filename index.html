@@ -414,9 +414,10 @@ function grade(prev, g, today, hold){
     return p;
   }
   if (hold){ p.run = base; p.reps = 0; p.interval = 0; p.due = today; p.ease = Math.max(1.3, +(p.ease - 0.1).toFixed(2)); return p; }   // częściowo dobrze po błędzie: licznik stoi, karta wraca
-  const upsToday = p.ups && p.ups.d === today ? p.ups.n : 0;
-  if (upsToday >= 2 && base < MASTERY_RUN){ p.lastOk = today; p.reps = 0; p.interval = 0; p.due = addDays(today, 1); p.run = base; return p; }   // trzeci poziom dopiero kolejnego dnia (pamięć, nie chwilowa powtórka)
-  p.run = base + 1; p.lastOk = today; if (base < MASTERY_RUN) p.ups = { d: today, n: upsToday + 1 };
+  // opanowanie wymaga co najmniej 2 dni: seria dobrych odpowiedzi zaczęta dziś nie może dziś dojść do 3 (pamięć, nie chwilowa powtórka)
+  if (base + 1 >= MASTERY_RUN && base < MASTERY_RUN && p.runStart === today){ p.lastOk = today; p.reps = 0; p.interval = 0; p.due = addDays(today, 1); p.run = base; return p; }
+  if (base === 0) p.runStart = today;
+  p.run = base + 1; p.lastOk = today; delete p.ups;
   if (g === 1) p.ease = Math.max(1.3, +(p.ease - 0.15).toFixed(2));
   if (p.run < MASTERY_RUN){ p.reps = 0; p.interval = 0; p.due = today; }            // jeszcze nie opanowana: wraca dziś
   else if (!wasMastered){ p.reps = 1; p.interval = 1; p.due = addDays(today, 1); }    // właśnie opanowana: pierwsza powtórka jutro
@@ -1796,7 +1797,7 @@ function gradeCap(c, g){
   const cid = SES.queue[SES.i];
   if (SES.hint === cid) g = Math.min(g, 1);                                     // po podpowiedzi najwyżej „Z trudem”
   const typed = String(SES.typed||"").trim();
-  if (!typed) return (SES.kind === "test" || SES.kind === "step") ? Math.min(g, 1) : g;   // bez wpisu samoocena; przed sprawdzianem „Wiem” tylko z wpisem
+  if (!typed) return (SES.kind === "test" || SES.kind === "step" || (SES.kind === "morning" && Object.values(S.tests).some(x => x.date === TODAY()))) ? Math.min(g, 1) : g;   // bez wpisu samoocena; przed sprawdzianem „Wiem” tylko z wpisem
   const { local, ai } = answerVerdict(c, SES.queue[SES.i], typed);
   if (local === "exact" || local === "close") return g;
   if (local === "no" || local === "dk") return 0;                               // inna liczba/data albo „nie wiem”
