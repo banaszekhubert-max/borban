@@ -1413,7 +1413,7 @@ function viewAdmin(){
     <button class="btn primary" data-act="loadPack">Wczytaj paczkę</button>
   </div></details>
   ${flags.length ? `<details class="adm" open><summary>Zgłoszenia od Borysa (${flags.length})</summary><div class="body">${flags.map(([fid,f]) => { const c = S.cards[f.cardId];
-    return `<div class="stack" style="gap:6px;padding:10px;border-radius:12px;background:var(--sunk)"><p class="small muted">${fmtDate(f.date)}${f.note ? ` · „${esc(f.note)}”` : ""}</p>
+    return `<div class="stack" style="gap:6px;padding:10px;border-radius:12px;background:var(--sunk)"><p class="small muted">${fmtDate(f.date)}${f.note ? ` · ${esc(f.note)}` : ""}${f.typed ? ` · wpisał: „${esc(f.typed)}”` : ""}</p>
     ${c ? `<input type="text" id="fx_f_${fid}" value="${esc(c.front)}"><input type="text" id="fx_b_${fid}" value="${esc(c.back)}" ${c.type==="cloze"?'placeholder="(luka w treści)"':""}>
     <div class="row"><button class="btn sm primary" data-act="fixCard" data-id="${fid}">Zapisz poprawkę</button><button class="btn sm" data-act="resolveFlag" data-id="${fid}">Karta jest dobra</button><button class="btn sm ghost danger" data-act="delFlagCard" data-id="${fid}">Usuń kartę</button></div>` : `<p class="small">Karta została usunięta.</p><button class="btn sm" data-act="resolveFlag" data-id="${fid}">Zamknij</button>`}</div>`; }).join("")}</div></details>` : ""}
 
@@ -1652,6 +1652,17 @@ function answerAlts(answer, type){
   const base = /\d[₀-₉]+(?=\s|$|\()/.test(String(answer)) ? [String(answer).replace(/(\d)[₀-₉]+(?=\s|$|\()/g, "$1").replace(/\s*\([^()]*\)\s*$/, "")] : [];   // 53₈ → 53
   return [...new Set([String(answer), main, ...(parts.length > 1 ? parts : []), ...extra, ...base].filter(x => String(x).trim()))];
 }
+// wartość wyrażenia z samych liczb („2500 + 100 + 1”, „(50+1)²”, „3,5·2”); null, gdy są litery lub coś innego
+function numValue(x){
+  let e = fold(x).replace(/[²³]/g, m => m === "²" ? "^2" : "^3").replace(/[⁰¹⁴-⁹]/g, "").replace(/[×·*]/g, "*").replace(/:/g, "/").replace(/(\d),(\d)/g, "$1.$2").replace(/\s+/g, "");
+  if (!e || /[^0-9+\-*/().^]/.test(e) || !/\d/.test(e)) return null;
+  const t = e.match(/\d+(?:\.\d+)?|[-+*/^()]/g) || []; let i = 0;
+  const num = () => { const k = t[i++]; if (k === "("){ const v = add(); i++; return v; } if (k === "-") return -pw(); return parseFloat(k); };
+  const pw = () => { let b = num(); while (t[i] === "^"){ i++; b = Math.pow(b, num()); } return b; };
+  const mul = () => { let v = pw(); while (t[i] === "*" || t[i] === "/"){ const o = t[i++], r = pw(); v = o === "*" ? v * r : v / r; } return v; };
+  const add = () => { let v = mul(); while (t[i] === "+" || t[i] === "-"){ const o = t[i++], r = mul(); v = o === "+" ? v + r : v - r; } return v; };
+  try { const v = add(); return i === t.length && Number.isFinite(v) ? v : null; } catch { return null; }
+}
 // wynik: "exact" | "close" | "no" (inna liczba – na pewno źle) | "dk" („nie wiem”) | "" (nie wiadomo – zdecyduje AI)
 function checkAnswer(typed, answer, type){
   if (!String(typed||"").trim()) return "";
@@ -1673,6 +1684,15 @@ function checkAnswer(typed, answer, type){
     if (mathy) continue;                                   // wzory, liczby, przedziały: tylko porównanie zapisu wzoru (nawias ma znaczenie)
     const r = shortMatch(tp, plain(a)); if (r) return r;
   }
+  // obliczenie: ten sam wynik liczbowy co ostatnia strona odpowiedzi („2500 + 100 + 1” przy „… = 2601”)
+  if (!/[a-z]/.test(fold(answer).replace(/\([^()]*\)/g, ""))){ const last = String(answer).split("=").pop(), av = numValue(last), tv = numValue(typed.split("=").pop());
+    if (av != null && tv != null && Math.abs(av - tv) < 1e-9) return "close"; }
+  // lista „nazwa – opis, nazwa – opis”: wystarczą same nazwy, w dowolnej kolejności
+  { const heads = splitParen(answer).main.split(/\s*[,;]\s*/).map(x => x.split(/\s+[–—-]\s+/)).filter(x => x.length > 1).map(x => plain(x[0])).filter(Boolean);
+    if (heads.length >= 2 && heads.every(h => h.split(" ").length <= 2)){
+      const got = typed.split(/\s*[,;]\s*|\s+i\s+|\s+oraz\s+/).map(plain).filter(Boolean);
+      const near = (y, h) => y === h || (!/\d/.test(h) && h.length >= 6 && lev(y, h) <= 2);
+      if (got.length === heads.length && heads.every(h => got.some(y => near(y, h)))) return "close"; } }
   // lista po przecinku (np. pierwiastki, cechy): każdy element musi być, kolejność dowolna
   const { main } = splitParen(answer);
   const LIST = /\s*[,;]\s*|\s+i\s+|\s+oraz\s+|\s+und\s+|\s+and\s+/;
@@ -2043,10 +2063,16 @@ document.addEventListener("click", async e => {
     case "grade": if (!t.disabled) gradeCard(+t.dataset.g); break;
     case "quit": persistSession(); closeSheet(); break;
     case "close": closeSheet(); break;
-    case "flag": {
-      const cid = SES.queue[SES.i];
-      store.put("flags", uid("f"), { cardId: cid, date: TODAY(), note: "", resolved: false });
-      toast("Dzięki! Tata sprawdzi tę kartę."); break; }
+    case "flag": {   // najpierw krótki powód, żeby było wiadomo, co poprawić
+      const box = document.createElement("div"); box.className = "row"; box.style.cssText = "gap:6px;justify-content:center;flex-wrap:wrap";
+      box.innerHTML = [["ok","Moja odpowiedź była dobra"],["card","Błąd w karcie"],["unclear","Niejasne pytanie"]]
+        .map(([v, l]) => `<button type="button" class="btn sm" data-act="flagWhy" data-v="${v}">${l}</button>`).join("");
+      t.replaceWith(box); break; }
+    case "flagWhy": {
+      const cid = SES.queue[SES.i], why = { ok: "Moja odpowiedź była dobra", card: "Błąd w karcie", unclear: "Niejasne pytanie" }[t.dataset.v] || "";
+      store.put("flags", uid("f"), { cardId: cid, date: TODAY(), note: why, typed: String(SES.typed || "").slice(0, 200), resolved: false });
+      t.parentElement.replaceWith(Object.assign(document.createElement("p"), { className: "small muted", style: "text-align:center", textContent: "Dzięki! Tata sprawdzi tę kartę." }));
+      break; }
     case "subj": mapSubject = id; openUnit = null; render(); break;
     case "unit": openUnit = openUnit === id ? null : id; render(); break;
     case "runImport": runImport(); break;
