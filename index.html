@@ -96,6 +96,8 @@ p{margin:0}
 .top .wrap{display:flex; align-items:center; gap:10px; padding-block:10px}
 .brand{font-family:var(--f-display); font-weight:800; font-size:1.3rem; margin-right:auto; position:relative}
 .brand span{background:linear-gradient(transparent 58%, var(--hl) 58%, var(--hl) 92%, transparent 92%); color:var(--ink)}
+@media (max-width:440px){ .top .wrap{gap:6px} .top .pill{padding:4px 7px; gap:3px; font-size:.82rem} .top .pill svg{width:14px; height:14px} .top .iconbtn{width:34px !important; height:34px !important} .brand{font-size:1.1rem} }
+@media (max-width:400px){ #hdrCam{display:none !important} }   /* zdjęcie notatki jest też na ekranie Dziś */
 .pill{display:inline-flex; align-items:center; gap:5px; padding:5px 10px; border-radius:999px; background:var(--surface); border:1px solid var(--line); font-weight:700; font-variant-numeric:tabular-nums; font-size:.9rem; white-space:nowrap}
 .pill svg{width:16px; height:16px}
 .pill.flame svg{color:#E8590C}
@@ -315,6 +317,7 @@ button.task:hover{border-color:var(--primary)}
     <div class="brand"><span>BorBan</span></div>
     <button class="iconbtn" id="hdrCam" data-act="noteNew" aria-label="Zrób zdjęcie notatki" title="Zdjęcie notatki" hidden style="width:38px;height:38px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/></svg></button>
     <button class="iconbtn" id="hdrBook" data-tab="zeszyt" aria-label="Zeszyt" title="Zeszyt" hidden style="width:38px;height:38px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6"/></svg></button>
+    <span class="pill" id="hdrTime" title="Czas nauki dziś"></span>
     <span class="pill flame" id="hdrStreak" title="Seria dni nauki"></span>
     <span class="pill star" id="hdrPoints" title="Punkty w tym tygodniu"></span>
     <button class="iconbtn" id="hdrMenu" data-act="menu" aria-label="Konto" hidden style="width:38px;height:38px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></button>
@@ -338,6 +341,7 @@ applySkin(getSkin());
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const ICON = {
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
   flame:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 3.5 5 5.6 5 10.5A5 5 0 0 1 12 22a5.5 5.5 0 0 1-5.5-5.4c0-2.3 1.2-3.7 2.3-4.8.3 1.4 1 2.4 2 2.8-.6-3.3.3-6.6 1.2-12.6z"/></svg>',
   star:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2.5 2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg>',
   home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>',
@@ -694,6 +698,7 @@ function scheduleRender(){ if (renderQueued) return; renderQueued = true; reques
 function render(){
   const st = streak();
   $("#hdrStreak").innerHTML = `${ICON.flame}${st}`;
+  $("#hdrTime").innerHTML = `${ICON.clock}${fmtClock(activeMsOn(TODAY()))}`;
   $("#hdrPoints").innerHTML = `${ICON.star}${pointsInWeek(mondayOf(TODAY()))}`;
   const tabs = [["dzis","Dziś",ICON.home],["mapa","Mapa",ICON.map],["postepy","Postępy",ICON.chart],["plan","Plan",ICON.cal]];
   if (role.canEdit && !role.preview){ tabs.push(["rodzic","Rodzic",ICON.eye]); tabs.push(["tata","Materiał",ICON.tool]); }
@@ -1530,7 +1535,11 @@ function startSession(kind, id){
   SES = { id: uid("s"), kind, ref: id || null, queue, base: kind === "daily" ? queue.reduce((a, c) => a + (isMastered(c) ? 1 : Math.min(3, MASTERY_RUN - runOf(S.progress[c]))), 0) : queue.length, firstDone: 0, rqSeen: {}, i:0, date: TODAY(), start: Date.now(), activeMs:0, lastAct: Date.now(), n:0, ok:0, hard:0, wrong:0, newN:0, points:0, revealed:false, typed:"", wrongIds:[] };
   openSheet(); renderStudy(); startTick();
 }
-function startTick(){ clearInterval(tick); tick = setInterval(() => { if (SES && document.visibilityState === "visible" && (SES.recall ? SES.activeMs < 40*60000 : Date.now() - SES.lastAct < 90000)) SES.activeMs += 1000; if (SES?.recall) renderRecallTimer(); }, 1000); }
+// zegar: m:ss do godziny, potem g:mm:ss
+const fmtClock = ms => { const t = Math.max(0, Math.round(ms / 1000)), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), sec = t % 60;
+  return h ? `${h}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}` : `${m}:${String(sec).padStart(2, "0")}`; };
+function startTick(){ clearInterval(tick); tick = setInterval(() => { if (SES && document.visibilityState === "visible" && (SES.recall ? SES.activeMs < 40*60000 : Date.now() - SES.lastAct < 90000)) SES.activeMs += 1000; if (SES?.recall) renderRecallTimer();
+  const el = document.getElementById("sesClock"); if (el && SES) el.textContent = fmtClock(SES.activeMs); }, 1000); }
 function openSheet(){ $("#sheet").hidden = false; document.body.style.overflow = "hidden"; }
 function closeSheet(){ $("#sheet").hidden = true; document.body.style.overflow = ""; clearInterval(tick); SES = null; scheduleRender(); }
 function sessionDoc(){ return { date: SES.date, start: SES.start, end: Date.now(), activeMs: SES.activeMs, kind: SES.kind, ref: SES.ref, n: SES.n, ok: SES.ok, hard: SES.hard, wrong: SES.wrong, newN: SES.newN, points: SES.points, answers: SES.answers || [] }; }
@@ -1778,7 +1787,7 @@ function renderStudy(){
     : ai.verdict === "no" ? `Nie o to chodzi.${ai.why ? " " + esc(ai.why) : ""} Liczy się jak „Nie wiem”, karta wróci.`
     : `Twoja odpowiedź: ${esc(typed)}. Porównaj z poprawną odpowiedzią i oceń sam: jeśli chodzi o to samo, kliknij „Wiem”.`;
   sh.innerHTML = `<div class="wrap">
-    <div class="sbar"><button class="iconbtn" data-act="quit" aria-label="Zakończ sesję">${ICON.x}</button><div class="bar"><i style="width:${pct}%"></i></div><span class="small muted" style="font-variant-numeric:tabular-nums">${SES.kind === "daily" ? `${SES.n + 1}/${Math.max(SES.base, SES.n + SES.queue.length - SES.i)} odp.` : `${Math.min(SES.base || SES.queue.length, (SES.firstDone||0) + 1)}/${SES.base || SES.queue.length}${SES.rqSeen?.[SES.i] ? " · powtórka" : ""}`}</span></div>
+    <div class="sbar"><button class="iconbtn" data-act="quit" aria-label="Zakończ sesję">${ICON.x}</button><span class="pill" title="Czas tej sesji" style="flex:none">${ICON.clock}<span id="sesClock">${fmtClock(SES.activeMs)}</span></span><div class="bar"><i style="width:${pct}%"></i></div><span class="small muted" style="font-variant-numeric:tabular-nums">${SES.kind === "daily" ? `${SES.n + 1}/${Math.max(SES.base, SES.n + SES.queue.length - SES.i)} odp.` : `${Math.min(SES.base || SES.queue.length, (SES.firstDone||0) + 1)}/${SES.base || SES.queue.length}${SES.rqSeen?.[SES.i] ? " · powtórka" : ""}`}</span></div>
     <div class="fc">
       <div class="meta"><span class="dot" style="--c:${scol(s)}"></span>${esc(s?.name)} · ${esc(u?.title)}${isNew ? ` <span class="chip here">nowa</span>` : ""}${c.type === "vocab" ? ` <span class="chip">przetłumacz</span>` : ""}${u?.svg && SES.revealed ? ` <button class="btn sm ghost" data-act="upic" style="padding:2px 10px">${SES.upic === c.unitId ? "Ukryj obrazek działu" : "Obrazek działu"}</button>` : ""}</div>
       ${u?.svg && SES.revealed && SES.upic === c.unitId ? `<div class="pic">${cleanSvg(u.svg)}</div>` : ""}
