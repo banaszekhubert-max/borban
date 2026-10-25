@@ -82,6 +82,84 @@ create table library_cards (
   updated_at timestamptz not null default now()
 );
 
+-- ===== Szkoła i klasa (wspólne dla klasy, od 25.10.2026 – zob. docs/OSZCZEDNOSC-DANYCH.md) =====
+-- Zasada: dana trafia na najwyższy poziom, na którym jest taka sama dla wszystkich: podręcznik → klasa → uczeń.
+create table schools (
+  id uuid primary key default gen_random_uuid(),
+  name text not null, city text, partner_id uuid references partners(id)
+);
+
+create table class_groups (               -- oddział w danym roku szkolnym, np. „1 TP, 2026/27”
+  id uuid primary key default gen_random_uuid(),
+  school_id uuid not null references schools(id),
+  school_year text not null,              -- '2026/27'
+  label text not null,                    -- '1 TP'
+  join_code text unique,                  -- kod klasy od pierwszego rodzica albo szkoły
+  created_at timestamptz not null default now()
+);
+
+create table class_members (              -- członkostwo potwierdza rodzic
+  class_id uuid not null references class_groups(id) on delete cascade,
+  child_id uuid not null references children(id) on delete cascade,
+  confirmed_by uuid references auth.users(id), share_notes boolean not null default false,   -- zgoda na wspólny zeszyt
+  primary key (class_id, child_id)
+);
+
+create table class_textbooks (            -- podręczniki klasy; uczeń dziedziczy (child_textbooks tylko wyjątki)
+  class_id uuid not null references class_groups(id) on delete cascade,
+  textbook_id text not null references textbooks(id),
+  current_unit_id text references library_units(id),   -- „tu jesteśmy” dla całej klasy
+  primary key (class_id, textbook_id)
+);
+
+create table class_tests (                -- terminarz klasy: jeden wpis dla wszystkich uczniów
+  id uuid primary key default gen_random_uuid(),
+  class_id uuid not null references class_groups(id) on delete cascade,
+  subject_key text not null, date date not null, title text, unit_ids text[],
+  source text,                            -- 'librus_zrzut', 'reczny', 'szkola'
+  added_by uuid references auth.users(id), confirmations int not null default 1
+);
+
+create table class_notes (                -- zeszyt klasy: jedna notatka na lekcję, scalana z wielu zdjęć
+  id uuid primary key default gen_random_uuid(),
+  class_id uuid not null references class_groups(id) on delete cascade,
+  subject_key text not null, lesson_date date not null, unit_id text references library_units(id),
+  text text not null,                      -- tylko tekst potwierdzony przez rodzica, bez imion i pisma
+  version int not null default 1, contributors int not null default 1,
+  unique (class_id, subject_key, lesson_date)
+);
+
+create table class_cards (                -- karty z lekcji klasy; gdy powtarzają się w wielu klasach → library_cards
+  id uuid primary key default gen_random_uuid(),
+  class_id uuid not null references class_groups(id) on delete cascade,
+  note_id uuid references class_notes(id) on delete set null,
+  unit_id text references library_units(id),
+  type text not null check (type in ('qa','cloze','vocab')),
+  front text not null, back text, svg text, lit text, why text, ex text,
+  promoted_to text references library_cards(id),
+  created_at timestamptz not null default now()
+);
+
+-- Zdjęcia zostają przy rodzinie (lesson_photos w Storage, 30 dni); do klasy idzie tylko tekst.
+-- card_progress.card_key: 'lib:<id>' | 'cls:<uuid>' | 'fam:<uuid>'.
+
+-- ===== Pamięć werdyktów AI (wspólna, bez danych osobowych) =====
+create table answer_verdicts (            -- ta sama odpowiedź na tę samą kartę = jedno zapytanie do AI dla wszystkich
+  card_key text not null,
+  typed_norm text not null,               -- znormalizowany wpis (małe litery, bez polskich znaków, max 200 znaków)
+  card_version int not null,
+  verdict text not null check (verdict in ('yes','partial','no')),
+  why text, how text, model text,
+  hits int not null default 1, created_at timestamptz not null default now(),
+  primary key (card_key, card_version, typed_norm)
+);
+
+create table ai_quota (                   -- dzienny limit zapytań do AI na ucznia
+  child_id uuid not null references children(id) on delete cascade,
+  day date not null, calls int not null default 0,
+  primary key (child_id, day)
+);
+
 -- ===== Dziecko: co realizuje i czego się uczy =====
 create table child_textbooks (            -- subskrypcje: z jakich podręczników korzysta dziecko
   child_id uuid not null references children(id) on delete cascade,

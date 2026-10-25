@@ -13,6 +13,7 @@ BorBan zaczął jako prototyp dla jednego ucznia. Ten dokument opisuje, co dzia�
 4. **Jeden standard karty** (`docs/STANDARD-KART.md`): obrazek w stylu „Naklejki”, a przy pojęciach 3 kroki (skąd to się wzięło, dlaczego tak jest, przykład z życia).
 5. **Mierzymy od pierwszej rodziny.** Wynik firmy zależy od liczby dzieci na etat opiekuna, więc czas opiekuna na dziecko, skuteczność (oceny) i aktywność to dane pierwszej kategorii, nie dodatki.
 6. **Prosto, dopóki działa.** Vercel i Supabase udźwigną tysiące użytkowników, więc nie budujemy mikroserwisów ani własnych serwerów, zanim liczby tego nie wymuszą.
+7. **Dane raz, dla jak największej liczby dzieci.** Trzy poziomy: podręcznik → klasa → uczeń. Dana trafia na najwyższy poziom, na którym jest taka sama dla wszystkich (biblioteka per podręcznik, zeszyt i terminarz per klasa, tylko postępy i oceny per uczeń). Telefon pobiera tylko zmiany i tylko potrzebne działy, AI najpierw sprawdza wspólną pamięć werdyktów. Szczegóły i pięć pytań kontrolnych dla każdej funkcji: `docs/OSZCZEDNOSC-DANYCH.md`.
 
 ## Stan dziś (faza 0: prototyp na jednym uczniu)
 
