@@ -302,7 +302,7 @@ button.task:hover{border-color:var(--primary)}
 .trow .pct{text-align:right; font-weight:800; font-variant-numeric:tabular-nums}
 .vs{display:grid; grid-template-columns:44px minmax(0,1fr) auto; gap:10px; align-items:center; padding:8px 0; border-top:1px solid var(--line); font-size:.9rem}
 .vs:first-child{border-top:0}
-.toast{position:fixed; left:50%; bottom:calc(84px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--ink); color:var(--bg); padding:10px 16px; border-radius:12px; font-weight:700; z-index:40; max-width:calc(100% - 32px); box-shadow:var(--shadow)}
+.toast{pointer-events:none; position:fixed; left:50%; bottom:calc(84px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--ink); color:var(--bg); padding:10px 16px; border-radius:12px; font-weight:700; z-index:40; max-width:calc(100% - 32px); box-shadow:var(--shadow)}
 @media (prefers-reduced-motion: reduce){ *{transition:none!important; animation:none!important} }
 @keyframes pop{0%{transform:scale(.9); opacity:.4} 100%{transform:scale(1); opacity:1}}
 .fc{animation:pop .18s ease-out}
@@ -1789,7 +1789,7 @@ function renderStudy(){
   sh.innerHTML = `<div class="wrap">
     <div class="sbar"><button class="iconbtn" data-act="quit" aria-label="Zakończ sesję">${ICON.x}</button><span class="pill" title="Czas tej sesji" style="flex:none">${ICON.clock}<span id="sesClock">${fmtClock(SES.activeMs)}</span></span><div class="bar"><i style="width:${pct}%"></i></div><span class="small muted" style="font-variant-numeric:tabular-nums">${SES.kind === "daily" ? `${SES.n + 1}/${Math.max(SES.base, SES.n + SES.queue.length - SES.i)} odp.` : `${Math.min(SES.base || SES.queue.length, (SES.firstDone||0) + 1)}/${SES.base || SES.queue.length}${SES.rqSeen?.[SES.i] ? " · powtórka" : ""}`}</span></div>
     <div class="fc">
-      <div class="meta"><span class="dot" style="--c:${scol(s)}"></span>${esc(s?.name)} · ${esc(u?.title)}${isNew ? ` <span class="chip here">nowa</span>` : ""}${c.type === "vocab" ? ` <span class="chip">przetłumacz</span>` : ""}${u?.svg && SES.revealed ? ` <button class="btn sm ghost" data-act="upic" style="padding:2px 10px">${SES.upic === c.unitId ? "Ukryj obrazek działu" : "Obrazek działu"}</button>` : ""}</div>
+      <div class="meta"><span class="dot" style="--c:${scol(s)}"></span>${esc(s?.name)} · ${esc(u?.title)}${isNew ? ` <span class="chip here">nowa</span>` : ` <span class="lvl" title="Poziom ${Math.min(runOf(S.progress[cid]),3)} z 3: tyle dobrych odpowiedzi z rzędu" style="padding-top:0">${[0,1,2].map(i => `<i class="${i < runOf(S.progress[cid]) ? "on" : ""}"></i>`).join("")}</span>`}${c.type === "vocab" ? ` <span class="chip">przetłumacz</span>` : ""}${u?.svg && SES.revealed ? ` <button class="btn sm ghost" data-act="upic" style="padding:2px 10px">${SES.upic === c.unitId ? "Ukryj obrazek działu" : "Obrazek działu"}</button>` : ""}</div>
       ${u?.svg && SES.revealed && SES.upic === c.unitId ? `<div class="pic">${cleanSvg(u.svg)}</div>` : ""}
       ${renderCardFace(c, SES.revealed)}
       ${speakSide(c, cid, false) === "front" ? `<button class="btn sm" data-act="speak" data-side="front" style="align-self:flex-start">🔊 Posłuchaj</button>` : ""}
@@ -1866,6 +1866,12 @@ function gradeCard(g){
   if (lvl(p) >= MASTERY_RUN && lvl(prev) < MASTERY_RUN) SES.mastered = (SES.mastered||0) + 1;
   { const ph = prev?.hist || []; const last = ph[ph.length-1]; if (g === 2 && last && last[1] < 2 && last[0] < t) SES.won = (SES.won||0) + 1; }
   store.put("progress", cid, p);
+  { const a = lvl(prev), b = lvl(p), dots = "●".repeat(b) + "○".repeat(MASTERY_RUN - b), left = MASTERY_RUN - b;
+    toast(g === 0 ? (a > 0 ? `${dots}  Kropki od nowa – karta wróci.` : `${dots}  Karta wróci, spróbujesz jeszcze raz.`)
+      : miss ? `${dots}  Częściowo: kropka bez zmian, karta wróci.`
+      : b >= MASTERY_RUN && a < MASTERY_RUN ? `${dots}  Opanowana! Wróci za kilka dni.`
+      : b > a ? `${dots}  Jeszcze ${left} ${left === 1 ? "dobra" : "dobre"} z rzędu do opanowania.`
+      : `${dots}  Dobrze, karta zostaje opanowana.`); }
   { const y = String(SES.typed||"").trim().slice(0,200); const ans = c.type === "cloze" ? clozeAnswer(c) : c.back;
     const vd = y ? answerVerdict(c, cid, y) : { local: "" }; const okTyped = vd.local === "exact" || vd.local === "close" || vd.ai?.verdict === "yes";
     SES.answers = [...(SES.answers||[]), { c: cid, y, g, m: y ? (okTyped ? 1 : 0) : null, ai: vd.ai?.verdict || null, t: Date.now() }].slice(-120);
