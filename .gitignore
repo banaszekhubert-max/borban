@@ -4,3 +4,6 @@ paczka*.json
 galeria*.html
 .DS_Store
 __pycache__/
+# wyniki symulacji i testów (generowane)
+tests/symulacja/wyniki/
+tests/node_modules/
