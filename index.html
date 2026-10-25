@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap">
 <style>
 /* Layout: one phone-width column, sticky top bar, fixed bottom tabs; study mode is a full-screen sheet.
    Identity: notebook paper + ink blue + highlighter yellow (zakreślacz) for answers and wins. */
@@ -45,6 +45,38 @@
   --s-blue:#7E96FF; --s-red:#F0857C; --s-green:#4CC995; --s-purple:#B58BF2; --s-orange:#F0A55C; --s-teal:#4FC3D0;
   --shadow:none; color-scheme:dark;
 }
+/* Motyw „Szkoła średnia” (domyślny od 25.10): grafit + indygo, Inter / Space Grotesk; błąd bursztynowy, nigdy czerwony */
+:root[data-skin="sredni"]{
+  --bg:#F4F5F7; --surface:#FFFFFF; --sunk:#EEF0F4; --ink:#0F172A; --muted:#475569; --line:#E2E8F0;
+  --primary:#4F46E5; --primary-ink:#FFFFFF; --primary-soft:#E0E7FF;
+  --hl:#FDE68A; --on-hl:#0F172A;
+  --good:#0F766E; --good-soft:#CCFBF1; --warn:#B45309; --warn-soft:#FEF3C7; --bad:#B45309; --bad-soft:#FEF3C7;
+  --f-display:"Space Grotesk", system-ui, sans-serif; --f-body:Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r:14px; --r-sm:10px; --shadow:none;
+}
+@media (prefers-color-scheme: dark){ :root[data-skin="sredni"]:not([data-theme="light"]){
+  --bg:#0B1220; --surface:#131C2E; --sunk:#0F1726; --ink:#F1F5F9; --muted:#94A3B8; --line:#24314A;
+  --primary:#818CF8; --primary-ink:#0B1220; --primary-soft:#262B5A; --hl:#FDE68A; --on-hl:#0B1220;
+  --good:#5EEAD4; --good-soft:#123A36; --warn:#FDBA74; --warn-soft:#3A2A12; --bad:#FDBA74; --bad-soft:#3A2A12;
+}}
+:root[data-skin="sredni"][data-theme="dark"]{
+  --bg:#0B1220; --surface:#131C2E; --sunk:#0F1726; --ink:#F1F5F9; --muted:#94A3B8; --line:#24314A;
+  --primary:#818CF8; --primary-ink:#0B1220; --primary-soft:#262B5A; --hl:#FDE68A; --on-hl:#0B1220;
+  --good:#5EEAD4; --good-soft:#123A36; --warn:#FDBA74; --warn-soft:#3A2A12; --bad:#FDBA74; --bad-soft:#3A2A12;
+}
+[data-skin="sredni"] h1,[data-skin="sredni"] h2{letter-spacing:-.02em}
+[data-skin="sredni"] .top{background:var(--surface)}
+[data-skin="sredni"] .brand span{background:none}
+[data-skin="sredni"] .brand::after{content:"_"; color:var(--primary)}
+[data-skin="sredni"] .panel.hero{background:#0F172A; color:#FFFFFF}
+[data-skin="sredni"] .panel.hero .muted{color:#CBD5E1}
+[data-skin="sredni"] .hero .btn.primary{background:#4F46E5; color:#FFFFFF}
+[data-skin="sredni"] .grade{border-width:1px}
+[data-skin="sredni"] .grade.g1{border-color:var(--line); color:var(--ink)}
+[data-skin="sredni"] .grade.g2{background:var(--primary); border-color:var(--primary); color:var(--primary-ink)}
+[data-skin="sredni"] .grade.g2 small{color:color-mix(in srgb, var(--primary-ink) 80%, transparent)}
+[data-skin="sredni"] .grade.suggest{box-shadow:0 0 0 4px color-mix(in srgb, var(--primary) 30%, transparent)}
+[data-skin="sredni"] .grade.g0.suggest{box-shadow:0 0 0 4px color-mix(in srgb, var(--warn) 30%, transparent)}
 /* Motyw „Arsenal” (czerwień, biel, granat, złoto) – przełącznik w zakładce konta */
 :root[data-skin="arsenal"]{
   --bg:#FAF5F5; --surface:#FFFFFF; --sunk:#F2E5E6; --ink:#0B1A33; --muted:#59627A; --line:#E6D2D4;
@@ -307,10 +339,11 @@ button.task:hover{border-color:var(--primary)}
 
 <script>
 // motyw kolorów na tym urządzeniu (domyślnie Arsenal, od 25.10)
-const SKIN_KEY = "borban_skin";
-function getSkin(){ try { return localStorage.getItem(SKIN_KEY) || "arsenal"; } catch { return "arsenal"; } }
-function applySkin(v){ if (v === "arsenal") document.documentElement.dataset.skin = "arsenal"; else delete document.documentElement.dataset.skin;
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", v === "arsenal" ? "#063672" : "#2448D8"); }
+const SKIN_KEY = "borban_skin2";   // od 25.10 domyślnie „Szkoła średnia”
+const SKINS = { sredni: "#4F46E5", arsenal: "#063672", borban: "#2448D8" };
+function getSkin(){ try { const v = localStorage.getItem(SKIN_KEY); return SKINS[v] ? v : "sredni"; } catch { return "sredni"; } }
+function applySkin(v){ if (v === "borban") delete document.documentElement.dataset.skin; else document.documentElement.dataset.skin = v;
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", SKINS[v] || "#2448D8"); }
 applySkin(getSkin());
 "use strict";
 /* ---------- helpers ---------- */
@@ -1322,8 +1355,9 @@ function openMenu(){
   const me = fam.me?.email || "";
   $("#sheet").innerHTML = `<div class="wrap"><div class="sbar"><button class="iconbtn" data-act="close" aria-label="Zamknij">${ICON.x}</button><span class="small muted" style="flex:1">Konto</span></div>
     <div class="panel stack"><p class="eyebrow">Kolory</p><div class="row" style="gap:8px">
+      <button class="btn ${getSkin() === "sredni" ? "primary" : ""}" data-act="skin" data-v="sredni">Szkoła średnia</button>
       <button class="btn ${getSkin() === "arsenal" ? "primary" : ""}" data-act="skin" data-v="arsenal">Arsenal</button>
-      <button class="btn ${getSkin() !== "arsenal" ? "primary" : ""}" data-act="skin" data-v="borban">Zwykłe BorBan</button></div>
+      <button class="btn ${getSkin() === "borban" ? "primary" : ""}" data-act="skin" data-v="borban">Zwykłe BorBan</button></div>
       <p class="small muted">Zmiana dotyczy tego telefonu lub komputera.</p></div>
     <div class="panel stack"><p class="eyebrow">Zalogowano</p><h3 style="overflow-wrap:anywhere">${esc(me)}</h3><p class="small muted">${fam.role === "parent" ? "Rodzic" : fam.role === "child" ? "Uczeń" : "Konto bez rodziny"}${fam.name ? " · " + esc(fam.name) : ""}</p></div>
     ${fam.role === "parent" && !role.preview ? `<button class="btn big" data-act="previewOn">Zobacz, jak widzi to ${esc(S.meta.config?.student || "Borys")}</button>` : ""}
