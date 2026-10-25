@@ -1,0 +1,14 @@
+{
+  "name": "borban-testy",
+  "private": true,
+  "description": "Testy BorBana: sprawdzanie odpowiedzi (bez przeglądarki), ekran (Playwright) i symulacja 50 uczniów",
+  "scripts": {
+    "odpowiedzi": "node odpowiedzi/run.js",
+    "ekran": "node ekran/run.js",
+    "test": "node odpowiedzi/run.js && node ekran/run.js",
+    "symulacja": "node symulacja/sim.js 1 25 && node symulacja/sim.js 51 75 && python3 symulacja/analiza.py && python3 symulacja/liczby.py"
+  },
+  "devDependencies": {
+    "playwright": "1.48.2"
+  }
+}
