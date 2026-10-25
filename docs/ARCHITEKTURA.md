@@ -72,7 +72,7 @@ Uczniowie zapraszają kolegów z klasy. Notatki tej samej lekcji (ta sama szkoł
 
 ## Kolejność prac
 
-**Faza 1: przed pilotażem (do stycznia 2027, 10–20 rodzin)**
+**Faza 1: przed pilotażem (do stycznia 2027, 10–20 rodzin).** Szczegółowy plan z etapami E0–E8, warunkami „gotowe” i kosztami: `docs/PLAN-FAZA-1.md`. Poniżej skrót.
 1. Repozytorium prywatne, uporządkowane jak tu; CI z walidatorem materiału.
 2. Kopie zapasowe: plan Supabase z codziennym backupem i cotygodniowy eksport bazy. Plany Vercel i Supabase na wersje płatne, bo darmowy plan Vercel nie jest przeznaczony do użytku komercyjnego.
 3. Schemat docelowy, czyli migracje w `supabase/migrations/`, i jednorazowe przeniesienie danych pierwszej rodziny.
@@ -101,7 +101,8 @@ content/library/*.json      biblioteka materiału, plik na przedmiot (bez danych
 content/pack.schema.json    kontrakt formatu paczki
 tools/                      walidator, składanie paczki, galeria do przeglądu
 supabase/migrations/        zmiany bazy po kolei (nazwa: data_numer_opis.sql)
-docs/                       architektura, standard kart, decyzje, bezpieczeństwo, proces pracy
+docs/                       dla programisty, plan Fazy 1, architektura, oszczędność danych, standard kart, decyzje, bezpieczeństwo
+tests/                      testy odpowiedzi i ekranu (CI), symulacja uczniów
 .github/workflows/          automatyczna kontrola materiału przy każdej zmianie
 .vercelignore               wszystko poza aplikacją nie trafia na serwer www
 ```
