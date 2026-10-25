@@ -247,8 +247,11 @@ mark{background:var(--hl); color:var(--on-hl); padding:0 .2em; border-radius:4px
 .yours.match{background:var(--good-soft)}
 .grades{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px}
 .grade{min-height:64px; border-radius:14px; border:2px solid var(--line); background:var(--surface); font-weight:800; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px}
-.mathbar{display:flex; flex-wrap:wrap; gap:6px}
-.mathbar .btn{min-width:44px; min-height:40px; padding:6px 10px; font-size:1.05rem; font-variant-numeric:tabular-nums}
+.mathpad{display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:6px; user-select:none; -webkit-user-select:none}
+.mathpad .key{min-height:46px; border-radius:12px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:1.15rem; font-weight:600; cursor:pointer; font-variant-numeric:tabular-nums; touch-action:manipulation}
+.mathpad .key:active{background:var(--sunk)}
+.mathpad .key.wide{grid-column:span 2; font-size:.95rem}
+.mathpad .key.on{background:var(--primary); border-color:var(--primary); color:var(--primary-ink)}
 .grade small{font-weight:400; font-size:.75rem; color:var(--muted)}
 .grade.g0{border-color:var(--bad); color:var(--bad)}
 .grade.g1{border-color:var(--warn); color:var(--warn)}
@@ -1769,8 +1772,8 @@ function renderStudy(){
       </div>
       <button class="btn ghost sm" data-act="flag" style="align-self:center">${ICON.flag.replace("<svg",'<svg width="16" height="16"')} Zgłoś błąd w karcie</button>`
     : `<form data-form="reveal" class="stack" style="gap:10px">
-        <label class="f">Przypomnij sobie odpowiedź <small>${c.type === "vocab" ? "słówka wpisz sam, litera po literze. Bez limitu czasu." : "możesz ją wpisać albo tylko pomyśleć. Bez limitu czasu."}</small><input type="text" id="typed" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" value="${esc(SES.typed)}"></label>
-        ${hasMath(answer) ? `<div class="mathbar" role="group" aria-label="Znaki do wzorów">${["²","³","√","(",")","−","+","·","/","="].map(v => `<button type="button" class="btn sm" data-act="ins" data-v="${v}" aria-label="Wstaw ${v}">${v}</button>`).join("")}</div>` : ""}
+        <label class="f">Przypomnij sobie odpowiedź <small>${c.type === "vocab" ? "słówka wpisz sam, litera po literze. Bez limitu czasu." : "możesz ją wpisać albo tylko pomyśleć. Bez limitu czasu."}</small><input type="text" id="typed" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="${hasMath(answer) && SES.kbd !== "sys" ? "none" : "text"}" value="${esc(SES.typed)}"></label>
+        ${hasMath(answer) ? mathKeypad() : ""}
         ${(!S.progress[cid] || SES.wrongIds.includes(cid) || (S.progress[cid]?.lapses||0) > 0) ? (SES.hint === cid ? `<p class="yours">Podpowiedź: <b>${esc(c.mnemo || hintOf(answer))}</b></p>` : `<button class="btn sm ghost" type="button" data-act="hint">Podpowiedź (pierwsze litery)</button>`) : ""}
         <button class="btn primary big" type="submit">Pokaż odpowiedź</button></form>`}
   </div>`;
@@ -1784,6 +1787,31 @@ function willReturn(cid, bucket = "e", max){
   if (k >= max || rest < (bucket === "o" ? 3 : 2)) return false;
   if (short && (SES.rqTotal||0) >= 3) return false;
   return true;
+}
+// Klawiatura do wzorów: cyfry, litery, działania i tryb wykładnika (xⁿ: kolejne cyfry jako potęga)
+const SUP = {"0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹","+":"⁺","−":"⁻","n":"ⁿ"};
+function mathKeypad(){
+  const k = (v, label, cls = "") => `<button type="button" class="key ${cls}" data-act="ins" data-v="${esc(v)}" aria-label="${esc(label || v)}">${esc(v)}</button>`;
+  const rows = [
+    ["7","8","9","(",")"],
+    ["4","5","6","+","−"],
+    ["1","2","3","·","/"],
+    ["0",",","=","√","²"],
+    ["a","b","x","y","n"]];
+  return `<div class="mathpad" role="group" aria-label="Klawiatura do wzorów">
+    ${rows.map(r => r.map(v => k(v)).join("")).join("")}
+    <button type="button" class="key wide ${SES.sup ? "on" : ""}" data-act="sup" aria-pressed="${SES.sup ? "true" : "false"}">xⁿ ${SES.sup ? "wykładnik: wł." : "wykładnik"}</button>
+    <button type="button" class="key" data-act="bksp" aria-label="Usuń znak">⌫</button>
+    <button type="button" class="key" data-act="kbd" style="font-size:.9rem">${SES.kbd === "sys" ? "123" : "ABC"}</button>
+    <button type="button" class="key" data-act="ins" data-v=" " aria-label="Spacja">␣</button>
+  </div>`;
+}
+function typedInsert(v){
+  const inp = $("#typed"); if (!inp) return;
+  if (SES?.sup && SUP[v]) v = SUP[v];
+  const a = inp.selectionStart ?? inp.value.length, b = inp.selectionEnd ?? a;
+  inp.value = inp.value.slice(0, a) + v + inp.value.slice(b); const pos = a + v.length;
+  try { inp.setSelectionRange(pos, pos); } catch {} if (SES) SES.typed = inp.value;
 }
 function gradeCard(g){
   const cid = SES.queue[SES.i]; const prev = S.progress[cid]; const c = S.cards[cid]; const t = TODAY();
@@ -1814,7 +1842,7 @@ function gradeCard(g){
   const short = SES.kind === "quick" || SES.kind === "step";
   if (g === 0){ SES.wrong++; SES.wrongIds.push(cid); requeue("e", short ? 1 : 2); }
   else { if (g === 1) SES.hard++; else SES.ok++; if (SES.kind === "daily" && !isMastered(cid)) requeue("o", 3); }
-  SES.i++; SES.revealed = false; SES.typed = ""; SES.lastAct = Date.now();
+  SES.i++; SES.revealed = false; SES.typed = ""; SES.sup = false; SES.lastAct = Date.now();
   persistSession(); // każda odpowiedź zapisuje się od razu
   if (SES.i >= SES.queue.length) finishSession(); else renderStudy();
 }
@@ -1970,7 +1998,7 @@ document.addEventListener("keydown", e => {
   if (e.key === "Escape") { persistSession(); closeSheet(); }
 });
 // pasek wzorów: dotknięcie znaku nie zabiera kursora z pola (klawiatura zostaje otwarta)
-document.addEventListener("pointerdown", e => { if (e.target.closest?.('[data-act="ins"]')) e.preventDefault(); });
+document.addEventListener("pointerdown", e => { if (e.target.closest?.('.mathpad [data-act]')) e.preventDefault(); });
 document.addEventListener("click", async e => {
   const t = e.target.closest("[data-tab],[data-act]"); if (!t) return;
   if (t.dataset.tab){ tab = t.dataset.tab; window.scrollTo(0,0); render(); return; }
@@ -1996,8 +2024,11 @@ document.addEventListener("click", async e => {
     case "confClose": NCONF = null; closeSheet(); break;
     case "why": if (SES){ SES.why = SES.queue[SES.i]; renderStudy(); } break;
     case "upic": if (SES){ SES.typed = $("#typed")?.value ?? SES.typed; const c = S.cards[SES.queue[SES.i]]; SES.upic = SES.upic === c?.unitId ? null : c?.unitId; renderStudy(); } break;
-    case "ins": { const inp = $("#typed"); if (inp){ const v = t.dataset.v, a = inp.selectionStart ?? inp.value.length, b = inp.selectionEnd ?? a;
-      inp.value = inp.value.slice(0, a) + v + inp.value.slice(b); const pos = a + v.length; inp.focus(); try { inp.setSelectionRange(pos, pos); } catch {} if (SES) SES.typed = inp.value; } break; }
+    case "ins": typedInsert(t.dataset.v); break;
+    case "sup": if (SES){ SES.sup = !SES.sup; t.classList.toggle("on", SES.sup); t.setAttribute("aria-pressed", SES.sup ? "true" : "false"); t.textContent = SES.sup ? "xⁿ wykładnik: wł." : "xⁿ wykładnik"; } break;
+    case "bksp": { const inp = $("#typed"); if (inp){ const a = inp.selectionStart ?? inp.value.length, b = inp.selectionEnd ?? a;
+      const from = a === b ? Math.max(0, a - 1) : a; inp.value = inp.value.slice(0, from) + inp.value.slice(b); try { inp.setSelectionRange(from, from); } catch {} if (SES) SES.typed = inp.value; } break; }
+    case "kbd": if (SES){ SES.typed = $("#typed")?.value || ""; SES.kbd = SES.kbd === "sys" ? "math" : "sys"; renderStudy(); const inp = $("#typed"); if (inp){ inp.focus(); try { inp.setSelectionRange(inp.value.length, inp.value.length); } catch {} } } break;
     case "hint": if (SES){ SES.typed = $("#typed")?.value || SES.typed; SES.hint = SES.queue[SES.i]; renderStudy(); } break;
     case "signup": doLogin(true); break;
     case "menu": openMenu(); break;
