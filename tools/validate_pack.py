@@ -124,12 +124,20 @@ def main(argv):
                     err(i, "karta bez odpowiedzi (back)")
                 if data.get("type") == "cloze" and "{{" not in data.get("front", ""):
                     err(i, "karta cloze bez {{luki}}")
+                ans = norm(answer_of(data))
+                if data.get("type") == "qa" and len(ans) >= 4 and ans in norm(data.get("front", "")):
+                    err(i, f"pytanie zdradza odpowiedź „{answer_of(data)}”")
                 for k, lim in STEP_LIMITS.items():
                     if len(data.get(k, "")) > lim:
                         err(i, f"{k} za długie ({len(data[k])} > {lim})")
             if col in ("cards", "units"):
                 check_svg(i, col, data, err)
     for (col, i), (cur, data) in all_docs.items():
+        if col == "cards":
+            u = all_docs.get(("units", data.get("unitId")))
+            ans = norm(answer_of(data))
+            if u and len(ans) >= 4 and ans in norm(u[1].get("title", "")):
+                print(f"uwaga: {i}: tytuł działu zawiera odpowiedź „{answer_of(data)}” (aplikacja ukrywa tytuł do odkrycia)")
         if col == "cards" and ("units", data.get("unitId")) not in all_docs:
             errors.append(f"{cur}: {i}: dział {data.get('unitId')} nie istnieje w podanych plikach")
         if col in ("cards", "units") and ("subjects", data.get("subjectId")) not in all_docs:
