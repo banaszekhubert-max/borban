@@ -364,6 +364,7 @@ const daysBetween = (a, b) => Math.round((parseKey(b) - parseKey(a)) / 864e5);
 const dow = k => parseKey(k).getDay(); // 0 = niedziela
 const mondayOf = k => addDays(k, -((dow(k)+6)%7));
 const TODAY = () => dkey();
+const STUDENT = () => S.meta.config?.student || (fam.role === "child" ? fam.me : "") || "uczeń";   // imię z ustawień rodziny, bez imienia na sztywno
 const DNI = ["niedziela","poniedziałek","wtorek","środa","czwartek","piątek","sobota"];
 const DNI_KR = ["Nd","Pn","Wt","Śr","Czw","Pt","Sob"];
 const MIES = ["stycznia","lutego","marca","kwietnia","maja","czerwca","lipca","sierpnia","września","października","listopada","grudnia"];
@@ -413,7 +414,9 @@ function grade(prev, g, today, hold){
     return p;
   }
   if (hold){ p.run = base; p.reps = 0; p.interval = 0; p.due = today; p.ease = Math.max(1.3, +(p.ease - 0.1).toFixed(2)); return p; }   // częściowo dobrze po błędzie: licznik stoi, karta wraca
-  p.run = base + 1; p.lastOk = today;
+  const upsToday = p.ups && p.ups.d === today ? p.ups.n : 0;
+  if (upsToday >= 2 && base < MASTERY_RUN){ p.lastOk = today; p.reps = 0; p.interval = 0; p.due = addDays(today, 1); p.run = base; return p; }   // trzeci poziom dopiero kolejnego dnia (pamięć, nie chwilowa powtórka)
+  p.run = base + 1; p.lastOk = today; if (base < MASTERY_RUN) p.ups = { d: today, n: upsToday + 1 };
   if (g === 1) p.ease = Math.max(1.3, +(p.ease - 0.15).toFixed(2));
   if (p.run < MASTERY_RUN){ p.reps = 0; p.interval = 0; p.due = today; }            // jeszcze nie opanowana: wraca dziś
   else if (!wasMastered){ p.reps = 1; p.interval = 1; p.due = addDays(today, 1); }    // właśnie opanowana: pierwsza powtórka jutro
@@ -462,13 +465,13 @@ function streak(){
   }
   return n;
 }
-function pointsInWeek(mon){ return Object.values(S.sessions).filter(s => s.date >= mon && s.date <= addDays(mon,6)).reduce((a,s) => a + (s.points||0), 0); }
+function pointsInWeek(mon){ return Object.values(S.sessions).filter(s => s.date >= mon && s.date <= addDays(mon,6) && (s.kind !== "note" || S.notes?.[s.ref]?.status === "confirmed")).reduce((a,s) => a + (s.points||0), 0); }   // notatka: punkty po potwierdzeniu rodzica
 function upcomingTests(){
   const t = TODAY();
   return Object.entries(S.tests).filter(([,x]) => x.date >= t).sort((a,b) => a[1].date.localeCompare(b[1].date));
 }
 function testCards(test){ return Object.entries(S.cards).filter(([,c]) => (test.unitIds||[]).includes(c.unitId)).map(([id]) => id); }
-function readiness(test){ const ids = testCards(test); return ids.length ? ids.filter(isMastered).length / ids.length : 0; }
+function readiness(test){ const ids = testCards(test); return ids.length ? ids.reduce((a, c) => a + Math.min(MASTERY_RUN, runOf(S.progress[c])), 0) / (ids.length * MASTERY_RUN) : 0; }   // każda dobra z rzędu się liczy, 100% = wszystko opanowane
 /* ---------- tempo do sprawdzianów: ile trzeba dziennie, żeby zdążyć ---------- */
 // Karta jest opanowana po 3 poprawnych odpowiedziach z rzędu. Nowe karty warto zacząć najpóźniej NEW_LEAD dni
 // przed sprawdzianem, żeby było kiedy je powtórzyć (powtórki w kolejne dni trzymają się w pamięci lepiej niż w jeden wieczór).
@@ -515,7 +518,7 @@ function pacePanel(){
   }).join("");
   return `<div class="panel stack" style="border:2px solid var(--${worst === "done" ? "line" : worst === "doing" ? "warn" : "bad"})">
     <div class="row" style="justify-content:space-between"><h3>Ile trzeba dziennie do sprawdzianów</h3><span class="chip ${worst}">${PACE_TXT[worst]}</span></div>
-    <p class="small muted">Widzisz to tylko Ty. Borys widzi jeden mały krok na dziś, bez minut i bez „mało czasu”. Karta jest opanowana po 3 dobrych odpowiedziach z rzędu (zła odpowiedź liczy od nowa). Nowe karty warto zacząć najpóźniej ${NEW_LEAD} dni przed sprawdzianem, żeby powtórki rozłożyły się na kilka dni.</p>
+    <p class="small muted">Widzisz to tylko Ty. ${esc(STUDENT())} widzi jeden mały krok na dziś i zegar nauki, bez sum i bez „mało czasu”. Karta jest opanowana po 3 dobrych odpowiedziach z rzędu (zła odpowiedź liczy od nowa). Nowe karty warto zacząć najpóźniej ${NEW_LEAD} dni przed sprawdzianem, żeby powtórki rozłożyły się na kilka dni.</p>
     <div class="list">${subjRows}</div>
     <p><b>Razem minimum ≈ ${fmtMin(total*60000)} dziennie</b>${total > 60 ? " – podziel na 2–3 krótkie rundy w ciągu dnia" : ""}.</p></div>`;
 }
@@ -566,6 +569,7 @@ function newIds(){
 function pairReady(id){ const c = S.cards[id]; if (!c || c.type !== "vocab" || !/b$/.test(id)) return true;
   const a = id.slice(0, -1) + "a"; if (!S.cards[a]) return true; const pa = S.progress[a]; return !!pa && (pa.introduced || "") < TODAY(); }
 const pairKey = id => S.cards[id]?.type === "vocab" ? id.replace(/[ab]$/, "") : id;
+const onePerPair = q => { const k = new Set(); return q.filter(c => { const x = pairKey(c); if (k.has(x)) return false; k.add(x); return true; }); };   // słówko w obie strony nie w jednej sesji (pierwsza zdradza drugą)
 function todayPlan(){
   const due = dueIds(); const room = Math.max(0, newLimit() - newToday());
   const nw = newIds().slice(0, room);
@@ -598,7 +602,7 @@ function todayTasks(k = TODAY()){
     done: did >= QUICK_N || (!pl.total && did > 0), act: pl.total ? `data-act="start" data-kind="quick"` : "" });
   { const mi = morningIds(k); const md = morningDone(k); const hr = new Date().getHours();
     if ((mi.length || md) && k === TODAY() && (hr < 12 || md)) out.unshift({ id:"morning", title:"Poranna powtórka", icon:"flame",
-      sub: md ? "zrobione · wczorajsze trudne karty" : `${mi.length} ${plural(mi.length,"karta","karty","kart")} z wczoraj · 7:45–8:45`, done: md, act:`data-act="start" data-kind="morning"` }); }
+      sub: md ? "zrobione · poranna powtórka" : Object.values(S.tests).some(x => x.date === k) ? `${mi.length} ${plural(mi.length,"karta","karty","kart")} ze sprawdzianu · przed lekcjami` : `${mi.length} ${plural(mi.length,"karta","karty","kart")} z wczoraj · 7:45–8:45`, done: md, act:`data-act="start" data-kind="morning"` }); }
   const ts = testSessionToday();
   const tests = upcomingTests().filter(([,x]) => { const d = daysBetween(k, x.date); return d >= 0 && d <= 3; });
   const seen = new Set();
@@ -663,10 +667,13 @@ const QUICK_N = 5;
 const MORNING = [7*60+45, 8*60+45];
 function morningIds(k = TODAY()){
   const y = addDays(k, -1);
+  const tt = Object.values(S.tests).filter(x => x.date === k);   // dzień sprawdzianu: rano powtórka całego zakresu
+  if (tt.length){ const ids = [...new Set(tt.flatMap(testCards))].filter(id => !(S.progress[id]?.hist||[]).some(([d]) => d === k));
+    if (ids.length) return ids.sort((a,b) => (S.progress[b]?.lapses||0) - (S.progress[a]?.lapses||0)).slice(0, 20); }
   return Object.entries(S.progress).filter(([id,p]) => S.cards[id] && (p.hist||[]).some(([d,g]) => d === y && g < 2) && !(p.hist||[]).some(([d]) => d === k))
     .sort((a,b) => (b[1].lapses||0) - (a[1].lapses||0)).map(([id]) => id).slice(0, 15);
 }
-function isMorning(){ const n = new Date(); const m = n.getHours()*60 + n.getMinutes(); return m >= MORNING[0] && m <= MORNING[1]; }
+function isMorning(){ const n = new Date(); const m = n.getHours()*60 + n.getMinutes(); const testDay = Object.values(S.tests).some(x => x.date === TODAY()); return m >= (testDay ? 6*60 : MORNING[0]) && m <= MORNING[1]; }
 // Rewanż: karty, które w ostatnich 7 dniach poszły źle i jeszcze nie zostały „odbite”
 function rematchIds(k = TODAY()){
   const from = addDays(k, -7);
@@ -713,13 +720,13 @@ function render(){
   window.scrollTo(0, y);
 }
 function modeBanner(){
-  if (role.preview) return `<div class="banner row" style="justify-content:space-between"><span>Podgląd: tak widzi to ${esc(S.meta.config?.student || "Borys")}. Odpowiedzi w podglądzie się nie zapisują.</span><button class="btn sm" data-act="previewOff">Wróć do widoku rodzica</button></div>`;
-  if (S.meta.config?.demo && Object.values(S.cards).some(c => c.demo)) return `<p class="banner">To przykładowe karty, żeby sprawdzić aplikację. Zastąpimy je materiałem Borysa.</p>`;
+  if (role.preview) return `<div class="banner row" style="justify-content:space-between"><span>Podgląd: tak widzi to ${esc(STUDENT())}. Odpowiedzi w podglądzie się nie zapisują.</span><button class="btn sm" data-act="previewOff">Wróć do widoku rodzica</button></div>`;
+  if (S.meta.config?.demo && Object.values(S.cards).some(c => c.demo)) return `<p class="banner">To przykładowe karty, żeby sprawdzić aplikację. Zastąpimy je materiałem ze szkoły ucznia.</p>`;
   return "";
 }
 function viewToday(){
   const t = TODAY(); const d = parseKey(t);
-  const name = S.meta.config?.student || "Borys";
+  const name = STUDENT();
   const pl = todayPlan(); const ts = testSessionToday(); const up = upcomingTests()[0];
   const mon = mondayOf(t); const woop = S.woop[mon]; const day = PLAN[dow(t)];
   const mins = Math.max(1, Math.round(pl.total * 0.6));
@@ -735,9 +742,10 @@ function viewToday(){
   // główny przycisk
   const mIds = morningIds(t);
   if (role.canWrite && isMorning() && mIds.length && !morningDone(t)){
-    parts.push(`<div class="panel hero stack"><div><p class="eyebrow" style="color:inherit;opacity:.8">Poranna powtórka · do 8:45</p>
-      <h2 style="font-size:1.5rem">${mIds.length} ${plural(mIds.length,"karta","karty","kart")}, które wczoraj nie weszły</h2>
-      <p style="opacity:.92">Rano, po nocy, pamięć sprawdza się najlepiej. To, co teraz przypomnisz, zostaje na dłużej. 2–3 minuty w drodze do szkoły.</p></div>
+    const tToday = Object.values(S.tests).filter(x => x.date === t);
+    parts.push(`<div class="panel hero stack"><div><p class="eyebrow" style="color:inherit;opacity:.8">${tToday.length ? "Dziś sprawdzian · powtórka w drodze" : "Poranna powtórka · do 8:45"}</p>
+      <h2 style="font-size:1.5rem">${tToday.length ? `${esc(tToday.map(x => x.title).join(", "))}: ${mIds.length} ${plural(mIds.length,"karta","karty","kart")}` : `${mIds.length} ${plural(mIds.length,"karta","karty","kart")}, które wczoraj nie weszły`}</h2>
+      <p style="opacity:.92">${tToday.length ? "Wpisuj odpowiedzi, jak na sprawdzianie. Rano, po nocy, widać, co naprawdę zostało w głowie. Kilka minut w drodze do szkoły." : "Rano, po nocy, pamięć sprawdza się najlepiej. To, co teraz przypomnisz, zostaje na dłużej. 2–3 minuty w drodze do szkoły."}</p></div>
       <button class="btn primary big" data-act="start" data-kind="morning">Sprawdź, co już pamiętasz</button></div>`);
   }
   if (pl.total){
@@ -791,7 +799,7 @@ function viewToday(){
 }
 function viewMap(){
   const subs = sortedSubjects();
-  if (!subs.length) return `<div class="empty">Nie ma jeszcze przedmiotów. ${role.canEdit ? "Dodaj je w zakładce Materiał." : "Tata doda je wkrótce."}</div>`;
+  if (!subs.length) return `<div class="empty">Nie ma jeszcze przedmiotów. ${role.canEdit ? "Dodaj je w zakładce Materiał." : "Rodzic doda je wkrótce."}</div>`;
   if (!mapSubject || !S.subjects[mapSubject]) mapSubject = subs[0][0];
   const s = S.subjects[mapSubject];
   const units = unitsOf(mapSubject);
@@ -832,7 +840,7 @@ function viewStats(){
   const t = TODAY(); const mon = mondayOf(t);
   const weekMs = [...Array(7)].reduce((a,_,i) => a + activeMsOn(addDays(mon,i)), 0);
   const wp = weekPlanStatus(mon);
-  const name = S.meta.config?.student || "Borys";
+  const name = STUDENT();
   const parentView = role.canEdit && !role.preview;
   const up = upcomingTests()[0];
   // gdzie docisnąć
@@ -952,7 +960,7 @@ function viewParent(){
   const tests = upcomingTests().filter(([,x]) => daysBetween(t, x.date) <= 21);
   const upd = S.meta.grades?.updated;
   const start = borbanStart();
-  const name = S.meta.config?.student || "Borys";
+  const name = STUDENT();
 
   const alerts = risk.map(x => {
     const tst = tests.find(([,y]) => y.subjectId && y.subjectId === x.subjectId);
@@ -1023,7 +1031,7 @@ function viewParent(){
     <div class="panel stack" style="gap:4px"><div class="row" style="justify-content:space-between;margin-bottom:6px"><h3>Oceny z Librusa</h3><span class="small muted">od najsłabszej średniej</span></div>
       <div class="gtable">${gradeRows || `<p class="small muted">Brak ocen. Pojawią się po synchronizacji z Librusem.</p>`}</div>
       <p class="small muted">Najedź na ocenę, żeby zobaczyć temat. Punkty liczone na skalę 1–6 (95/85/70/55/40%). „+”, „−” i „np” nie wchodzą do średniej.</p></div>
-    <div class="panel stack" style="gap:4px"><div style="margin-bottom:6px"><h3>Oceny a nauka</h3><p class="small muted">Ile powtórek z przedmiotu Borys zrobił w tygodniu przed oceną. ${start ? `Liczone od pierwszej sesji w BorBan (${fmtDate(start)}).` : "Pierwsze zestawienia pojawią się po kilku dniach nauki."}</p></div>
+    <div class="panel stack" style="gap:4px"><div style="margin-bottom:6px"><h3>Oceny a nauka</h3><p class="small muted">Ile powtórek z przedmiotu ${esc(STUDENT())} zrobił(a) w tygodniu przed oceną. ${start ? `Liczone od pierwszej sesji w BorBan (${fmtDate(start)}).` : "Pierwsze zestawienia pojawią się po kilku dniach nauki."}</p></div>
       ${vsRows || `<p class="small muted">Na razie brak ocen wystawionych po starcie nauki w BorBan.</p>`}</div>
     ${familyPanel()}
   </div>`;
@@ -1134,7 +1142,7 @@ async function sendNote(){
   store.put("sessions", uid("s"), { date: t, start: t0, end: Date.now(), activeMs: Date.now() - t0, kind: "note", ref: id, n: 0, ok: 0, hard: 0, wrong: 0, newN: 0, points: 10, answers: [] });
   N.files.forEach(f => URL.revokeObjectURL(f.url));
   NOTE = null; closeSheet();
-  toast(ocrOk ? "+10 pkt! Notatka czeka na potwierdzenie rodzica." : "+10 pkt! Zdjęcia wysłane; tekstu nie udało się odczytać, rodzic go uzupełni.");
+  toast(ocrOk ? "Wysłane! +10 pkt, gdy rodzic potwierdzi notatkę." : "Zdjęcia wysłane; tekstu nie udało się odczytać, rodzic go uzupełni. +10 pkt po potwierdzeniu.");
 }
 // propozycja działu: wspólne słowa z tytułem działu i treścią jego kart
 function suggestUnit(sid, text){
@@ -1290,7 +1298,7 @@ function zCompare(unitId){
     <p class="small muted" style="margin:0">${cov} z ${total} punktów działu jest w zeszycie${part ? `, ${part} częściowo` : ""}${r.conflicts.length ? `, <b style="color:var(--bad)">${r.conflicts.length} ${plural(r.conflicts.length,"różnica","różnice","różnic")}</b>` : ""}. ${r.local ? (r.stale ? "Notatki się zmieniły: to szybkie porównanie słów." : "Szybkie porównanie słów, bez AI.") : "Sprawdzone przez AI."}</p>
     ${r.summary ? `<p class="small" style="margin:0">${esc(r.summary)}</p>` : ""}
     ${sec(`⚠️ Inaczej niż w podręczniku (${r.conflicts.length})`, "var(--bad)", r.conflicts.map(c => `<div class="small" style="margin:4px 0">W zeszycie: <s>${esc(c.note)}</s><br>W podręczniku: <b>${esc(c.book)}</b>${c.why ? `<br><span class="muted">${esc(c.why)}</span>` : ""}</div>`).join(""), true)}
-    ${sec(`❌ Brakuje w zeszycie (${r.missing.length})`, "var(--bad)", r.missing.map(id => li(id)).join("") + (r.missing.length ? `<p class="small muted">Te punkty są w powtórkach BorBan, więc Borys i tak je przećwiczy.</p>` : ""), r.missing.length <= 6)}
+    ${sec(`❌ Brakuje w zeszycie (${r.missing.length})`, "var(--bad)", r.missing.map(id => li(id)).join("") + (r.missing.length ? `<p class="small muted">Te punkty są w powtórkach BorBan, więc ${esc(STUDENT())} i tak je przećwiczy.</p>` : ""), r.missing.length <= 6)}
     ${sec(`🟡 Częściowo (${part})`, "var(--warn)", r.partial.map(id => li(id)).join(""), false)}
     ${sec(`✅ Jest w zeszycie (${cov})`, "var(--good)", r.covered.map(id => li(id)).join(""), false)}
     ${sec(`➕ W zeszycie, poza materiałem działu (${r.extra.length})`, "var(--primary)", r.extra.map(x => `<div class="small" style="margin:4px 0">${esc(x)}</div>`).join(""), false)}
@@ -1337,7 +1345,7 @@ function viewZeszyt(){
 }
 function notesPanel(){
   const todo = notesOf("to_confirm"), done = notesOf("confirmed");
-  if (!todo.length && !done.length) return `<div class="panel stack"><h3>Notatki z lekcji</h3><p class="small muted">Gdy Borys albo Ty zrobicie zdjęcie zeszytu (przycisk „Notatka z lekcji” na ekranie Dziś), pojawi się tu do potwierdzenia.</p><button class="btn sm" data-act="noteNew">📸 Dodaj notatkę</button></div>`;
+  if (!todo.length && !done.length) return `<div class="panel stack"><h3>Notatki z lekcji</h3><p class="small muted">Gdy ${esc(STUDENT())} albo Ty zrobicie zdjęcie zeszytu (przycisk „Notatka z lekcji” na ekranie Dziś), pojawi się tu do potwierdzenia.</p><button class="btn sm" data-act="noteNew">📸 Dodaj notatkę</button></div>`;
   return `<div class="panel stack" style="${todo.length ? "border:2px solid var(--warn)" : ""}"><div class="row" style="justify-content:space-between"><h3>Notatki z lekcji</h3>${todo.length ? `<span class="chip doing">${todo.length} do potwierdzenia</span>` : ""}</div>
     ${todo.map(([id,n]) => `<div class="li"><div><b>${esc(S.subjects[n.subjectId]?.name || "")}</b> · ${fmtDate(n.date)}<br><span class="small muted">${(n.photos||[]).length} ${plural((n.photos||[]).length,"zdjęcie","zdjęcia","zdjęć")} · ${n.by === "parent" ? "rodzic" : "dziecko"}${n.ocrOk === false ? " · tekst nieodczytany" : ""}</span></div><button class="btn sm primary" data-act="confOpen" data-id="${id}">Sprawdź</button></div>`).join("")}
     ${done.length ? `<p class="small muted">Potwierdzone i dodane do materiału: <b>${done.length}</b> (widać je w Mapie przy działach).</p>` : ""}
@@ -1349,7 +1357,7 @@ function openMenu(){
   const me = fam.me?.email || "";
   $("#sheet").innerHTML = `<div class="wrap"><div class="sbar"><button class="iconbtn" data-act="close" aria-label="Zamknij">${ICON.x}</button><span class="small muted" style="flex:1">Konto</span></div>
     <div class="panel stack"><p class="eyebrow">Zalogowano</p><h3 style="overflow-wrap:anywhere">${esc(me)}</h3><p class="small muted">${fam.role === "parent" ? "Rodzic" : fam.role === "child" ? "Uczeń" : "Konto bez rodziny"}${fam.name ? " · " + esc(fam.name) : ""}</p></div>
-    ${fam.role === "parent" && !role.preview ? `<button class="btn big" data-act="previewOn">Zobacz, jak widzi to ${esc(S.meta.config?.student || "Borys")}</button>` : ""}
+    ${fam.role === "parent" && !role.preview ? `<button class="btn big" data-act="previewOn">Zobacz, jak widzi to ${esc(STUDENT())}</button>` : ""}
     <div class="panel stack"><h3>Na telefonie jak aplikacja</h3><p class="small muted">iPhone: Safari → Udostępnij → „Do ekranu początkowego”. Android: Chrome → menu ⋮ → „Dodaj do ekranu głównego”. Logujesz się raz, potem aplikacja pamięta konto.</p></div>
     <button class="btn danger" data-act="logout">Wyloguj</button></div>`;
   openSheet();
@@ -1391,7 +1399,7 @@ function familyPanel(){
     <div class="list">${fam.members.map(m => `<div class="li"><div><b>${esc(m.display_name || m.email || "")}</b><br><span class="small muted">${esc(m.email || "")}</span></div><span class="chip">${ROLE[m.role] || m.role}</span></div>`).join("") || `<p class="small muted">Wczytuję…</p>`}</div>
     <p class="small muted">Nowa osoba zakłada konto na borban.vercel.app („Nie mam konta – załóż”). Potem wpisz tu jej e-mail.</p>
     <label class="f">E-mail konta<input type="email" id="m_email" style="width:100%;min-height:44px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg)"></label>
-    <div class="row" style="align-items:stretch"><label class="f" style="flex:1;min-width:140px">Imię<input type="text" id="m_name" placeholder="np. Borys"></label>
+    <div class="row" style="align-items:stretch"><label class="f" style="flex:1;min-width:140px">Imię<input type="text" id="m_name" placeholder="np. Ola"></label>
     <label class="f" style="width:140px">Rola<select id="m_role"><option value="child">uczeń</option><option value="parent">rodzic</option></select></label></div>
     <button class="btn" data-act="addMember">Dodaj do rodziny</button></div>`;
 }
@@ -1408,7 +1416,7 @@ function viewAdmin(){
   const demoCount = Object.values(S.cards).filter(c => c.demo).length;
   const subjList = subs.map(([id,s]) => `<div class="stack" style="gap:8px;padding:10px;border-radius:12px;background:var(--sunk)">
       <div class="row" style="justify-content:space-between"><div class="row" style="gap:8px"><span class="dot" style="--c:${scol(s)}"></span><b>${esc(s.name)}</b></div><button class="btn sm ghost danger" data-act="delSubj" data-id="${id}">Usuń</button></div>
-      <label class="f">Gdzie Borys jest w materiale <small>nowe karty pojawiają się tylko do tego działu włącznie</small><select data-act="setCurrent" data-id="${id}"><option value="">(wszystkie działy)</option>${unitOptions(id, s.current)}</select></label>
+      <label class="f">Gdzie ${esc(STUDENT())} jest w materiale <small>nowe karty pojawiają się tylko do tego działu włącznie</small><select data-act="setCurrent" data-id="${id}"><option value="">(wszystkie działy)</option>${unitOptions(id, s.current)}</select></label>
       <div class="list">${unitsOf(id).map(([uid_,u]) => `<div class="li"><div>${u.order}. ${esc(u.title)} <span class="muted small">· ${cardsOf(uid_).length} kart</span></div><button class="btn sm ghost danger" data-act="delUnit" data-id="${uid_}">Usuń</button></div>`).join("")}</div>
       <label class="f">Dodaj działy ze spisu treści <small>jeden dział w linii</small><textarea id="toc_${id}" placeholder="Ciągi liczbowe&#10;Trygonometria"></textarea></label>
       <button class="btn sm" data-act="addUnits" data-id="${id}">Dodaj działy</button></div>`).join("");
@@ -1420,7 +1428,7 @@ function viewAdmin(){
     <input type="file" id="pk_file" accept=".json,application/json">
     <button class="btn primary" data-act="loadPack">Wczytaj paczkę</button>
   </div></details>
-  ${flags.length ? `<details class="adm" open><summary>Zgłoszenia od Borysa (${flags.length})</summary><div class="body">${flags.map(([fid,f]) => { const c = S.cards[f.cardId];
+  ${flags.length ? `<details class="adm" open><summary>Zgłoszenia ucznia (${flags.length})</summary><div class="body">${flags.map(([fid,f]) => { const c = S.cards[f.cardId];
     return `<div class="stack" style="gap:6px;padding:10px;border-radius:12px;background:var(--sunk)"><p class="small muted">${fmtDate(f.date)}${f.note ? ` · ${esc(f.note)}` : ""}${f.typed ? ` · wpisał: „${esc(f.typed)}”` : ""}</p>
     ${c ? `<input type="text" id="fx_f_${fid}" value="${esc(c.front)}"><input type="text" id="fx_b_${fid}" value="${esc(c.back)}" ${c.type==="cloze"?'placeholder="(luka w treści)"':""}>
     <div class="row"><button class="btn sm primary" data-act="fixCard" data-id="${fid}">Zapisz poprawkę</button><button class="btn sm" data-act="resolveFlag" data-id="${fid}">Karta jest dobra</button><button class="btn sm ghost danger" data-act="delFlagCard" data-id="${fid}">Usuń kartę</button></div>` : `<p class="small">Karta została usunięta.</p><button class="btn sm" data-act="resolveFlag" data-id="${fid}">Zamknij</button>`}</div>`; }).join("")}</div></details>` : ""}
@@ -1471,7 +1479,7 @@ function viewAdmin(){
   </div></details>
 
   <details class="adm" ${drafts.open_set?"open":""} data-key="open_set"><summary>Ustawienia</summary><div class="body">
-    <label class="f">Imię ucznia<input type="text" id="c_name" value="${esc(S.meta.config?.student || "Borys")}"></label>
+    <label class="f">Imię ucznia<input type="text" id="c_name" value="${esc(STUDENT())}"></label>
     <label class="f">Nowe karty dziennie <small>10–20; przy słabszej pamięci długotrwałej lepiej mniej i regularnie</small><input type="number" id="c_new" min="5" max="20" value="${baseNewLimit()}"></label>
     <button class="btn" data-act="saveCfg">Zapisz ustawienia</button>
     ${demoCount ? `<hr style="border:0;border-top:1px solid var(--line);width:100%"><p class="small">W aplikacji jest ${demoCount} przykładowych kart.</p>
@@ -1501,11 +1509,12 @@ let SES = null, tick = null;
 function buildQueue(kind, id){
   if (kind === "daily"){ const p = todayPlan(); const q = []; let n = 0;
     p.reviews.forEach((r,i) => { q.push(r); if ((i+1) % 3 === 0 && n < p.news.length) q.push(p.news[n++]); });
-    while (n < p.news.length) q.push(p.news[n++]); return q; }
+    while (n < p.news.length) q.push(p.news[n++]); return onePerPair(q); }
   if (kind === "extra") return newIds().slice(0, 10);
   if (kind === "morning") return morningIds();
   if (kind === "rematch") return rematchIds().slice(0, QUICK_N);
-  if (kind === "quick"){ const p = todayPlan(); const due = [...p.reviews].sort((a,b) => (isMastered(a) - isMastered(b)) || runOf(S.progress[b]) - runOf(S.progress[a]));
+  if (kind === "quick"){ const p = todayPlan(); const t0 = TODAY(); const errToday = c => (S.progress[c]?.hist||[]).some(h => h[0] === t0 && h[1] === 0) && !isMastered(c);
+    const due = [...p.reviews].sort((a,b) => (errToday(b) - errToday(a)) || (isMastered(a) - isMastered(b)) || runOf(S.progress[b]) - runOf(S.progress[a]));   // „wróci jeszcze dziś” ma być prawdą
     // najwyżej 3 powtórki w rundzie, reszta to nowe karty – nowy materiał ma się pojawiać w każdej rundzie
     const nNew = Math.min(p.news.length, Math.max(QUICK_N - due.length, 2));
     const q = [], keys = new Set();
@@ -1513,7 +1522,8 @@ function buildQueue(kind, id){
       if (q.length >= QUICK_N) break; const k = pairKey(c); if (keys.has(k)) continue; keys.add(k); q.push(c); }
     if (q.length > 1 && !S.progress[q[0]]){ const easy = q.findIndex(c => runOf(S.progress[c]) >= 1); if (easy > 0) q.unshift(q.splice(easy,1)[0]); }
     return q.slice(0, QUICK_N); }
-  if (kind === "unit") return cardsOf(id).map(([c]) => c).filter(c => !isMastered(c)).concat(cardsOf(id).map(([c]) => c).filter(isMastered)).slice(0, SESSION_MAX);
+  if (kind === "unit"){ const room = Math.max(0, newLimit() - newToday()); let fresh = 0;
+    return onePerPair(cardsOf(id).map(([c]) => c).filter(c => !isMastered(c)).filter(c => S.progress[c] || (pairReady(c) && fresh++ < room)).concat(cardsOf(id).map(([c]) => c).filter(isMastered))).slice(0, SESSION_MAX); }   // nowe karty w limicie dnia
   if (kind === "step"){ const ids = testCards(S.tests[id]||{});
     const open = ids.filter(c => S.progress[c] && !isMastered(c)).sort((a,b) => (S.progress[a].at||0) - (S.progress[b].at||0));
     const soon = S.tests[id]?.date && daysBetween(TODAY(), S.tests[id].date) <= 2;   // tuż przed sprawdzianem bez limitu nowych
@@ -1524,9 +1534,11 @@ function buildQueue(kind, id){
     if (!q.length) q = buildQueue("quick");   // limit nowych na dziś wykorzystany: zwykła szybka runda
     return q; }
   if (kind === "test"){ const ids = testCards(S.tests[id]);
-    const notM = ids.filter(c => !isMastered(c)).sort((a,b) => (S.progress[b]?.lapses||0)-(S.progress[a]?.lapses||0));
+    const soon = S.tests[id]?.date && daysBetween(TODAY(), S.tests[id].date) <= 2;   // tuż przed sprawdzianem bez limitu nowych
+    const room = soon ? Infinity : Math.max(0, newLimit() - newToday()); let fresh = 0;
+    const notM = ids.filter(c => !isMastered(c)).filter(c => S.progress[c] || (pairReady(c) && fresh++ < room)).sort((a,b) => (S.progress[b]?.lapses||0)-(S.progress[a]?.lapses||0));
     const m = ids.filter(isMastered).sort(() => Math.random() - .5);
-    return notM.concat(m).slice(0, SESSION_MAX); }
+    return onePerPair(notM.concat(m)).slice(0, SESSION_MAX); }
   return [];
 }
 function startSession(kind, id){
@@ -1542,8 +1554,8 @@ function startTick(){ clearInterval(tick); tick = setInterval(() => { if (SES &&
   const el = document.getElementById("sesClock"); if (el && SES) el.textContent = fmtClock(SES.activeMs); }, 1000); }
 function openSheet(){ $("#sheet").hidden = false; document.body.style.overflow = "hidden"; }
 function closeSheet(){ $("#sheet").hidden = true; document.body.style.overflow = ""; clearInterval(tick); SES = null; scheduleRender(); }
-function sessionDoc(){ return { date: SES.date, start: SES.start, end: Date.now(), activeMs: SES.activeMs, kind: SES.kind, ref: SES.ref, n: SES.n, ok: SES.ok, hard: SES.hard, wrong: SES.wrong, newN: SES.newN, points: SES.points, answers: SES.answers || [] }; }
-function persistSession(){ if (SES?.recall) SES.activeMs = Math.min((SES.doneAt || SES.lastAct) - SES.start, 40*60000);
+function sessionDoc(){ return { date: SES.date, start: SES.start, end: Date.now(), activeMs: SES.activeMs, kind: SES.kind, ref: SES.ref, n: SES.n, ok: SES.ok, hard: SES.hard, partial: SES.partial || 0, wrong: SES.wrong, newN: SES.newN, points: SES.points, answers: SES.answers || [] }; }
+function persistSession(){ if (SES?.recall) SES.activeMs = Math.min(Math.min(SES.doneAt || SES.lastAct, SES.lastAct + 5*60000) - SES.start, 40*60000);   // odłożony telefon nie nabija czasu
   if (SES && (SES.n || SES.activeMs > 30000)) store.put("sessions", SES.id, sessionDoc()); }
 function renderCardFace(c, revealed){
   let front = esc(c.front);
@@ -1634,7 +1646,11 @@ function termKey(t){
   if (rest.length <= 6 && rest.filter(k => /^[a-z]/.test(k)).length <= 4 && rest.every(k => /^[a-z]\d*$|^\(/.test(k))) rest.sort();   // jednomian: 2ba = 2ab
   return sign + coef + rest.join("");
 }
+const supPrep = s => String(s||"").replace(/[⁰¹²³⁴-⁹]+/g, m => "^" + [...m].map(c => SUPMAP[c]).join("")).replace(/\^\s*(\d+)/g, "^$1");
+const SUPMAP = {"⁰":"0","¹":"1","²":"2","³":"3","⁴":"4","⁵":"5","⁶":"6","⁷":"7","⁸":"8","⁹":"9"};
 function mathKey(s){
+  s = supPrep(s).replace(/(\d)\^(?=\d)/g, "$1↑").replace(/([^\d\s^])\s*\^(?=\d)/g, "$1").replace(/(\d)\s*[×·*]\s*(?=\d)/g, "$1⋆").replace(/([a-z)])\s*[×·*]\s*(?=\d)/gi, "$1⋆");
+  s = s.replace(/(^|[(⟨;,]\s*)∞/g, "$1+∞");
   let x = fold(s).replace(/\(\s*([ivxlcdm]+)\s*\)/g, (m, r) => ROMAN.test(r) ? "(" + romanVal(r) + ")" : m).replace(/\^/g, "").replace(/>=|=>/g, "≥").replace(/<=|=</g, "≤").replace(/[×·*]/g, "").replace(/(\d),(\d)/g, "$1.$2");
   x = x.replace(/^\s*(w|we|im|in|okolo|ok\.?)\s+(?=\d|[ivxlcdm]+\s*(w\b|wiek))/, "");                       // „w 1939”, „ok. 966”
   x = x.replace(/\b([ivxlcdm]+)\s*(w\.?|wiek|wieku)(?=$|\s|p|n)/g, (m, r) => ROMAN.test(r) ? romanVal(r) + "w" : m);   // XV w. = 15 wiek
@@ -1657,16 +1673,29 @@ function shortMatch(t, v){   // t, v po plain()
   if (!/\d/.test(v) && v.split(" ").length === 2 && wordsClose(ws(t), ws(v))) return "close";
   return "";
 }
-function answerAlts(answer, type){
-  const { main, extra } = splitParen(answer);
-  const sep = type === "vocab" ? /\s+\/\s+|\s*[;,]\s*|\s+lub\s+|\s+or\s+|\s+oder\s+/i : /\s+\/\s+|\s*;\s*|\s+lub\s+|\s+or\s+|\s+oder\s+/i;
-  const parts = main.split(sep).map(x => x.trim()).filter(Boolean);
+// P1: podział na warianty tylko poza nawiasami i nigdy po „;” (średnik = „i”, część odpowiedzi; w przedziale – separator końców)
+// P2: gdy pytanie ma ten sam separator („on / ona”, „eins, zwei, drei”), to para/lista – trzeba wszystkich części
+function splitTop(s, re){ const out = []; let depth = 0, cur = "";
+  for (let i = 0; i < s.length; i++){ const ch = s[i];
+    if ("([⟨〈{".includes(ch)) depth++; if (")]⟩〉}".includes(ch)) depth = Math.max(0, depth - 1);
+    if (depth === 0){ const m = s.slice(i).match(re); if (m && m.index === 0 && m[0].length){ out.push(cur); cur = ""; i += m[0].length - 1; continue; } }
+    cur += ch; }
+  out.push(cur); return out; }
+function answerAlts(answer, type, front){
+  const { main, extra: extra0 } = splitParen(answer);
+  const extra = (wordCount(main) <= 2 && !/\d/.test(main)) ? extra0 : [];
+  const f = String(front || "").replace(/\{\{.+?\}\}/g, " ");
+  const vocabComma = type === "vocab" && !/,/.test(f);
+  const slash = !/\s\/\s/.test(f);
+  const sep = new RegExp("^(?:" + [slash ? "\\s+\\/\\s+" : null, vocabComma ? "\\s*,\\s*" : null, "\\s+lub\\s+", "\\s+or\\s+", "\\s+oder\\s+"].filter(Boolean).join("|") + ")", "i");
+  let parts = splitTop(main, sep).map(x => x.trim()).filter(Boolean);
+  if (parts.some(x => wordCount(x) > 3) || (/\d/.test(main) && type === "vocab")) parts = [];   // warianty to krótkie synonimy; „…, 0–180° E lub W” albo „7, 8, 9, 10” to nie warianty
   const base = /\d[₀-₉]+(?=\s|$|\()/.test(String(answer)) ? [String(answer).replace(/(\d)[₀-₉]+(?=\s|$|\()/g, "$1").replace(/\s*\([^()]*\)\s*$/, "")] : [];   // 53₈ → 53
   return [...new Set([String(answer), main, ...(parts.length > 1 ? parts : []), ...extra, ...base].filter(x => String(x).trim()))];
 }
 // wartość wyrażenia z samych liczb („2500 + 100 + 1”, „(50+1)²”, „3,5·2”); null, gdy są litery lub coś innego
 function numValue(x){
-  let e = fold(x).replace(/[²³]/g, m => m === "²" ? "^2" : "^3").replace(/[⁰¹⁴-⁹]/g, "").replace(/[×·*]/g, "*").replace(/:/g, "/").replace(/(\d),(\d)/g, "$1.$2").replace(/\s+/g, "");
+  let e = String(x||"").replace(/[⁰¹²³⁴-⁹]+/g, m => "^" + [...m].map(c => SUPMAP[c]).join("")); e = fold(e).replace(/[²³]/g, m => m === "²" ? "^2" : "^3").replace(/[⁰¹⁴-⁹]/g, "").replace(/[×·*]/g, "*").replace(/:/g, "/").replace(/(\d),(\d)/g, "$1.$2").replace(/\s+/g, "");
   if (!e || /[^0-9+\-*/().^]/.test(e) || !/\d/.test(e)) return null;
   const t = e.match(/\d+(?:\.\d+)?|[-+*/^()]/g) || []; let i = 0;
   const num = () => { const k = t[i++]; if (k === "("){ const v = add(); i++; return v; } if (k === "-") return -pw(); return parseFloat(k); };
@@ -1676,15 +1705,22 @@ function numValue(x){
   try { const v = add(); return i === t.length && Number.isFinite(v) ? v : null; } catch { return null; }
 }
 // wynik: "exact" | "close" | "no" (inna liczba – na pewno źle) | "dk" („nie wiem”) | "" (nie wiadomo – zdecyduje AI)
-function checkAnswer(typed, answer, type){
+const normM = s => fold(supPrep(s).replace(/([^\d\s^])\^(?=\d)/g, "$1")).replace(/\s+/g, "").replace(/[.!]+$/, "");
+const same = (t, a) => (hasMath(a) || hasMath(t)) ? normM(t) === normM(a) : norm(t) === norm(a);
+function checkAnswer(typed, answer, type, front){
   if (!String(typed||"").trim()) return "";
-  if (norm(typed) === norm(answer)) return "exact";
-  if (/^(nie wiem|nie pamietam|nw|idk|[?.\-x\s]+)$/.test(fold(typed).trim())) return "dk";   // „nie wiem”, „?”, „-”
-  const alts = answerAlts(answer, type), tp = plain(typed), tk = mathKey(typed);
+  if (same(typed, answer)) return "exact";
+  if (/^(nie wiem|niewiem|nie pamietam|niepamietam|nie znam|nie mam pojecia|nw|nwm|nwn|idk|brak|[?.\-x\s]+)[\s.!?]*$/.test(fold(typed).trim())) return "dk";   // P5: „nwm”, „nie wiem.”
+  const alts = answerAlts(answer, type, front), tp = plain(typed), tk = mathKey(typed);
+  // P11: przepisane pytanie (bez luki) to nie odpowiedź
+  if (front && type !== "cloze" && tp.length >= 4 && tp === plain(String(front).replace(/\{\{.+?\}\}/g, " "))) return "no";
+  // P6: „x = 5” – inna liczba przy tej samej niewiadomej = na pewno źle
+  { const ea = fold(answer).replace(/\s+/g, "").match(/^([a-z])=(-?\d+(?:[.,]\d+)?)$/), et = fold(typed).replace(/\s+/g, "").match(/^(?:([a-z])=)?(-?\d+(?:[.,]\d+)?)$/);
+    if (ea && et && (!et[1] || et[1] === ea[1]) && parseFloat(et[2].replace(",", ".")) !== parseFloat(ea[2].replace(",", "."))) return "no"; }
   for (const a of alts){
-    if (norm(typed) === norm(a)) return "exact";
+    if (same(typed, a)) return "exact";
     const k = mathKey(a);
-    const mathy = hasMath(a) || hasMath(typed) || /\d/.test(k + tk) || /[()⟨⟩〈〉\[\];]/.test(a + typed);
+    const mathy = hasMath(a) || hasMath(typed) || /\d/.test(k + tk) || /[⟨⟩〈〉\[\]]/.test(a + typed);   // P10: sam nawias/średnik w tekście nie wyłącza tolerancji literówek
     if (mathy){
       if (k === tk) return "exact";
       const ks = k.split("="), ts = tk.split("=");
@@ -1697,11 +1733,14 @@ function checkAnswer(typed, answer, type){
     const r = shortMatch(tp, plain(a)); if (r) return r;
   }
   // obliczenie: ten sam wynik liczbowy co ostatnia strona odpowiedzi („2500 + 100 + 1” przy „… = 2601”)
-  if (!/[a-z]/.test(fold(answer).replace(/\([^()]*\)/g, ""))){ const last = String(answer).split("=").pop(), av = numValue(last), tv = numValue(typed.split("=").pop());
-    if (av != null && tv != null && Math.abs(av - tv) < 1e-9) return "close"; }
+  if (!/[a-z]/.test(fold(answer).replace(/\([^()]*\)/g, ""))){ const last = String(answer).split("=").pop(), tl = typed.split("=").pop(), av = numValue(last), tv = numValue(tl);
+    if (av != null && tv != null && Math.abs(av - tv) < 1e-9){
+      if (/^\s*-?\d+(?:[.,]\d+)?\s*$/.test(tl)) return "close";   // P7: wynik = sama liczba na końcu; działanie bez wyniku („51²”, „2500 + 100 + 1”) ocenia AI
+      return ""; } }
   // lista „nazwa – opis, nazwa – opis”: wystarczą same nazwy, w dowolnej kolejności
   { const heads = splitParen(answer).main.split(/\s*[,;]\s*/).map(x => x.split(/\s+[–—-]\s+/)).filter(x => x.length > 1).map(x => plain(x[0])).filter(Boolean);
-    if (heads.length >= 2 && heads.every(h => h.split(" ").length <= 2)){
+    const fq = " " + plain(String(front || "").replace(/\{\{.+?\}\}/g, " ")) + " ";   // P10: nazwy z pytania („Kim byli Achilles i Hektor?”) to nie odpowiedź
+    if (front && heads.length >= 2 && heads.every(h => h.split(" ").length <= 2 && !fq.includes(" " + h + " "))){
       const got = typed.split(/\s*[,;]\s*|\s+i\s+|\s+oraz\s+/).map(plain).filter(Boolean);
       const near = (y, h) => y === h || (!/\d/.test(h) && h.length >= 6 && lev(y, h) <= 2);
       if (got.length === heads.length && heads.every(h => got.some(y => near(y, h)))) return "close"; } }
@@ -1721,6 +1760,15 @@ function checkAnswer(typed, answer, type){
   }
   return "";
 }
+// P9: bez AI (awaria, brak sieci) – wpis bez żadnego wspólnego słowa/liczby z odpowiedzią albo wyliczanka: najwyżej „Z trudem”
+function offlineCap(typed, answer, type){
+  const tok = s => new Set(plain(s).split(" ").filter(w => w.length >= 3 || /\d/.test(w)));
+  const A = tok(answer), T = tok(typed); const common = [...T].some(w => A.has(w) || [...A].some(v => v.length >= 6 && lev(v, w) <= 2));
+  const sepN = s => (String(s).match(/[,;\n]|\s(i|oraz|lub)\s/g) || []).length;
+  if (hasMath(answer)) return 1;   // wzór/liczba/przedział: poprawne zapisy zalicza już checkAnswer, resztę bez AI nie da się sprawdzić
+  if (!common) return 1;
+  if (sepN(typed) >= sepN(answer) + 2) return 1;
+  return 2; }
 // Ocena sensu przez AI (Edge Function read-notebook, tryb "answer"): treść karty bierze serwer z bazy po id karty.
 async function askMeaning(cid, typed){
   const call = sb.functions.invoke("read-notebook", { body: { mode: "answer", fam: fam.id, cardId: cid, typed: String(typed).slice(0, 400), ctx: [S.subjects[S.cards[cid]?.subjectId]?.name, S.units[S.cards[cid]?.unitId]?.title].filter(Boolean).join(" · ") } })
@@ -1739,13 +1787,16 @@ const aiKey = (cid, typed) => cid + "|" + plain(typed);
 function answerVerdict(c, cid, typed){
   if (!typed) return { local: "" };
   const ans = c.type === "cloze" ? clozeAnswer(c) : c.back;
-  const local = checkAnswer(typed, ans, c.type);
+  const local = checkAnswer(typed, ans, c.type, c.front);
   return { local, ai: local ? null : (SES?.ai?.[aiKey(cid, typed)] || null) };
 }
 // najwyższa ocena, na jaką pozwala wpisana odpowiedź
 function gradeCap(c, g){
   if (g === 0 || !SES || !c) return g;
-  const typed = String(SES.typed||"").trim(); if (!typed) return g;            // nie wpisywał: samoocena
+  const cid = SES.queue[SES.i];
+  if (SES.hint === cid) g = Math.min(g, 1);                                     // po podpowiedzi najwyżej „Z trudem”
+  const typed = String(SES.typed||"").trim();
+  if (!typed) return (SES.kind === "test" || SES.kind === "step") ? Math.min(g, 1) : g;   // bez wpisu samoocena; przed sprawdzianem „Wiem” tylko z wpisem
   const { local, ai } = answerVerdict(c, SES.queue[SES.i], typed);
   if (local === "exact" || local === "close") return g;
   if (local === "no" || local === "dk") return 0;                               // inna liczba/data albo „nie wiem”
@@ -1754,19 +1805,20 @@ function gradeCap(c, g){
   if (v === "no") return 0;                                                     // AI: źle = „Nie wiem”
   if (v === "busy") return 0;                                                   // czekamy na sprawdzenie (przyciski 1 i 2 chwilowo wyłączone)
   if (v === "partial") return Math.min(g, 1);                                  // częściowo: najwyżej „Z trudem”
-  return g;                                                                     // AI niedostępne: uczeń ocenia sam (rodzic widzi wpis do przejrzenia)
+  return Math.min(g, offlineCap(typed, c.type === "cloze" ? clozeAnswer(c) : c.back, c.type));   // AI niedostępne: samoocena, ale wpis bez związku z odpowiedzią najwyżej „Z trudem”
 }
 function renderStudy(){
   const sh = $("#sheet"); const cid = SES.queue[SES.i]; const c = S.cards[cid];
   if (!c){ SES.i++; if (SES.i >= SES.queue.length) return finishSession(); return renderStudy(); }
   if (SES.shown !== SES.i){ SES.shown = SES.i; sh.scrollTop = 0; }
   const s = S.subjects[c.subjectId], u = S.units[c.unitId];
-  const pct = Math.round(Math.min(1, SES.kind === "daily" ? SES.n / Math.max(SES.base, SES.n + SES.queue.length - SES.i) : (SES.firstDone||0) / (SES.base || SES.queue.length)) * 100);
+  const uniqN = new Set(SES.queue).size, uniqSeen = new Set(SES.queue.slice(0, SES.i)).size;
+  const pct = Math.round(Math.min(1, SES.kind === "daily" ? uniqSeen / uniqN : (SES.firstDone||0) / (SES.base || SES.queue.length)) * 100);
   const answer = c.type === "cloze" ? clozeAnswer(c) : c.back;
   const typed = SES.typed.trim();
   const isNew = !S.progress[cid];
   SES.ai = SES.ai || {};
-  const verdict = SES.revealed && typed ? checkAnswer(typed, answer, c.type) : "";
+  const verdict = SES.revealed && typed ? checkAnswer(typed, answer, c.type, c.front) : "";
   const match = verdict === "exact" || verdict === "close";
   const askAi = SES.revealed && typed && (!verdict || verdict === "no");
   if (askAi){ const k = aiKey(cid, typed);   // werdykt AI zapamiętany dla tej karty i tego wpisu
@@ -1775,6 +1827,10 @@ function renderStudy(){
   const ai = askAi ? (SES.ai[aiKey(cid, typed)] || {}) : {};
   // wpisana odpowiedź okazała się zła: od razu pokazujemy poprawną odpowiedź i wyjaśnienie (bez klikania)
   const miss = !!(SES.revealed && typed && (verdict === "no" || verdict === "dk" || ai.verdict === "no" || ai.verdict === "partial"));
+  if (miss && ai.verdict !== "busy" && !(SES.pre && SES.pre.i === SES.i)){   // błąd zapisujemy od razu: zamknięcie albo odświeżenie go nie skasuje
+    const prev0 = S.progress[cid]; SES.pre = { i: SES.i, cid, prev: prev0 };
+    const pp = grade(prev0, ai.verdict === "partial" ? 1 : 0, TODAY(), ai.verdict === "partial"); pp.unitId = c.unitId; pp.subjectId = c.subjectId; if (!prev0) pp.introduced = TODAY();
+    store.put("progress", cid, pp); }
   const cap = SES.revealed ? gradeCap(c, 2) : 2;
   const mastered = isMastered(cid), nextLvl = Math.min(MASTERY_RUN, runOf(S.progress[cid]) + 1);
   const yourMsg = !typed ? "" : verdict === "exact" ? "Zgadza się z Twoją odpowiedzią."
@@ -1783,34 +1839,35 @@ function renderStudy(){
     : verdict === "no" ? `Twoja odpowiedź: <b>${esc(typed)}</b>. Liczba się nie zgadza, więc liczy się jak „Nie wiem”.`
     : ai.verdict === "busy" ? `Twoja odpowiedź: ${esc(typed)}. Sprawdzam, czy chodzi o to samo…`
     : ai.verdict === "yes" ? `Dobrze! Innymi słowami, ale o to chodzi.${ai.why ? " " + esc(ai.why) : ""}`
-    : ai.verdict === "partial" ? `Częściowo.${ai.why ? " " + esc(ai.why) : ""} Liczy się najwyżej jako „Z trudem”.`
+    : ai.verdict === "partial" ? `Częściowo dobrze.${ai.why ? " " + esc(ai.why) : ""} Wybierz „Z trudem” – karta wróci jeszcze raz.`
     : ai.verdict === "no" ? `Nie o to chodzi.${ai.why ? " " + esc(ai.why) : ""} Liczy się jak „Nie wiem”, karta wróci.`
+    : cap < 2 ? `Twoja odpowiedź: ${esc(typed)}. Teraz nie da się sprawdzić znaczenia, a wpis wyraźnie różni się od odpowiedzi, więc liczy się najwyżej jako „Z trudem”. Rodzic zobaczy ten wpis.`
     : `Twoja odpowiedź: ${esc(typed)}. Porównaj z poprawną odpowiedzią i oceń sam: jeśli chodzi o to samo, kliknij „Wiem”.`;
   sh.innerHTML = `<div class="wrap">
-    <div class="sbar"><button class="iconbtn" data-act="quit" aria-label="Zakończ sesję">${ICON.x}</button><span class="pill" title="Czas tej sesji" style="flex:none">${ICON.clock}<span id="sesClock">${fmtClock(SES.activeMs)}</span></span><div class="bar"><i style="width:${pct}%"></i></div><span class="small muted" style="font-variant-numeric:tabular-nums">${SES.kind === "daily" ? `${SES.n + 1}/${Math.max(SES.base, SES.n + SES.queue.length - SES.i)} odp.` : `${Math.min(SES.base || SES.queue.length, (SES.firstDone||0) + 1)}/${SES.base || SES.queue.length}${SES.rqSeen?.[SES.i] ? " · powtórka" : ""}`}</span></div>
+    <div class="sbar"><button class="iconbtn" data-act="quit" aria-label="Zakończ sesję">${ICON.x}</button><span class="pill" title="Czas tej sesji" style="flex:none">${ICON.clock}<span id="sesClock">${fmtClock(SES.activeMs)}</span></span><div class="bar"><i style="width:${pct}%"></i></div><span class="small muted" style="font-variant-numeric:tabular-nums">${SES.kind === "daily" ? `${Math.min(uniqN, uniqSeen + (SES.queue.slice(0, SES.i).includes(cid) ? 0 : 1))}/${uniqN} kart${SES.rqSeen?.[SES.i] ? " · powtórka" : ""}` : `${Math.min(SES.base || SES.queue.length, (SES.firstDone||0) + 1)}/${SES.base || SES.queue.length}${SES.rqSeen?.[SES.i] ? " · powtórka" : ""}`}</span></div>
     <div class="fc">
-      <div class="meta"><span class="dot" style="--c:${scol(s)}"></span>${esc(s?.name)} · ${esc(u?.title)}${isNew ? ` <span class="chip here">nowa</span>` : ""}${c.type === "vocab" ? ` <span class="chip">przetłumacz</span>` : ""}${u?.svg && SES.revealed ? ` <button class="btn sm ghost" data-act="upic" style="padding:2px 10px">${SES.upic === c.unitId ? "Ukryj obrazek działu" : "Obrazek działu"}</button>` : ""}</div>
+      <div class="meta"><span class="dot" style="--c:${scol(s)}"></span>${esc(s?.name)}${u?.title && (SES.revealed || !plain(answer) || plain(answer).length < 3 || !plain(u.title).includes(plain(answer))) ? " · " + esc(u.title) : ""}${isNew ? ` <span class="chip here">nowa</span>` : ""}${c.type === "vocab" ? ` <span class="chip">przetłumacz</span>` : ""}${u?.svg && SES.revealed ? ` <button class="btn sm ghost" data-act="upic" style="padding:2px 10px">${SES.upic === c.unitId ? "Ukryj obrazek działu" : "Obrazek działu"}</button>` : ""}</div>
       ${u?.svg && SES.revealed && SES.upic === c.unitId ? `<div class="pic">${cleanSvg(u.svg)}</div>` : ""}
       ${renderCardFace(c, SES.revealed)}
       ${speakSide(c, cid, false) === "front" ? `<button class="btn sm" data-act="speak" data-side="front" style="align-self:flex-start">🔊 Posłuchaj</button>` : ""}
       ${SES.revealed ? `<div class="answer">${c.type === "cloze" ? `Odpowiedź: <mark>${esc(answer)}</mark>` : esc(c.back)}</div>
         ${speakSide(c, cid, true) === "back" ? `<button class="btn sm" data-act="speak" data-side="back" style="align-self:flex-start">🔊 Posłuchaj</button>` : ""}
-        ${miss ? `<div class="yours miss" role="alert">${verdict === "dk" ? "" : "<b>To nie ta odpowiedź.</b> "}${yourMsg}<br><span class="small">Poprawnie: <b>${esc(answer)}</b>${c.lit || c.why || c.ex ? " · niżej wyjaśnienie krok po kroku" : ""}<br>Materiał: ${esc(s?.name || "")}${u?.title ? " · " + esc(u.title) : ""}</span>${ai.how ? `<div class="how"><b>Jak do tego dojść:</b> ${esc(ai.how)}</div>` : ai.verdict === "busy" ? `<div class="how small muted">Przygotowuję wyjaśnienie, jak do tego dojść…</div>` : ""}</div>` : ""}
+        ${miss ? `<div class="yours miss" role="alert">${verdict === "dk" ? "" : ai.verdict === "partial" ? "<b>Prawie.</b> " : "<b>To nie ta odpowiedź.</b> "}${yourMsg}<br><span class="small">Poprawnie: <b>${esc(answer)}</b>${c.lit || c.why || c.ex ? " · niżej wyjaśnienie krok po kroku" : ""}<br>Materiał: ${esc(s?.name || "")}${u?.title ? " · " + esc(u.title) : ""}</span>${ai.how ? `<div class="how"><b>Jak do tego dojść:</b> ${esc(ai.how)}</div>` : ai.verdict === "busy" ? `<div class="how small muted">Przygotowuję wyjaśnienie, jak do tego dojść…</div>` : ""}</div>` : ""}
         ${stepsBlock(c, cid, isNew || miss)}
         ${c.mnemo ? `<div class="yours" style="background:var(--primary-soft)"><b>Zaczepka:</b> ${esc(c.mnemo)}</div>` : ""}
         ${typed && !miss ? `<div class="yours ${match || ai.verdict === "yes" ? "match" : ""}">${yourMsg}</div>` : ""}` : ""}
     </div>
-    ${SES.revealed ? `<p class="small muted" style="text-align:center">${isNew ? "Pierwszy raz? Oceń szczerze, karta wróci w dobrym momencie." : "Jak Ci poszło?"}</p>
+    ${SES.revealed ? `<p class="small muted" style="text-align:center">${miss ? (cap < 1 ? "Kliknij „Nie wiem” – karta wróci, spróbujesz jeszcze raz." : "Częściowo dobrze: wybierz „Z trudem” albo „Nie wiem”.") : !typed && cap < 2 && SES.hint !== cid ? "W sesji przed sprawdzianem „Wiem” jest po wpisaniu odpowiedzi." : SES.hint === cid ? "Była podpowiedź, więc najwyżej „Z trudem”." : isNew ? "Pierwszy raz? Oceń szczerze, karta wróci w dobrym momencie." : "Jak Ci poszło?"}</p>
       <div class="grades" style="${miss ? `grid-template-columns:repeat(${cap >= 1 ? 2 : 1}, minmax(0, 1fr))` : ""}">
         <button class="grade g0 ${cap === 0 ? "suggest" : ""}" data-act="grade" data-g="0">Nie wiem<small>${willReturn(cid) ? "wróci za chwilę" : "wróci w następnej rundzie"}</small></button>
-        ${miss && cap < 1 ? "" : `<button class="grade g1" data-act="grade" data-g="1" ${cap < 1 ? "disabled" : ""}>Z trudem<small>${miss ? "częściowo · wróci za chwilę" : mastered ? "wróci wcześniej" : "dobra odpowiedź"}</small></button>`}
+        ${miss && cap < 1 ? "" : `<button class="grade g1" data-act="grade" data-g="1" ${cap < 1 ? "disabled" : ""}>Z trudem<small>${miss ? (willReturn(cid) ? "częściowo · wróci za chwilę" : "częściowo · wróci później") : mastered ? "wróci wcześniej" : "dobra odpowiedź"}</small></button>`}
         ${miss ? "" : `<button class="grade g2 ${match || ai.verdict === "yes" ? "suggest" : ""}" data-act="grade" data-g="2" ${cap < 2 ? "disabled" : ""}>Wiem<small>${mastered ? "wróci później" : "dobra odpowiedź"}</small></button>`}
       </div>
       <button class="btn ghost sm" data-act="flag" style="align-self:center">${ICON.flag.replace("<svg",'<svg width="16" height="16"')} Zgłoś błąd w karcie</button>`
     : `<form data-form="reveal" class="stack" style="gap:10px">
         <label class="f">Przypomnij sobie odpowiedź <small>${c.type === "vocab" ? "słówka wpisz sam, litera po literze. Bez limitu czasu." : "możesz ją wpisać albo tylko pomyśleć. Bez limitu czasu."}</small><input type="text" id="typed" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="${hasMath(answer) && SES.kbd !== "sys" ? "none" : "text"}" value="${esc(SES.typed)}"></label>
         ${hasMath(answer) ? mathKeypad() : ""}
-        ${(!S.progress[cid] || SES.wrongIds.includes(cid) || (S.progress[cid]?.lapses||0) > 0) ? (SES.hint === cid ? `<p class="yours">Podpowiedź: <b>${esc(c.mnemo || hintOf(answer))}</b></p>` : `<button class="btn sm ghost" type="button" data-act="hint">Podpowiedź (pierwsze litery)</button>`) : ""}
+        ${(!S.progress[cid] || SES.wrongIds.includes(cid) || (S.progress[cid]?.lapses||0) > 0) ? (SES.hint === cid ? `<p class="yours">Podpowiedź: <b>${esc(hintOf(answer))}</b></p>` : `<button class="btn sm ghost" type="button" data-act="hint">Podpowiedź (pierwsze litery)</button>`) : ""}
         <button class="btn primary big" type="submit">Pokaż odpowiedź</button></form>`}
   </div>`;
   if (!SES.revealed){ const inp = $("#typed"); if (inp && matchMedia("(hover:hover)").matches) inp.focus(); }
@@ -1855,15 +1912,18 @@ function missNow(){
   return local === "no" || local === "dk" || ai?.verdict === "no" || ai?.verdict === "partial";
 }
 function gradeCard(g){
-  const cid = SES.queue[SES.i]; const prev = S.progress[cid]; const c = S.cards[cid]; const t = TODAY();
+  const cid = SES.queue[SES.i]; const c = S.cards[cid]; const t = TODAY();
+  const prev = SES.pre && SES.pre.i === SES.i && SES.pre.cid === cid ? SES.pre.prev : S.progress[cid];   // stan sprzed zapisanego od razu błędu
+  SES.pre = null;
   if (!c) return;
   g = gradeCap(c, g); // wpisana odpowiedź nie zgadza się z poprawną: nie może być „Wiem”
   const lvl = x => Math.min(MASTERY_RUN, runOf(x));
   const miss = missNow();
   const p = grade(prev, g, t, miss && g > 0); p.unitId = c.unitId; p.subjectId = c.subjectId;
   if (!prev){ p.introduced = t; SES.newN++; }
-  if (lvl(p) > lvl(prev)) SES.levelUps = (SES.levelUps||0) + 1;
+  if (lvl(p) > lvl(prev) && !(SES.upIds||[]).includes(cid)){ SES.upIds = [...(SES.upIds||[]), cid]; SES.levelUps = SES.upIds.length; }   // karty, nie kroki
   if (lvl(p) >= MASTERY_RUN && lvl(prev) < MASTERY_RUN) SES.mastered = (SES.mastered||0) + 1;
+  if (g > 0 && !miss && lvl(prev) >= MASTERY_RUN && !(SES.keptIds||[]).includes(cid)) SES.keptIds = [...(SES.keptIds||[]), cid];
   { const ph = prev?.hist || []; const last = ph[ph.length-1]; if (g === 2 && last && last[1] < 2 && last[0] < t) SES.won = (SES.won||0) + 1; }
   store.put("progress", cid, p);
   { const a = lvl(prev), b = lvl(p);   // bez liczników i bez „od nowa” – tylko dobra informacja (decyzja 25.10: kropki stresowały)
@@ -1873,7 +1933,7 @@ function gradeCard(g){
   { const y = String(SES.typed||"").trim().slice(0,200); const ans = c.type === "cloze" ? clozeAnswer(c) : c.back;
     const vd = y ? answerVerdict(c, cid, y) : { local: "" }; const okTyped = vd.local === "exact" || vd.local === "close" || vd.ai?.verdict === "yes";
     SES.answers = [...(SES.answers||[]), { c: cid, y, g, m: y ? (okTyped ? 1 : 0) : null, ai: vd.ai?.verdict || null, t: Date.now() }].slice(-120);
-    SES.points += [1,6,8][g] + (g > 0 && y && okTyped ? 2 : 0); }   // wpisana i zgodna odpowiedź: +2 pkt
+    SES.points += (y ? [1,6,8] : [1,3,4])[g] + (g > 0 && y && okTyped ? 2 : 0); }   // wpisana i zgodna: +2 pkt; bez wpisu połowa
   SES.n++;
   if (!SES.rqSeen?.[SES.i]) SES.firstDone = (SES.firstDone||0) + 1;
   // powrót karty w tej samej sesji: po „Nie wiem” najwyżej 2 razy (w szybkiej rundzie raz, łącznie najwyżej 3 powtórki),
@@ -1886,8 +1946,8 @@ function gradeCard(g){
     Object.keys(SES.rqSeen).map(Number).filter(x => x >= at).sort((a,b) => b - a).forEach(x => { SES.rqSeen[x+1] = true; delete SES.rqSeen[x]; });
     SES.queue.splice(at, 0, cid); SES.rqSeen[at] = true; SES.rq[key] = k + 1; };
   const short = SES.kind === "quick" || SES.kind === "step";
-  if (g === 0 || miss){ if (g === 0) SES.wrong++; else SES.hard++; SES.wrongIds.push(cid); requeue("e", short ? 1 : 2); }
-  else { if (g === 1) SES.hard++; else SES.ok++; if (SES.kind === "daily" && !isMastered(cid)) requeue("o", 3); }
+  if (g === 0 || miss){ if (g === 0) SES.wrong++; else SES.partial = (SES.partial||0) + 1; SES.wrongIds.push(cid); requeue("e", short ? 1 : 2); }
+  else { if (g === 1) SES.hard++; else SES.ok++; if (SES.kind === "daily" && !isMastered(cid) && p.due === t) requeue("o", 1); }
   SES.i++; SES.revealed = false; SES.typed = ""; SES.sup = false; SES.lastAct = Date.now();
   persistSession(); // każda odpowiedź zapisuje się od razu
   if (SES.i >= SES.queue.length) finishSession(); else renderStudy();
@@ -1899,7 +1959,7 @@ function finishSession(){
   const wrong = [...new Set(SES.wrongIds)].map(id => S.cards[id]).filter(Boolean);
   const acc = SES.n ? Math.round((SES.ok + SES.hard) / SES.n * 100) : 0;
   const ups = SES.levelUps || 0; const nb = nearestBadge(); const more = buildQueue("quick").length;
-  const kept = Math.max(0, (SES.ok + SES.hard) - ups);   // dobre odpowiedzi na kartach już opanowanych
+  const kept = (SES.keptIds||[]).length;   // karty już opanowane, potwierdzone dobrą odpowiedzią
   const bigN = ups || kept, bigLbl = ups ? `${plural(ups,"karta","karty","kart")} poziom wyżej` : `${plural(kept,"karta utrwalona","karty utrwalone","kart utrwalonych")}`;
   const PRAISE = ups + kept >= 5 ? "Mocna runda!" : ups + kept >= 3 ? "Dobra robota!" : ups + kept >= 1 ? "Jest postęp!" : "Każda próba się liczy.";
   clearInterval(tick);
@@ -2097,7 +2157,7 @@ document.addEventListener("click", async e => {
     case "flagWhy": {
       const cid = SES.queue[SES.i], why = { ok: "Moja odpowiedź była dobra", card: "Błąd w karcie", unclear: "Niejasne pytanie" }[t.dataset.v] || "";
       store.put("flags", uid("f"), { cardId: cid, date: TODAY(), note: why, typed: String(SES.typed || "").slice(0, 200), resolved: false });
-      t.parentElement.replaceWith(Object.assign(document.createElement("p"), { className: "small muted", style: "text-align:center", textContent: "Dzięki! Tata sprawdzi tę kartę." }));
+      t.parentElement.replaceWith(Object.assign(document.createElement("p"), { className: "small muted", style: "text-align:center", textContent: "Dzięki! Rodzic sprawdzi tę kartę." }));
       break; }
     case "subj": mapSubject = id; openUnit = null; render(); break;
     case "unit": openUnit = openUnit === id ? null : id; render(); break;
@@ -2149,7 +2209,7 @@ document.addEventListener("click", async e => {
       store.put("flags", id, { ...f, resolved: true }); toast("Poprawiono kartę."); break; }
     case "resolveFlag": store.put("flags", id, { ...S.flags[id], resolved: true }); break;
     case "delFlagCard": store.del("cards", S.flags[id].cardId); store.put("flags", id, { ...S.flags[id], resolved: true }); break;
-    case "saveCfg": store.put("meta", "config", { ...(S.meta.config||{}), student: $("#c_name").value.trim() || "Borys", newPerDay: Math.max(5, Math.min(20, +$("#c_new").value || 15)) }); toast("Zapisano ustawienia."); break;
+    case "saveCfg": store.put("meta", "config", { ...(S.meta.config||{}), student: $("#c_name").value.trim() || STUDENT(), newPerDay: Math.max(5, Math.min(20, +$("#c_new").value || 15)) }); toast("Zapisano ustawienia."); break;
     case "wipeDemo": {
       if (t.dataset.confirm !== "1"){ t.dataset.confirm = "1"; t.textContent = "Kliknij jeszcze raz, żeby usunąć"; return; }
       const wipe = $("#c_wipe")?.checked;
@@ -2192,6 +2252,8 @@ function makeSbStore(fid){
   const chain = (k, e) => (q[k] = (q[k] || Promise.resolve()).then(() => send(k, e)).then(r => { if (r?.error) throw r.error;
       const o = outboxRead(fid); if (o[k]?.t === e.t){ delete o[k]; outboxWrite(fid, o); } })
     .catch(err => { console.warn(err);
+      if (err?.code === "P0001" && /borban:/.test(err.message||"")){   // strażnik w bazie odrzucił nienaturalny postęp (np. wpisany z konsoli)
+        const o = outboxRead(fid); if (o[k]?.t === e.t){ delete o[k]; outboxWrite(fid, o); } toast("Baza nie przyjęła tego postępu."); return; }
       const perm = err?.code && /^(42501|42P01|23\d{3}|22\d{3}|PGRST1\d\d|PGRST2\d\d)$/.test(err.code) && !/jwt/i.test(err.message||"");
       if (perm && !["progress","sessions"].includes(e.col)){   // trwała odmowa bazy (uprawnienia, zły rekord): ponawianie nic nie da
         const o = outboxRead(fid); if (o[k]?.t === e.t){ delete o[k]; outboxWrite(fid, o); }
@@ -2299,7 +2361,7 @@ async function start(){
   $("#view").innerHTML = `<div class="empty">Ładuję materiał…</div>`;
   const { data: mem, error } = await sb.from("borban_members").select("family_id,role,display_name,borban_families(name)").eq("user_id", session.user.id).limit(1);
   if (error || !mem?.length){ authScreen(`Konto ${session.user.email} nie jest jeszcze dodane do rodziny. Poproś rodzica, żeby dodał je w zakładce „Rodzic”, a potem odśwież stronę.`); $("#hdrMenu").hidden = false; return; }
-  fam.id = mem[0].family_id; fam.role = mem[0].role; fam.name = mem[0].borban_families?.name || "";
+  fam.id = mem[0].family_id; fam.role = mem[0].role; fam.me = mem[0].display_name || ""; fam.name = mem[0].borban_families?.name || "";
   role.canEdit = fam.role === "parent"; role.canWrite = true; role.isOwner = role.canEdit; role.preview = false;
   try { await loadAll(fam.id); } catch (e){ console.warn(e); $("#view").innerHTML = `<div class="empty">Nie udało się wczytać danych. Sprawdź internet i odśwież.</div>`; return; }
   store = makeSbStore(fam.id); store.flush();
