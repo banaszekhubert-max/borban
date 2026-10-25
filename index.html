@@ -247,6 +247,8 @@ mark{background:var(--hl); color:var(--on-hl); padding:0 .2em; border-radius:4px
 .yours.match{background:var(--good-soft)}
 .grades{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px}
 .grade{min-height:64px; border-radius:14px; border:2px solid var(--line); background:var(--surface); font-weight:800; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:6px}
+.mathbar{display:flex; flex-wrap:wrap; gap:6px}
+.mathbar .btn{min-width:44px; min-height:40px; padding:6px 10px; font-size:1.05rem; font-variant-numeric:tabular-nums}
 .grade small{font-weight:400; font-size:.75rem; color:var(--muted)}
 .grade.g0{border-color:var(--bad); color:var(--bad)}
 .grade.g1{border-color:var(--warn); color:var(--warn)}
@@ -1768,6 +1770,7 @@ function renderStudy(){
       <button class="btn ghost sm" data-act="flag" style="align-self:center">${ICON.flag.replace("<svg",'<svg width="16" height="16"')} Zgłoś błąd w karcie</button>`
     : `<form data-form="reveal" class="stack" style="gap:10px">
         <label class="f">Przypomnij sobie odpowiedź <small>${c.type === "vocab" ? "słówka wpisz sam, litera po literze. Bez limitu czasu." : "możesz ją wpisać albo tylko pomyśleć. Bez limitu czasu."}</small><input type="text" id="typed" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" value="${esc(SES.typed)}"></label>
+        ${hasMath(answer) ? `<div class="mathbar" role="group" aria-label="Znaki do wzorów">${["²","³","√","(",")","−","+","·","/","="].map(v => `<button type="button" class="btn sm" data-act="ins" data-v="${v}" aria-label="Wstaw ${v}">${v}</button>`).join("")}</div>` : ""}
         ${(!S.progress[cid] || SES.wrongIds.includes(cid) || (S.progress[cid]?.lapses||0) > 0) ? (SES.hint === cid ? `<p class="yours">Podpowiedź: <b>${esc(c.mnemo || hintOf(answer))}</b></p>` : `<button class="btn sm ghost" type="button" data-act="hint">Podpowiedź (pierwsze litery)</button>`) : ""}
         <button class="btn primary big" type="submit">Pokaż odpowiedź</button></form>`}
   </div>`;
@@ -1966,6 +1969,8 @@ document.addEventListener("keydown", e => {
   if (SES.revealed && ["1","2","3"].includes(e.key) && e.target.tagName !== "INPUT"){ const b = document.querySelector(`.grade[data-g="${+e.key - 1}"]`); if (b && !b.disabled) gradeCard(+e.key - 1); }
   if (e.key === "Escape") { persistSession(); closeSheet(); }
 });
+// pasek wzorów: dotknięcie znaku nie zabiera kursora z pola (klawiatura zostaje otwarta)
+document.addEventListener("pointerdown", e => { if (e.target.closest?.('[data-act="ins"]')) e.preventDefault(); });
 document.addEventListener("click", async e => {
   const t = e.target.closest("[data-tab],[data-act]"); if (!t) return;
   if (t.dataset.tab){ tab = t.dataset.tab; window.scrollTo(0,0); render(); return; }
@@ -1991,6 +1996,8 @@ document.addEventListener("click", async e => {
     case "confClose": NCONF = null; closeSheet(); break;
     case "why": if (SES){ SES.why = SES.queue[SES.i]; renderStudy(); } break;
     case "upic": if (SES){ SES.typed = $("#typed")?.value ?? SES.typed; const c = S.cards[SES.queue[SES.i]]; SES.upic = SES.upic === c?.unitId ? null : c?.unitId; renderStudy(); } break;
+    case "ins": { const inp = $("#typed"); if (inp){ const v = t.dataset.v, a = inp.selectionStart ?? inp.value.length, b = inp.selectionEnd ?? a;
+      inp.value = inp.value.slice(0, a) + v + inp.value.slice(b); const pos = a + v.length; inp.focus(); try { inp.setSelectionRange(pos, pos); } catch {} if (SES) SES.typed = inp.value; } break; }
     case "hint": if (SES){ SES.typed = $("#typed")?.value || SES.typed; SES.hint = SES.queue[SES.i]; renderStudy(); } break;
     case "signup": doLogin(true); break;
     case "menu": openMenu(); break;
