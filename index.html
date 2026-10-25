@@ -1677,7 +1677,12 @@ function checkAnswer(typed, answer, type){
 // Ocena sensu przez AI (Edge Function read-notebook, tryb "answer"): treść karty bierze serwer z bazy po id karty.
 async function askMeaning(cid, typed){
   const call = sb.functions.invoke("read-notebook", { body: { mode: "answer", fam: fam.id, cardId: cid, typed: String(typed).slice(0, 400) } })
-    .then(({ data, error }) => { if (error || !data?.ok) return { verdict: "na" };
+    .then(async ({ data, error }) => {
+      if (error){   // odpowiedź AI z nietypowym cudzysłowem: werdykt odczytujemy z surowego tekstu
+        try { const b = JSON.parse(await error.context.text()); const m = String(b.raw||"").match(/"verdict"\s*:\s*"(yes|partial|no)"/);
+          if (b.error === "parse" && m) return { verdict: m[1], why: (String(b.raw).match(/"why"\s*:\s*"(.*?)"\s*\}/s) || [, ""])[1].slice(0, 220) }; } catch {}
+        return { verdict: "na" }; }
+      if (!data?.ok) return { verdict: "na" };
       const v = data.result?.verdict; return { verdict: ["yes","partial","no"].includes(v) ? v : "na", why: String(data.result?.why || "").slice(0, 220) }; })
     .catch(() => ({ verdict: "na" }));
   return Promise.race([call, new Promise(r => setTimeout(() => r({ verdict: "na" }), 9000))]);
