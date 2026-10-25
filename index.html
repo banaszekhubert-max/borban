@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>BorBan</title>
-<meta name="theme-color" content="#2448D8">
+<meta name="theme-color" content="#4F46E5">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="BorBan">
@@ -52,7 +52,7 @@
   --hl:#FDE68A; --on-hl:#0F172A;
   --good:#0F766E; --good-soft:#CCFBF1; --warn:#B45309; --warn-soft:#FEF3C7; --bad:#B45309; --bad-soft:#FEF3C7;
   --f-display:"Space Grotesk", system-ui, sans-serif; --f-body:Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --r:14px; --r-sm:10px; --shadow:none;
+  --r:18px; --r-sm:12px; --shadow:none;
 }
 @media (prefers-color-scheme: dark){ :root[data-skin="sredni"]:not([data-theme="light"]){
   --bg:#0B1220; --surface:#131C2E; --sunk:#0F1726; --ink:#F1F5F9; --muted:#94A3B8; --line:#24314A;
@@ -71,34 +71,15 @@
 [data-skin="sredni"] .panel.hero{background:#0F172A; color:#FFFFFF}
 [data-skin="sredni"] .panel.hero .muted{color:#CBD5E1}
 [data-skin="sredni"] .hero .btn.primary{background:#4F46E5; color:#FFFFFF}
-[data-skin="sredni"] .grade{border-width:1px}
+[data-skin="sredni"] .grade{border-width:1px; border-radius:16px}
+[data-skin="sredni"] .btn{border-radius:14px}
+[data-skin="sredni"] .chip,[data-skin="sredni"] .pill{border-radius:999px}
+[data-skin="sredni"] input,[data-skin="sredni"] select,[data-skin="sredni"] textarea{border-radius:12px}
 [data-skin="sredni"] .grade.g1{border-color:var(--line); color:var(--ink)}
 [data-skin="sredni"] .grade.g2{background:var(--primary); border-color:var(--primary); color:var(--primary-ink)}
 [data-skin="sredni"] .grade.g2 small{color:color-mix(in srgb, var(--primary-ink) 80%, transparent)}
 [data-skin="sredni"] .grade.suggest{box-shadow:0 0 0 4px color-mix(in srgb, var(--primary) 30%, transparent)}
 [data-skin="sredni"] .grade.g0.suggest{box-shadow:0 0 0 4px color-mix(in srgb, var(--warn) 30%, transparent)}
-/* Motyw „Arsenal” (czerwień, biel, granat, złoto) – przełącznik w zakładce konta */
-:root[data-skin="arsenal"]{
-  --bg:#FAF5F5; --surface:#FFFFFF; --sunk:#F2E5E6; --ink:#0B1A33; --muted:#59627A; --line:#E6D2D4;
-  --primary:#DB0007; --primary-ink:#FFFFFF; --primary-soft:#FDE1E2;
-  --hl:#C9A55C; --on-hl:#0B1A33;
-  --s-blue:#063672; --s-red:#DB0007;
-}
-@media (prefers-color-scheme: dark){ :root[data-skin="arsenal"]:not([data-theme="light"]){
-  --bg:#081429; --surface:#10244A; --sunk:#0B1B39; --ink:#F3F5FA; --muted:#A8B2CB; --line:#233A6B;
-  --primary:#F0262D; --primary-ink:#FFFFFF; --primary-soft:#4A1622; --hl:#D6B66C; --on-hl:#081429;
-  --s-blue:#7EA6E8; --s-red:#FF6A6F;
-}}
-:root[data-skin="arsenal"][data-theme="dark"]{
-  --bg:#081429; --surface:#10244A; --sunk:#0B1B39; --ink:#F3F5FA; --muted:#A8B2CB; --line:#233A6B;
-  --primary:#F0262D; --primary-ink:#FFFFFF; --primary-soft:#4A1622; --hl:#D6B66C; --on-hl:#081429;
-  --s-blue:#7EA6E8; --s-red:#FF6A6F;
-}
-[data-skin="arsenal"] .top{background:#063672; border-bottom:3px solid #DB0007; color:#FFFFFF}
-[data-skin="arsenal"] .top .brand span{color:#FFFFFF; background:linear-gradient(transparent 58%, #DB0007 58%, #DB0007 92%, transparent 92%)}
-[data-skin="arsenal"] .top .pill{color:#0B1A33; background:#FFFFFF; border-color:transparent}
-[data-skin="arsenal"] .top .iconbtn{color:#FFFFFF; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.35)}
-[data-skin="arsenal"] .tabs{border-top:3px solid #DB0007}
 html,body{height:100%}
 body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:16px; line-height:1.45; -webkit-tap-highlight-color:transparent}
 *{box-sizing:border-box}
@@ -338,10 +319,10 @@ button.task:hover{border-color:var(--primary)}
 <div class="toast" id="toast" hidden></div>
 
 <script>
-// motyw kolorów na tym urządzeniu (domyślnie Arsenal, od 25.10)
+// jeden motyw marki BorBan (od 25.10): grafit + indygo, miękkie zaokrąglenia
 const SKIN_KEY = "borban_skin2";   // od 25.10 domyślnie „Szkoła średnia”
-const SKINS = { sredni: "#4F46E5", arsenal: "#063672", borban: "#2448D8" };
-function getSkin(){ try { const v = localStorage.getItem(SKIN_KEY); return SKINS[v] ? v : "sredni"; } catch { return "sredni"; } }
+const SKINS = { sredni: "#4F46E5" };   // jedna marka dla wszystkich (25.10): bez motywów do wyboru
+function getSkin(){ return "sredni"; }
 function applySkin(v){ if (v === "borban") delete document.documentElement.dataset.skin; else document.documentElement.dataset.skin = v;
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", SKINS[v] || "#2448D8"); }
 applySkin(getSkin());
@@ -1354,11 +1335,6 @@ function notesPanel(){
 function openMenu(){
   const me = fam.me?.email || "";
   $("#sheet").innerHTML = `<div class="wrap"><div class="sbar"><button class="iconbtn" data-act="close" aria-label="Zamknij">${ICON.x}</button><span class="small muted" style="flex:1">Konto</span></div>
-    <div class="panel stack"><p class="eyebrow">Kolory</p><div class="row" style="gap:8px">
-      <button class="btn ${getSkin() === "sredni" ? "primary" : ""}" data-act="skin" data-v="sredni">Szkoła średnia</button>
-      <button class="btn ${getSkin() === "arsenal" ? "primary" : ""}" data-act="skin" data-v="arsenal">Arsenal</button>
-      <button class="btn ${getSkin() === "borban" ? "primary" : ""}" data-act="skin" data-v="borban">Zwykłe BorBan</button></div>
-      <p class="small muted">Zmiana dotyczy tego telefonu lub komputera.</p></div>
     <div class="panel stack"><p class="eyebrow">Zalogowano</p><h3 style="overflow-wrap:anywhere">${esc(me)}</h3><p class="small muted">${fam.role === "parent" ? "Rodzic" : fam.role === "child" ? "Uczeń" : "Konto bez rodziny"}${fam.name ? " · " + esc(fam.name) : ""}</p></div>
     ${fam.role === "parent" && !role.preview ? `<button class="btn big" data-act="previewOn">Zobacz, jak widzi to ${esc(S.meta.config?.student || "Borys")}</button>` : ""}
     <div class="panel stack"><h3>Na telefonie jak aplikacja</h3><p class="small muted">iPhone: Safari → Udostępnij → „Do ekranu początkowego”. Android: Chrome → menu ⋮ → „Dodaj do ekranu głównego”. Logujesz się raz, potem aplikacja pamięta konto.</p></div>
@@ -2019,7 +1995,6 @@ document.addEventListener("click", async e => {
     case "signup": doLogin(true); break;
     case "menu": openMenu(); break;
     case "logout": closeSheet(); await sb.auth.signOut(); location.reload(); break;
-    case "skin": { try { localStorage.setItem(SKIN_KEY, t.dataset.v); } catch {} applySkin(t.dataset.v); render(); break; }
     case "previewOn": closeSheet(); role.preview = true; tab = "dzis"; window.scrollTo(0,0); render(); break;
     case "previewOff": role.preview = false; tab = "rodzic"; render(); loadAll(fam.id).then(render).catch(() => {}); break;
     case "loadPack": loadPack(); break;
