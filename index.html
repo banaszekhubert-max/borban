@@ -415,7 +415,7 @@ function grade(prev, g, today, hold){
   }
   if (hold){ p.run = base; p.reps = 0; p.interval = 0; p.due = today; p.ease = Math.max(1.3, +(p.ease - 0.1).toFixed(2)); return p; }   // częściowo dobrze po błędzie: licznik stoi, karta wraca
   const upsToday = p.ups && p.ups.d === today ? p.ups.n : 0;
-  if (upsToday >= 2 && base < MASTERY_RUN){ p.lastOk = today; p.reps = 0; p.interval = 0; p.due = addDays(today, 1); p.run = base; return p; }   // trzeci poziom dopiero kolejnego dnia (pamięć, nie chwilowa powtórka)
+  // 3 dobre odpowiedzi z rzędu = karta opanowana (także tego samego dnia)
   p.run = base + 1; p.lastOk = today; if (base < MASTERY_RUN) p.ups = { d: today, n: upsToday + 1 };
   if (g === 1) p.ease = Math.max(1.3, +(p.ease - 0.15).toFixed(2));
   if (p.run < MASTERY_RUN){ p.reps = 0; p.interval = 0; p.due = today; }            // jeszcze nie opanowana: wraca dziś
@@ -428,7 +428,7 @@ function grade(prev, g, today, hold){
   return p;
 }
 // Dobre odpowiedzi z rzędu. Zapisy od 25.10 (v:2) trzymają licznik w run; starsze liczymy z historii.
-function runOf(p){ if (!p) return 0; if (p.v === 2) return p.run || 0; const h = p.hist || []; if (!h.length) return p.run || 0;
+function runOf(p){ if (!p) return 0; if (p.v === 2){ const h2 = p.hist || []; let s = 0; for (let i = h2.length - 1; i >= 0 && h2[i][1] === 2; i--) s++; return Math.max(p.run || 0, s); } const h = p.hist || []; if (!h.length) return p.run || 0;
   let n = 0; for (let i = h.length - 1; i >= 0 && h[i][1] > 0; i--) n++; return Math.max(n, h[h.length-1][1] > 0 ? (p.run || 0) : 0); }
 const isMastered = cid => runOf(S.progress[cid]) >= MASTERY_RUN;
 
