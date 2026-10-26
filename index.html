@@ -771,14 +771,14 @@ function viewToday(){
     const [id,x,dd] = ts; const r = readiness(x);
     parts.push(`<div class="panel test stack"><div class="row" style="justify-content:space-between"><span class="chip here">D−${dd}</span><span class="small muted">${fmtDate(x.date)}</span></div>
       <h2>${esc(x.title)}</h2><p class="muted small">Dziś sesja przed sprawdzianem: przepytanie z całego zakresu, najpierw to, co jeszcze nie siedzi.</p>
-      <div class="bar" style="--c:var(--good)"><i style="width:${Math.round(r*100)}%"></i></div><p class="small">Gotowość: <b>${Math.round(r*100)}%</b> kart opanowanych</p>
+      <div class="bar" style="--c:var(--good)"><i style="width:${Math.round(r*100)}%"></i></div><p class="small">${isKid() ? kidReady(x) : `Gotowość: <b>${Math.round(r*100)}%</b> (średni poziom kart z zakresu)`}</p>
       ${role.canWrite ? `<button class="btn primary" data-act="start" data-kind="test" data-id="${id}">Sesja przed sprawdzianem</button>` : ""}</div>`);
   } else if (up && daysBetween(t, up[1].date) <= 14){
     const [id,x] = up; const dd = daysBetween(t, x.date); const r = readiness(x);
     const nextS = TEST_DAYS.map(n => addDays(x.date, -n)).filter(k => k > t)[0];
     parts.push(`<div class="panel stack"><div class="row" style="justify-content:space-between"><span class="chip">${dd === 0 ? "dziś" : `za ${dd} ${plural(dd,"dzień","dni","dni")}`}</span><span class="small muted">${fmtDate(x.date)}</span></div>
       <h3>${esc(x.title)}</h3><div class="bar" style="--c:var(--good)"><i style="width:${Math.round(r*100)}%"></i></div>
-      <p class="small muted">Gotowość ${Math.round(r*100)}%.${nextS ? ` Następna sesja sprawdzianowa: ${DNI[dow(nextS)]}, ${fmtDate(nextS)}.` : ""}</p>
+      <p class="small muted">${isKid() ? kidReady(x) : `Gotowość ${Math.round(r*100)}%.`}${nextS ? ` Następna sesja sprawdzianowa: ${DNI[dow(nextS)]}, ${fmtDate(nextS)}.` : ""}</p>
       ${role.canWrite ? `<button class="btn sm" data-act="start" data-kind="test" data-id="${id}">Powtórz zakres teraz</button>` : ""}</div>`);
   }
   // plan dnia
@@ -836,6 +836,10 @@ function chart14(){
   });
   return s + `</svg>`;
 }
+// Widok ucznia: bez liczników błędów i procentów, tylko to, co już umie.
+function isKid(){ return !(role.canEdit && !role.preview); }
+function kidReady(test){ const ids = testCards(test); const m = ids.filter(isMastered).length; const left = ids.length - m;
+  return left ? `Umiesz już <b>${m}</b> z ${ids.length} kart. Zostało ${left} ${plural(left,"karta","karty","kart")}.` : `Umiesz wszystkie ${ids.length} kart z zakresu!`; }
 function viewStats(){
   const t = TODAY(); const mon = mondayOf(t);
   const weekMs = [...Array(7)].reduce((a,_,i) => a + activeMsOn(addDays(mon,i)), 0);
@@ -849,7 +853,7 @@ function viewStats(){
   const woop = S.woop[mon];
   const subjBlocks = sortedSubjects().map(([sid,s]) => {
     const rows = unitsOf(sid).map(([id,u]) => { const st = unitStats(id); const sp = st.total ? st.seen / st.total : 0;
-      return `<div class="urow"><span>${esc(u.title)}<br><span class="small muted">${st.seen}/${st.total} przećwiczonych · ${st.mastered} opanowanych</span></span><div class="bar dual" style="--c:${scol(s)}"><b style="width:${Math.round(sp*100)}%"></b><i style="width:${Math.round(st.prog*100)}%"></i></div><span class="n">${Math.round(st.prog*100)}%</span></div>`; }).join("");
+      return `<div class="urow"><span>${esc(u.title)}<br><span class="small muted">${st.seen}/${st.total} przećwiczonych · ${st.mastered} opanowanych</span></span><div class="bar dual" style="--c:${scol(s)}"><b style="width:${Math.round(sp*100)}%"></b><i style="width:${Math.round(st.prog*100)}%"></i></div><span class="n">${parentView ? Math.round(st.prog*100) + "%" : st.mastered + "/" + st.total}</span></div>`; }).join("");
     return `<div class="stack" style="gap:8px"><div class="row"><span class="dot" style="--c:${scol(s)}"></span><h3>${esc(s.name)}</h3></div>${rows || `<p class="small muted">Brak działów.</p>`}</div>`;
   }).join("");
   return `<div class="stack">${modeBanner()}
@@ -866,13 +870,13 @@ function viewStats(){
       <p class="small muted">Fiszki w ${wp.cardsDays} z ${wp.daysSoFar} dni tego tygodnia · plan tygodnia ${wp.woop ? "ustalony" : "jeszcze nie ustalony"}</p></div>
     ${up ? `<div class="panel stack"><p class="eyebrow">Najbliższy sprawdzian · ${fmtDate(up[1].date)}</p><h3>${esc(up[1].title)}</h3>
       <div class="bar" style="--c:var(--good);height:14px"><i style="width:${Math.round(readiness(up[1])*100)}%"></i></div>
-      <p class="small">Gotowość <b>${Math.round(readiness(up[1])*100)}%</b>: ${testCards(up[1]).filter(isMastered).length} z ${testCards(up[1]).length} kart z zakresu opanowanych.</p></div>` : ""}
-    <div class="panel stack"><h3>Gdzie docisnąć</h3>
+      <p class="small">${parentView ? `Gotowość <b>${Math.round(readiness(up[1])*100)}%</b>: ${testCards(up[1]).filter(isMastered).length} z ${testCards(up[1]).length} kart z zakresu opanowanych.` : kidReady(up[1])}</p></div>` : ""}
+    ${parentView ? `<div class="panel stack"><h3>Gdzie docisnąć</h3>
       ${unitErr.length || hardCards.length ? `
       ${unitErr.length ? `<div class="list">${unitErr.map(([id,s]) => `<div class="li"><div>${esc(S.units[id].title)} <span class="muted small">· ${esc(S.subjects[S.units[id].subjectId]?.name)}</span></div><span class="chip doing">${s.lapses} ${plural(s.lapses,"błąd","błędy","błędów")}</span></div>`).join("")}</div>` : ""}
       ${hardCards.length ? `<p class="eyebrow">Najtrudniejsze karty</p><div class="list">${hardCards.map(([id,p]) => `<div class="li"><div>${esc(stripCloze(S.cards[id].front))}</div><span class="small muted">${+p.lapses||0}×</span></div>`).join("")}</div>` : ""}`
-      : `<p class="small muted">Tu pojawią się działy i karty z największą liczbą pomyłek. Na razie nic.</p>`}</div>
-    <div class="panel stack"><div><h3>Opanowanie działów</h3><p class="small muted">Każda karta ma 3 poziomy: każda dobra odpowiedź to poziom wyżej, a „Nie wiem” zaczyna od zera. 3 dobre z rzędu = karta opanowana. Procent rośnie od pierwszej sesji. Jasny pasek: karty już przećwiczone.</p></div>${subjBlocks || `<p class="small muted">Brak przedmiotów.</p>`}</div>
+      : `<p class="small muted">Tu pojawią się działy i karty z największą liczbą pomyłek. Na razie nic.</p>`}</div>` : ""}
+    <div class="panel stack"><div><h3>Opanowanie działów</h3><p class="small muted">Każda karta ma 3 poziomy: każda dobra odpowiedź to poziom wyżej, a „Nie wiem” zaczyna od zera. 3 dobre z rzędu = karta opanowana.${parentView ? " Procent rośnie od pierwszej sesji." : ""} Jasny pasek: karty już przećwiczone.</p></div>${subjBlocks || `<p class="small muted">Brak przedmiotów.</p>`}</div>
     ${woop ? `<div class="panel stack"><p class="eyebrow">Cel tygodnia (WOOP)</p><h3>${esc(woop.wish)}</h3><p class="small"><b>Jeśli</b> ${esc(woop.ifp)}, <b>to</b> ${esc(woop.then)}.</p>${woop.review ? `<p class="small muted">Podsumowanie: ${esc(woop.review)}</p>`:""}</div>` : ""}
   </div>`;
 }
