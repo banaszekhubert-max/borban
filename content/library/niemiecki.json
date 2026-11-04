@@ -787,6 +787,150 @@
     "unitId": "un_n2",
     "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegarek na rękę z paskiem\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><rect x=\"80\" y=\"4\" width=\"40\" height=\"122\" rx=\"10\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"80\" y=\"4\" width=\"40\" height=\"122\" rx=\"10\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"80\" y=\"4\" width=\"40\" height=\"122\" rx=\"10\" fill=\"#b45309\"/></g><path d=\"M84 18h32M84 30h32M84 100h32M84 112h32\" stroke=\"#7c4a1e\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g stroke=\"#fff\" stroke-width=\"4.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><rect x=\"146\" y=\"58\" width=\"10\" height=\"14\" rx=\"3\"/></g><g stroke=\"#1d2433\" stroke-width=\"2.5\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><rect x=\"146\" y=\"58\" width=\"10\" height=\"14\" rx=\"3\" fill=\"#9ca3af\"/></g><g transform=\"translate(3 4)\" fill=\"#1d2433\" opacity=\".15\"><circle cx=\"100\" cy=\"65\" r=\"40\"/></g><g stroke=\"#fff\" stroke-width=\"10\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#fff\"><circle cx=\"100\" cy=\"65\" r=\"40\"/></g><g stroke=\"#1d2433\" stroke-width=\"3\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><circle cx=\"100\" cy=\"65\" r=\"40\" fill=\"#9ca3af\"/></g><circle cx=\"100\" cy=\"65\" r=\"33\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M100 34.5L100 41.5M115.2 38.6L113.5 41.6M126.4 49.8L123.4 51.5M130.5 65L123.5 65M126.4 80.2L123.4 78.5M115.2 91.4L113.5 88.4M100 95.5L100 88.5M84.8 91.4L86.5 88.4M73.6 80.3L76.6 78.5M69.5 65L76.5 65M73.6 49.8L76.6 51.5M84.7 38.6L86.5 41.6\" stroke=\"#1d2433\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 65L86.5 55.5\" stroke=\"#1d2433\" stroke-width=\"5\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M100 65L122.9 51.8\" stroke=\"#1d2433\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"65\" r=\"3.5\" fill=\"#ef4444\" stroke=\"#1d2433\" stroke-width=\"1.5\"/></svg>"
    }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_28",
+   "data": {
+    "type": "qa",
+    "front": "Jak po niemiecku (potocznie) powiesz godzinę 8:25?",
+    "back": "fünf vor halb neun",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar wskazuje 8:25, fioletowa połowa tarczy do wpół do dziewiątej\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><circle cx=\"67\" cy=\"69\" r=\"46\" fill=\"#1d2433\" opacity=\".15\"/><circle cx=\"64\" cy=\"65\" r=\"50\" fill=\"#fff\"/><circle cx=\"64\" cy=\"65\" r=\"46\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"3\"/><path d=\"M64 22 A43 43 0 0 1 64 108 Z\" fill=\"#a78bfa\" opacity=\".55\"/><path d=\"M64.0 23.0 L64.0 29.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M85.0 28.6 L83.5 31.2\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M100.4 44.0 L97.8 45.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M106.0 65.0 L100.0 65.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M100.4 86.0 L97.8 84.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M85.0 101.4 L83.5 98.8\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M64.0 107.0 L64.0 101.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M43.0 101.4 L44.5 98.8\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M27.6 86.0 L30.2 84.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M22.0 65.0 L28.0 65.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M27.6 44.0 L30.2 45.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M43.0 28.6 L44.5 31.2\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M64 65 L42.1 71.9\" stroke=\"#1d2433\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M64 65 L81.9 96.1\" stroke=\"#ef4444\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><circle cx=\"64\" cy=\"65\" r=\"4\" fill=\"#1d2433\"/><rect x=\"120\" y=\"44\" width=\"66\" height=\"34\" rx=\"8\" fill=\"#1d2433\"/><text x=\"153\" y=\"68\" text-anchor=\"middle\" style=\"font:700 18px monospace;fill:#34d399\">8:25</text></svg>",
+    "unitId": "un_n2",
+    "subjectId": "sb_niem",
+    "source": "zakres wg: Ein tolles Team 1 (Hueber), Lektion 2; treść: opracowanie własne BorBan",
+    "created": "2026-11-04",
+    "lit": "Niemcy liczą minuty od najbliższego pełnego punktu: pełnej godziny albo „wpół do”. 8:25 jest 5 minut przed 8:30, a 8:30 to halb neun.",
+    "why": "8:25 to pięć minut przed wpół do dziewiątej, więc fünf vor halb neun.",
+    "ex": "Lekcja zaczyna się o 8:25: Die Stunde beginnt um fünf vor halb neun."
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_29",
+   "data": {
+    "type": "qa",
+    "front": "Jak po niemiecku (potocznie) powiesz godzinę 8:35?",
+    "back": "fünf nach halb neun",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar wskazuje 8:35, fioletowa połowa tarczy\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e8f1ff\"/><circle cx=\"67\" cy=\"69\" r=\"46\" fill=\"#1d2433\" opacity=\".15\"/><circle cx=\"64\" cy=\"65\" r=\"50\" fill=\"#fff\"/><circle cx=\"64\" cy=\"65\" r=\"46\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"3\"/><path d=\"M64 22 A43 43 0 0 1 64 108 Z\" fill=\"#a78bfa\" opacity=\".55\"/><path d=\"M64.0 23.0 L64.0 29.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M85.0 28.6 L83.5 31.2\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M100.4 44.0 L97.8 45.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M106.0 65.0 L100.0 65.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M100.4 86.0 L97.8 84.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M85.0 101.4 L83.5 98.8\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M64.0 107.0 L64.0 101.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M43.0 101.4 L44.5 98.8\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M27.6 86.0 L30.2 84.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M22.0 65.0 L28.0 65.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M27.6 44.0 L30.2 45.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M43.0 28.6 L44.5 31.2\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M64 65 L41.5 70.0\" stroke=\"#1d2433\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M64 65 L46.1 96.1\" stroke=\"#ef4444\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><circle cx=\"64\" cy=\"65\" r=\"4\" fill=\"#1d2433\"/><rect x=\"120\" y=\"44\" width=\"66\" height=\"34\" rx=\"8\" fill=\"#1d2433\"/><text x=\"153\" y=\"68\" text-anchor=\"middle\" style=\"font:700 18px monospace;fill:#34d399\">8:35</text></svg>",
+    "unitId": "un_n2",
+    "subjectId": "sb_niem",
+    "source": "zakres wg: Ein tolles Team 1 (Hueber), Lektion 2; treść: opracowanie własne BorBan",
+    "created": "2026-11-04",
+    "lit": "8:35 jest 5 minut po 8:30, a 8:30 to halb neun (pół drogi do dziewiątej).",
+    "why": "8:35 to pięć minut po wpół do dziewiątej, więc fünf nach halb neun.",
+    "ex": "Autobus mam o 8:35: Mein Bus kommt um fünf nach halb neun."
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_30",
+   "data": {
+    "type": "qa",
+    "front": "Jak po niemiecku (oficjalnie, np. w rozkładzie jazdy) powiesz godzinę 14:30?",
+    "back": "vierzehn Uhr dreißig",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar i wyświetlacz z godziną 14:30\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><circle cx=\"67\" cy=\"69\" r=\"46\" fill=\"#1d2433\" opacity=\".15\"/><circle cx=\"64\" cy=\"65\" r=\"50\" fill=\"#fff\"/><circle cx=\"64\" cy=\"65\" r=\"46\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"3\"/><path d=\"M64.0 23.0 L64.0 29.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M85.0 28.6 L83.5 31.2\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M100.4 44.0 L97.8 45.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M106.0 65.0 L100.0 65.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M100.4 86.0 L97.8 84.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M85.0 101.4 L83.5 98.8\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M64.0 107.0 L64.0 101.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M43.0 101.4 L44.5 98.8\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M27.6 86.0 L30.2 84.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M22.0 65.0 L28.0 65.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M27.6 44.0 L30.2 45.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M43.0 28.6 L44.5 31.2\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M64 65 L86.2 59.0\" stroke=\"#1d2433\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M64 65 L64.0 100.9\" stroke=\"#ef4444\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><circle cx=\"64\" cy=\"65\" r=\"4\" fill=\"#1d2433\"/><rect x=\"120\" y=\"44\" width=\"66\" height=\"34\" rx=\"8\" fill=\"#1d2433\"/><text x=\"153\" y=\"68\" text-anchor=\"middle\" style=\"font:700 18px monospace;fill:#34d399\">14:30</text></svg>",
+    "unitId": "un_n2",
+    "subjectId": "sb_niem",
+    "source": "zakres wg: Ein tolles Team 1 (Hueber), Lektion 2; treść: opracowanie własne BorBan",
+    "created": "2026-11-04",
+    "lit": "W radiu, na dworcu i w szkole Niemcy podają godzinę jak na wyświetlaczu: liczba godzin od 0 do 24, słowo Uhr, potem liczba minut.",
+    "why": "Oficjalnie czytasz cyfry po kolei: 14 = vierzehn, potem Uhr, potem 30 = dreißig.",
+    "ex": "Der Zug fährt um vierzehn Uhr dreißig. (Pociąg odjeżdża o 14:30.)"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_31",
+   "data": {
+    "type": "qa",
+    "front": "Jak po niemiecku (oficjalnie) powiesz godzinę 20:15?",
+    "back": "zwanzig Uhr fünfzehn",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Ciemniejsza tarcza zegara i wyświetlacz z godziną 20:15\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><circle cx=\"67\" cy=\"69\" r=\"46\" fill=\"#1d2433\" opacity=\".15\"/><circle cx=\"64\" cy=\"65\" r=\"50\" fill=\"#fff\"/><circle cx=\"64\" cy=\"65\" r=\"46\" fill=\"#cbd5e1\" stroke=\"#1d2433\" stroke-width=\"3\"/><path d=\"M64.0 23.0 L64.0 29.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M85.0 28.6 L83.5 31.2\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M100.4 44.0 L97.8 45.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M106.0 65.0 L100.0 65.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M100.4 86.0 L97.8 84.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M85.0 101.4 L83.5 98.8\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M64.0 107.0 L64.0 101.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M43.0 101.4 L44.5 98.8\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M27.6 86.0 L30.2 84.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M22.0 65.0 L28.0 65.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M27.6 44.0 L30.2 45.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M43.0 28.6 L44.5 31.2\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M64 65 L42.8 73.8\" stroke=\"#1d2433\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M64 65 L99.9 65.0\" stroke=\"#ef4444\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><circle cx=\"64\" cy=\"65\" r=\"4\" fill=\"#1d2433\"/><rect x=\"120\" y=\"44\" width=\"66\" height=\"34\" rx=\"8\" fill=\"#1d2433\"/><text x=\"153\" y=\"68\" text-anchor=\"middle\" style=\"font:700 18px monospace;fill:#34d399\">20:15</text></svg>",
+    "unitId": "un_n2",
+    "subjectId": "sb_niem",
+    "source": "zakres wg: Ein tolles Team 1 (Hueber), Lektion 2; treść: opracowanie własne BorBan",
+    "created": "2026-11-04",
+    "lit": "Oficjalna godzina: liczba godzin (0–24) + Uhr + liczba minut. Bez słów halb, Viertel, vor, nach.",
+    "why": "20 = zwanzig, potem Uhr, potem 15 = fünfzehn.",
+    "ex": "Der Film beginnt um zwanzig Uhr fünfzehn. (Film zaczyna się o 20:15.)"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_32",
+   "data": {
+    "type": "qa",
+    "front": "Odpowiedz po niemiecku na pytanie „Wie spät ist es?”, gdy jest 9:45 (potocznie).",
+    "back": "Es ist Viertel vor zehn.",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Zegar wskazuje 9:45\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><circle cx=\"67\" cy=\"69\" r=\"46\" fill=\"#1d2433\" opacity=\".15\"/><circle cx=\"64\" cy=\"65\" r=\"50\" fill=\"#fff\"/><circle cx=\"64\" cy=\"65\" r=\"46\" fill=\"#fff\" stroke=\"#1d2433\" stroke-width=\"3\"/><path d=\"M64.0 23.0 L64.0 29.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M85.0 28.6 L83.5 31.2\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M100.4 44.0 L97.8 45.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M106.0 65.0 L100.0 65.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M100.4 86.0 L97.8 84.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M85.0 101.4 L83.5 98.8\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M64.0 107.0 L64.0 101.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M43.0 101.4 L44.5 98.8\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M27.6 86.0 L30.2 84.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M22.0 65.0 L28.0 65.0\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M27.6 44.0 L30.2 45.5\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M43.0 28.6 L44.5 31.2\" stroke=\"#1d2433\" stroke-width=\"2\" stroke-linecap=\"round\"/><path d=\"M64 65 L42.8 56.2\" stroke=\"#1d2433\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M64 65 L28.1 65.0\" stroke=\"#ef4444\" stroke-width=\"3.5\" stroke-linecap=\"round\"/><circle cx=\"64\" cy=\"65\" r=\"4\" fill=\"#1d2433\"/><rect x=\"120\" y=\"44\" width=\"66\" height=\"34\" rx=\"8\" fill=\"#1d2433\"/><text x=\"153\" y=\"68\" text-anchor=\"middle\" style=\"font:700 18px monospace;fill:#34d399\">9:45</text></svg>",
+    "unitId": "un_n2",
+    "subjectId": "sb_niem",
+    "source": "zakres wg: Ein tolles Team 1 (Hueber), Lektion 2; treść: opracowanie własne BorBan",
+    "created": "2026-11-04",
+    "lit": "Viertel to ćwierć, czyli 15 minut. 9:45 to 15 minut przed dziesiątą.",
+    "why": "Do dziesiątej brakuje kwadransa, więc Viertel vor zehn.",
+    "ex": "Es ist Viertel vor zehn – gleich ist Pause! (Jest za kwadrans dziesiąta, zaraz przerwa!)"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_33",
+   "data": {
+    "type": "qa",
+    "front": "Jak po niemiecku powiesz „po południu” (np. Spotkamy się po południu)?",
+    "back": "am Nachmittag",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Słońce po prawej stronie nieba, po południu\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><path d=\"M14 104 H186\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M30 104 a70 70 0 0 1 140 0\" fill=\"none\" stroke=\"#9ca3af\" stroke-width=\"2\" stroke-dasharray=\"4 5\"/><path d=\"M150.0 33.0 L150.0 27.0 M162.0 38.0 L166.3 33.7 M167.0 50.0 L173.0 50.0 M162.0 62.0 L166.3 66.3 M150.0 67.0 L150.0 73.0 M138.0 62.0 L133.7 66.3 M133.0 50.0 L127.0 50.0 M138.0 38.0 L133.7 33.7\" stroke=\"#fb923c\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"150\" cy=\"50\" r=\"17\" fill=\"#fff\"/><circle cx=\"150\" cy=\"50\" r=\"13\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><rect x=\"20\" y=\"78\" width=\"26\" height=\"26\" fill=\"#60a5fa\" stroke=\"#1d2433\" stroke-width=\"2.5\"/></svg>",
+    "unitId": "un_n2",
+    "subjectId": "sb_niem",
+    "source": "zakres wg: Ein tolles Team 1 (Hueber), Lektion 2; treść: opracowanie własne BorBan",
+    "created": "2026-11-04"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_34",
+   "data": {
+    "type": "qa",
+    "front": "Jak po niemiecku powiesz „przed południem”?",
+    "back": "am Vormittag",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Słońce po lewej stronie nieba, wznosi się przed południem\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#e6f8ee\"/><path d=\"M14 104 H186\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M30 104 a70 70 0 0 1 140 0\" fill=\"none\" stroke=\"#9ca3af\" stroke-width=\"2\" stroke-dasharray=\"4 5\"/><path d=\"M52.0 35.0 L52.0 29.0 M64.0 40.0 L68.3 35.7 M69.0 52.0 L75.0 52.0 M64.0 64.0 L68.3 68.3 M52.0 69.0 L52.0 75.0 M40.0 64.0 L35.7 68.3 M35.0 52.0 L29.0 52.0 M40.0 40.0 L35.7 35.7\" stroke=\"#fb923c\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"52\" cy=\"52\" r=\"17\" fill=\"#fff\"/><circle cx=\"52\" cy=\"52\" r=\"13\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2.5\"/></svg>",
+    "unitId": "un_n2",
+    "subjectId": "sb_niem",
+    "source": "zakres wg: Ein tolles Team 1 (Hueber), Lektion 2; treść: opracowanie własne BorBan",
+    "created": "2026-11-04"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_35",
+   "data": {
+    "type": "qa",
+    "front": "Jak po niemiecku powiesz „w nocy”?",
+    "back": "in der Nacht",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Księżyc i gwiazdy na ciemnym niebie\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#1d2433\"/><path d=\"M106 44 a16 16 0 1 0 10 28 a13 13 0 1 1 -10 -28 z\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M40 30 l2 5 5 1 -4 3 1 5 -4 -3 -4 3 1 -5 -4 -3 5 -1z\" fill=\"#fde047\"/><path d=\"M150 24 l2 5 5 1 -4 3 1 5 -4 -3 -4 3 1 -5 -4 -3 5 -1z\" fill=\"#fde047\"/><path d=\"M166 80 l2 5 5 1 -4 3 1 5 -4 -3 -4 3 1 -5 -4 -3 5 -1z\" fill=\"#fde047\"/><path d=\"M30 90 l2 5 5 1 -4 3 1 5 -4 -3 -4 3 1 -5 -4 -3 5 -1z\" fill=\"#fde047\"/><path d=\"M130 100 l2 5 5 1 -4 3 1 5 -4 -3 -4 3 1 -5 -4 -3 5 -1z\" fill=\"#fde047\"/></svg>",
+    "unitId": "un_n2",
+    "subjectId": "sb_niem",
+    "source": "zakres wg: Ein tolles Team 1 (Hueber), Lektion 2; treść: opracowanie własne BorBan",
+    "created": "2026-11-04",
+    "lit": "Przy porach dnia Niemcy mówią am: am Morgen, am Vormittag, am Mittag, am Nachmittag, am Abend. Noc jest wyjątkiem: in der Nacht.",
+    "why": "Wszystkie pory dnia mają am, tylko noc ma in der, dlatego in der Nacht.",
+    "ex": "In der Nacht schlafe ich. (W nocy śpię.)"
+   }
+  },
+  {
+   "col": "cards",
+   "id": "k_n2_36",
+   "data": {
+    "type": "qa",
+    "front": "Jak po niemiecku powiesz „w południe”?",
+    "back": "am Mittag",
+    "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 130\" role=\"img\" aria-label=\"Słońce w najwyższym punkcie nieba, w samo południe\"><rect width=\"200\" height=\"130\" rx=\"16\" fill=\"#fff4d6\"/><path d=\"M14 104 H186\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/><path d=\"M30 104 a70 70 0 0 1 140 0\" fill=\"none\" stroke=\"#9ca3af\" stroke-width=\"2\" stroke-dasharray=\"4 5\"/><path d=\"M100.0 15.0 L100.0 9.0 M112.0 20.0 L116.3 15.7 M117.0 32.0 L123.0 32.0 M112.0 44.0 L116.3 48.3 M100.0 49.0 L100.0 55.0 M88.0 44.0 L83.7 48.3 M83.0 32.0 L77.0 32.0 M88.0 20.0 L83.7 15.7\" stroke=\"#fb923c\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"100\" cy=\"32\" r=\"17\" fill=\"#fff\"/><circle cx=\"100\" cy=\"32\" r=\"13\" fill=\"#fde047\" stroke=\"#1d2433\" stroke-width=\"2.5\"/><path d=\"M86 116 h28\" stroke=\"#1d2433\" stroke-width=\"3\" stroke-linecap=\"round\"/></svg>",
+    "unitId": "un_n2",
+    "subjectId": "sb_niem",
+    "source": "zakres wg: Ein tolles Team 1 (Hueber), Lektion 2; treść: opracowanie własne BorBan",
+    "created": "2026-11-04"
+   }
   }
  ]
 }
