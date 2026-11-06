@@ -537,7 +537,7 @@ function studentStep(){
     <p>${did ? `Dziś już ${did} ${plural(did,"odpowiedź","odpowiedzi","odpowiedzi")}. Każda kolejna runda to 2 minuty – rób, ile chcesz.` : `Zacznij od 5 kart – to 2 minuty. Jak pójdzie, rób dalej, ile chcesz.`}</p>
     <div class="bar" style="--c:var(--good)"><i style="width:${Math.max(2, Math.round(known / Math.max(1,p.total) * 100))}%"></i></div>
     <p class="small muted">Z tego sprawdzianu umiesz już ${known} z ${p.total} kart (3 dobre odpowiedzi z rzędu).</p>
-    ${role.canWrite ? `<button class="btn primary" data-act="start" data-kind="step" data-id="${id}">${allDone ? "Powtórz 5 kart z zakresu" : "5 kart z tego sprawdzianu"}</button>` : ""}</div>`;
+    ${role.canWrite ? `<button class="btn primary" data-act="start" data-kind="step" data-id="${id}">${allDone ? "Powtórz 5 kart z zakresu" : x.allAtOnce ? `Wszystkie karty z tego sprawdzianu (${p.total - known})` : "5 kart z tego sprawdzianu"}</button>` : ""}</div>`;
 }
 function paceNewNeed(){ return paceTests().reduce((a,[,,p]) => a + p.newPerDay, 0); }
 function newToday(){ const t = TODAY(); return Object.entries(S.progress).filter(([id,p]) => S.cards[id] && p.introduced === t).length; }
@@ -1528,15 +1528,16 @@ function buildQueue(kind, id){
   if (kind === "step"){ const ids = testCards(S.tests[id]||{});
     const open = ids.filter(c => S.progress[c] && !isMastered(c)).sort((a,b) => (S.progress[a].at||0) - (S.progress[b].at||0));
     const soon = S.tests[id]?.date && daysBetween(TODAY(), S.tests[id].date) <= 2;   // tuż przed sprawdzianem bez limitu nowych
-    const room = Math.max(soon ? QUICK_N : 0, newLimit() - newToday());
+    const all = !!S.tests[id]?.allAtOnce;   // rodzic ustawił „wszystkie karty od razu”: bez limitu nowych i bez podziału na 5
+    const room = all ? Infinity : Math.max(soon ? QUICK_N : 0, newLimit() - newToday());
     const fresh = ids.filter(c => !S.progress[c] && pairReady(c)).slice(0, room);
-    let q = [...open.slice(0,3), ...fresh, ...open.slice(3)].slice(0, QUICK_N);
+    let q = [...open.slice(0,3), ...fresh, ...open.slice(3)].slice(0, all ? SESSION_MAX : QUICK_N);
     if (!q.length) q = ids.filter(isMastered).sort(() => Math.random() - .5).slice(0, QUICK_N); // zakres opanowany: krótka powtórka
     if (!q.length) q = buildQueue("quick");   // limit nowych na dziś wykorzystany: zwykła szybka runda
     return q; }
   if (kind === "test"){ const ids = testCards(S.tests[id]);
     const soon = S.tests[id]?.date && daysBetween(TODAY(), S.tests[id].date) <= 2;   // tuż przed sprawdzianem bez limitu nowych
-    const room = soon ? Infinity : Math.max(0, newLimit() - newToday()); let fresh = 0;
+    const room = (soon || S.tests[id]?.allAtOnce) ? Infinity : Math.max(0, newLimit() - newToday()); let fresh = 0;
     const notM = ids.filter(c => !isMastered(c)).filter(c => S.progress[c] || (pairReady(c) && fresh++ < room)).sort((a,b) => (S.progress[b]?.lapses||0)-(S.progress[a]?.lapses||0));
     const m = ids.filter(isMastered).sort(() => Math.random() - .5);
     return onePerPair(notM.concat(m)).slice(0, SESSION_MAX); }

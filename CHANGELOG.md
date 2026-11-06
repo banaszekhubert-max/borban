@@ -4,6 +4,10 @@ Od najnowszych. Uzasadnienia decyzji są w `docs/DECYZJE.md`, a szczegóły w hi
 
 Wizualna mapa systemu, droga karty i wyniki testu 50 uczniów to strona „Mechanika BorBana”: https://claude.ai/artifact/4YYm8ZeaABj5NvxkyYjiCn (prywatna, udostępnia Hubert).
 
+## 06.11.2026 – wszystkie karty sprawdzianu od razu
+
+- Sprawdzian z ustawieniem `allAtOnce` daje uczniowi cały zakres w jednej sesji (do 30 kart), bez podziału na 5 i bez dziennego limitu nowych kart. Domyślnie wyłączone; włączone dla sprawdzianu SQL (PSOiSK, 12.11).
+
 ## 25.10.2026 – test 50 uczniów, porządki pod skalę
 
 **Dokumentacja dla programisty**
