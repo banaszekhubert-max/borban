@@ -92,6 +92,11 @@ const buttons = p => p.evaluate(() => [...document.querySelectorAll("#sheet .gra
       document.querySelector("#view").innerHTML = familyPanel(); o.childBtn = document.querySelectorAll('[data-act="childPass"]').length;
       return o; });
     check("logowanie: przycisk „Nie pamiętam hasła”", hs.forgot);
+    const [eye0, eye1, eye2] = await r.page.evaluate(() => { authScreen(); const q = () => document.querySelector('[data-act="pwToggle"][data-id="l_pass"]'), st = () => ({ t: document.querySelector("#l_pass").type, l: q()?.getAttribute("aria-label") });
+      const a = st(); q().click(); const b = st(); q().click(); return [a, b, document.querySelector("#l_pass").type]; });
+    check("hasło: oczko – domyślnie ukryte, klik pokazuje, drugi klik ukrywa", eye0.t === "password" && eye0.l === "Pokaż hasło" && eye1.t === "text" && eye1.l === "Ukryj hasło" && eye2 === "password", JSON.stringify([eye0, eye1, eye2]));
+    const eyes = await r.page.evaluate(() => { recoveryScreen(); return document.querySelectorAll('.pw .pweye').length; });
+    check("hasło: oczko także przy nowym haśle (oba pola)", eyes === 2, String(eyes));
     check("link z e-maila: ekran nowego hasła", hs.recovery);
     check("nowe hasło: różne, za krótkie odrzucone, zgodne przyjęte", hs.mismatch && hs.short && hs.match, JSON.stringify(hs));
     check("menu: „Zmień hasło” dla każdego konta", hs.change);

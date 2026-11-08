@@ -9,6 +9,7 @@ Wizualna mapa systemu, droga karty i wyniki testu 50 uczniów to strona „Mecha
 - Logowanie: „Nie pamiętam hasła” (link e-mailem) i ekran „Ustaw nowe hasło”.
 - Menu konta: „Zmień hasło” dla każdego konta.
 - Rodzic: „Nowe hasło” przy koncie ucznia (Rodzic → Konta w rodzinie), bez potrzeby e-maila.
+- Każde pole hasła (logowanie, rejestracja, nowe hasło) ma „oczko”: domyślnie hasło ukryte (oko przekreślone), dotknięcie pokazuje je przed zatwierdzeniem.
 - Konsola kont dla administratora: nowe, aktywne i nieaktywne konta, pobieranie CSV. Funkcja `konta`, migracja `20261108000001_konsola_kont.sql`.
 
 ## 06.11.2026 – wszystkie karty sprawdzianu od razu
