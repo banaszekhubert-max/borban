@@ -4,6 +4,12 @@ Od najnowszych. Uzasadnienia decyzji są w `docs/DECYZJE.md`, a szczegóły w hi
 
 Wizualna mapa systemu, droga karty i wyniki testu 50 uczniów to strona „Mechanika BorBana”: https://claude.ai/artifact/4YYm8ZeaABj5NvxkyYjiCn (prywatna, udostępnia Hubert).
 
+## 08.11.2026 – notatki w jednym miejscu, Beta dla rodziców
+
+- `docs/README.md`: spis wszystkich notatek, linki do stron poza repozytorium, zasada aktualizacji na koniec sesji.
+- `docs/INSTRUKCJA-RODZICA.md`: krótka instrukcja dla testerów Bety; `marketing/plansze/`: 6 plansz onboardingowych (PNG 1080×1350) i generator.
+- Notatki marketingowe i przegląd badań przeniesione z projektu claude.ai do `docs/marketing/`.
+
 ## 08.11.2026 – hasła i konsola kont
 
 - Logowanie: „Nie pamiętam hasła” (link e-mailem) i ekran „Ustaw nowe hasło”.

@@ -1,5 +1,8 @@
 # Jak pracujemy
 
+## Notatki: jedno źródło
+Wszystkie notatki o aplikacji są w repozytorium, spis w `docs/README.md`. Projekt claude.ai trzyma tylko kopie najważniejszych plików i dane dziecka, których nie wolno dać do repozytorium. Na koniec każdej sesji: wpis do `CHANGELOG.md`, decyzja do `docs/DECYZJE.md`, nowy plik do spisu; kopie w projekcie aktualizujemy po repozytorium.
+
 ## Wdrożenie aplikacji
 Commit do `main` → Vercel publikuje https://borban.vercel.app w ok. 20 s. `vercel.json` wyłącza cache dla strony, ale otwartą aplikację trzeba odświeżyć (na telefonie: przeciągnij w dół). Przy większych zmianach: gałąź `dev` → link podglądu z Vercel → test → merge.
 

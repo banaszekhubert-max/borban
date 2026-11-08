@@ -13,9 +13,10 @@ Aplikacja do systematycznej nauki na materiale z prawdziwej szkoły dziecka: fis
 | `tools/` | walidator paczek, składanie paczki, galeria do przeglądu |
 | `supabase/` | migracje bazy i funkcja serwerowa `read-notebook` |
 | `tests/` | testy sprawdzania odpowiedzi i ekranu (CI) oraz symulacja 50 uczniów |
-| `docs/` | dla programisty, plan Fazy 1, architektura, oszczędność danych, standard kart, decyzje, bezpieczeństwo, proces pracy |
+| `docs/` | wszystkie notatki: spis w `docs/README.md` (programista, plan Fazy 1, architektura, decyzje, instrukcja dla rodziców, marketing) |
+| `marketing/` | plansze onboardingowe dla rodziców (PNG + generator) |
 
-**Programista zaczyna od `docs/DLA-PROGRAMISTY.md`**, potem `docs/PLAN-FAZA-1.md`. Historia zmian: `CHANGELOG.md`.
+**Spis wszystkich notatek: `docs/README.md`.** Programista zaczyna od `docs/DLA-PROGRAMISTY.md`, potem `docs/PLAN-FAZA-1.md`. Historia zmian: `CHANGELOG.md`.
 
 ```bash
 python3 -m http.server 8080                 # aplikacja lokalnie (uwaga: łączy się z produkcyjną bazą do etapu E0)
