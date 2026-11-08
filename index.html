@@ -2464,7 +2464,9 @@ async function start(){
   if (!session){ authScreen(); return; }
   if (RECOVERY){ recoveryScreen(); return; }
   fam.me = session.user;
-  sb.functions.invoke("konta", { body: { action: "whoami" } }).then(r => { fam.admin = !!r.data?.admin; }).catch(() => {});
+  const wantConsole = location.hash === "#konsola";
+  sb.functions.invoke("konta", { body: { action: "whoami" } }).then(r => { fam.admin = !!r.data?.admin;
+    if (wantConsole){ history.replaceState(null, "", location.pathname); if (fam.admin) setTimeout(openConsole, 300); else toast("Konsola kont jest tylko dla administratora."); } }).catch(() => {});
   $("#view").innerHTML = `<div class="empty">Ładuję materiał…</div>`;
   const { data: mem, error } = await sb.from("borban_members").select("family_id,role,display_name,borban_families(name)").eq("user_id", session.user.id).limit(1);
   if (error || !mem?.length){ authScreen(`Konto ${session.user.email} nie jest jeszcze dodane do rodziny. Poproś rodzica, żeby dodał je w zakładce „Rodzic”, a potem odśwież stronę.`); $("#hdrMenu").hidden = false; return; }
