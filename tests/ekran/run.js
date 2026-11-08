@@ -78,6 +78,35 @@ const buttons = p => p.evaluate(() => [...document.querySelectorAll("#sheet .gra
     const r = await startApp(browser, { role: "parent" });
     const tabs = await r.page.evaluate(() => ["dzis","postepy","plan","material","rodzic","zeszyt","mapa"].map(t => { try { tab = t; render(); const x = document.querySelector("#view").innerText; return t + (x.includes("${") ? ":LITERAL" : ""); } catch (e) { return t + ":ERR " + e.message; } }));
     check("panel rodzica: wszystkie zakładki się renderują", tabs.every(t => !t.includes(":")), tabs.join(", "));
+
+    // 9. hasła i konsola kont
+    const hs = await r.page.evaluate(() => { const o = {};
+      authScreen(); o.forgot = !!document.querySelector('[data-act="forgot"]');
+      recoveryScreen(); o.recovery = !!document.querySelector('form[data-form="recovery"] #np_1');
+      document.querySelector("#np_1").value = "abcdefgh"; document.querySelector("#np_2").value = "abcdefgX"; o.mismatch = readNewPass() === null;
+      document.querySelector("#np_2").value = "abcdefgh"; o.match = readNewPass() === "abcdefgh";
+      document.querySelector("#np_1").value = document.querySelector("#np_2").value = "krotkie"; o.short = readNewPass() === null;
+      fam.admin = false; openMenu(); o.change = !!document.querySelector('[data-act="changePass"]'); o.noConsole = !document.querySelector('[data-act="console"]'); closeSheet();
+      fam.admin = true; openMenu(); o.console = !!document.querySelector('[data-act="console"]'); closeSheet();
+      fam.members = [{ user_id: "c1", role: "child", display_name: "Uczeń", email: "u@test.local" }, { user_id: "p1", role: "parent", display_name: "Rodzic", email: "r@test.local" }];
+      document.querySelector("#view").innerHTML = familyPanel(); o.childBtn = document.querySelectorAll('[data-act="childPass"]').length;
+      return o; });
+    check("logowanie: przycisk „Nie pamiętam hasła”", hs.forgot);
+    check("link z e-maila: ekran nowego hasła", hs.recovery);
+    check("nowe hasło: różne, za krótkie odrzucone, zgodne przyjęte", hs.mismatch && hs.short && hs.match, JSON.stringify(hs));
+    check("menu: „Zmień hasło” dla każdego konta", hs.change);
+    check("konsola kont tylko dla administratora", hs.noConsole && hs.console);
+    check("rodzic: „Nowe hasło” tylko przy koncie ucznia", hs.childBtn === 1, String(hs.childBtn));
+    await r.page.evaluate(() => { window.__ROWS = [
+      { email: "a@test.local", status: "nowe", role: "child", created_at: "2026-11-07T10:00:00Z", last_sign_in_at: null, last_activity_at: null },
+      { email: "b@test.local", status: "aktywne", role: "parent", created_at: "2026-10-01T10:00:00Z", last_sign_in_at: "2026-11-08T10:00:00Z", last_activity_at: null },
+      { email: "c@test.local", status: "nieaktywne", role: null, created_at: "2026-10-01T10:00:00Z", last_sign_in_at: null, last_activity_at: null }]; return openConsole(); });
+    const kons = await r.page.evaluate(() => { const o = { rows: document.querySelectorAll("#sheet .li").length };
+      CONSOLE.filter = "nieaktywne"; renderConsole(); o.filtered = document.querySelectorAll("#sheet .li").length; return o; });
+    check("konsola: lista kont i filtr statusu", kons.rows === 3 && kons.filtered === 1, JSON.stringify(kons));
+    const [dl] = await Promise.all([r.page.waitForEvent("download", { timeout: 3000 }).catch(() => null), r.page.evaluate(() => consoleCsv())]);
+    const csv = dl ? require("fs").readFileSync(await dl.path(), "utf8") : "";
+    check("konsola: pobieranie CSV", csv.includes("c@test.local") && !csv.includes("a@test.local") && csv.split("\n")[0].startsWith("\ufeffe-mail"), csv.slice(0, 80));
     check("brak błędów JS (rodzic)", !r.errs.length, r.errs.join(" | "));
     await r.page.close();
   } finally { await browser.close(); }

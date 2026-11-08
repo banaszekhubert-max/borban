@@ -22,7 +22,7 @@ function qb(table){ const st={table,filters:{}}; const p={
 window.supabase={createClient(){return {
   auth:{getSession:async()=>({data:{session:{user:{id:'u1',email:'uczen@test.local'}}}}),onAuthStateChange(){},signOut:async()=>({})},
   from:qb, rpc:async()=>({data:null,error:null}),
-  functions:{invoke:async(n,o)=>{ window.__AI.push(o.body); await new Promise(r=>setTimeout(r,50)); return {data:{ok:true,result:{verdict:window.__VERDICT||'yes',why:'test',how:'krok 1, krok 2'}},error:null}}},
+  functions:{invoke:async(n,o)=>{ if(n==='konta') return {data:{ok:true,admin:!!window.__ADMIN,rows:window.__ROWS||[]},error:null}; window.__AI.push(o.body); await new Promise(r=>setTimeout(r,50)); return {data:{ok:true,result:{verdict:window.__VERDICT||'yes',why:'test',how:'krok 1, krok 2'}},error:null}}},
   storage:{from:()=>({remove:async()=>({error:null}),upload:async()=>({error:null}),createSignedUrls:async()=>({data:[]})})},
   channel(){const c={on(){return c},subscribe(){return c}};return c}
 }}};`;

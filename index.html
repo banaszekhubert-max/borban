@@ -1360,6 +1360,8 @@ function openMenu(){
     <div class="panel stack"><p class="eyebrow">Zalogowano</p><h3 style="overflow-wrap:anywhere">${esc(me)}</h3><p class="small muted">${fam.role === "parent" ? "Rodzic" : fam.role === "child" ? "Uczeń" : "Konto bez rodziny"}${fam.name ? " · " + esc(fam.name) : ""}</p></div>
     ${fam.role === "parent" && !role.preview ? `<button class="btn big" data-act="previewOn">Zobacz, jak widzi to ${esc(STUDENT())}</button>` : ""}
     <div class="panel stack"><h3>Na telefonie jak aplikacja</h3><p class="small muted">iPhone: Safari → Udostępnij → „Do ekranu początkowego”. Android: Chrome → menu ⋮ → „Dodaj do ekranu głównego”. Logujesz się raz, potem aplikacja pamięta konto.</p></div>
+    ${fam.admin ? `<button class="btn big" data-act="console">Konsola kont</button>` : ""}
+    <button class="btn" data-act="changePass">Zmień hasło</button>
     <button class="btn danger" data-act="logout">Wyloguj</button></div>`;
   openSheet();
 }
@@ -1397,7 +1399,7 @@ async function addMember(){
 function familyPanel(){
   const ROLE = { parent:"rodzic", child:"uczeń" };
   return `<div class="panel stack"><h3>Konta w rodzinie</h3>
-    <div class="list">${fam.members.map(m => `<div class="li"><div><b>${esc(m.display_name || m.email || "")}</b><br><span class="small muted">${esc(m.email || "")}</span></div><span class="chip">${ROLE[m.role] || m.role}</span></div>`).join("") || `<p class="small muted">Wczytuję…</p>`}</div>
+    <div class="list">${fam.members.map(m => `<div class="li"><div><b>${esc(m.display_name || m.email || "")}</b><br><span class="small muted">${esc(m.email || "")}</span></div><div class="row" style="gap:6px"><span class="chip">${ROLE[m.role] || m.role}</span>${m.role === "child" && m.user_id ? `<button class="btn sm ghost" data-act="childPass" data-id="${esc(m.user_id)}">Nowe hasło</button>` : ""}</div></div>`).join("") || `<p class="small muted">Wczytuję…</p>`}</div>
     <p class="small muted">Nowa osoba zakłada konto na borban.vercel.app („Nie mam konta – załóż”). Potem wpisz tu jej e-mail.</p>
     <label class="f">E-mail konta<input type="email" id="m_email" style="width:100%;min-height:44px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg)"></label>
     <div class="row" style="align-items:stretch"><label class="f" style="flex:1;min-width:140px">Imię<input type="text" id="m_name" placeholder="np. Ola"></label>
@@ -2088,6 +2090,9 @@ document.addEventListener("toggle", e => { const d = e.target; if (d.matches?.("
 document.addEventListener("submit", e => {
   e.preventDefault(); const f = e.target;
   if (f.dataset.form === "login"){ doLogin(false); return; }
+  if (f.dataset.form === "recovery"){ saveRecovery(); return; }
+  if (f.dataset.form === "changepass"){ saveChangePass(); return; }
+  if (f.dataset.form === "childpass"){ saveChildPass(f.dataset.id); return; }
   if (f.dataset.form === "reveal" && SES){ SES.typed = $("#typed")?.value || ""; SES.revealed = true; SES.lastAct = Date.now(); renderStudy(); }
   if (f.dataset.form === "woop"){
     const w = { wish: $("#w_wish").value.trim(), outcome: $("#w_out").value.trim(), obstacle: $("#w_obs").value.trim(), ifp: $("#w_if").value.trim(), then: $("#w_then").value.trim() };
@@ -2140,6 +2145,12 @@ document.addEventListener("click", async e => {
     case "hint": if (SES){ SES.typed = $("#typed")?.value || SES.typed; SES.hint = SES.queue[SES.i]; renderStudy(); } break;
     case "signup": doLogin(true); break;
     case "menu": openMenu(); break;
+    case "forgot": forgotPassword(); break;
+    case "changePass": openChangePass(); break;
+    case "childPass": openChildPass(id); break;
+    case "console": openConsole(); break;
+    case "consoleFilter": CONSOLE.filter = id; renderConsole(); break;
+    case "consoleCsv": consoleCsv(); break;
     case "logout": closeSheet(); await sb.auth.signOut(); location.reload(); break;
     case "previewOn": closeSheet(); role.preview = true; tab = "dzis"; window.scrollTo(0,0); render(); break;
     case "previewOff": role.preview = false; tab = "rodzic"; render(); loadAll(fam.id).then(render).catch(() => {}); break;
@@ -2233,7 +2244,8 @@ document.addEventListener("visibilitychange", () => {
 /* ---------- start: Supabase (logowanie + wspólna baza rodziny) ---------- */
 if (!window.BORBAN){ document.body.innerHTML = '<div style="font:16px system-ui,sans-serif;max-width:420px;margin:60px auto;padding:20px;border:2px solid #1d2433;border-radius:12px">BorBan działa tylko pod adresem <b>borban.vercel.app</b>. Ten plik służy do wgrania na GitHub, nie do otwierania na komputerze.</div>'; throw new Error("BorBan: brak config.js (otwarty plik lokalnie?)"); }
 const sb = supabase.createClient(window.BORBAN.url, window.BORBAN.anonKey, { auth: { persistSession: true, autoRefreshToken: true } });
-const fam = { id:null, role:null, name:"", members:[], me:null };
+const fam = { id:null, role:null, name:"", members:[], me:null, admin:false };
+let RECOVERY = /type=recovery/.test(location.hash);
 const CHILD_COLS = ["progress","sessions","woop","flags","notes"];
 // Kolejka zapisów w telefonie: odpowiedź bez internetu nie ginie, wysyłamy ją przy następnej okazji.
 const OUTBOX_KEY = fid => "borban_outbox_" + fid;
@@ -2324,8 +2336,10 @@ function authScreen(msg){
       <label class="f">Hasło<input type="password" id="l_pass" autocomplete="current-password" required minlength="6" style="width:100%;min-height:44px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg)"></label>
       <button class="btn primary big" type="submit">Zaloguj</button>
       <button class="btn ghost sm" type="button" data-act="signup">Nie mam konta – załóż</button>
+      <button class="btn ghost sm" type="button" data-act="forgot">Nie pamiętam hasła</button>
     </form>
-    <p class="small muted">Po założeniu konta rodzic dodaje je do rodziny w zakładce „Rodzic”.</p></div>`;
+    <p class="small muted">Po założeniu konta rodzic dodaje je do rodziny w zakładce „Rodzic”.</p>
+    <p class="small muted">Uczeń, który nie pamięta hasła, może też poprosić rodzica: rodzic ustawi nowe hasło w zakładce „Rodzic” → „Konta w rodzinie”.</p></div>`;
 }
 async function doLogin(signup){
   const email = $("#l_email")?.value.trim(), password = $("#l_pass")?.value || "";
@@ -2334,6 +2348,95 @@ async function doLogin(signup){
   if (error){ toast(error.message.includes("Invalid") ? "Zły e-mail lub hasło." : error.message); return; }
   if (signup && !data.session){ authScreen("Konto założone. Potwierdź adres e-mail z wiadomości, którą przyszła, a potem się zaloguj."); return; }
   start();
+}
+/* ---------- hasła: przypomnienie e-mailem, zmiana własnego, rodzic ustawia hasło uczniowi ---------- */
+const PASS_MIN = 8;
+async function forgotPassword(){
+  const email = $("#l_email")?.value.trim();
+  if (!email){ toast("Wpisz e-mail konta, a potem kliknij „Nie pamiętam hasła”."); $("#l_email")?.focus(); return; }
+  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.origin + "/" });
+  if (error && /rate|seconds/i.test(error.message)){ toast("Za dużo prób. Spróbuj za kilka minut."); return; }
+  authScreen("Jeśli to konto istnieje, na adres " + email + " przyszedł link do ustawienia nowego hasła. Nie ma wiadomości po kilku minutach? Sprawdź spam albo poproś rodzica o ustawienie hasła w aplikacji.");
+}
+function passFields(){
+  return `<label class="f">Nowe hasło (min. ${PASS_MIN} znaków)<input type="password" id="np_1" autocomplete="new-password" required minlength="${PASS_MIN}" style="width:100%;min-height:44px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg)"></label>
+      <label class="f">Powtórz nowe hasło<input type="password" id="np_2" autocomplete="new-password" required minlength="${PASS_MIN}" style="width:100%;min-height:44px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg)"></label>`;
+}
+function readNewPass(){
+  const a = $("#np_1")?.value || "", b = $("#np_2")?.value || "";
+  if (a.length < PASS_MIN){ toast(`Hasło musi mieć co najmniej ${PASS_MIN} znaków.`); return null; }
+  if (a !== b){ toast("Hasła się różnią. Wpisz to samo hasło dwa razy."); return null; }
+  return a;
+}
+function recoveryScreen(){
+  $("#tabs").innerHTML = ""; $("#hdrMenu").hidden = true;
+  $("#view").innerHTML = `<div class="stack" style="padding-top:20px">
+    <div><p class="eyebrow">BorBan</p><h1>Ustaw nowe hasło</h1><p class="small muted">Wpisz nowe hasło do konta. Potem od razu się zalogujesz.</p></div>
+    <form class="panel stack" data-form="recovery">${passFields()}<button class="btn primary big" type="submit">Zapisz nowe hasło</button></form></div>`;
+}
+async function saveRecovery(){
+  const pw = readNewPass(); if (!pw) return;
+  const { error } = await sb.auth.updateUser({ password: pw });
+  if (error){ toast(/same|different/i.test(error.message) ? "Nowe hasło musi być inne niż poprzednie." : "Nie udało się zapisać hasła. Otwórz link z e-maila jeszcze raz."); return; }
+  RECOVERY = false; history.replaceState(null, "", location.pathname);
+  toast("Nowe hasło zapisane."); start();
+}
+function openChangePass(){
+  $("#sheet").innerHTML = `<div class="wrap"><div class="sbar"><button class="iconbtn" data-act="close" aria-label="Zamknij">${ICON.x}</button><span class="small muted" style="flex:1">Zmiana hasła</span></div>
+    <form class="panel stack" data-form="changepass"><h3>Nowe hasło do konta</h3><p class="small muted" style="overflow-wrap:anywhere">${esc(fam.me?.email || "")}</p>${passFields()}<button class="btn primary big" type="submit">Zapisz</button></form></div>`;
+  openSheet();
+}
+async function saveChangePass(){
+  const pw = readNewPass(); if (!pw) return;
+  const { error } = await sb.auth.updateUser({ password: pw });
+  if (error){ toast(/same|different/i.test(error.message) ? "Nowe hasło musi być inne niż poprzednie." : "Nie udało się zmienić hasła. Wyloguj się i zaloguj ponownie, potem spróbuj jeszcze raz."); return; }
+  closeSheet(); toast("Hasło zmienione.");
+}
+function openChildPass(uidc){
+  const m = fam.members.find(x => x.user_id === uidc); if (!m) return;
+  $("#sheet").innerHTML = `<div class="wrap"><div class="sbar"><button class="iconbtn" data-act="close" aria-label="Zamknij">${ICON.x}</button><span class="small muted" style="flex:1">Hasło ucznia</span></div>
+    <form class="panel stack" data-form="childpass" data-id="${esc(uidc)}"><h3>Nowe hasło: ${esc(m.display_name || m.email || "")}</h3>
+    <p class="small muted">Ustaw hasło i przekaż je uczniowi osobiście. Stare hasło przestanie działać.</p>${passFields()}<button class="btn primary big" type="submit">Ustaw hasło</button></form></div>`;
+  openSheet();
+}
+async function saveChildPass(uidc){
+  const pw = readNewPass(); if (!pw) return;
+  const { data, error } = await sb.functions.invoke("konta", { body: { action: "set_password", userId: uidc, password: pw } });
+  if (error || !data?.ok){ toast("Nie udało się ustawić hasła. Sprawdź internet i spróbuj ponownie."); return; }
+  closeSheet(); toast("Hasło ucznia ustawione.");
+}
+
+/* ---------- konsola kont (tylko administrator, sekret BORBAN_ADMINS w funkcji „konta”) ---------- */
+let CONSOLE = { rows: null, filter: "all", at: null };
+const ST_LABEL = { nowe:"nowe", aktywne:"aktywne", nieaktywne:"nieaktywne" };
+async function openConsole(){
+  CONSOLE = { rows: null, filter: "all", at: null }; renderConsole(); openSheet();
+  const { data, error } = await sb.functions.invoke("konta", { body: { action: "list" } });
+  if (error || !data?.ok){ CONSOLE.rows = []; CONSOLE.err = true; } else { CONSOLE.rows = data.rows; CONSOLE.at = data.generated_at; }
+  renderConsole();
+}
+function consoleRows(){ return (CONSOLE.rows || []).filter(r => CONSOLE.filter === "all" || r.status === CONSOLE.filter); }
+function renderConsole(){
+  const all = CONSOLE.rows || [], cnt = k => all.filter(r => r.status === k).length;
+  const d = x => x ? fmtDate(String(x).slice(0,10)) : "–";
+  const chip = (k, label, n) => `<button class="btn sm ${CONSOLE.filter === k ? "primary" : "ghost"}" data-act="consoleFilter" data-id="${k}">${label} (${n})</button>`;
+  $("#sheet").innerHTML = `<div class="wrap"><div class="sbar"><button class="iconbtn" data-act="close" aria-label="Zamknij">${ICON.x}</button><span class="small muted" style="flex:1">Konsola kont</span></div>
+    <div class="panel stack"><h3>Konta w BorBanie</h3>
+      <p class="small muted">Nowe: założone w ostatnich 7 dniach. Aktywne: logowanie albo nauka w ostatnich 7 dniach. Nieaktywne: bez aktywności dłużej niż 7 dni.${CONSOLE.at ? " Stan na " + esc(new Date(CONSOLE.at).toLocaleString("pl-PL")) + "." : ""}</p>
+      ${CONSOLE.rows === null ? `<p class="small muted">Wczytuję…</p>` : CONSOLE.err ? `<p class="banner">Nie udało się wczytać listy kont.</p>` : `
+      <div class="row" style="gap:8px;flex-wrap:wrap">${chip("all","wszystkie",all.length)}${chip("nowe","nowe",cnt("nowe"))}${chip("aktywne","aktywne",cnt("aktywne"))}${chip("nieaktywne","nieaktywne",cnt("nieaktywne"))}</div>
+      <button class="btn big" data-act="consoleCsv">Pobierz listę (CSV)</button>
+      <div class="list">${consoleRows().map(r => `<div class="li" style="align-items:flex-start"><div style="min-width:0"><b style="overflow-wrap:anywhere">${esc(r.email)}</b><br><span class="small muted">${esc([r.name, r.role === "parent" ? "rodzic" : r.role === "child" ? "uczeń" : "bez rodziny", r.family].filter(Boolean).join(" · "))}<br>założone ${d(r.created_at)} · logowanie ${d(r.last_sign_in_at)} · nauka/zapis ${d(r.last_activity_at)}</span></div><span class="chip">${ST_LABEL[r.status] || r.status}</span></div>`).join("") || `<p class="small muted">Brak kont w tym widoku.</p>`}</div>`}
+    </div></div>`;
+}
+function consoleCsv(){
+  const cols = [["email","e-mail"],["name","imię"],["role","rola"],["family","rodzina"],["status","status"],["created_at","założone"],["last_sign_in_at","ostatnie logowanie"],["last_activity_at","ostatnia aktywność"],["confirmed","e-mail potwierdzony"]];
+  const q = v => { const x = v == null ? "" : String(v); return /[";\n]/.test(x) ? `"${x.replace(/"/g, '""')}"` : x; };
+  const lines = [cols.map(c => c[1]).join(";"), ...consoleRows().map(r => cols.map(([k]) => q(k === "role" ? (r.role === "parent" ? "rodzic" : r.role === "child" ? "uczeń" : "") : r[k])).join(";"))];
+  const blob = new Blob(["\ufeff" + lines.join("\n")], { type: "text/csv;charset=utf-8" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = `borban-konta-${CONSOLE.filter}-${TODAY()}.csv`; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
 // rodzic: zdjęcia potwierdzonych notatek kasujemy po 30 dniach (tekst zostaje w notatce)
 async function removePhotos(id){
@@ -2359,7 +2462,9 @@ async function loadMembers(){
 async function start(){
   const { data: { session } } = await sb.auth.getSession();
   if (!session){ authScreen(); return; }
+  if (RECOVERY){ recoveryScreen(); return; }
   fam.me = session.user;
+  sb.functions.invoke("konta", { body: { action: "whoami" } }).then(r => { fam.admin = !!r.data?.admin; }).catch(() => {});
   $("#view").innerHTML = `<div class="empty">Ładuję materiał…</div>`;
   const { data: mem, error } = await sb.from("borban_members").select("family_id,role,display_name,borban_families(name)").eq("user_id", session.user.id).limit(1);
   if (error || !mem?.length){ authScreen(`Konto ${session.user.email} nie jest jeszcze dodane do rodziny. Poproś rodzica, żeby dodał je w zakładce „Rodzic”, a potem odśwież stronę.`); $("#hdrMenu").hidden = false; return; }
@@ -2373,7 +2478,10 @@ async function start(){
   watch(fam.id);
   render();
 }
-sb.auth.onAuthStateChange((ev) => { if (ev === "SIGNED_OUT") authScreen(); });
+sb.auth.onAuthStateChange((ev) => {
+  if (ev === "SIGNED_OUT") authScreen();
+  if (ev === "PASSWORD_RECOVERY"){ RECOVERY = true; setTimeout(recoveryScreen, 0); }
+});
 start();
 </script>
 </body>

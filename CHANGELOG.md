@@ -4,6 +4,13 @@ Od najnowszych. Uzasadnienia decyzji są w `docs/DECYZJE.md`, a szczegóły w hi
 
 Wizualna mapa systemu, droga karty i wyniki testu 50 uczniów to strona „Mechanika BorBana”: https://claude.ai/artifact/4YYm8ZeaABj5NvxkyYjiCn (prywatna, udostępnia Hubert).
 
+## 08.11.2026 – hasła i konsola kont
+
+- Logowanie: „Nie pamiętam hasła” (link e-mailem) i ekran „Ustaw nowe hasło”.
+- Menu konta: „Zmień hasło” dla każdego konta.
+- Rodzic: „Nowe hasło” przy koncie ucznia (Rodzic → Konta w rodzinie), bez potrzeby e-maila.
+- Konsola kont dla administratora: nowe, aktywne i nieaktywne konta, pobieranie CSV. Funkcja `konta`, migracja `20261108000001_konsola_kont.sql`.
+
 ## 06.11.2026 – wszystkie karty sprawdzianu od razu
 
 - Sprawdzian z ustawieniem `allAtOnce` daje uczniowi cały zakres w jednej sesji (do 30 kart), bez podziału na 5 i bez dziennego limitu nowych kart. Domyślnie wyłączone; włączone dla sprawdzianu SQL (PSOiSK, 12.11).
