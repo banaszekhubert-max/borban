@@ -6,7 +6,7 @@ Wersja graficzna: 6 plansz w `marketing/plansze/` (do wysłania na WhatsAppie lu
 
 ## Start (ok. 10 minut)
 1. Na telefonie otwórz **borban.vercel.app** i wybierz „Nie mam konta – załóż” pod przyciskiem „Zaloguj”. Potwierdź e-mail z wiadomości. Jeśli zamiast logowania od razu widać czyjeś konto, kliknij ikonę osoby w prawym górnym rogu → „Wyloguj”.
-2. Napisz nam, na jaki e-mail założyłeś konto. Otworzymy Ci rodzinę i wgramy materiał na start.
+2. Zaloguj się. Aplikacja zapyta, kim jesteś: przy „Jestem rodzicem” wpisz swoje imię i kliknij „Załóż rodzinę”.
 3. Wyloguj się i załóż drugie konto, dla dziecka. Dziecko nie musi mieć własnej skrzynki: w Gmailu wpisz np. `twojadres+ola@gmail.com`, potwierdzenie przyjdzie do Ciebie.
 4. Zaloguj się z powrotem na swoje konto. W zakładce **Rodzic** → „Konta w rodzinie” wpisz e-mail dziecka, imię i rolę „uczeń”, potem „Dodaj do rodziny”.
 5. Na telefonie dziecka zaloguj jego konto i dodaj aplikację do ekranu: iPhone (Safari) → Udostępnij → „Do ekranu początkowego”; Android (Chrome) → menu ⋮ → „Dodaj do ekranu głównego”.
@@ -35,6 +35,6 @@ Zdjęcia i wyniki widzi tylko Twoja rodzina. Zdjęcia usuwamy po 30 dniach.
 - Wszystko inne: napisz do nas, najlepiej ze zrzutem ekranu.
 
 ## Dla zespołu: znane ograniczenia Bety (08.11.2026)
-- Nowy rodzic nie założy sam rodziny: zakłada ją administrator (krok 2). Do zrobienia: przycisk „Załóż rodzinę”.
+- Nowa rodzina startuje bez materiału: pierwszą paczkę przygotowujemy z listy podręczników i zdjęć zeszytu.
 - Plan tygodnia (`PLAN`) i okno porannej powtórki (`MORNING`) są wpisane pod pierwszego ucznia. Do przeniesienia do ustawień rodzica (etap E7).
 - Jest tylko motyw „Szkoła średnia”; biblioteka materiału obejmuje technikum.

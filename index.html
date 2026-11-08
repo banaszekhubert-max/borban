@@ -1369,6 +1369,36 @@ function openMenu(){
     <button class="btn danger" data-act="logout">Wyloguj</button></div>`;
   openSheet();
 }
+// konto bez rodziny: rodzic zakłada ją sam, uczeń czeka, aż rodzic go doda
+function noFamilyScreen(email){
+  $("#tabs").innerHTML = ""; $("#hdrCam").hidden = true; $("#hdrBook").hidden = true; $("#hdrMenu").hidden = false;
+  const inp = 'style="width:100%;min-height:44px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg)"';
+  $("#view").innerHTML = `<div class="stack" style="padding-top:20px">
+    <div><p class="eyebrow">BorBan</p><h1>Witaj!</h1><p class="small muted" style="overflow-wrap:anywhere">Konto ${esc(email)} nie należy jeszcze do żadnej rodziny.</p></div>
+    <form class="panel stack" data-form="newfam">
+      <h3>Jestem rodzicem</h3>
+      <label class="f">Twoje imię<input id="nf_me" autocomplete="given-name" maxlength="40" ${inp}></label>
+      <label class="f">Nazwa rodziny<input id="nf_name" placeholder="np. Rodzina Kowalskich" maxlength="60" ${inp}></label>
+      <button class="btn primary big" type="submit">Załóż rodzinę</button>
+      <p class="small muted">Potem w zakładce „Rodzic” dodasz konto dziecka.</p>
+    </form>
+    <div class="panel stack"><h3>Jestem uczniem</h3>
+      <p class="small muted">Poproś rodzica, żeby dodał Cię w zakładce „Rodzic” → „Konta w rodzinie”. Potem kliknij niżej.</p>
+      <button class="btn" type="button" data-act="reloadApp">Już mnie dodano – odśwież</button></div>
+  </div>`;
+}
+async function createFamily(){
+  const me = $("#nf_me")?.value.trim() || "", name = $("#nf_name")?.value.trim() || "";
+  if (!me){ toast("Wpisz swoje imię."); $("#nf_me")?.focus(); return; }
+  const btn = document.querySelector('[data-form="newfam"] button[type=submit]'); if (btn){ btn.disabled = true; btn.textContent = "Zakładam…"; }
+  const { data, error } = await sb.rpc("borban_create_family", { fam_name: name || `Rodzina: ${me}`, parent_name: me });
+  if (error || (data !== "ok" && data !== "already")){
+    if (btn){ btn.disabled = false; btn.textContent = "Załóż rodzinę"; }
+    toast(error ? "Nie udało się założyć rodziny. Spróbuj za chwilę." : "Nie udało się: " + data); return; }
+  toast(data === "ok" ? "Rodzina założona. Dodaj teraz konto dziecka w zakładce Rodzic." : "To konto ma już rodzinę.");
+  await start();
+  if (data === "ok"){ tab = "rodzic"; render(); }
+}
 async function loadPack(){
   const f = $("#pk_file")?.files?.[0]; if (!f){ toast("Wybierz plik od Claude."); return; }
   let pk; try { pk = JSON.parse(await f.text()); } catch { toast("To nie jest poprawny plik paczki."); return; }
@@ -1398,6 +1428,7 @@ async function addMember(){
   const { data, error } = await sb.rpc("borban_add_member", { fam: fam.id, member_email: email, member_role: r, member_name: name || null });
   if (error){ toast(error.message); return; }
   toast(data === "ok" ? "Dodano do rodziny." : data === "no_user" ? "Nie ma konta z tym e-mailem. Niech najpierw założy je w aplikacji." : "Nie udało się.");
+  if (data === "ok" && r === "child" && name && !S.meta.config?.student) store.put("meta", "config", { ...(S.meta.config||{}), student: name });   // pierwsze dziecko: jego imię w całej aplikacji
   if (data === "ok"){ ["m_email","m_name"].forEach(k => delete drafts[k]); await loadMembers(); render(); }
 }
 function familyPanel(){
@@ -2094,6 +2125,7 @@ document.addEventListener("toggle", e => { const d = e.target; if (d.matches?.("
 document.addEventListener("submit", e => {
   e.preventDefault(); const f = e.target;
   if (f.dataset.form === "login"){ doLogin(false); return; }
+  if (f.dataset.form === "newfam"){ createFamily(); return; }
   if (f.dataset.form === "recovery"){ saveRecovery(); return; }
   if (f.dataset.form === "changepass"){ saveChangePass(); return; }
   if (f.dataset.form === "childpass"){ saveChildPass(f.dataset.id); return; }
@@ -2149,6 +2181,7 @@ document.addEventListener("click", async e => {
     case "hint": if (SES){ SES.typed = $("#typed")?.value || SES.typed; SES.hint = SES.queue[SES.i]; renderStudy(); } break;
     case "signup": doLogin(true); break;
     case "menu": openMenu(); break;
+    case "reloadApp": location.reload(); break;
     case "forgot": forgotPassword(); break;
     case "pwToggle": pwToggle(id); break;
     case "changePass": openChangePass(); break;
@@ -2486,7 +2519,8 @@ async function start(){
     if (wantConsole){ history.replaceState(null, "", location.pathname); if (fam.admin) setTimeout(openConsole, 300); else toast("Konsola kont jest tylko dla administratora."); } }).catch(() => {});
   $("#view").innerHTML = `<div class="empty">Ładuję materiał…</div>`;
   const { data: mem, error } = await sb.from("borban_members").select("family_id,role,display_name,borban_families(name)").eq("user_id", session.user.id).limit(1);
-  if (error || !mem?.length){ authScreen(`Konto ${session.user.email} nie jest jeszcze dodane do rodziny. Poproś rodzica, żeby dodał je w zakładce „Rodzic”, a potem odśwież stronę.`); $("#hdrMenu").hidden = false; return; }
+  if (error){ $("#view").innerHTML = `<div class="empty">Nie udało się wczytać konta. Sprawdź internet i odśwież.</div>`; $("#hdrMenu").hidden = false; return; }
+  if (!mem?.length){ noFamilyScreen(session.user.email); return; }
   fam.id = mem[0].family_id; fam.role = mem[0].role; fam.me = mem[0].display_name || ""; fam.name = mem[0].borban_families?.name || "";
   role.canEdit = fam.role === "parent"; role.canWrite = true; role.isOwner = role.canEdit; role.preview = false;
   try { await loadAll(fam.id); } catch (e){ console.warn(e); $("#view").innerHTML = `<div class="empty">Nie udało się wczytać danych. Sprawdź internet i odśwież.</div>`; return; }

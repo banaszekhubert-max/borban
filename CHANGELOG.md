@@ -4,6 +4,13 @@ Od najnowszych. Uzasadnienia decyzji są w `docs/DECYZJE.md`, a szczegóły w hi
 
 Wizualna mapa systemu, droga karty i wyniki testu 50 uczniów to strona „Mechanika BorBana”: https://claude.ai/artifact/4YYm8ZeaABj5NvxkyYjiCn (prywatna, udostępnia Hubert).
 
+## 08.11.2026 – rodzic sam zakłada rodzinę
+
+- Konto bez rodziny po zalogowaniu widzi „Witaj!”: rodzic wpisuje imię i klika „Załóż rodzinę” (zostaje rodzicem i trafia do zakładki Rodzic), uczeń dostaje prośbę, żeby rodzic go dodał, i przycisk „Już mnie dodano – odśwież”.
+- Funkcja `borban_create_family`, migracja `20261108000003_zaloz_rodzine.sql` (uruchomiona): jedna rodzina na konto, konto będące już w rodzinie nie założy drugiej.
+- Imię pierwszego dodanego dziecka ustawia się samo jako imię ucznia w aplikacji.
+- Instrukcja i plansza 1 bez kroku „napisz do nas”.
+
 ## 08.11.2026 – notatki w jednym miejscu, Beta dla rodziców
 
 - `docs/README.md`: spis wszystkich notatek, linki do stron poza repozytorium, zasada aktualizacji na koniec sesji.

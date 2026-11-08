@@ -104,7 +104,7 @@ BOARDS = [
     ("Załóż konto", "2 minuty, tylko e-mail i hasło", scr_login, [
         ("Wejdź na", "borban.vercel.app", True),
         ("Kliknij „Nie mam", "konta – załóż”", False),
-        ("Potwierdź e-mail", "i napisz do nas, otworzymy Ci rodzinę", None)]),
+        ("Potwierdź e-mail,", "zaloguj się i kliknij „Załóż rodzinę”", None)]),
     ("Dodaj dziecko", "Dziecko nie musi mieć własnej skrzynki", scr_family, [
         ("Załóż mu konto, np.", "ty+ola@gmail.com", True),
         ("Wróć na swoje", "konto → zakładka Rodzic", False),
