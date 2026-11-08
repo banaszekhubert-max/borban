@@ -7,7 +7,7 @@
 - **Obrazki SVG** z paczek przechodzą sanitizację w aplikacji (bez skryptów, zdarzeń i linków zewnętrznych) i walidację przed wczytaniem.
 - **Uprawnienia (RLS):** rodzic zapisuje materiał swojej rodziny, dziecko tylko swoje postępy, sesje, cele i zgłoszenia.
 - **Hasła do BorBana:** każde konto może zmienić swoje hasło (menu konta) i odzyskać je linkiem e-mailem („Nie pamiętam hasła”). Rodzic może ustawić nowe hasło tylko kontu ucznia ze swojej rodziny; robi to funkcja `konta` na serwerze, która sprawdza rodzinę i rolę. Minimum 8 znaków. Claude nigdy nie wpisuje ani nie zmienia haseł za użytkownika i nie dostaje ich na czat.
-- **Konsola kont:** lista wszystkich kont (e-mail, rola, rodzina, daty założenia, logowania i ostatniego zapisu) widzi tylko administrator z sekretu `BORBAN_ADMINS`. Pobrany plik CSV zawiera e-maile, więc trzymamy go poza repozytorium i nie wysyłamy dalej.
+- **Konsola kont:** lista wszystkich kont (e-mail, rola, rodzina, daty założenia, logowania i ostatniego zapisu) widzi tylko administrator wpisany w tabeli `borban_admins` (albo w sekrecie `BORBAN_ADMINS`). Pobrany plik CSV zawiera e-maile, więc trzymamy go poza repozytorium i nie wysyłamy dalej.
 - **E-maile z Supabase:** wbudowana poczta Supabase ma niski limit i może nie dostarczać na adresy spoza zespołu projektu. Przed pilotażem trzeba podpiąć własny serwer poczty (SMTP); do tego czasu uczniom hasło ustawia rodzic.
 
 ## Źródła danych

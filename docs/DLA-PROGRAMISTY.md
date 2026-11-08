@@ -158,7 +158,7 @@ Przy nieznanej nazwie modelu funkcja sama wybiera najnowszy dostępny model z li
 POST z tokenem zalogowanego użytkownika (`sb.functions.invoke("konta", { body })`):
 - `{ action: "whoami" }` → `{ ok, admin }`; aplikacja pokazuje „Konsola kont” w menu tylko przy `admin: true`.
 - `{ action: "set_password", userId, password }` → rodzic ustawia hasło (8–72 znaki) kontu **ucznia** ze swojej rodziny; inaczej 403.
-- `{ action: "list" }` → tylko administrator (`BORBAN_ADMINS`, e-maile po przecinku): `rows[]` z `email, name, role, family, created_at, last_sign_in_at, last_activity_at, confirmed, status` (`nowe` = założone < 7 dni, `aktywne` = logowanie lub zapis < 7 dni, `nieaktywne`). Ostatni zapis liczy SQL `borban_last_activity()` (migracja `20261108000001`, wykonywać może tylko service_role).
+- `{ action: "list" }` → tylko administrator (tabela `borban_admins`, migracja `20261108000002`; albo sekret `BORBAN_ADMINS`, e-maile po przecinku): `rows[]` z `email, name, role, family, created_at, last_sign_in_at, last_activity_at, confirmed, status` (`nowe` = założone < 7 dni, `aktywne` = logowanie lub zapis < 7 dni, `nieaktywne`). Ostatni zapis liczy SQL `borban_last_activity()` (migracja `20261108000001`, wykonywać może tylko service_role).
 
 W aplikacji: `forgotPassword` (link e-mailem, `redirectTo` = adres aplikacji), `recoveryScreen` (zdarzenie `PASSWORD_RECOVERY` albo `#type=recovery` w adresie), `openChangePass`, `openChildPass`, `openConsole` / `consoleCsv`. Bezpośredni link do konsoli: `https://borban.vercel.app/#konsola` (po zalogowaniu kontem administratora). Testy: `tests/ekran/run.js`, część 9.
 

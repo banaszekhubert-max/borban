@@ -3,7 +3,8 @@
 //   { action: "whoami" }                              → { ok, admin: bool }
 //   { action: "set_password", userId, password }      → rodzic ustawia nowe hasło kontu UCZNIA ze swojej rodziny
 //   { action: "list" }                                → tylko administrator: lista wszystkich kont do konsoli
-// Administratorzy: sekret BORBAN_ADMINS (adresy e-mail oddzielone przecinkami; Supabase → Edge Functions → Secrets).
+// Administratorzy: tabela borban_admins (e-maile małymi literami; dostęp tylko service_role)
+//   albo sekret BORBAN_ADMINS (adresy oddzielone przecinkami; Supabase → Edge Functions → Secrets).
 // Klucz service_role funkcja bierze ze zmiennej środowiskowej Supabase (nigdy z kodu ani z aplikacji).
 import { createClient } from "jsr:@supabase/supabase-js@2";
 
@@ -31,7 +32,11 @@ Deno.serve(async (req) => {
     if (!me) return json({ error: "unauthorized" }, 401);
     const admin = createClient(url, service, { auth: { persistSession: false, autoRefreshToken: false } });
     const admins = (Deno.env.get("BORBAN_ADMINS") || "").toLowerCase().split(",").map((s) => s.trim()).filter(Boolean);
-    const isAdmin = !!me.email && admins.includes(me.email.toLowerCase());
+    let isAdmin = !!me.email && admins.includes(me.email.toLowerCase());
+    if (!isAdmin && me.email) {
+      const { data: a } = await admin.from("borban_admins").select("email").eq("email", me.email.toLowerCase()).limit(1);
+      isAdmin = !!a?.length;
+    }
 
     const body = await req.json().catch(() => ({}));
 
